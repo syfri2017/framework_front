@@ -22,6 +22,13 @@ router.beforeEach((to, from, next) => {
 
   //跳转到路由请求页面
   next();
+  // debugger
+  // axios.get('/xfxhapi/getMenu').then(function (res) {
+  //   debugger
+  //   //router.addRoutes(menus)
+  // }.bind(this), function (error) {
+  //     console.log(error)
+  // })
 });
 
 //添加请求拦截器

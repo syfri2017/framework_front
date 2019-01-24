@@ -32,14 +32,12 @@
           <span style="margin-right:100px;font-size:18px;">用户登录</span>
           <span >没有账户?<a >去注册</a></span>
         </div>
+        <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
         <div class="filed ">
-          <el-input placeholder="用户名" v-model="form.name" prefix-icon="iconfont icon-user" ></el-input>
+          <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-user" ></el-input>
         </div>
         <div class="filed">
-          <el-input placeholder="密码" v-model="form.name" prefix-icon="iconfont icon-passwd"></el-input>
-        </div>
-        <div class="filed">
-          <el-input placeholder="验证码" v-model="form.name" prefix-icon="iconfont icon-validate"></el-input>
+          <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-passwd"></el-input>
         </div>
         <div class="filed left" >
           <span ><a>忘记用户名</a>  |  <a>忘记密码</a>  |  <a>重置账户</a></span>
@@ -49,6 +47,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;&nbsp;&nbsp;&nbsp;
           </el-button>
         </div>
+        </form>
       </div>
      </el-col>
      <el-col :span="8">&nbsp;</el-col>
@@ -65,18 +64,38 @@
 </template>
 
 <script>
+import axios from 'axios';
+axios.defaults.baseURL = window.config.domain;
 export default {
   name: 'Login',
   data () {
     return {
-      form:{
-
-      }
+        GLYusername: "",
+        GLYpassword: "",
+        GLYsrc: "/xfxhapi/imageCode",
+        GLYvalidateCode: "",
+        GLYmessages: "",
+        GLYloginType: "MyShiro"
     }
   },
   methods:{
     login(){
-      this.$router.push({name: 'index'})
+       if (this.GLYusername == null || this.GLYusername == '') {
+                alert("用户名不能为空！")
+            } else if (this.GLYpassword == null || this.GLYpassword == '') {
+                alert("密码不能为空！")
+            } 
+            else {
+                 var params={
+                   GLYpassword:this.GLYpassword,
+                   GLYusername:this.GLYusername
+                 }
+                  axios.post('/login',params).then(function (res) {
+                  this.$router.push({name: 'index'})
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+            }
     }
   }
 }
