@@ -4,14 +4,17 @@ import Vue from 'vue'
 import App from './App'
 import router from './common/router'
 import axios from 'axios';
+import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui';
 import {Message,Loading} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './common/scss/index.scss';
 
 Vue.config.productionTip = false
 Vue.config.devtools = true;
 Vue.use(ElementUI);
+Vue.use(VueAxios, axios);
 // 后台项目地址
 axios.defaults.baseURL = window.config.domain;
 
