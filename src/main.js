@@ -19,6 +19,8 @@ Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
 // 后台项目地址
 axios.defaults.baseURL = window.config.domain;
+//解决跨域
+Vue.prototype.$http.defaults.withCredentials = true;
 
 Vue.use(utils);
 Vue.use(store);
@@ -63,7 +65,7 @@ axios.interceptors.request.use(
           localStorage.setItem('user', null);
           localStorage.setItem('isLogin', 'N');
           Vue.prototype.$message.error('用户超时，请重新登陆'); 
-          this.$router.push({path: '/'});
+          vm.$router.push({path: '/'});
         }
       }.bind(this), function (error) {
           console.log(error)
@@ -129,7 +131,7 @@ Vue.prototype.$dicFormat = (dicCode,itemCode) => {
 }
 
 /* eslint-disable no-new */
-new Vue({
+let vm = new Vue({
   el: '#app',
   router,
   store,
