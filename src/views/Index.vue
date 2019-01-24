@@ -1,10 +1,10 @@
 <template>
   <el-container>
     <el-header>
-      <div class="header"></div>
+      <headerTop></headerTop>
     </el-header>
     <el-container>
-      <el-aside class="aside" style="width: 240px;">
+      <el-aside class="aside">
         <el-menu
           :show-timeout="200"
           :default-active="$route.path"
@@ -42,8 +42,16 @@
     </el-container>
   </el-container>
 </template>
+
 <script>
+//引入Header Component
+import headerTop from './layout/Header.vue'
+//引入Aside Component
+import aside from './layout/Aside.vue'
 export default {
+  components: {
+    headerTop
+  },
   computed: {
     routes() {
       return this.$router.options.routes;
@@ -51,30 +59,18 @@ export default {
   },
   methods: {
     handleOpen(key, keyPath) {
-      debugger;
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      debugger;
       console.log(key, keyPath);
     },
     handleSelect(key, keyPath) {
-      debugger;
-      //this.$router.push({name: 'system/user'})
       console.log(key, keyPath);
     }
   }
 };
 </script>
 <style scoped>
-.header {
-  background: url(/static/images/login/pic_logo.png) no-repeat center center;
-  background-size: auto 100%;
-  position: relative;
-  width: 350px;
-  height: 40px;
-  margin-top: 10px;
-}
 .el-header,
 .el-footer {
   background-color: #2d1113;
@@ -83,8 +79,8 @@ export default {
   line-height: 50px;
 }
 .aside {
-  width: 200px;
-  height: 750px;
+  width: 240px !important;
+  height: 600px;
   background-color: rgb(70, 49, 50);
 }
 </style>

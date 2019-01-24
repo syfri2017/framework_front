@@ -11,6 +11,7 @@ const frameIn = [{
 {
   path: '/index',
   name: 'index',
+  meta: {auth: true},
   component: resolve => require(['@/views/Index'], resolve)
 }
   // ,
