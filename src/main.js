@@ -7,7 +7,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui';
 import {Message,Loading} from 'element-ui';
-import utils from '../static/common/utils.js';
+import utils from './common/js/utils';
 import store from './store/index';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
