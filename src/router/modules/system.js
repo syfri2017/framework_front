@@ -1,4 +1,4 @@
-import index from '@/views/Index'
+import index from '@/views/layout/Index'
 export default {
   path: '/system',
   name: 'system',

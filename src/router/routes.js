@@ -12,7 +12,7 @@ const frameIn = [{
   path: '/index',
   name: 'index',
   meta: {auth: true},
-  component: resolve => require(['@/views/Index'], resolve)
+  component: resolve => require(['@/views/layout/Index'], resolve)
 }
   // ,
   // system

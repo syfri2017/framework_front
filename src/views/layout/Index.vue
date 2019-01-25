@@ -1,9 +1,9 @@
 <template>
   <el-container>
-    <el-header>
-      <headerTop></headerTop>
-    </el-header>
+    <el-header><headerTop></headerTop></el-header>
     <el-container>
+      <aside></aside>
+
       <el-aside class="aside">
         <el-menu
           :show-timeout="200"
@@ -45,12 +45,15 @@
 
 <script>
 //引入Header Component
-import headerTop from './layout/Header.vue'
+import headerTop from '@/views/layout/Header'
 //引入Aside Component
-import aside from './layout/Aside.vue'
+import aside from '@/views/layout/Aside'
+//引入Main Component
+import main from '@/views/layout/Main'
 export default {
   components: {
-    headerTop
+    headerTop,
+    aside
   },
   computed: {
     routes() {
