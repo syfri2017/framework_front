@@ -96,6 +96,7 @@ export default {
             this.axios.get('/shiro').then(function (res) {
               this.$store.commit('$_setStorage', res.data);
               this.$store.commit('$_setLogin', 'Y');
+              console.log(res.data);
               this.$router.push({name: 'index'});
             }.bind(this), function (error) {
               console.log(error)

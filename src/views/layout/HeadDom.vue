@@ -41,6 +41,7 @@ export default {
         if("success" == res.data) {
           this.$store.commit('$_setStorage', '');
           this.$store.commit('$_setLogin', 'N');
+          this.$store.commit('$_setMenus', []);
           this.$router.push({ path: '/' });
         }
       }.bind(this), function (error) {

@@ -27,9 +27,38 @@ Vue.use(store);
 
 //路由拦截
 router.beforeEach((to, from, next) => {
-  debugger;
+  /**如果用户需要验证，则需要判断用户登录状态，否则看齐是否跳转到登录页 by li.xue 2019/1/25 */
   if (to.matched.some(m => m.meta.auth)) {
     if (window.localStorage.isLogin === 'Y') {
+      //判断是否加载菜单
+      /**
+      if(window.localStorage.menus == null) {
+        var menus = [];
+        var resourceTrees = JSON.parse(window.localStorage.user).resourceTrees;
+        for (var i in resourceTrees) {
+          var children = [];
+          for (var j in resourceTrees[i].children) {
+            var tempChild = {
+              path: resourceTrees[i].children[j].resourcename,
+              name: resourceTrees[i].children[j].resourcename,
+              meta: {title: resourceTrees[i].children[j].resourceinfo, auth: true},
+              // component: () => import('@/views' + resourceTrees[i].children[j].resourcename)
+            };
+            children.push(tempChild);
+          }
+          var temp = {
+            path: resourceTrees[i].resourcename,
+            name: resourceTrees[i].resourcename,
+            meta: {title: resourceTrees[i].resourceinfo, auth: true},
+            component: () => import('@/views/layout/Index'),
+            children: children
+          };
+          menus.push(temp);
+        }
+        store.commit('$_setMenus', menus);
+        router.addRoutes(menus);
+      }
+      */
       next();
     } else if (to.path !== '/') {
       next({path: '/'});

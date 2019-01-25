@@ -6,13 +6,29 @@ import system from './modules/system'
 const frameIn = [{
   path: '/',
   name: 'Login',
+  hidden: true,
   component: resolve => require(['@/views/Login'], resolve)
 },
 {
   path: '/index',
   name: 'index',
+  hidden: true,
   meta: {auth: true},
-  component: resolve => require(['@/views/layout/Index'], resolve)
+  component: resolve => require(['@/views/layout/Index'], resolve),
+  children: [
+    {
+      path: '/home',
+      name: '/home',
+      meta: {auth: true, title: '首页'},
+      component: resolve => require(['@/views/home'],resolve)
+    },
+    {
+      path: '/home2',
+      name: '/home2',
+      meta: {auth: true, title: '首页222'},
+      component: resolve => require(['@/views/home2'],resolve)
+    }
+  ]
 }
   // ,
   // system
