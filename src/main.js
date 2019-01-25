@@ -27,6 +27,7 @@ Vue.use(store);
 
 //路由拦截
 router.beforeEach((to, from, next) => {
+  debugger;
   if (to.matched.some(m => m.meta.auth)) {
     if (window.localStorage.isLogin === 'Y') {
       next();
@@ -142,5 +143,6 @@ let vm = new Vue({
       localStorage.setItem("isLogin", '');
     }
     this.$store.state.isLogin = localStorage.getItem("isLogin");
+    this.$store.state.user = localStorage.getItem("user");
   }
 })

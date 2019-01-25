@@ -8,9 +8,11 @@ const store = new Vuex.Store({
     state: {
         user: null,
         isLogin: 'N',
+        isCollapse: false
     },
     getters: {
         getStorage: function(state) {
+            debugger;
             if(!state.user){
                 state.user = JSON.parse(localStorage.getItem(key));
                 state.isLogin = localStorage.getItem(isLogin);

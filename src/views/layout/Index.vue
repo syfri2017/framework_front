@@ -1,9 +1,10 @@
 <template>
   <el-container>
-    <el-header><headerTop></headerTop></el-header>
+    <el-header><headerDom></headerDom></el-header>
     <el-container>
-      <aside></aside>
+      <asideDom class="aside"></asideDom>
 
+<!--
       <el-aside class="aside">
         <el-menu
           :show-timeout="200"
@@ -34,6 +35,7 @@
           </div>
         </el-menu>
       </el-aside>
+      -->
       <el-container>
         <el-main>
           <router-view/>
@@ -45,17 +47,18 @@
 
 <script>
 //引入Header Component
-import headerTop from '@/views/layout/Header'
+import headerDom from '@/views/layout/HeadDom'
 //引入Aside Component
-import aside from '@/views/layout/Aside'
+import asideDom from '@/views/layout/AsideDom'
 //引入Main Component
-import main from '@/views/layout/Main'
+import mainDom from '@/views/layout/MainDom'
 export default {
   components: {
-    headerTop,
-    aside
+    headerDom,
+    asideDom,
+    mainDom
   },
-  computed: {
+  computed: { 
     routes() {
       return this.$router.options.routes;
     }

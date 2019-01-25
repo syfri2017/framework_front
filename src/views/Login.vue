@@ -97,7 +97,6 @@ export default {
               this.$store.commit('$_setStorage', res.data);
               this.$store.commit('$_setLogin', 'Y');
               this.$router.push({name: 'index'});
-              console.log();
             }.bind(this), function (error) {
               console.log(error)
             })
