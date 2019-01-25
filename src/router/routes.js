@@ -16,6 +16,7 @@ const frameIn = [{
   meta: {auth: true},
   component: resolve => require(['@/views/layout/Index'], resolve),
   children: [
+    /** 
     {
       path: '/home',
       name: '/home',
@@ -28,6 +29,7 @@ const frameIn = [{
       meta: {auth: true, title: '首页222'},
       component: resolve => require(['@/views/home2'],resolve)
     }
+    */
   ]
 }
   // ,

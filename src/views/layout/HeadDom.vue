@@ -39,9 +39,7 @@ export default {
     logout(){
       this.axios.get('/vueCliLogout').then(function (res) {
         if("success" == res.data) {
-          this.$store.commit('$_setStorage', '');
-          this.$store.commit('$_setLogin', 'N');
-          this.$store.commit('$_setMenus', []);
+          this.$store.commit('$_removeStorage');
           this.$router.push({ path: '/' });
         }
       }.bind(this), function (error) {

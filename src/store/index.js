@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import router from '@/router';
 Vue.use(Vuex);
 
 const key = "user";
@@ -9,8 +10,7 @@ const store = new Vuex.Store ({
     state: {
         user: null,
         isLogin: 'N',
-        menus: [],
-        isCollapse: false,
+        menus: []
     },
     getters: {
         getStorage: function(state) {
@@ -42,7 +42,11 @@ const store = new Vuex.Store ({
         },
         $_removeStorage(state) {
             state.user = null;
+            state.isLogin = false;
+            state.menus = [];
             localStorage.removeItem(key);
+            localStorage.removeItem(isLogin);
+            localStorage.removeItem(menus);
         }
     }
 });
