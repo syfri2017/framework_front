@@ -1,6 +1,6 @@
 <template>
   <div >
-    <h1>Role</h1>
+    <h1>Resource</h1>
   </div>
 </template>
 <script>

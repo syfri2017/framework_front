@@ -1,13 +1,15 @@
 <template>
-  <div >
-    <h1>Role</h1>
+  <div id="plan">
+  <h1>Plan</h1>
   </div>
 </template>
+
 <script>
 export default {
-  methods: {
-    
-  }
+  name: 'plan'
 }
 </script>
 
+<style>
+
+</style>
