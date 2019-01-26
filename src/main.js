@@ -27,7 +27,6 @@ Vue.prototype.$axios = axios;
 //路由拦截
 router.beforeEach((to, from, next) => {
   /**如果用户需要跳转登录页或者跳转不需要验证的页面，直接next() by li.xue 2019/1/25 */
-  debugger;
   if (to.path !== '/' && to.matched.some(m => m.meta.auth)) {
     if (localStorage.isLogin === 'TRUE') {
         next();
