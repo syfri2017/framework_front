@@ -39,7 +39,8 @@ export default {
     logout(){
       this.axios.get('/vueCliLogout').then(function (res) {
         if("success" == res.data) {
-          this.$store.commit('$_removeStorage');
+          localStorage.removeItem("isLogin");
+          localStorage.removeItem("shiroUser");
           this.$router.push({ path: '/' });
         }
       }.bind(this), function (error) {
