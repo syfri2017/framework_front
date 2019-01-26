@@ -37,11 +37,12 @@ export default {
       alert("personal");
     },
     logout(){
-      this.axios.get('/vueCliLogout').then(function (res) {
+      let vm = this;
+      vm.$axios.get('/vueCliLogout').then(function (res) {
         if("success" == res.data) {
           localStorage.removeItem("isLogin");
           localStorage.removeItem("shiroUser");
-          this.$router.push({ path: '/' });
+          vm.$router.push({name: 'login' });
         }
       }.bind(this), function (error) {
         console.log(error)
