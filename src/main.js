@@ -20,6 +20,7 @@ Vue.use(utils);
 // 后台项目地址
 axios.defaults.baseURL = window.config.domain;
 //解决跨域
+axios.defaults.withCredentials = true;
 Vue.prototype.$http.defaults.withCredentials = true;
 //axios请求
 Vue.prototype.$axios = axios;
@@ -27,9 +28,13 @@ Vue.prototype.$axios = axios;
 //路由拦截
 router.beforeEach((to, from, next) => {
   /**如果用户需要跳转登录页或者跳转不需要验证的页面，直接next() by li.xue 2019/1/25 */
+  debugger;
   if (to.path !== '/' && to.matched.some(m => m.meta.auth)) {
     if (localStorage.isLogin === 'TRUE') {
-        next();
+      next();
+    } else {
+      Vue.prototype.$message.warning('您还未登录，请登陆');
+      next({path: '/'});
     }
   } else if (to.path == '/') {
     if (localStorage.isLogin === 'TRUE') {
