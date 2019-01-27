@@ -47,18 +47,13 @@ export default {
   methods: {
     //初始化菜单
     initMenu(){
-      if (localStorage.getItem("shiroUser")) {
-        this.menus = JSON.parse(localStorage.getItem("shiroUser")).resourceTrees;
-      }
-      /**通过请求方式获取菜单，暂不好用，跨域问题  by li.xue */
-      /**
       let vm = this;
-      vm.$axios.get('/getMenu').then(function (res) {
-        console.log(res.data);
+      vm.$axios.get('/resource/menuTree').then(function (res) {
+        vm.menus = res.data.result;
       }.bind(this), function (error) {
         console.log(error)
       })
-      */
+      
     }
   },
   mounted() {

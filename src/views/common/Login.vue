@@ -89,27 +89,25 @@ export default {
           password: vm.GLYpassword,
           loginType: vm.GLYloginType
         }
-        vm.$axios.post('/vueCliLogin', params).then(function (res) {
+        vm.$axios.post('/login', params).then(function (res) {
+          debugger;
           var message = res.data;
-          if ("success" == message || "session" == message) {
-            localStorage.removeItem("isLogin");
-            localStorage.setItem("isLogin", "TRUE");
-            vm.$axios.get('/shiro').then(function (res) {
-              localStorage.removeItem("shiroUser");
-              localStorage.setItem("shiroUser", JSON.stringify(res.data));
-              vm.$router.push({name: 'index'});
-            }.bind(this), function (error) {
-              console.log(error)
-            })
-          } else if ("kaptcha" == message) {
-            this.$message.error('验证码错误');
-          } else if ("unknown" == message) {
-            this.$message.error('账号不存在');
-          } else if ("incorrect" == message) {
-            this.$message.error('密码不正确');
-          } else if ("excessive" == message) {
-            this.$message.error('密码输入错误次数超过5次');
+          if (message.code == '000000') {          
+            localStorage.removeItem('isLogin');
+            localStorage.removeItem('XTOKEN');
+            localStorage.removeItem('USERTOEKN');
+            localStorage.removeItem('shiroUser');
+            localStorage.setItem('isLogin', 'TRUE');
+            localStorage.setItem('XTOKEN',  message.data.token);
+            localStorage.setItem('USERTOEKN',  JSON.stringify(message.data.userToken));
+            this.$router.push({ path: '/index' });
+          
+          } else if (message.code == '111111') {
+            this.$message.error("账号不存在");
+          } else if (message.code == '222222') {
+            this.$message.error("密码不正确");
           } else {
+            this.$message.error("登录失败");
             this.$router.push({ path: '/' });
           }          
         }.bind(this), function (error) {

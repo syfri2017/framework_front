@@ -26,26 +26,25 @@ Vue.prototype.$http.defaults.withCredentials = true;
 Vue.prototype.$axios = axios;
 
 //路由拦截
-router.beforeEach((to, from, next) => {
-  /**如果用户需要跳转登录页或者跳转不需要验证的页面，直接next() by li.xue 2019/1/25 */
-  debugger;
-  if (to.path !== '/' && to.matched.some(m => m.meta.auth)) {
-    if (localStorage.isLogin === 'TRUE') {
-      next();
-    } else {
-      Vue.prototype.$message.warning('您还未登录，请登陆');
-      next({path: '/'});
-    }
-  } else if (to.path == '/') {
-    if (localStorage.isLogin === 'TRUE') {
-      next({path: '/index'});
-    } else {
-      next();
-    }
-  }else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   /**如果用户需要跳转登录页或者跳转不需要验证的页面，直接next() by li.xue 2019/1/25 */
+//   if (to.path !== '/' && to.matched.some(m => m.meta.auth)) {
+//     if (localStorage.isLogin === 'TRUE') {
+//       next();
+//     } else {
+//       Message.error('您还未登录，请登陆');
+//       next({path: '/'});
+//     }
+//   } else if (to.path == '/') {
+//     if (localStorage.isLogin === 'TRUE') {
+//       next({path: '/index'});
+//     } else {
+//       next();
+//     }
+//   }else {
+//     next();
+//   }
+// });
 
 //添加请求拦截器
 axios.interceptors.request.use(
@@ -54,19 +53,17 @@ axios.interceptors.request.use(
     config.headers.PATHURL = router.currentRoute.path;
     config.headers.PATHNAME = encodeURI(router.currentRoute.name);
 
-    if(config.url != '/vueCliLogin' && config.url != '/vueCliLogout'){
+    if(config.url != '/login' && config.url != '/logout'){
       var isLogin = localStorage.getItem('isLogin');
       if(isLogin != 'TRUE'){
         router.push({path: '/'});
       }
     }
     /**采用TOKEN验证方式  by li.xue */
-    /**
-    var token = this.localStorage.getItem("XTOKEN")
+    var token = localStorage.getItem("XTOKEN");
     if (token != null){
-      config.headers.XTOKEN = this.localStorage.getItem("XTOKEN");
+      config.headers.XTOKEN = token;
     }
-    */
       return config;
     },
   error => {
@@ -77,6 +74,7 @@ axios.interceptors.request.use(
   //添加响应拦截器
 // axios.interceptors.response.use(
 //   response => {
+//     debugger;
 //       //展示请求错误信息
 //       //错误提示键值对
 //       let errorObj = {1010100003: '请求参数错误'};
