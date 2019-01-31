@@ -38,11 +38,12 @@ export default {
     },
     logout(){
       let vm = this;
-      vm.$axios.get('/vueCliLogout').then(function (res) {
-        if("success" == res.data) {
-          localStorage.removeItem("isLogin");
-          localStorage.removeItem("shiroUser");
-          vm.$router.push({name: 'login' });
+      vm.$axios.get('/logout').then(function (res) {
+        if(res.data.code = '99999999') {
+          localStorage.removeItem('isLogin');
+          localStorage.removeItem('XTOKEN');
+          localStorage.removeItem('USERTOEKN');
+          vm.$router.push({name: 'login'});
         }
       }.bind(this), function (error) {
         console.log(error)

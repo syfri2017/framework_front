@@ -71,31 +71,40 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   });
 
-  //添加响应拦截器
-// axios.interceptors.response.use(
-//   response => {
-//     debugger;
-//       //展示请求错误信息
-//       //错误提示键值对
-//       let errorObj = {1010100003: '请求参数错误'};
-//       if (errorObj.hasOwnProperty(response.data.respCode)) {
-//         return response;
-//       }
-//   },
-//   error => {
-//     Message.error({
-//       showClose: true,
-//       message: error,
-//       type: 'error',
-//       duration: 0
-//     });
-//     //请求超时跳转到登录页面
-//     if("Network Error"==error.message){
-//       router.push({name: 'login'});
-//       localStorage.clear(); 
-//     }
-//     return Promise.reject(error);
-//   })
+// 添加响应拦截器
+axios.interceptors.response.use(
+  response => {
+      //展示请求错误信息
+      //错误提示键值对
+      let code = response.data.code;
+      if (code == '000000') {
+        return response.data;
+      } else {
+        if (code == '444444') {
+          localStorage.clear();
+          Message.error('登录超时，请重新登录');
+        } else {
+          localStorage.clear();
+          Message.error('登录异常');
+        }
+        router.push({name: 'login'});
+        return Promise.reject(error);
+      }
+  },
+  error => {
+    Message.error({
+      showClose: true,
+      message: "error",
+      type: 'error',
+      duration: 0
+    });
+    //请求超时跳转到登录页面
+    // if("Network Error" == error.message){
+      
+    //   localStorage.clear(); 
+    // }
+    
+  })
 
 new Vue({
   el: '#app',
