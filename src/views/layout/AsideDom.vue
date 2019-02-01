@@ -49,7 +49,7 @@ export default {
     initMenu(){
       let vm = this;
       vm.$axios.get('/resource/menuTree').then(function (res) {
-        vm.menus = res.data.result;
+        vm.menus = res.data.result; 
       }.bind(this), function (error) {
         console.log(error)
       })

@@ -90,18 +90,18 @@ export default {
           loginType: vm.GLYloginType
         }
         vm.$axios.post('/login', params).then(function (res) {
-          if (res.code == '000000') {          
+          if (res.data.code == '00000000') {          
             localStorage.removeItem('isLogin');
             localStorage.removeItem('XTOKEN');
-            localStorage.removeItem('USERTOEKN');
+            localStorage.removeItem('CURRENTUSER');
             localStorage.setItem('isLogin', 'TRUE');
-            localStorage.setItem('XTOKEN',  res.data.token);
-            localStorage.setItem('USERTOEKN',  JSON.stringify(res.data.userToken));
+            localStorage.setItem('XTOKEN',  res.data.data.token);
+            localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
             this.$router.push({ path: '/index' });
           
-          } else if (res.code == '11111111') {
+          } else if (res.data.code == '11111111') {
             this.$message.error("账号不存在");
-          } else if (res.code == '22222222') {
+          } else if (res.data.code == '22222222') {
             this.$message.error("密码不正确");
           } else {
             this.$message.error("登录失败");

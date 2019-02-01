@@ -77,10 +77,10 @@ axios.interceptors.response.use(
       //展示请求错误信息
       //错误提示键值对
       let code = response.data.code;
-      if (code == '000000') {
-        return response.data;
+      if (code == '00000000') {
+        return response;
       } else {
-        if (code == '444444') {
+        if (code == '44444444') {
           localStorage.clear();
           Message.error('登录超时，请重新登录');
         } else {

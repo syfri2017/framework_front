@@ -39,10 +39,10 @@ export default {
     logout(){
       let vm = this;
       vm.$axios.get('/logout').then(function (res) {
-        if(res.data.code = '99999999') {
+        if(res.data.code = '00000000') {
           localStorage.removeItem('isLogin');
           localStorage.removeItem('XTOKEN');
-          localStorage.removeItem('USERTOEKN');
+          localStorage.removeItem('CURRENTUSER');
           vm.$router.push({name: 'login'});
         }
       }.bind(this), function (error) {
