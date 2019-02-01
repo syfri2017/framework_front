@@ -1,5 +1,5 @@
 <template>
-  <div id="positionDesign">
+  <div id="PositionDesign">
   <h1>positionDesign</h1>
   </div>
 </template>
