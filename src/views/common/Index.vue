@@ -1,10 +1,11 @@
 <template>
   <el-container>
-    <el-header><headerDom/></el-header>
+    <el-header><HeaderDom></HeaderDom></el-header>
     <el-container>
-      <el-aside class="aside"><asideDom/></el-aside>
+      <el-aside class="aside"><AsideDom></AsideDom></el-aside>
       <el-main>
-       <mainDom/>
+        <Breadcrumb></Breadcrumb>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -12,16 +13,16 @@
 
 <script>
 //引入Header Component
-import headerDom from '@/views/layout/HeadDom'
+import HeaderDom from '@/views/layout/HeadDom'
 //引入Aside Component
-import asideDom from '@/views/layout/AsideDom'
-//引入Main Component
-import mainDom from '@/views/layout/MainDom'
+import AsideDom from '@/views/layout/AsideDom'
+//引入Breadcrumb Component
+import Breadcrumb from '@/components/Breadcrumb'
 export default {
   components: {
-    headerDom,
-    asideDom,
-    mainDom
+    HeaderDom,
+    AsideDom,
+    Breadcrumb
   },
   computed: { 
     routes() {
@@ -53,5 +54,8 @@ export default {
   width: 240px !important;
   height: 600px;
   background-color: rgb(70, 49, 50);
+}
+.el-main {
+  padding: 10px;
 }
 </style>
