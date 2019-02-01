@@ -1,6 +1,6 @@
 <template>
   <div id="statisticalConfirm">
-  <h1>statisticalConfirm</h1>
+  <h1>StatisticalConfirm</h1>
   </div>
 </template>
 

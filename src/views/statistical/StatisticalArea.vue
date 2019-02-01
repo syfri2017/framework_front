@@ -1,6 +1,6 @@
 <template>
   <div id="statisticalArea">
-  <h1>statisticalArea</h1>
+  <h1>StatisticalArea</h1>
   </div>
 </template>
 
