@@ -85,10 +85,9 @@ axios.interceptors.response.use(
           Message.error('登录超时，请重新登录');
         } else {
           localStorage.clear();
-          Message.error('登录异常');
+          Message.error('登录失效，请重新登录');
         }
         router.push({name: 'login'});
-        return Promise.reject(error);
       }
   },
   error => {
@@ -98,6 +97,7 @@ axios.interceptors.response.use(
       type: 'error',
       duration: 0
     });
+    return Promise.reject(error);
     //请求超时跳转到登录页面
     // if("Network Error" == error.message){
       
