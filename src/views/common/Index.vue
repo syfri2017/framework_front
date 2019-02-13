@@ -56,6 +56,6 @@ export default {
   background-color: rgb(70, 49, 50);
 }
 .el-main {
-  padding: 10px;
+  padding: 5px 10px 5px 10px;
 }
 </style>

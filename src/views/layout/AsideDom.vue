@@ -12,7 +12,7 @@
         <template v-if="menu.children">
           <el-submenu :index="menu.resourcename">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i :class="getMenuIcon(menu.icon)"></i>
               <span>{{menu.resourceinfo}}</span>
             </template>
             <el-menu-item v-for="(child, childIndex) in menu.children" :key="childIndex" :index="child.resourcename">
@@ -23,7 +23,7 @@
         </template>
         <template v-else>
           <el-menu-item :index="menu.resourcename">
-            <i class="el-icon-menu"></i>
+            <i :class="getMenuIcon(menu.icon)"></i>
             <span>{{menu.resourceinfo}}</span>
           </el-menu-item>
         </template>
@@ -53,11 +53,13 @@ export default {
       }.bind(this), function (error) {
         console.log(error)
       })
-      
+    },
+    getMenuIcon(value) {
+      return value;
     }
   },
   mounted() {
-      this.initMenu()
+      this.initMenu();
   },
 }
 </script>

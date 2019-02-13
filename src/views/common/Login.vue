@@ -34,10 +34,10 @@
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed ">
-              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-user"></el-input>
+              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username"></el-input>
             </div>
             <div class="filed">
-              <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-passwd" type="password"></el-input>
+              <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
             </div>
             <div class="filed left" >
               <span ><a>忘记用户名</a>  |  <a>忘记密码</a>  |  <a>重置账户</a></span>
@@ -97,7 +97,7 @@ export default {
             localStorage.setItem('isLogin', 'TRUE');
             localStorage.setItem('XTOKEN',  res.data.data.token);
             localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
-            this.$router.push({ path: '/index' });
+            this.$router.push({ path: '/home' });
           
           } else if (res.data.code == '11111111') {
             this.$message.error("账号不存在");
