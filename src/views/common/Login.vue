@@ -99,9 +99,9 @@ export default {
             localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
             this.$router.push({ path: '/home' });
           
-          } else if (res.data.code == '11111111') {
-            this.$message.error("账号不存在");
           } else if (res.data.code == '22222222') {
+            this.$message.error("账号不存在");
+          } else if (res.data.code == '33333333') {
             this.$message.error("密码不正确");
           } else {
             this.$message.error("登录失败");

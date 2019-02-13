@@ -74,21 +74,24 @@ axios.interceptors.request.use(
 // 添加响应拦截器
 axios.interceptors.response.use(
   response => {
-      //展示请求错误信息
-      //错误提示键值对
-      let code = response.data.code;
-      if (code == '00000000') {
-        return response;
-      } else {
-        if (code == '44444444') {
-          localStorage.clear();
-          Message.error('登录超时，请重新登录');
-        } else {
-          localStorage.clear();
-          Message.error('登录失效，请重新登录');
-        }
+    //展示请求错误信息
+    //错误提示键值对
+    let code = response.data.code;
+    if (code == '00000000') {
+      return response;
+    } else {
+      if (code == '44444444') {
+        localStorage.clear();
+        Message.error('登录超时，请重新登录');
         router.push({name: 'login'});
+      } else if (code == '55555555'){
+        localStorage.clear();
+        Message.error('登录失效，请重新登录');
+        router.push({name: 'login'});
+      } else {
+        return response;
       }
+    }
   },
   error => {
     Message.error({
