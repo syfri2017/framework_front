@@ -1,7 +1,7 @@
 <template>
 <div style="border-bottom:1px;">
   <el-breadcrumb class="app-breadcrumb" separator=">">
-    <el-breadcrumb-item v-for="(item, index) in levelList" :key="item.path">
+    <el-breadcrumb-item v-for="(item, index) in levelList" :key="index">
       <span v-if="item.meta.isRedirect===false" class="no-redirect">
         {{item.meta.title}}
       </span>
@@ -33,12 +33,12 @@ export default {
       let matched = this.$route.matched.filter(item => item.name)
 
       //面包屑第一项：带首页
-      
+      /** 
       const first = matched[0]
       if (first && first.name !== 'home') {
-        
         matched = [{ path: '/home', meta: { title: '首页' }}].concat(matched)
       } 
+      */
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false);
     },
     pathCompile(path) {

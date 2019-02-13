@@ -16,10 +16,13 @@
 import HeaderDom from '@/views/layout/HeadDom'
 //引入Aside Component
 import AsideDom from '@/views/layout/AsideDom'
+//引入面包屑Breadcrumb
+import Breadcrumb from '@/components/breadcrumb'
 export default {
   components: {
     HeaderDom,
-    AsideDom
+    AsideDom,
+    Breadcrumb
   },
   computed: { 
     routes() {
