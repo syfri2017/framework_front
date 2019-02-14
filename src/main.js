@@ -26,25 +26,25 @@ Vue.prototype.$http.defaults.withCredentials = true;
 Vue.prototype.$axios = axios;
 
 //路由拦截
-// router.beforeEach((to, from, next) => {
-//   /**如果用户需要跳转登录页或者跳转不需要验证的页面，直接next() by li.xue 2019/1/25 */
-//   if (to.path !== '/' && to.matched.some(m => m.meta.auth)) {
-//     if (localStorage.isLogin === 'TRUE') {
-//       next();
-//     } else {
-//       Message.error('您还未登录，请登陆');
-//       next({path: '/'});
-//     }
-//   } else if (to.path == '/') {
-//     if (localStorage.isLogin === 'TRUE') {
-//       next({path: '/index'});
-//     } else {
-//       next();
-//     }
-//   }else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  /**如果用户需要跳转登录页或者跳转不需要验证的页面，直接next() by li.xue 2019/1/25 */
+  if (to.path !== '/' && to.matched.some(m => m.meta.auth)) {
+    if (localStorage.isLogin === 'TRUE') {
+      next();
+    } else {
+      Message.error('您还未登录，请登陆');
+      next({path: '/'});
+    }
+  } else if (to.path == '/') {
+    if (localStorage.isLogin === 'TRUE') {
+      next({path: '/index'});
+    } else {
+      next();
+    }
+  }else {
+    next();
+  }
+});
 
 //添加请求拦截器
 axios.interceptors.request.use(
