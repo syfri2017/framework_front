@@ -5,25 +5,25 @@ Vue.use(VueRouter)
 import Login from '@/views/common/Login'
 import Index from '@/views/common/Index'
 import Home from '@/views/home/Home'
-import Exhprediction from '@/views/prediction/Exhprediction'
-import ExhpredictionApprove from '@/views/prediction/ExhpredictionApprove'
-import Exhibitor from '@/views/prediction/Exhibitor'
-import VenuePlan from '@/views/venue/Plan'
-import VenueTrader from '@/views/venue/Trader'
-import Position from '@/views/booth/Position'
-import PositionType from '@/views/booth/PositionType'
-import PositionDesign from '@/views/booth/PositionDesign'
-import StatisticalProduct from '@/views/statistical/StatisticalProduct'
-import StatisticalArea from '@/views/statistical/StatisticalArea'
-import StatisticalConfirm from '@/views/statistical/StatisticalConfirm'
-import BoothLog from '@/views/log/BoothLog'
-import SmsLog from '@/views/log/SmsLog'
-import User from '@/views/system/User'
-import Role from '@/views/system/Role'
-import Resource from '@/views/system/Resource'
-import Permission from '@/views/system/Permission'
-import Codelist from '@/views/system/Codelist'
-import Mail from '@/views/system/Mail'
+import Exhprediction from '@/views/prediction/exhprediction/Exhprediction'
+import ExhpredictionApprove from '@/views/prediction/exhprediction/ExhpredictionApprove'
+import Exhibitor from '@/views/prediction/exhibitor/Exhibitor'
+import VenuePlan from '@/views/venue/plan/Plan'
+import VenueTrader from '@/views/venue/trader/Trader'
+import Position from '@/views/booth/position/Position'
+import PositionDesign from '@/views/booth/design/PositionDesign'
+import PositionType from '@/views/booth/type/PositionType'
+import StatisticalProduct from '@/views/statistical/product/StatisticalProduct'
+import StatisticalArea from '@/views/statistical/area/StatisticalArea'
+import StatisticalConfirm from '@/views/statistical/confirm/StatisticalConfirm'
+import BoothLog from '@/views/log/booth/BoothLog'
+import SmsLog from '@/views/log/sms/SmsLog'
+import User from '@/views/system/user/User'
+import Role from '@/views/system/role/Role'
+import Resource from '@/views/system/resource/Resource'
+import Permission from '@/views/system/permission/Permission'
+import Codelist from '@/views/system/codelist/Codelist'
+import Mail from '@/views/system/mail/Mail'
 
 const router = new VueRouter({
   routes: [
@@ -67,7 +67,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'exhprediction',
-              component: resolve => require(['@/views/prediction/Exhprediction'], resolve)
+              component: resolve => require(['@/views/prediction/exhprediction/Exhprediction'], resolve)
             },
           ]
         },
@@ -80,7 +80,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'exhpredictionApprove',
-              component: resolve => require(['@/views/prediction/ExhpredictionApprove'], resolve)
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionApprove'], resolve)
             },
           ]
         },
@@ -93,7 +93,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'exhibitor',
-              component: resolve => require(['@/views/prediction/Exhibitor'], resolve)
+              component: resolve => require(['@/views/prediction/exhibitor/Exhibitor'], resolve)
             },
           ]
         },
@@ -106,7 +106,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'plan',
-              component: resolve => require(['@/views/venue/Plan'], resolve)
+              component: resolve => require(['@/views/venue/plan/Plan'], resolve)
             },
           ]
         },
@@ -119,7 +119,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'trader',
-              component: resolve => require(['@/views/venue/Trader'], resolve)
+              component: resolve => require(['@/views/venue/trader/Trader'], resolve)
             },
           ]
         },
@@ -132,7 +132,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'position',
-              component: resolve => require(['@/views/booth/Position'], resolve)
+              component: resolve => require(['@/views/booth/position/Position'], resolve)
             },
           ]
         },
@@ -145,7 +145,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'positionDesign',
-              component: resolve => require(['@/views/booth/PositionDesign'], resolve)
+              component: resolve => require(['@/views/booth/design/PositionDesign'], resolve)
             },
           ]
         },
@@ -158,7 +158,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'positionType',
-              component: resolve => require(['@/views/booth/PositionType'], resolve)
+              component: resolve => require(['@/views/booth/type/PositionType'], resolve)
             },
           ]
         },
@@ -171,7 +171,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'statisticalProduct',
-              component: resolve => require(['@/views/statistical/StatisticalProduct'], resolve)
+              component: resolve => require(['@/views/statistical/product/StatisticalProduct'], resolve)
             },
           ]
         },
@@ -184,7 +184,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'statisticalArea',
-              component: resolve => require(['@/views/statistical/StatisticalArea'], resolve)
+              component: resolve => require(['@/views/statistical/area/StatisticalArea'], resolve)
             },
           ]
         },
@@ -197,7 +197,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'statisticalConfirm',
-              component: resolve => require(['@/views/statistical/StatisticalConfirm'], resolve)
+              component: resolve => require(['@/views/statistical/confirm/StatisticalConfirm'], resolve)
             },
           ]
         },
@@ -210,7 +210,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'boothLog',
-              component: resolve => require(['@/views/log/BoothLog'], resolve)
+              component: resolve => require(['@/views/log/booth/BoothLog'], resolve)
             },
           ]
         },
@@ -223,7 +223,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'smsLog',
-              component: resolve => require(['@/views/log/SmsLog'], resolve)
+              component: resolve => require(['@/views/log/sms/SmsLog'], resolve)
             },
           ]
         },
@@ -236,7 +236,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'user',
-              component: resolve => require(['@/views/system/User'], resolve)
+              component: resolve => require(['@/views/system/user/User'], resolve)
             },
           ]
         },
@@ -249,7 +249,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'role',
-              component: resolve => require(['@/views/system/Role'], resolve)
+              component: resolve => require(['@/views/system/role/Role'], resolve)
             },
           ]
         },
@@ -262,7 +262,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'resource',
-              component: resolve => require(['@/views/system/Resource'], resolve)
+              component: resolve => require(['@/views/system/resource/Resource'], resolve)
             },
           ]
         },
@@ -275,7 +275,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'permission',
-              component: resolve => require(['@/views/system/Permission'], resolve)
+              component: resolve => require(['@/views/system/permission/Permission'], resolve)
             },
           ]
         },
@@ -288,7 +288,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'codelist',
-              component: resolve => require(['@/views/system/Codelist'], resolve)
+              component: resolve => require(['@/views/system/codelist/Codelist'], resolve)
             },
           ]
         },
@@ -301,7 +301,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'mail',
-              component: resolve => require(['@/views/system/Mail'], resolve)
+              component: resolve => require(['@/views/system/mail/Mail'], resolve)
             },
           ]
         }
