@@ -1,11 +1,13 @@
 <template>
-<div style="border-bottom:1px;">
+<div class="breadcrumb-line">
   <el-breadcrumb class="app-breadcrumb" separator=">">
     <el-breadcrumb-item v-for="(item, index) in levelList" :key="index">
-      <span v-if="item.meta.isRedirect===false" class="no-redirect">
-        {{item.meta.title}}
+      <span v-if="item.meta.isRedirect===false" class="iconfontBread icon-breadcrumb no-redirect">
+        &nbsp;{{item.meta.title}}
       </span>
-      <a v-else @click.prevent="handleLink(item)" class="yes-redirect">{{item.meta.title}}</a>
+      <a v-else @click.prevent="handleLink(item)" class="iconfontBread icon-breadcrumb yes-redirect">
+        &nbsp;{{item.meta.title}}
+      </a>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </div>
@@ -63,18 +65,26 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .app-breadcrumb.el-breadcrumb {
-    display: inline-block;
-    font-size: 14px;
-    line-height: 30px;
-    .no-redirect {
-      // color: #C0C4CC;
-      color: #666666;
-      cursor: text;
-    }
-    .yes-redirect {
-      color: #337AB7;
-      cursor: text;
+  .breadcrumb-line {
+    border-bottom: 1px solid;
+    border-color: #BFCBD9;
+    margin-bottom: 10px;
+    padding: 2px 0px 2px 0px;
+    .app-breadcrumb.el-breadcrumb {
+      // display: inline-block;
+      font-size: 14px !important;
+      line-height: 30px !important;
+      .no-redirect {
+        color: #666666;
+        cursor: text;
+      }
+      .yes-redirect {
+        color: #337AB7;
+        cursor: text;
+      }
+      .iconfontBread {
+        font-family: "iconfont" !important;
+      }
     }
   }
   .el-breadcrumb__inner a, .el-breadcrumb__inner.is-link {
