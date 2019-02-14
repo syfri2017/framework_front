@@ -55,7 +55,7 @@ export default {
       })
     },
     getMenuIcon(value) {
-      return value;
+      return "iconfont " + value;
     }
   },
   mounted() {
