@@ -2,10 +2,11 @@
 <div class="breadcrumb-line">
   <el-breadcrumb class="app-breadcrumb" separator=">">
     <el-breadcrumb-item v-for="(item, index) in levelList" :key="index">
-      <span v-if="item.meta.isRedirect===false" class="iconfontBread icon-breadcrumb no-redirect">
+      <span class = "iconfontBread icon-breadcrumb"></span>
+      <span v-if="item.meta.isRedirect===false" class="no-redirect">
         &nbsp;{{item.meta.title}}
       </span>
-      <a v-else @click.prevent="handleLink(item)" class="iconfontBread icon-breadcrumb yes-redirect">
+      <a v-else @click.prevent="handleLink(item)" class="yes-redirect">
         &nbsp;{{item.meta.title}}
       </a>
     </el-breadcrumb-item>
