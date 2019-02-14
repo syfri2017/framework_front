@@ -66,7 +66,7 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss">
   .breadcrumb-line {
     border-bottom: 1px solid;
     border-color: #BFCBD9;
