@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      let matched = this.$route.matched.filter(item => item.name);
+      let matched = this.$route.matched.filter(item => item.meta.title);
       //面包屑第一项：带首页
       /** 
       const first = matched[0]
