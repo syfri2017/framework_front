@@ -1,16 +1,11 @@
 <template>
-  <div id="asideDom">
-  <!--
-    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-      <el-radio-button :label="false">展开</el-radio-button>
-      <el-radio-button :label="true">收起</el-radio-button>
-    </el-radio-group>
-  -->
-    <el-menu :default-active="$route.path" :collapse="isCollapse" mode="vertical" :unique-opened="isUniqueOpened" :router="isRouter"
-              background-color="#463132" text-color="#ffffff" active-text-color="#E40613">
+  <div class="sidebar">
+        <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" background-color="#463132"
+            text-color="#ffffff" active-text-color="#E40613" unique-opened router>
+           
       <template v-for="menu in menus">
         <template v-if="menu.children">
-          <el-submenu :index="menu.resourcename">
+          <el-submenu :index="menu.resourcename" :key="menu.resourcename">
             <template slot="title">
               <i :class="getMenuIcon(menu.icon)"></i>
               <span>{{menu.resourceinfo}}</span>
@@ -22,22 +17,23 @@
           </el-submenu>
         </template>
         <template v-else>
-          <el-menu-item :index="menu.resourcename">
+          <el-menu-item :index="menu.resourcename" :key="menu.resourcename">
             <i :class="getMenuIcon(menu.icon)"></i>
             <span>{{menu.resourceinfo}}</span>
           </el-menu-item>
         </template>
       </template>
-    </el-menu>
-  </div>
+        </el-menu>
+    </div>
 </template>
 
 <script>
-
-export default {
+  import bus from '../../common/js/bus';
+  export default {
   name: 'AsideDom',
   data(){
     return {
+       collapse: false,
       isCollapse: false,
       isUniqueOpened: true,
       isRouter: true,
@@ -61,9 +57,36 @@ export default {
   mounted() {
       this.initMenu();
   },
+  computed:{
+      onRoutes(){
+          return this.$route.path.replace('/','');
+      }
+  },
+  created(){
+      // 通过 Event Bus 进行组件间通信，来折叠侧边栏
+      bus.$on('collapse', msg => {
+          this.collapse = msg;
+      })
+  }
 }
 </script>
 
-<style>
-
+<style scoped>
+    .sidebar{
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 60px;
+        bottom:0;
+        overflow-y: scroll;
+    }
+    .sidebar::-webkit-scrollbar{
+        width: 0;
+    }
+    .sidebar-el-menu:not(.el-menu--collapse){
+        width: 240px;
+    }
+    .sidebar > ul {
+        height:100%;
+    }
 </style>

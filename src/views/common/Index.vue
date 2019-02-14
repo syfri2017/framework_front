@@ -50,11 +50,11 @@ export default {
   text-align: center;
   line-height: 50px;
 }
-.aside {
+/* .aside {
   width: 240px !important;
   height: 600px;
   background-color: rgb(70, 49, 50);
-}
+} */
 .el-main {
   padding: 5px 10px 5px 10px;
 }
