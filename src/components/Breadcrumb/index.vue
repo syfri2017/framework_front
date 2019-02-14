@@ -72,8 +72,8 @@ export default {
     padding: 2px 0px 2px 0px;
     .app-breadcrumb.el-breadcrumb {
       // display: inline-block;
-      font-size: 14px !important;
-      line-height: 30px !important;
+      font-size: 14px;
+      line-height: 30px;
       .no-redirect {
         color: #666666;
         cursor: text;
