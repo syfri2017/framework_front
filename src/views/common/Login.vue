@@ -2,13 +2,13 @@
   <div class="login">
     <el-row>
       <el-col :span="6" >
-        <p style="margin:50px 0px 0px 80px">
-        <img src="/static/images/login/QRCode.jpg" height="140px" width="140px">
+        <p>
+        <img class="imgstyle" src="/static/images/login/QRCode.jpg">
         </p>
       </el-col>
-      <el-col :span="12"  style="text-align:-webkit-center" >
-        <p style="margin:80px 0px 0px 0px">
-          <img src="/static/images/login/title.png" height="90%" width="90%" >
+      <el-col :span="12" class="logincenter" style="text-align:-webkit-center" >
+        <p class="pstyle">
+          <img class="titlestyle" src="/static/images/login/title.png">
         </p>
       </el-col>
       <el-col :span="6" style="text-align:-webkit-center" >
@@ -23,36 +23,37 @@
           </p>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row class="logincenter">
       <el-col :span="8" >&nbsp;</el-col>
       <el-col :span="8" style="text-align:-webkit-center">
         <div class="login-form" >
-          <div class="filed left" style="padding-top:30px;text-align:-webkit-left;">
-            <i class="iconfont icon-user" style="font-size:18px;"></i>
-            <span style="margin-right:100px;font-size:18px;">用户登录</span>
-            <span >没有账户?<a >去注册</a></span>
+          <div class="filed left">
+            <i class="iconfont icon-user"></i>
+            <span >用户登录</span>
+            <span class="signstyle">没有账户?<a >去注册</a></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed ">
-              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username"></el-input>
+              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-icon_zhanghao"></el-input>
             </div>
             <div class="filed">
               <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
             </div>
-            <div class="filed left" >
-              <span ><a>忘记用户名</a>  |  <a>忘记密码</a>  |  <a>重置账户</a></span>
-            </div>
             <div class="filed">
-              <el-button class="login-btn" @click="GLYlogin">
-                &nbsp;&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;&nbsp;&nbsp;&nbsp;
-              </el-button>
+              <el-input placeholder="验证码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+            </div>
+            <div class="filed right" >
+              <span class="muchtab"><a>忘记用户名</a>  |  <a>忘记密码</a>  |  <a>重置账户</a></span>
+            </div>
+            <div class="filed lgin">
+              <el-button type="danger" @click="GLYlogin" round>登录</el-button>
             </div>
           </form>
         </div>
       </el-col>
       <el-col :span="8">&nbsp;</el-col>
     </el-row>
-    <el-row style="margin-top:100px">
+    <el-row class="footerstyle">
       <el-col :span="4" >&nbsp;</el-col>
       <el-col :span="16" class="footer">
         <div >建议使用谷歌、搜狗、360和火狐浏览器</div>
@@ -116,65 +117,136 @@ export default {
 }
 </script>
 
-<style scoped>
-.login{
+<style lang="scss">
+@import '../../common/style/all.scss';
+
+.login {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top:$top0;
+  left: $top0;
+  right:$right0;
+  bottom: $bottom0;
   overflow: hidden;
   overflow-y: auto;
-  z-index:1000;
+  z-index: 1000;
   background: url('/static/images/login/login.png') center 100% #65809d;
+
+  * {
+    font-size: 0.8rem;
+  }
+
+  p {
+    margin:4rem 0 0 6rem;
+  }
+
+  .imgstyle{
+      height:$heightimg;
+      width:$widthimg;
+    }
+
+  .titlestyle{
+    height:$heighttitle; 
+    width:$widthtitle;
+  } 
+
+  .pstyle{
+    margin:5rem 0 0 0;
+  }
+  
 }
-.login *{
-  font-size:12px;
-}
+
 .lana {
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    letter-spacing: 2px;
+  color: $whitecolor;
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 0.1rem;
 }
+
 .lanb {
-    color: #2c2c2c;
-    font-size: 18px;
-    cursor: pointer;
+  color:$blackcolor;
+  font-size: 1rem;
+  cursor: pointer;
 }
-.filed{
-    margin: 0px 30px 20px 30px;
+
+.filed {
+  margin: 0px 1.875rem 1.25rem 1.875rem;
 }
-.left{
+
+.lgin{
+  margin-top: 2.5rem;
+  .el-button{
+    width:$widthlgbtn;
+    background-color: $bgcolor;
+  }
+  .el-button:hover{
+    width:$widthlgbtn;
+    background-color:$bgcolor2;
+  }
+}
+
+.right {
   text-align: right;
-  text-align:-webkit-right;
-  color: rgb(251, 106, 116)
+  text-align: -webkit-right;
+  color:$color166;
+  
 }
-.login-form{
-  height: 340px;
-  width: 350px;
+
+.left {
+  color:$color166;
+  padding-top:30px;
+  text-align:-webkit-left;
+}
+
+.login-form {
+  height: $height;
+  width: $width;
   background: url('/static/images/login/form_bg.png') no-repeat;
+  .signstyle {
+    margin-left: 8.5rem;
+    a{
+      cursor: pointer;
+    }
+  }
 }
-.login-form *{
-  color:#EA2530
+
+.el-button {
+  border: 0px solid #dcdfe6;
 }
-.el-button{
-    border: 0px solid #dcdfe6
+
+.login-btn {
+  color:$whitecolor;
+  background-color:$bgcolor;
+  font-size: 1rem;
+  margin-top: 0.5rem;
 }
-.login-btn{
-  color:#fff;
-  background-color:#EA2530;
-  font-size:16px;
-  margin-top: 10px;
+
+.footer {
+  text-align: -webkit-center;
+  color: $whitecolor;
+  font-size: 1rem;
+  * {
+    text-align: -webkit-center;
+    color: $whitecolor;
+    font-size: 1rem;
+  }
 }
-.footer{
-  text-align:-webkit-center;
-  color:#fff;
-  font-size: 18px;
+
+.footerstyle{
+  position: absolute;
+  bottom: $bottomfooter;
+  height: $heightfooter;
+  text-align: center;
+  line-height: $line-heightfooter;
+  width: $widthfooter;
 }
-.footer *{
-  text-align:-webkit-center;
-  color:#fff;
-  font-size: 16px;
+
+.logincenter{
+  margin-top:3rem;
+}
+
+.muchtab{
+  a{
+    cursor: pointer;
+  }
 }
 </style>
