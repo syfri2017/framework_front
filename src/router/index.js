@@ -65,7 +65,6 @@ const router = new VueRouter({
     {
       path: '/booth',
       name: 'booth',
-      redirect: 'noRedirect',
       meta: {auth: true, title: "展位管理", isRedirect: false},
       component: resolve => require(['@/views/common/Index'], resolve),
       children: [
@@ -92,7 +91,6 @@ const router = new VueRouter({
     {
       path: '/statistical',
       name: 'statistical',
-      redirect: 'noRedirect',
       meta: {auth: true, title: "统计分析", isRedirect: false},
       component: resolve => require(['@/views/common/Index'], resolve),
       children: [
@@ -119,7 +117,6 @@ const router = new VueRouter({
     {
       path: '/system',
       name: 'system',
-      redirect: 'noRedirect',
       meta: {auth: true, title: "系统管理", isRedirect: false},
       component: resolve => require(['@/views/common/Index'], resolve),
       children: [
