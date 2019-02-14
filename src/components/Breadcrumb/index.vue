@@ -2,12 +2,13 @@
 <div class="breadcrumb-line">
   <el-breadcrumb class="app-breadcrumb" separator=">">
     <el-breadcrumb-item v-for="(item, index) in levelList" :key="index">
-      <span class = "iconfontBread icon-breadcrumb"></span>
       <span v-if="item.meta.isRedirect===false" class="no-redirect">
-        &nbsp;{{item.meta.title}}
+        <span v-if="index==0" class="iconfontBread icon-breadcrumb">&nbsp;</span>
+        {{item.meta.title}}
       </span>
       <a v-else @click.prevent="handleLink(item)" class="yes-redirect">
-        &nbsp;{{item.meta.title}}
+        <span v-if="index==0" class="iconfontBread icon-breadcrumb">&nbsp;</span>
+        {{item.meta.title}}
       </a>
     </el-breadcrumb-item>
   </el-breadcrumb>
@@ -71,6 +72,9 @@ export default {
     border-color: #BFCBD9;
     margin-bottom: 10px;
     padding: 2px 0px 2px 0px;
+    .iconfontBread {
+      font-family: "iconfont" !important;
+    }
     .app-breadcrumb.el-breadcrumb {
       // display: inline-block;
       font-size: 14px;
@@ -82,9 +86,6 @@ export default {
       .yes-redirect {
         color: #337AB7;
         cursor: text;
-      }
-      .iconfontBread {
-        font-family: "iconfont" !important;
       }
     }
   }
