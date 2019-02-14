@@ -5,7 +5,7 @@
       <span v-if="item.meta.isRedirect===false" class="no-redirect">
         {{item.meta.title}}
       </span>
-      <a v-else @click.prevent="handleLink(item)">{{item.meta.title}}</a>
+      <a v-else @click.prevent="handleLink(item)" class="yes-redirect">{{item.meta.title}}</a>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </div>
@@ -22,16 +22,15 @@ export default {
   },
   watch: {
     $route() {
-      this.getBreadcrumb()
+      this.getBreadcrumb();
     }
   },
   created() {
-    this.getBreadcrumb()
+    this.getBreadcrumb();
   },
   methods: {
     getBreadcrumb() {
-      let matched = this.$route.matched.filter(item => item.name)
-
+      let matched = this.$route.matched.filter(item => item.name);
       //面包屑第一项：带首页
       /** 
       const first = matched[0]
@@ -39,20 +38,25 @@ export default {
         matched = [{ path: '/home', meta: { title: '首页' }}].concat(matched)
       } 
       */
-      this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false);
+      this.levelList = matched.filter(item => item.meta && item.meta.title);
+      
+      /**面包屑最后一级不跳转  by li.xue 2019/2/14 */
+      if(this.levelList!=null && this.levelList.length>1){
+        this.levelList[this.levelList.length-1].meta.isRedirect = false;
+      }
     },
     pathCompile(path) {
-      const { params } = this.$route
-      var toPath = pathToRegexp.compile(path)
-      return toPath(params)
+      const { params } = this.$route;
+      var toPath = pathToRegexp.compile(path);
+      return toPath(params);
     },
     handleLink(item) {
-      const { redirect, path } = item
-      if (redirect) {
-        this.$router.push(redirect)
-        return
+      const { path } = item;
+      if (path) {
+        this.$router.push(path);
+        return;
       }
-      this.$router.push(this.pathCompile(path))
+      this.$router.push(this.pathCompile(path));
     }
   }
 }
@@ -64,8 +68,16 @@ export default {
     font-size: 14px;
     line-height: 30px;
     .no-redirect {
-      color: #97a8be;
+      // color: #C0C4CC;
+      color: #666666;
       cursor: text;
     }
+    .yes-redirect {
+      color: #337AB7;
+      cursor: text;
+    }
+  }
+  .el-breadcrumb__inner a, .el-breadcrumb__inner.is-link {
+    font-weight: 400;
   }
 </style>

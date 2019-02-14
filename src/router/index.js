@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+import Index from '@/views/common/Index'
+
+
 const router = new VueRouter({
   routes: [
     {
@@ -13,14 +16,25 @@ const router = new VueRouter({
       path: '/index',
       name: 'index',
       meta: {auth: true},
-      component: resolve => require(['@/views/common/Index'], resolve),
+      component: Index
+    },
+    {
+      path: '/home2',
+      component: Index,
       children: [
         {
           path: '/home',
           name: 'home',
           meta: {auth: true, title: "首页"},
           component: resolve => require(['@/views/home/Home'], resolve)
-        },
+        }
+      ]
+    },
+    {
+      path: '/prediction',
+      name: 'prediction',
+      component: Index,
+      children: [
         {
           path: '/prediction/exhprediction',
           name: 'exhprediction',
@@ -37,16 +51,15 @@ const router = new VueRouter({
           path: '/prediction/exhibitor',
           name: 'exhibitor',
           meta: {auth: true, title: "展商用户管理"},
-          component: resolve => require(['@/views/prediction/Exhibitor'], resolve)
-        },
-        
+          component: resolve => require(['@/views/prediction/Exhibitor'], resolve),
+        }
       ]
     },
     {
       path: '/venue',
       name: 'venue',
-      meta: {auth: true, title: "展馆管理", isRedirect: false},
-      component: resolve => require(['@/views/common/Index'], resolve),
+      meta: {auth: true, menuTitle: "展馆管理"},
+      component: Index,
       children: [
         {
           path: '/plan/plan',
@@ -65,8 +78,8 @@ const router = new VueRouter({
     {
       path: '/booth',
       name: 'booth',
-      meta: {auth: true, title: "展位管理", isRedirect: false},
-      component: resolve => require(['@/views/common/Index'], resolve),
+      meta: {auth: true, menuTitle: "展位管理"},
+      component: Index,
       children: [
         {
           path: '/booth/position',
@@ -91,8 +104,8 @@ const router = new VueRouter({
     {
       path: '/statistical',
       name: 'statistical',
-      meta: {auth: true, title: "统计分析", isRedirect: false},
-      component: resolve => require(['@/views/common/Index'], resolve),
+      meta: {auth: true, menuTitle: "统计分析"},
+      component: Index,
       children: [
         {
           path: '/statistical/statistical_product',
@@ -117,8 +130,8 @@ const router = new VueRouter({
     {
       path: '/system',
       name: 'system',
-      meta: {auth: true, title: "系统管理", isRedirect: false},
-      component: resolve => require(['@/views/common/Index'], resolve),
+      meta: {auth: true, menuTitle: "系统管理"},
+      component: Index,
       children: [
         {
           path: '/system/user',
