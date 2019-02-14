@@ -1,6 +1,7 @@
 <template>
   <div id="exhibitor">
-  <h1>Exhibitor</h1>
+    <h1>Exhibitor</h1>
+    <router-view></router-view>
   </div>
 </template>
 

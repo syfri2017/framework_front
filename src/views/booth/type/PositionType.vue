@@ -1,6 +1,7 @@
 <template>
   <div id="positionType">
-  <h1>PositionType</h1>
+    <h1>PositionType</h1>
+    <router-view></router-view>
   </div>
 </template>
 

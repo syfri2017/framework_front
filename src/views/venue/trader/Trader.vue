@@ -1,6 +1,7 @@
 <template>
   <div id="trader">
-  <h1>Trader</h1>
+    <h1>Trader</h1>
+    <router-view></router-view>
   </div>
 </template>
 

@@ -1,6 +1,7 @@
 <template>
   <div id="exhprediction">
-  <h1>Exhprediction</h1>
+    <h1>Exhprediction</h1>
+    <router-view></router-view>
   </div>
 </template>
 
