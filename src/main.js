@@ -3,17 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from 'axios';
+import axios from 'axios'
 import VueAxios from 'vue-axios'
-import ElementUI from 'element-ui';
-import {Message,Loading} from 'element-ui';
-import utils from './common/js/utils';
-import 'element-ui/lib/theme-chalk/index.css';
-import './common/scss/index.scss';
+import ElementUI from 'element-ui'
+import {Message,Loading} from 'element-ui'
+import utils from './common/js/utils'
+import 'element-ui/lib/theme-chalk/index.css'
+import './common/scss/index.scss'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true;
-Vue.use(ElementUI);
+Vue.use(ElementUI); 
 Vue.use(VueAxios, axios);
 Vue.use(utils);
 
