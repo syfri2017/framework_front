@@ -8,7 +8,7 @@
           <el-submenu :index="menu.resourcename" :key="menu.resourcename">
             <template slot="title">
               <i :class="getMenuIcon(menu.icon)"></i>
-              <span>{{menu.resourceinfo}}</span>
+              <span>&nbsp;{{menu.resourceinfo}}</span>
             </template>
             <el-menu-item v-for="(child, childIndex) in menu.children" :key="childIndex" :index="child.resourcename">
               {{child.resourceinfo}}
@@ -19,7 +19,7 @@
         <template v-else>
           <el-menu-item :index="menu.resourcename" :key="menu.resourcename">
             <i :class="getMenuIcon(menu.icon)"></i>
-            <span>{{menu.resourceinfo}}</span>
+            <span>&nbsp;{{menu.resourceinfo}}</span>
           </el-menu-item>
         </template>
       </template>
@@ -88,5 +88,11 @@
     }
     .sidebar > ul {
         height:100%;
+    }
+    .el-menu-item i {
+      color: #ffffff;
+    }
+    .el-submenu__title i {
+      color: #ffffff;
     }
 </style>
