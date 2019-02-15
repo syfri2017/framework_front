@@ -9,7 +9,7 @@ import ElementUI from 'element-ui';
 import {Message,Loading} from 'element-ui';
 import utils from './common/js/utils';
 import 'element-ui/lib/theme-chalk/index.css';
-// import './common/scss/index.scss';
+import './common/scss/index.scss';
 
 Vue.config.productionTip = false
 Vue.config.devtools = true;

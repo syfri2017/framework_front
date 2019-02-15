@@ -118,8 +118,27 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../common/style/all.scss';
-
+// @import '../../common/scss/all.scss';
+$height:22rem; //全局变量声明
+$width:22rem;
+$heightimg:8.75rem;
+$widthimg:8.75rem;
+$heighttitle:90%; 
+$widthtitle:90%;
+$bottomfooter: 3.125rem;
+$heightfooter: 3.125rem;
+$widthlgbtn:12rem;
+$line-heightfooter: 3.125rem;
+$widthfooter: 100%;
+$bgcolor:#EA2530;
+$bgcolor2:rgb(234, 109, 37);
+$whitecolor: #fff;
+$color166:rgb(251, 106, 116);
+$top0:0;
+$left0: 0;
+$right0:0;
+$bottom0: 0;
+$blackcolor:#2c2c2c;
 .login {
   position: absolute;
   top:$top0;
