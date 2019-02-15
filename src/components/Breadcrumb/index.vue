@@ -71,7 +71,6 @@ export default {
     border-bottom: 1px solid;
     border-color: #BFCBD9;
     margin-bottom: 10px;
-    padding: 2px 0px 2px 0px;
     .iconfontBread {
       font-family: "iconfont" !important;
     }
