@@ -33,18 +33,37 @@ const router = new VueRouter({
       component: Login,
       children: [
         {
-          path: '/login/Login',
-          name: 'login/Login',
-          meta: {auth: true, title: "用户登录", operation: true},
-          component: resolve => require(['@/views/login/Login'], resolve)
+          path: '/login/Reset',
+          name: 'login/Reset',
+          meta: {auth: true, title: "账户重置", operation: true},
+          component: resolve => require(['@/views/login/Reset'], resolve)
+        },
+        {
+          path: '/login/ForgetPassword',
+          name: 'login/ForgetPassword',
+          meta: {auth: true, title: "忘记用户名", operation: true},
+          component: resolve => require(['@/views/login/ForgetPassword'], resolve)
+        },
+        {
+          path: '/login/ForgetUsername',
+          name: 'login/ForgetUsername',
+          meta: {auth: true, title: "忘记密码", operation: true},
+          component: resolve => require(['@/views/login/ForgetUsername'], resolve)
         },
         {
           path: '/login/Register',
           name: 'login/Register',
           meta: {auth: true, title: "用户注册", operation: true},
           component: resolve => require(['@/views/login/Register'], resolve)
+        },
+        {
+          path: '/login/Login',
+          name: 'login/Login',
+          meta: {auth: true, title: "用户登录", operation: true},
+          component: resolve => require(['@/views/login/Login'], resolve)
         }
-      ]
+      ],
+      redirect:'/login/Login'
     },
     {
       path: '/index',

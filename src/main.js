@@ -32,8 +32,9 @@ router.beforeEach((to, from, next) => {
     if (localStorage.isLogin === 'TRUE') {
       next();
     } else {
-      Message.error('您还未登录，请登陆');
-      next({path: '/'});
+      // Message.error('您还未登录，请登陆');
+      next();
+      // next({path: '/'});
     }
   } else if (to.path == '/') {
     if (localStorage.isLogin === 'TRUE') {
