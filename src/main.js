@@ -8,6 +8,7 @@ import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui'
 import {Message,Loading} from 'element-ui'
 import utils from './common/js/utils'
+import constant from './common/js/constant'
 import 'element-ui/lib/theme-chalk/index.css'
 import './common/scss/index.scss'
 
@@ -24,6 +25,7 @@ axios.defaults.withCredentials = true;
 Vue.prototype.$http.defaults.withCredentials = true;
 //axios请求
 Vue.prototype.$axios = axios;
+Vue.prototype.CONSTANT = constant;
 
 //路由拦截
 router.beforeEach((to, from, next) => {

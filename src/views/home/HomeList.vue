@@ -10,6 +10,7 @@ export default {
   name: 'home',
   methods: {
     navigate(){
+      console.log(this.CONSTANT.currentUser);
       this.$router.replace({name:"home/detail"})
     }
   },

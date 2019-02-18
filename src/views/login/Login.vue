@@ -69,6 +69,7 @@ export default {
             localStorage.setItem('isLogin', 'TRUE');
             localStorage.setItem('XTOKEN',  res.data.data.token);
             localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
+            this.CONSTANT.currentUser = res.data.data.currentUser;
             this.$router.push({ path: '/index' });
           
           } else if (res.data.code == '22222222') {
