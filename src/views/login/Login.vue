@@ -5,7 +5,7 @@
       <el-col :span="8" style="text-align:-webkit-center">
         <div class="login-form" >
           <div class="filed left">
-            <router-link :to="{path:'/login/Register'}"><i class="iconfont icon-yonghu"></i></router-link>
+            <router-link :to="{path:'/login/Administrator'}"><i class="iconfont icon-yonghu"></i></router-link>
             <span >用户登录</span>
             <span class="signstyle">没有账户?<router-link :to="{path:'/login/Register'}"><a>去注册</a></router-link></span>
           </div>
