@@ -7,7 +7,7 @@
                 <div class="filed left">
                   <i class="iconfont icon-user"></i>
                   <span >用户名找回</span>
-                  <span class="signstyle"><a >返回登录</a></span>
+                  <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
                 </div>
                 <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
                   <div class="filed ">

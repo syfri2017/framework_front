@@ -7,7 +7,7 @@
                 <div class="filed left">
                   <i class="iconfont icon-user"></i>
                   <span >用户注册</span>
-                  <span class="signstyle">没有账户?<a >去登录</a></span>
+                  <span class="signstyle">没有账户?<router-link :to="{path:'/login/login'}"><a >去登录</a></router-link></span>
                 </div>
                 <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
                   <div class="filed ">
