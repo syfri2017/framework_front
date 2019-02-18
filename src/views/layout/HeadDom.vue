@@ -149,7 +149,7 @@
       },
       created() {
         let vm = this;
-        vm.currentUser = JSON.parse(localStorage.getItem("CURRENTUSER"));
+        vm.currentUser = this.CONSTANT.currentUser;
         if(vm.currentUser != null){
           vm.realname = this.currentUser.realname ? this.currentUser.realname : "欢迎您！";
           vm.personalFlag = this.currentUser.deptid == 'ZSYH' ? true : false;
