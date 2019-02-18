@@ -24,7 +24,7 @@
         </p>
       </el-col>
     </el-row>
-    <login></login>
+    <!-- <login></login> -->
     <router-view></router-view>
     <!-- <el-tabs v-model="activeName">
       <el-tab-pane label="登录" name="first" :key="'first'">
@@ -182,7 +182,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 8.5rem;
+    margin-left: 7.5rem;
     a {
       cursor: pointer;
     }

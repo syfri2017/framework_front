@@ -1,36 +1,35 @@
 <template>
     <!-- 用户登录 -->
-    
-          <el-row class="logincenter">
-            <el-col :span="8" >&nbsp;</el-col>
-            <el-col :span="8" style="text-align:-webkit-center">
-              <div class="login-form" >
-                <div class="filed left">
-                  <i class="iconfont icon-user"></i>
-                  <span >用户登录</span>
-                  <span class="signstyle">没有账户?<router-link :to="{path:'/login/Register'}"><a>去注册</a></router-link></span>
-                </div>
-                <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
-                  <div class="filed ">
-                    <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-icon_zhanghao"></el-input>
-                  </div>
-                  <div class="filed">
-                    <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
-                  </div>
-                  <div class="filed">
-                    <el-input placeholder="验证码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
-                  </div>
-                  <div class="filed right" >
-                    <span class="muchtab"><a>忘记用户名</a>  |  <a>忘记密码</a>  |  <a>重置账户</a></span>
-                  </div>
-                  <div class="filed lgin">
-                    <el-button type="danger" @click="GLYlogin" round>登录</el-button>
-                  </div>
-                </form>
-              </div>
-            </el-col>
-            <el-col :span="8">&nbsp;</el-col>
-          </el-row>
+    <el-row class="logincenter">
+      <el-col :span="8" >&nbsp;</el-col>
+      <el-col :span="8" style="text-align:-webkit-center">
+        <div class="login-form" >
+          <div class="filed left">
+            <router-link :to="{path:'/login/Register'}"><i class="iconfont icon-yonghu"></i></router-link>
+            <span >用户登录</span>
+            <span class="signstyle">没有账户?<router-link :to="{path:'/login/Register'}"><a>去注册</a></router-link></span>
+          </div>
+          <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+            <div class="filed ">
+              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-icon_zhanghao"></el-input>
+            </div>
+            <div class="filed">
+              <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
+            </div>
+            <div class="filed">
+              <el-input placeholder="验证码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+            </div>
+            <div class="filed right" >
+              <span class="muchtab"><router-link :to="{path:'/login/ForgetUsername'}"><a>忘记用户名</a></router-link>  |  <router-link :to="{path:'/login/ForgetPassword'}"><a>忘记密码</a></router-link>  |  <router-link :to="{path:'/login/Reset'}"><a>重置账户</a></router-link></span>
+            </div>
+            <div class="filed lgin">
+              <el-button type="danger" @click="GLYlogin" round>登录</el-button>
+            </div>
+          </form>
+        </div>
+      </el-col>
+      <el-col :span="8">&nbsp;</el-col>
+    </el-row>
 </template>
 
 <script>

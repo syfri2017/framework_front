@@ -17,7 +17,7 @@
         <div class="content-box" :class="{'content-collapse':collapse}">
             <div class="content">
                <transition name="move" mode="out-in">
-                     <el-main>
+                <el-main>
                   <Breadcrumb></Breadcrumb>
                   <router-view></router-view>
                 </el-main>

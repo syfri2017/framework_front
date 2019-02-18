@@ -2,27 +2,26 @@
   <div class="sidebar">
         <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" background-color="#463132"
             text-color="#ffffff" active-text-color="#E40613" unique-opened router>
-           
-      <template v-for="menu in menus">
-        <template v-if="menu.children">
-          <el-submenu :index="menu.resourcename" :key="menu.resourcename">
-            <template slot="title">
-              <i :class="getMenuIcon(menu.icon)"></i>
-              <span>&nbsp;{{menu.resourceinfo}}</span>
+            <template v-for="menu in menus">
+              <template v-if="menu.children">
+                <el-submenu :index="menu.resourcename" :key="menu.resourcename">
+                  <template slot="title">
+                    <i :class="getMenuIcon(menu.icon)"></i>
+                    <span>&nbsp;{{menu.resourceinfo}}</span>
+                  </template>
+                  <el-menu-item v-for="(child, childIndex) in menu.children" :key="childIndex" :index="child.resourcename">
+                    {{child.resourceinfo}}
+                    <!--<router-link :to="children.path">{{children.meta.title}}</router-link>-->
+                  </el-menu-item>
+                </el-submenu>
+              </template>
+              <template v-else>
+                <el-menu-item :index="menu.resourcename" :key="menu.resourcename">
+                  <i :class="getMenuIcon(menu.icon)"></i>
+                  <span>&nbsp;{{menu.resourceinfo}}</span>
+                </el-menu-item>
+              </template>
             </template>
-            <el-menu-item v-for="(child, childIndex) in menu.children" :key="childIndex" :index="child.resourcename">
-              {{child.resourceinfo}}
-              <!--<router-link :to="children.path">{{children.meta.title}}</router-link>-->
-            </el-menu-item>
-          </el-submenu>
-        </template>
-        <template v-else>
-          <el-menu-item :index="menu.resourcename" :key="menu.resourcename">
-            <i :class="getMenuIcon(menu.icon)"></i>
-            <span>&nbsp;{{menu.resourceinfo}}</span>
-          </el-menu-item>
-        </template>
-      </template>
         </el-menu>
     </div>
 </template>
