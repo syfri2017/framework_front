@@ -30,7 +30,21 @@ const router = new VueRouter({
     {
       path: '/',
       name: 'login',
-      component: Login
+      component: Login,
+      children: [
+        {
+          path: '/login/Login',
+          name: 'login/Login',
+          meta: {auth: true, title: "用户登录", operation: true},
+          component: resolve => require(['@/views/login/Login'], resolve)
+        },
+        {
+          path: '/login/Register',
+          name: 'login/Register',
+          meta: {auth: true, title: "用户注册", operation: true},
+          component: resolve => require(['@/views/login/Register'], resolve)
+        }
+      ]
     },
     {
       path: '/index',

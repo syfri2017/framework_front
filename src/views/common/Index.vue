@@ -15,7 +15,6 @@
         <el-header><HeaderDom></HeaderDom></el-header>
         <el-aside><AsideDom></AsideDom></el-aside>
         <div class="content-box" :class="{'content-collapse':collapse}">
-           
             <div class="content">
                <transition name="move" mode="out-in">
                      <el-main>
@@ -23,7 +22,6 @@
                   <router-view></router-view>
                 </el-main>
                 </transition>
-               
             </div>
         </div>
   </div>
