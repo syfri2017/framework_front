@@ -18,11 +18,11 @@
           <!-- 用户名下拉菜单 -->
           <el-dropdown class="dropdown-position" @command="handleCommand">
             <div class="el-dropdown-link">
-              <span id="realname" >{{realname}}</span>
+              <span id="realname">{{realname}}</span>
               <i class="el-icon-arrow-down el-icon--right"></i>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="personal" class="iconfont icon-personal iconfontDrop">&nbsp;个人中心</el-dropdown-item>
+              <el-dropdown-item v-if="personalFlag" command="personal" class="iconfont icon-personal iconfontDrop">&nbsp;个人中心</el-dropdown-item>
               <el-dropdown-item command="logout" class="iconfont icon-logout iconfontDrop">&nbsp;退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -33,8 +33,7 @@
           <el-row class="mb5">
             <el-col :span="21">
               <el-form-item prop="username" label="用户名">
-                <el-input size="small" v-model="userForm.username" placeholder="用户名" :disabled="!userForm.usernameFlag">
-                </el-input>
+                <el-input size="small" v-model="userForm.username" placeholder="用户名" :disabled="!userForm.usernameFlag"></el-input>
                 <el-button class="abs hqyzm" size="mini" v-text="userForm.messageCodeText" type="text" v-show="userForm.usernameFlag" :disabled="userForm.messageBtnFlag"
                     @click="getMessageCode()"></el-button>
               </el-form-item>
@@ -90,6 +89,13 @@
             callback();
           }
         };
+        var validateMsgCode = (rule, value, callback) => {
+          if (value !== this.userForm.messageCodeReal) {
+            callback(new Error("验证码输入错误"));
+          } else {
+            callback();
+          }
+        };
         return {
           collapse: false,
           fullscreen: false,
@@ -97,6 +103,8 @@
           realname: null,
           //个人中心的Dialog显示与隐藏
           dialogVisible: false,
+          //个人中心DropDown显示与隐藏
+          personalFlag: false,
           //修改用户名密码的Form表单
           userForm: {
             usernameWord: "",//保存原用户名
@@ -126,6 +134,7 @@
             ],
             messageCode: [
               { required: true, message: '请输入验证码', trigger: 'blur' },
+              { validator: validateMsgCode, trigger: 'blur' }
             ],
             password: [
               { required: true, message: '请输入密码', trigger: 'blur' },
@@ -143,6 +152,8 @@
         vm.currentUser = JSON.parse(localStorage.getItem("CURRENTUSER"));
         if(vm.currentUser != null){
           vm.realname = this.currentUser.realname ? this.currentUser.realname : "欢迎您！";
+          vm.personalFlag = this.currentUser.deptid == 'ZSYH' ? true : false;
+          vm.deptid = false;
           vm.userForm.userid = vm.currentUser.userid;
           vm.userForm.usernameWord = vm.currentUser.username;
           vm.userForm.passwordWord = "admin123";
@@ -286,20 +297,22 @@
               }
               //修改人、修改时间
               params.alterId = vm.currentUser.userid;
-              params.alterName = vm.currentUser.username;
+              params.alterName = vm.userForm.username;
               vm.$axios.post('/account/updateByVO', params).then(function (res) {
                 var result = res.data.result;
                 if (result == 1) {
                   vm.$message({
                       message: '修改成功，3秒后退出登录',
+                      duration: 2000,
                       type: 'success'
                   });
                   var count = 3;
-                  var timer = setInterval(() => {
+                  var timer2 = setInterval(() => {
                       if (count == 0) {
-                          this.logout();
+                        clearInterval(timer2);
+                        this.logout();
                       } else {
-                          count--;
+                        count--;
                       }
                   }, 1000);
                 } else {
@@ -421,24 +434,29 @@
     .btn-bell .el-icon-bell{
       color: #fff;
     }
-    .user-name{
+    .user-name {
       margin-left: 10px;
     }
-    .user-avator{
+    .user-avator {
       margin-left: 20px;
     }
-    .user-avator img{
+    .user-avator img {
       display: block;
       width:40px;
       height:40px;
       border-radius: 50%;
     }
-    .el-dropdown-link{
+    .el-dropdown-link {
       color: #fff;
       cursor: pointer;
     }
     .iconfontDrop {
       font-size: 14px;
-    }  
+    }
+    .hqyzm {
+      margin-top: -32px;
+      margin-left: 70%;
+      color:#EA2530;
+    }
 </style>
 
