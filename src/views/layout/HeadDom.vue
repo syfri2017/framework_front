@@ -153,7 +153,6 @@
         if(vm.currentUser != null){
           vm.realname = this.currentUser.realname ? this.currentUser.realname : "欢迎您！";
           vm.personalFlag = this.currentUser.deptid == 'ZSYH' ? true : false;
-          vm.deptid = false;
           vm.userForm.userid = vm.currentUser.userid;
           vm.userForm.usernameWord = vm.currentUser.username;
           vm.userForm.passwordWord = "admin123";
