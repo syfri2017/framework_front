@@ -3,7 +3,7 @@
     <div class="header">
       <!-- 折叠按钮 -->
       <div class="collapse-btn" @click="collapseChage">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-menu el-icon-menu-position"></i>
       </div>
       <div class="logo"></div>
       <div class="header-right">
@@ -150,6 +150,7 @@
       created() {
         let vm = this;
         vm.currentUser = JSON.parse(localStorage.getItem("CURRENTUSER"));
+        console.log(vm.currentUser);
         if(vm.currentUser != null){
           vm.realname = this.currentUser.realname ? this.currentUser.realname : "欢迎您！";
           vm.personalFlag = this.currentUser.deptid == 'ZSYH' ? true : false;
@@ -389,6 +390,9 @@
       padding: 0 3px;
       cursor: pointer;
       line-height: 60px;
+    }
+    .el-icon-menu-position {
+      margin-left: -4px;
     }
     .header .logo{
       background: url(/static/images/login/pic_logo.png)no-repeat center center; background-size: auto 100%; position: relative;
