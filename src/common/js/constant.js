@@ -1,4 +1,4 @@
-const currentUser = null
+const currentUser = JSON.parse(localStorage.getItem('CURRENTUSER'));
 const tableheight10 = 465;
 const tableheight20 = 878;
 const tableheight30 = 1291;
