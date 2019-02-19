@@ -33,6 +33,12 @@ const router = new VueRouter({
       component: Login,
       children: [
         {
+          path: '/login/Administrator',
+          name: 'login/Administrator',
+          meta: {auth: true, title: "账户重置", operation: true},
+          component: resolve => require(['@/views/login/Administrator'], resolve)
+        },
+        {
           path: '/login/Reset',
           name: 'login/Reset',
           meta: {auth: true, title: "账户重置", operation: true},
