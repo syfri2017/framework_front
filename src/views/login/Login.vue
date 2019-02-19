@@ -11,13 +11,13 @@
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed ">
-              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-icon_zhanghao"></el-input>
+              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username"></el-input>
             </div>
             <div class="filed">
               <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
             </div>
             <div class="filed">
-              <el-input placeholder="验证码" class="yanzhengma_input" @blur="checkLpicma" v-model="picLyanzhengma" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+              <el-input placeholder="验证码" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-validate"></el-input>
               <input type="button" id="code" @click="createCode"  class="verification1" v-model="checkCode"/>
             </div>
             <div class="filed right" >
@@ -45,6 +45,11 @@ export default {
         GLYvalidateCode: "",
         GLYmessages: "",
         GLYloginType: "MyShiro",
+        userPhone:'',
+        dialog: false,
+        UserPhone:'',
+        LUserPsd:'',
+        picLyanzhengma:'',
         checkCode:''
     }
   },
@@ -63,14 +68,12 @@ export default {
       },
       // 失焦验证图和密码
       checkLpicma(){
-          debugger
           this.picLyanzhengma.toUpperCase();//取得输入的验证码并转化为大写         
           if(this.picLyanzhengma == '') {
               $(".login_content1 span:eq(2)").text("请输入验证码")
               $(".login_content1 span:eq(2)").removeClass("disappear");
-             
           }else if(this.picLyanzhengma.toUpperCase() != this.checkCode ) { //若输入的验证码与产生的验证码不一致时    
-              console.log( this.picLyanzhengma.toUpperCase())
+              console.log(this.picLyanzhengma.toUpperCase())
               console.log(code)           
               $(".login_content1 span:eq(2)").text("验证码不正确")
               $(".login_content1 span:eq(2)").removeClass("disappear");
@@ -90,9 +93,9 @@ export default {
       } else if (this.GLYpassword == null || this.GLYpassword == '') {
         alert("密码不能为空！")
       } 
-      // else if(this.checkLpicma() == true){
-      //   alert("验证码错误！")
-      // } 
+      else if(this.checkLpicma() == true){
+        alert("验证码错误！")
+      } 
       else {
         var params = {
           username: vm.GLYusername,
