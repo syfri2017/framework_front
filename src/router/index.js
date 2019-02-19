@@ -142,7 +142,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'exhibitor',
-              component: resolve => require(['@/views/prediction/exhibitor/Exhibitor'], resolve)
+              component: resolve => require(['@/views/prediction/exhibitor/ExhibitorList'], resolve)
             },
           ]
         },
