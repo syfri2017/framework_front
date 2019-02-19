@@ -63,7 +63,7 @@ export default {
       },
       // 失焦验证图和密码
       checkLpicma(){
-        
+          debugger
           this.picLyanzhengma.toUpperCase();//取得输入的验证码并转化为大写         
           if(this.picLyanzhengma == '') {
               $(".login_content1 span:eq(2)").text("请输入验证码")
@@ -80,7 +80,6 @@ export default {
               $(".login_content1 span:eq(2)").addClass("disappear");
               $(".login_content1 span:eq(2)").text("请输入验证码")
               return true;
-
           } 
 
       },
@@ -90,7 +89,11 @@ export default {
         alert("用户名不能为空！")
       } else if (this.GLYpassword == null || this.GLYpassword == '') {
         alert("密码不能为空！")
-      } else {
+      } 
+      // else if(this.checkLpicma() == true){
+      //   alert("验证码错误！")
+      // } 
+      else {
         var params = {
           username: vm.GLYusername,
           password: vm.GLYpassword,
@@ -106,7 +109,6 @@ export default {
             localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
             this.CONSTANT.currentUser = res.data.data.currentUser;
             this.$router.push({ path: '/index' });
-          
           } else if (res.data.code == '22222222') {
             this.$message.error("账号不存在");
           } else if (res.data.code == '33333333') {
