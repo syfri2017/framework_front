@@ -1,9 +1,114 @@
 .el-col.searchInline{
   display: inline-flex;
 }
+.searchLabel{
+  width: 155px; 
+  vertical-align: middle; 
+  line-height: 30px;
+}
+.searchSelect{
+  width: 100%;
+}
+.table_container{
+  border: 1px solid #eee;
+  border-radius:2px;
+  margin-top: 8px;
+}
 .btnEditDelete{
-    text-align: left;
+  margin-top: 5px;
+  text-align: left;
 }
 .btnSearchPlus{
-    text-align: right;
+  margin-top: 5px;
+  text-align: right;
+}
+.el-button--clear{
+  color:#fff;
+  background-color:#909399;
+  border-color:#909399
+}
+.el-button--clear:focus,.el-button--clear:hover{
+  background:#a6a9ad;
+  border-color:#a6a9ad;
+  color:#fff
+}
+.el-button--clear.is-active,.el-button--clear:active{
+  background:#82848a;
+  border-color:#82848a;
+  color:#fff
+}
+.el-button--clear:active{
+  outline:0
+}
+.el-button--clear.is-plain{
+  background:#fff;
+  border:1px solid #bfcbd9;
+  color:#1f2d3d
+}
+.el-button--clear.is-plain:focus,.el-button--clear.is-plain:hover{
+  background:#fff;
+  border-color:#909399;
+  color:#909399
+}
+.el-button--clear.is-plain:active{
+  background:#fff;
+  border-color:#82848a;
+  color:#82848a;
+  outline:0
+}
+.el-table__header th,
+.el-table__header tr {
+  border-color: #dfe6ec;
+  background-color: #eef1f6;
+  color: black;
+  height: 50px;
+}
+.el-table__body td,
+.el-table__body th {
+  padding: 0px;
+}
+.el-table__header td,
+.el-table__header th {
+  padding: 6px 0px;
+}
+.el-table a{
+  cursor: pointer;
+  text-decoration: none;
+}
+.el-pagination{
+  float: right !important;
+}
+.el-form-item{
+  margin-bottom: 2px;
+}
+.el-form-item__error {
+  padding-top: 0px;
+  line-height: 0;
+}
+.el-date-editor .el-range-separator{
+  padding: 0 0px;
+}
+.el-range-editor.el-input__inner{
+  padding: 3px 3px 3px 10px;
+}
+.el-date-editor .el-range-input{
+  width: 50%;
+}
+.el-date-editor .el-range__close-icon{
+  width: 15px;
+}
+.el-date-editor.el-input{
+  width: 100%;
+}
+.el-input-number--small{
+  line-height: 28px !important;
+}
+.el-dialog__body {
+  padding: 0px 20px 20px;
+}
+.el-card__header {
+  padding: 6px 15px;
+}
+.el-card__body{
+  padding: 13px 15px;    
 }
