@@ -102,6 +102,16 @@ const router = new VueRouter({
               name: 'exhprediction',
               component: resolve => require(['@/views/prediction/exhprediction/Exhprediction'], resolve)
             },
+            {
+              path: '/prediction/exhprediction/edit',
+              name: 'exhpredictionEdit',
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit'], resolve)
+            },
+            {
+              path: '/prediction/exhprediction/edit_ENG',
+              name: 'exhpredictionEdit_ENG',
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit_ENG'], resolve)
+            },
           ]
         },
         //----------展会报名审核----------

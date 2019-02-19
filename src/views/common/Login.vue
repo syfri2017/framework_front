@@ -189,9 +189,9 @@ $blackcolor: #2c2c2c;
   }
 }
 
-.el-button {
-  border: 0px solid #dcdfe6;
-}
+// .el-button {
+//   border: 0px solid #dcdfe6;
+// }
 
 .login-btn {
   color: $whitecolor;

@@ -39,10 +39,10 @@ import Breadcrumb from '@/components/breadcrumb'
 import bus from '../../common/js/bus';
 export default {
   data(){
-        return {
-            collapse: false
-        }
-    },
+    return {
+      collapse: false
+    }
+  },
   components: {
     HeaderDom,
     AsideDom,
