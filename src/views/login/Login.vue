@@ -70,18 +70,18 @@ export default {
       checkLpicma(){
           this.picLyanzhengma.toUpperCase();//取得输入的验证码并转化为大写         
           if(this.picLyanzhengma == '') {
-              $(".login_content1 span:eq(2)").text("请输入验证码")
-              $(".login_content1 span:eq(2)").removeClass("disappear");
+              // $(".login_content1 span:eq(2)").text("请输入验证码")
+              // $(".login_content1 span:eq(2)").removeClass("disappear");
           }else if(this.picLyanzhengma.toUpperCase() != this.checkCode ) { //若输入的验证码与产生的验证码不一致时    
               console.log(this.picLyanzhengma.toUpperCase())
               console.log(code)           
-              $(".login_content1 span:eq(2)").text("验证码不正确")
-              $(".login_content1 span:eq(2)").removeClass("disappear");
+              // $(".login_content1 span:eq(2)").text("验证码不正确")
+              // $(".login_content1 span:eq(2)").removeClass("disappear");
               this.createCode();//刷新验证码   
               this.picLyanzhengma = '';
           }else { //输入正确时   
-              $(".login_content1 span:eq(2)").addClass("disappear");
-              $(".login_content1 span:eq(2)").text("请输入验证码")
+              // $(".login_content1 span:eq(2)").addClass("disappear");
+              // $(".login_content1 span:eq(2)").text("请输入验证码")
               return true;
           } 
 
