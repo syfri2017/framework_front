@@ -80,7 +80,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 // @import '../../common/scss/all.scss';
 $height: 22rem; //全局变量声明
 $width: 22rem;
@@ -189,9 +189,9 @@ $blackcolor: #2c2c2c;
   }
 }
 
-// .el-button {
-//   border: 0px solid #dcdfe6;
-// }
+.el-button {
+  border: 0px solid #dcdfe6;
+}
 
 .login-btn {
   color: $whitecolor;
