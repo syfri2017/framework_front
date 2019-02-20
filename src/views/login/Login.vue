@@ -206,7 +206,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lgin {
-  margin-top: 1.7rem;
+  margin-top: 1.8rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
