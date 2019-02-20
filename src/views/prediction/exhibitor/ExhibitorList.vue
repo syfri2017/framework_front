@@ -63,21 +63,8 @@
             </template>
         </el-table-column>
       </el-table>
-
       <!--列表底部工具条和分页符-->
-      <el-row type="flex" justify="end">
-        <el-col :span="18">
-          <el-pagination 
-            @size-change="pageSizeChange" 
-            @current-change="currentPageChange" 
-            :current-page="currentPage"
-            :page-sizes="[10, 20, 30]" 
-            :page-size="pageSize" 
-            layout="total, sizes, prev, pager, next, jumper" 
-            :total=parseInt(total)>
-          </el-pagination>
-        </el-col>
-      </el-row>
+      <paginator></paginator>
     </div>
 
     <!-- 编辑-->
@@ -139,8 +126,13 @@
 </template>
 
 <script>
+//引入翻页 paginator
+import paginator from '@/components/paginator'
 export default {
   name: 'exhibitorList',
+  components: {
+    paginator
+  },
   data () {
     var validatePwdAgain = (rule, value, callback) => {
       if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value) == false) {
