@@ -93,10 +93,10 @@ export default {
       } else if (this.GLYpassword == null || this.GLYpassword == '') {
         alert("密码不能为空！")
       } 
-      else if(this.checkLpicma() == true){
+      else if(this.checkLpicma() == false){
         alert("验证码错误！")
       } 
-      else {
+      else if(this.checkLpicma() == true){
         var params = {
           username: vm.GLYusername,
           password: vm.GLYpassword,
