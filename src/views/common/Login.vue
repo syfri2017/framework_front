@@ -80,7 +80,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 // @import '../../common/scss/all.scss';
 $height: 22rem; //全局变量声明
 $width: 22rem;
