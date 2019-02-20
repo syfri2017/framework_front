@@ -5,7 +5,7 @@
       <el-col :span="8" style="text-align:-webkit-center">
         <div class="login-form" >
           <div class="filed left">
-            <router-link :to="{path:'/login/Login'}"><i class="iconfont icon-yonghu"></i></router-link>
+            <router-link :to="{path:'/login/Login'}"><i class="iconfont icon-yonghu icou"></i></router-link>
             <span >管理员登录</span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
@@ -466,5 +466,8 @@ a {
     color:$bgcolor;
 }
 
+.icou{
+  font-size:1.8rem;
+}
 
 </style>
