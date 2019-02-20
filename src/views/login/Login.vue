@@ -5,12 +5,12 @@
       <el-col :span="8" style="text-align:-webkit-center">
         <div class="login-form" >
           <div class="filed left">
-            <router-link :to="{path:'/login/Administrator'}"><i class="iconfont icon-yonghu"></i></router-link>
+            <router-link :to="{path:'/login/Administrator'}"><i style="font-size:1.8rem;" class="iconfont icon-yonghu"></i></router-link>
             <span >用户登录</span>
             <span class="signstyle">没有账户?<router-link :to="{path:'/login/Register'}"><a>去注册</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
-            <div class="filed ">
+            <div class="filed">
               <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username"></el-input>
             </div>
             <div class="filed">
@@ -20,7 +20,7 @@
               <el-input placeholder="验证码" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-validate"></el-input>
               <input type="button" id="code" @click="createCode"  class="verification1" v-model="checkCode"/>
             </div>
-            <div class="filed right" >
+            <div class="filed right">
               <span class="muchtab"><router-link :to="{path:'/login/ForgetUsername'}"><a>忘记用户名</a></router-link>  |  <router-link :to="{path:'/login/ForgetPassword'}"><a>忘记密码</a></router-link>  |  <router-link :to="{path:'/login/Reset'}"><a>重置账户</a></router-link></span>
             </div>
             <div class="filed lgin">
@@ -234,7 +234,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 7.5rem;
+    margin-left: 6.5rem;
     a {
       cursor: pointer;
     }
@@ -507,5 +507,11 @@ $blackcolor: #2c2c2c;
     margin-top: 10px;
     cursor: pointer;
 }
+
+a {
+    text-decoration: none;
+    color:$bgcolor;
+}
+
 
 </style>
