@@ -105,7 +105,7 @@
           </el-col>
           <el-col :span="2">
             &nbsp;
-            <el-button v-if="dialogTitle=='展商编辑'" v-text="editFlagText" type="text" size="small" @click="editFlagChange" style="margin-top:6px;"></el-button>
+            <el-button v-if="dialogTitle=='展商用户编辑'" v-text="editFlagText" type="text" size="small" @click="editFlagChange" style="margin-top:6px;"></el-button>
           </el-col>
         </el-row>
           <el-row v-if="editPasswordShow">
@@ -120,9 +120,9 @@
         <el-row v-if="editPasswordShow">
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="21">
-              <el-form-item label="确认密码" prop="checkPass">
-                  <el-input v-model="editForm.checkPass" type="password" placeholder="请输入确认密码" size="small" auto-complete="off" clearable maxlength="60"></el-input>
-              </el-form-item>
+            <el-form-item label="确认密码" prop="checkPass">
+              <el-input v-model="editForm.checkPass" type="password" placeholder="请输入确认密码" size="small" auto-complete="off" clearable maxlength="60"></el-input>
+            </el-form-item>
           </el-col>
           <el-col :span="2">&nbsp;</el-col>
         </el-row>
@@ -169,7 +169,7 @@ export default {
           callback();
         }
       } else {
-        callback("请选择展商类型");
+        callback();
       }
     };
     return {
@@ -206,18 +206,19 @@ export default {
       //选中的序号
       editIndex: -1,
       //Dialog Title
-      dialogTitle: "展商编辑",
+      dialogTitle: "展商用户编辑",
       //修改密码是否显示
       editPasswordShow: false,
       //修改界面是否显示
       editFormVisible: false,
       //修改界面数据
       editForm: {
-          userid: "",
-          username: "",
-          password: "",
-          checkPass: "",
-          roles: [],
+        pkid: "",
+        userid: "",
+        username: "",
+        password: "",
+        checkPass: "",
+        usertype: ""
       },
       editFormRules: {
         usertype: [
@@ -286,18 +287,18 @@ export default {
     addClick: function () {
       this.dialogTitle = "展商用户新增";
       this.editPasswordShow = true;
-      this.editFormVisible = true;
       this.editFlag = false;
+      this.editFormVisible = true;
     },
 
     //修改事件
     editClick: function(val, index) {
-      this.editFlag = true;
       this.editFlagText = "编辑";
       this.editIndex = index;
       this.dialogTitle = "展商用户编辑";
       this.editPasswordShow = false;
       this.editSearch(val);
+      this.editFlag = true;
       this.editFormVisible = true;
     },
 
@@ -305,24 +306,24 @@ export default {
     deleteClick: function () {
       let vm = this;
       this.$confirm('确认删除选中信息?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(() => {
           vm.$axios.post('/user/deleteByList', this.multipleSelection).then(function (res) {
-              this.$message({
-                message: "成功删除" + res.data.result + "条用户信息",
-                showClose: true,
-                onClose: this.searchClick('delete')
-              });
+            this.$message({
+              message: "成功删除" + res.data.result + "条用户信息",
+              showClose: true,
+              onClose: this.searchClick('delete')
+            });
           }.bind(this), function (error) {
               console.log(error)
           })
       }).catch(() => {
-          this.$message({
-              type: 'info',
-              message: '已取消删除'
-          });
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
       });
     },
 
@@ -354,31 +355,21 @@ export default {
       });     
     },
 
-    //表格修改事件
-    editClick: function(val, index) {
-      this.editFlag = true;
-      this.editFlagText = "编辑";
-      this.editIndex = index;
-      this.dialogTitle = "展商编辑";
-      this.editPasswordShow = false;
-      this.editSearch(val);
-      this.editFormVisible = true;
-    },
-
     //修改时查询方法
     editSearch: function(val){
       let vm = this;
       //获取选择行主键
       var params = {
-          pkid: val.pkid,
-          deptid: "ZSYH"
+        pkid: val.pkid,
+        deptid: "ZSYH"
       };
       vm.$axios.post('/user/findByVO', params).then(function(res) {
-          this.editForm = res.data.result[0];
-          this.editFormUsername =  res.data.result[0].username;
-          //密码、再次密码置空
-          this.editForm.password = '';
-          this.editForm.checkPass = '';
+        var userData = res.data.result[0];
+        vm.editFormUsername =  res.data.result[0].username;
+        vm.editForm.pkid = userData.pkid;
+        vm.editForm.userid = userData.userid;
+        vm.editForm.usertype = userData.usertype;
+        vm.editForm.username = userData.username;
       }.bind(this), function (error) {
           console.log(error)
       }) 
@@ -448,33 +439,28 @@ export default {
                     message: "用户名已存在!",
                     type: "error"
                   });
-                }else{
-                  vm.$axios.post('/user/updateByVO', params).then(function (res){
-                    var result = res.data.result;
-                    this.tableData[this.editIndex].username = result.username;
-                    if(result.usertype == "CHN"){
-                      this.tableData[this.editIndex].usertypeName = "国内"; 
-                    }else if(result.usertype == "ENG"){
-                      this.tableData[this.editIndex].usertypeName = "国外"; 
-                    }
-                    this.editFormVisible = false;
-                    this.$message({
-                      message: "修改成功！",
-                      type: "success"
-                    });
-                  }.bind(this), function (error) {
-                      console.log(error)
-                  })
+                  return;
                 }
               }.bind(this),function(error){
                   console.log(error)
               })
-            }else{
+            }
+            vm.$axios.post('/user/updateByVO', params).then(function (res){
+              var result = res.data.result;
+              this.tableData[this.editIndex].username = result.username;
+              if(result.usertype == "CHN"){
+                this.tableData[this.editIndex].usertypeName = "国内"; 
+              }else if(result.usertype == "ENG"){
+                this.tableData[this.editIndex].usertypeName = "国外"; 
+              }
+              this.editFormVisible = false;
               this.$message({
-                message: "用户名未修改!",
-                type: "error"
+                message: "修改成功！",
+                type: "success"
               });
-            } 
+            }.bind(this), function (error) {
+                console.log(error)
+            }) 
           }
         } else {
           console.log('error submit!!');
