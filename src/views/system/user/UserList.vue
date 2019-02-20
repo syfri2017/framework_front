@@ -70,8 +70,104 @@
 					<el-checkbox v-for="role in roleDetailList" :label="role.rolename" :key="role.roleid" disabled>{{role.roleinfo}}<br></el-checkbox>
 				</el-checkbox-group>
 			</el-dialog>
-	
-					
+      <!-- 编辑-->
+			<el-dialog :title="dialogTitle" :visible.sync="editFormVisible" @close="closeDialog(editForm)" :close-on-click-modal="false">
+				<el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+					<div v-show="true" v-once>{{usernameOld}}</div>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="用户名" prop="username">
+									<el-input v-model="editForm.username" placeholder="用户名" size="small" auto-complete="off" maxlength="30" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="真实姓名" prop="realname">
+									<el-input v-model="editForm.realname" placeholder="真实姓名" size="small" auto-complete="off" maxlength="20" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row v-if="editPasswordShow">
+							<el-col :span="11">
+								<el-form-item label="密码" prop="password">
+									<el-input v-model="editForm.password" type="password" placeholder="密码" size="small" auto-complete="off" maxlength="60" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="确认密码" prop="checkPass">
+									<el-input v-model="editForm.checkPass" type="password" placeholder="确认密码" size="small" auto-complete="off" maxlength="60" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+								<!--组织机构隐藏-->
+								<!--
+								<el-row>
+									<el-col :span="23">
+										<el-form-item label="组织机构" prop="organizationId">
+											<el-cascader :options="zzjgData" :props="jgidprops" size="small" v-model="editForm.organizationId" placeholder="请选择" class="searchSelect" clearable change-on-select :show-all-levels="false"></el-cascader>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+								</el-row>
+								-->
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="手机号" prop="mobile">
+									<el-input v-model="editForm.mobile" auto-complete="off" placeholder="手机号" size="small" maxlength="15" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="邮箱" prop="email">
+									<el-input v-model="editForm.email" auto-complete="off" placeholder="邮箱" size="small" maxlength="30" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="生日" prop="birth">
+									<el-date-picker type="date" placeholder="选择日期" size="small" @change="dateChangebirthday" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+												auto-complete="off" v-model="editForm.birth">
+									</el-date-picker>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="性别" prop="sex">
+									<el-radio-group v-model="editForm.sex" size="small" auto-complete="off">
+										<el-radio class="radio" :label="'1'">男</el-radio>
+										<el-radio class="radio" :label="'2'">女</el-radio>
+									</el-radio-group>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="角色" prop="roles" id="roleDiv" style="height:34px;overflow:hidden;">
+									<el-checkbox-group v-model="editForm.roles" size="small" style="float:left;width:90%;">
+										<el-checkbox v-for="role in allRoles" :label="role.rolename" :key="role.id">{{role.roleinfo}}</el-checkbox>
+									</el-checkbox-group>
+									<el-button id="roleSpread" size="mini" type="info" plain style="float:right;margin-top:6px;" @click="spread">展开</el-button>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row class="buttonSubmit">
+							<el-row>
+								<el-col :span="24" style="text-align: center">
+									<el-button v-if="dialogTitle == '用户编辑'" type="warning" icon="edit" size="small" @click="editPassword">修改密码</el-button>
+									<el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog(editForm)"> 取消</el-button>
+									<el-button type="success" icon="el-icon-check" size="small" class="btn_save" @click="editSubmit('editForm')">保存</el-button>
+								</el-col>
+							</el-row>
+						</el-row>
+					</el-form>
+				</el-dialog>
 		</div>
   </div>
 </template>
@@ -83,6 +179,15 @@ export default {
     paginator
   },
   data() {
+    var validatePwdAgain = (rule, value, callback) => {
+      if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value) == false) {
+        callback(new Error("密码应为6-16位字母和数字组合"));
+      } else if (value !== this.editForm.password) {
+        callback(new Error("两次输入密码不一致"));
+      } else {
+        callback();
+      }
+    };
     return {
       //搜索表单
       searchForm: {
@@ -165,16 +270,7 @@ export default {
         ],
         checkPass: [
           { required: true, message: "请输入密码", trigger: "blur" },
-          {
-            validator: (rule, value, callback) => {
-              if (value != this.editForm.password) {
-                callback(new Error("两次密码不一致"));
-              } else {
-                callback();
-              }
-            },
-            trigger: "blur"
-          }
+          { validator: validatePwdAgain, trigger: "blur" }
         ],
         organizationId: [
           { required: true, message: "请选择组织机构", trigger: "select" }
@@ -367,7 +463,19 @@ export default {
       };
       this.$axios.post("/user/findByVO", params).then(
         function(res) {
-          this.editForm = res.data.result[0];
+          var tempData = res.data.result[0];
+          this.editForm.pkid = tempData.pkid;
+          this.editForm.userid = tempData.userid;
+          this.editForm.username = tempData.username;
+          this.editForm.password = tempData.password;
+          this.editForm.organizationId = tempData.organizationId;
+          this.editForm.realname = tempData.realname;
+          this.editForm.birth = tempData.birth;
+          this.editForm.sex = tempData.sex;
+          this.editForm.mobile = tempData.mobile;
+          this.editForm.email = tempData.email;
+          this.editForm.roles = tempData.roles;
+         
           //密码、再次密码置空
           this.editForm.password = "";
           this.editForm.checkPass = "";
