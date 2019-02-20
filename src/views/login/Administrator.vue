@@ -10,13 +10,10 @@
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed ">
-              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-icon_zhanghao"></el-input>
+              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username"></el-input>
             </div>
             <div class="filed">
               <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
-            </div>
-            <div class="filed right" >
-              <span class="muchtab"><a></a>  |  <a></a>  |  <a></a></span>
             </div>
             <div class="filed lgin">
               <el-button type="danger" @click="GLYlogin" round>登录</el-button>
@@ -159,7 +156,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lgin {
-  margin-top: 2.5rem;
+  margin-top: 8.1rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
