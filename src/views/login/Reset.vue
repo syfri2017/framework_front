@@ -10,17 +10,11 @@
                   <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
                 </div>
                 <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
-                  <div class="filed ">
-                    <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-icon_zhanghao"></el-input>
+                  <div class="filed">
+                    <el-input placeholder="单位名称" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
                   </div>
                   <div class="filed">
-                    <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
-                  </div>
-                  <div class="filed">
-                    <el-input placeholder="验证码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
-                  </div>
-                  <div class="filed right" >
-                    <span class="muchtab"><a></a>  |  <a></a>  |  <a></a></span>
+                    <el-input placeholder="社会统一信用代码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
                   </div>
                   <div class="filed lgin">
                     <el-button type="danger" @click="GLYlogin" round>确定</el-button>
