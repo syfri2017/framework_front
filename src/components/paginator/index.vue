@@ -5,9 +5,9 @@
 		<el-pagination @size-change="pageSizeChange"
 			@current-change="currentPageChange" 
 			:current-page="this.$parent.currentPage"
-			:page-sizes="[10, 20, 30, 50]" 
+			:page-sizes="[10, 20, 30]" 
 			:page-size="this.$parent.pageSize" 
-			layout="total, prev, pager, next, jumper" 
+			layout="total, sizes, prev, pager, next, jumper" 
 			:total=parseInt(this.$parent.total)>
 		</el-pagination>
 	</el-col>
@@ -28,11 +28,11 @@ export default {
         pageSizeChange : function(val) {
             this.$parent.pageSize = val;
             if(val == 10){
-                tableheight = tableheight10;
+                this.$parent.tableheight = this.CONSTANT.tableheight10;
             }else if(val == 20){
-                tableheight = tableheight20;
+                this.$parent.tableheight = this.CONSTANT.tableheight20;
             }else if(val == 30){
-                tableheight = tableheight30;
+                this.$parent.tableheight = this.CONSTANT.tableheight30;
             }
             this.$parent.searchClick('page');
         },
