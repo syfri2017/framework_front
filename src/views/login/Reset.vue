@@ -1,29 +1,29 @@
 <template>
     <!-- 用户登录 -->
-          <el-row class="logincenter">
-            <el-col :span="8" >&nbsp;</el-col>
-            <el-col :span="8" style="text-align:-webkit-center">
-              <div class="login-form" >
-                <div class="filed left">
-                  <i class="iconfont icon-user"></i>
-                  <span >账户重置</span>
-                  <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
-                </div>
-                <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
-                  <div class="filed">
-                    <el-input placeholder="单位名称" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
-                  </div>
-                  <div class="filed">
-                    <el-input placeholder="社会统一信用代码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
-                  </div>
-                  <div class="filed lgin">
-                    <el-button type="danger" @click="GLYlogin" round>确定</el-button>
-                  </div>
-                </form>
-              </div>
-            </el-col>
-            <el-col :span="8">&nbsp;</el-col>
-          </el-row>
+    <el-row class="logincenter">
+      <el-col :span="8" >&nbsp;</el-col>
+      <el-col :span="8" style="text-align:-webkit-center">
+        <div class="login-form" >
+          <div class="filed left">
+            <i class="iconfont icon-user"></i>
+            <span >账户重置</span>
+            <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
+          </div>
+          <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+            <div class="filed">
+              <el-input placeholder="单位名称" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+            </div>
+            <div class="filed">
+              <el-input placeholder="社会统一信用代码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+            </div>
+            <div class="filed lgin">
+              <el-button type="danger" @click="GLYlogin" round>确定</el-button>
+            </div>
+          </form>
+        </div>
+      </el-col>
+      <el-col :span="8">&nbsp;</el-col>
+    </el-row>
 </template>
 
 <script>
