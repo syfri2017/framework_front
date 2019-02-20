@@ -285,7 +285,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'user',
-              component: resolve => require(['@/views/system/user/User'], resolve)
+              component: resolve => require(['@/views/system/user/UserList'], resolve)
             },
           ]
         },
