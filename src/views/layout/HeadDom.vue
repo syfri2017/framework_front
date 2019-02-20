@@ -130,7 +130,7 @@
           userInforRules: {
             username: [
               { required: true, message: '请输入手机号', trigger: 'blur' },
-              { pattern: /^1[34578]\d{9}$/, message: '请填写正确的手机号码', trigger: 'blur' }
+              { pattern: /^1[34578]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
             ],
             messageCode: [
               { required: true, message: '请输入验证码', trigger: 'blur' },

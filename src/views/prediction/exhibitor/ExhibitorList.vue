@@ -1,7 +1,7 @@
 <template>
   <div id="exhibitorList">
     <el-row>
-      <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
+      <el-form label-width="75px" :inline="true">
         <el-row>
           <el-col :span="8" class="searchInline">
             <label class="el-form-item__label searchLabel">用户名</label>
@@ -126,7 +126,7 @@
           </el-col>
           <el-col :span="2">&nbsp;</el-col>
         </el-row>
-        <el-row class="mt35 mb20">
+        <el-row class="buttonSubmit">
           <el-col :span="24" style="text-align: center">
             <el-button v-if="dialogTitle == '展商用户编辑'" type="warning" icon="edit" size="small" @click="editPassword">修改密码</el-button>
             <el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog(editForm)"> 取消</el-button>
@@ -142,8 +142,39 @@
 export default {
   name: 'exhibitorList',
   data () {
+    var validatePwdAgain = (rule, value, callback) => {
+      if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value) == false) {
+        callback(new Error("密码应为6-16位字母和数字组合"));
+      } else if (value !== this.editForm.password) {
+        callback(new Error("两次输入密码不一致"));
+      } else {
+        callback();
+      }
+    };
+    var validateUsername = (rule, value, callback) => {
+      if (this.editForm.usertype == 'CHN') {
+        if (value == null || value == '') {
+          callback(new Error("请输入手机号"));
+        } else if (/^[1][3,4,5,7,8][0-9]{9}$/.test(value) == false) {
+          callback(new Error("手机号格式不正确"));
+        } else {
+          callback();
+        }
+      } else if (this.editForm.usertype == 'ENG') {
+        if (value == null || value == '') {
+          callback(new Error("请输入邮箱"));
+        } else if (/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(value) == false) {
+          callback(new Error("邮箱格式不正确"));
+        } else {
+          callback();
+        }
+      } else {
+        callback("请选择展商类型");
+      }
+    };
     return {
-      
+      //当前登陆用户
+      currentUser: this.CONSTANT.currentUser,
       //显示加载中
       loading: false,          
       //当前页
@@ -193,15 +224,16 @@ export default {
           { required: true, message: '请选择展商类型', trigger: 'change' }
         ],
         username: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { validator: validateUsername, trigger: "blur" }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+          { pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/, message: '密码应为6-16位字母和数字组合', trigger: 'blur' }
         ],
         checkPass: [
           { required: true, message: '请输入确认密码', trigger: 'blur' },
-          { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+          { validator: validatePwdAgain, trigger: "blur" }
         ],
       },
       //编辑页面用户名备份
@@ -210,9 +242,13 @@ export default {
       multipleSelection: [],
     }
   },
+  created: function () {
+    this.searchClick('click');
+  },
   methods: {
     //表格查询事件
     searchClick: function(type) {
+      let vm = this;
       //按钮事件的选择
       if(type == 'page'){
         this.tableData = [];
@@ -227,7 +263,7 @@ export default {
         pageSize: this.pageSize,
         pageNum: this.currentPage
       }
-      axios.post('/qyjbxx/doFindZsxxByQyjbxx', params).then(function (res) {
+      vm.$axios.post('/qyjbxx/doFindZsxxByQyjbxx', params).then(function (res) {
         var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
         this.tableData = tableTemp.concat(res.data.result.list);
         this.total = res.data.result.total;
@@ -248,7 +284,7 @@ export default {
 
     //新增事件
     addClick: function () {
-      this.dialogTitle = "展商新增";
+      this.dialogTitle = "展商用户新增";
       this.editPasswordShow = true;
       this.editFormVisible = true;
       this.editFlag = false;
@@ -259,7 +295,7 @@ export default {
       this.editFlag = true;
       this.editFlagText = "编辑";
       this.editIndex = index;
-      this.dialogTitle = "展商编辑";
+      this.dialogTitle = "展商用户编辑";
       this.editPasswordShow = false;
       this.editSearch(val);
       this.editFormVisible = true;
@@ -267,12 +303,13 @@ export default {
 
     //删除所选，批量删除
     deleteClick: function () {
+      let vm = this;
       this.$confirm('确认删除选中信息?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
       }).then(() => {
-          axios.post('/user/deleteByList', this.multipleSelection).then(function (res) {
+          vm.$axios.post('/user/deleteByList', this.multipleSelection).then(function (res) {
               this.$message({
                 message: "成功删除" + res.data.result + "条用户信息",
                 showClose: true,
@@ -291,6 +328,7 @@ export default {
 
     //重置密码
     resetClick: function(val, index){
+      let vm = this;
       var params = {
         pkid: val.pkid,
         userid: val.userid
@@ -300,7 +338,7 @@ export default {
         cancelButtonText: '否',
         type: 'warning'
       }).then(() => {
-        axios.post('/user/doResetPassword', params).then(function(res) {
+        vm.$axios.post('/user/doResetPassword', params).then(function(res) {
           this.$message({
             message: "密码重置成功",
             type: "success"
@@ -329,12 +367,13 @@ export default {
 
     //修改时查询方法
     editSearch: function(val){
+      let vm = this;
       //获取选择行主键
       var params = {
           pkid: val.pkid,
           deptid: "ZSYH"
       };
-      axios.post('/user/findByVO', params).then(function(res) {
+      vm.$axios.post('/user/findByVO', params).then(function(res) {
           this.editForm = res.data.result[0];
           this.editFormUsername =  res.data.result[0].username;
           //密码、再次密码置空
@@ -353,114 +392,95 @@ export default {
 
     //编辑提交点击事件
     editSubmit: function(val) {
-      if(this.validateSave()){
-        if(this.editPasswordShow){
-          if(this.editForm.password=="" || this.editForm.password==null){
-            this.$message.error({
-                message: '请输入密码！',
-                showClose: true
-            });
-            return false;
-          }else if(!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(this.editForm.password))){
-            this.$message.error({
-                message: '密码应为6-16为数字字母组合！',
-                showClose: true
-            });
-            return false;
-          }else if(this.editForm.checkPass=="" || this.editForm.checkPass==null){
-            this.$message.error({
-                message: '请输入确认密码！',
-                showClose: true
-            });
-            return false;
-          }else if(this.editForm.password!=this.editForm.checkPass){
-            this.$message.error({
-                message: '两次密码输入不一致！',
-                showClose: true
-            });
-            return false;
-          }
-        }
-        if(this.dialogTitle == "展商新增"){
-          axios.get('/xfxhapi/account/getNum/' + this.editForm.username + "/static").then(function(res){
-            if(res.data.result != 0){
-              this.$message({
-                  message: "用户名已存在!",
-                  type: "error"
-              });
-            }else{
-              var params = {
-                username: val.username,
-                password: val.password,
-                deptid: "ZSYH",
-                usertype: val.usertype,
-              }
-              axios.post('/xfxhapi/user/insertByVO', params).then(function(res){
-                var addData = res.data.result;
-                if(addData.usertype == 'ENG'){
-                    addData.usertypeName = "国外";
-                }else if(addData.usertype == 'CHN'){
-                    addData.usertype = "国内";
-                }
-                this.tableData.unshift(addData);
-                this.total = this.tableData.length;
-              }.bind(this),function(error){
-                console.log(error)
-              })
-              this.editFormVisible = false;
-            }
-          }.bind(this),function(error){
-              console.log(error)
-          })
-        }else if(this.dialogTitle == "展商编辑"){
-          var params = {
-              pkid: val.pkid,
-              userid: val.userid,
-              username: val.username,
-              deptid: "ZSYH",
-              usertype: val.usertype,
-              alterId: this.shiroData.userid,
-              alterName: this.shiroData.realName
-          }
-          if(this.editPasswordShow){
-              params.password = val.password;
-          }
-          if(!this.editFlag){
-            axios.get('/xfxhapi/account/getNum/' + this.editForm.username + "/static").then(function(res){
+      let vm = this;
+      this.$refs["editForm"].validate((valid) => {
+        if (valid) {
+          if(this.dialogTitle == "展商用户新增"){
+            vm.$axios.get('/account/getNum/' + this.editForm.username + "/static").then(function(res){
               if(res.data.result != 0){
                 this.$message({
                     message: "用户名已存在!",
                     type: "error"
                 });
               }else{
-                axios.post('/xfxhapi/user/updateByVO', params).then(function (res){
-                  var result = res.data.result;
-                  this.tableData[this.editIndex].username = result.username;
-                  if(result.usertype == "CHN"){
-                    this.tableData[this.editIndex].usertypeName = "国内"; 
-                  }else if(result.usertype == "ENG"){
-                    this.tableData[this.editIndex].usertypeName = "国外"; 
+                var params = {
+                  username: val.username,
+                  password: val.password,
+                  deptid: "ZSYH",
+                  usertype: val.usertype,
+                  createId: this.currentUser.userid,
+                  createName: this.currentUser.username
+                }
+                vm.$axios.post('/user/insertByVO', params).then(function(res){
+                  var addData = res.data.result;
+                  if(addData.usertype == 'ENG'){
+                      addData.usertypeName = "国外";
+                  }else if(addData.usertype == 'CHN'){
+                      addData.usertypeName = "国内";
                   }
+                  this.tableData.unshift(addData);
+                  this.total = this.tableData.length;
                   this.editFormVisible = false;
-                  this.$message({
-                      message: "修改成功！",
-                      type: "success"
-                  });
-                }.bind(this), function (error) {
-                    console.log(error)
+                }.bind(this),function(error){
+                  console.log(error)
                 })
               }
             }.bind(this),function(error){
                 console.log(error)
             })
-          }else{
-            this.$message({
+          }else if(this.dialogTitle == "展商用户编辑"){
+            var params = {
+              pkid: val.pkid,
+              userid: val.userid,
+              username: val.username,
+              deptid: "ZSYH",
+              usertype: val.usertype,
+              alterId: this.currentUser.userid,
+              alterName: this.currentUser.realName
+            }
+            if(this.editPasswordShow){
+              params.password = val.password;
+            }
+            if(!this.editFlag){
+              vm.$axios.get('/account/getNum/' + this.editForm.username + "/static").then(function(res){
+                if(res.data.result != 0){
+                  this.$message({
+                    message: "用户名已存在!",
+                    type: "error"
+                  });
+                }else{
+                  vm.$axios.post('/user/updateByVO', params).then(function (res){
+                    var result = res.data.result;
+                    this.tableData[this.editIndex].username = result.username;
+                    if(result.usertype == "CHN"){
+                      this.tableData[this.editIndex].usertypeName = "国内"; 
+                    }else if(result.usertype == "ENG"){
+                      this.tableData[this.editIndex].usertypeName = "国外"; 
+                    }
+                    this.editFormVisible = false;
+                    this.$message({
+                      message: "修改成功！",
+                      type: "success"
+                    });
+                  }.bind(this), function (error) {
+                      console.log(error)
+                  })
+                }
+              }.bind(this),function(error){
+                  console.log(error)
+              })
+            }else{
+              this.$message({
                 message: "用户名未修改!",
                 type: "error"
-            });
-          } 
+              });
+            } 
+          }
+        } else {
+          console.log('error submit!!');
+          return false;
         }
-      }
+      });
     },
 
     //编辑页按钮显示
