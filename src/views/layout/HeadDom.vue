@@ -46,7 +46,7 @@
           <el-row class="mb5" v-show="userForm.usernameFlag">
             <el-col :span="21">
               <el-form-item prop="messageCode" label="验证码" :rules="this.userForm.usernameFlag?userInforRules.messageCode:[{ required: false, message: '请输入验证码', trigger: 'blur' }]">
-                <el-input size="small" v-model="userForm.messageCode" placeholder="短信验证码"></el-input>
+                <el-input size="small" v-model="userForm.messageCode" placeholder="验证码"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -70,7 +70,7 @@
           </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" icon="el-icon-close" @click="dialogVisible = false">取 消</el-button>
+        <el-button size="small" @click="dialogVisible = false">取 消</el-button>
         <el-button size="small" type="primary" @click="confirm()">确 定</el-button>
       </span>
     </el-dialog>
@@ -99,7 +99,7 @@
         return {
           collapse: false,
           fullscreen: false,
-          currentUser: null,
+          currentUser: this.CONSTANT.currentUser,
           realname: null,
           //个人中心的Dialog显示与隐藏
           dialogVisible: false,
@@ -130,7 +130,24 @@
           userInforRules: {
             username: [
               { required: true, message: '请输入手机号', trigger: 'blur' },
-              { pattern: /^1[34578]\d{9}$/, message: '请填写正确的手机号码', trigger: 'blur' }
+              { validator: (rule, value, callback) => {
+                if (this.currentUser.usertype == 'CHN') {
+                  if (/^[1][3,4,5,7,8][0-9]{9}$/.test(value) == false) {
+                    callback(new Error("手机号格式不正确"));
+                  } else {
+                    callback();
+                  }
+                  } else if (this.currentUser.usertype == 'ENG') {
+                    if (/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(value) == false) {
+                      callback(new Error("邮箱格式不正确"));
+                    } else {
+                      callback();
+                    }
+                  } else {
+                      callback();
+                  }
+                }, trigger: 'blur'
+              }
             ],
             messageCode: [
               { required: true, message: '请输入验证码', trigger: 'blur' },
@@ -149,7 +166,6 @@
       },
       created() {
         let vm = this;
-        vm.currentUser = this.CONSTANT.currentUser;
         if(vm.currentUser != null){
           vm.realname = this.currentUser.realname ? this.currentUser.realname : "欢迎您！";
           vm.personalFlag = this.currentUser.deptid == 'ZSYH' ? true : false;
