@@ -434,39 +434,48 @@ export default {
             }
             if(!this.editFlag){
               vm.$axios.get('/account/getNum/' + this.editForm.username + "/static").then(function(res){
-                if(res.data.result != 0){
+                if (res.data.result != 0) {
                   this.$message({
                     message: "用户名已存在!",
                     type: "error"
                   });
                   return;
+                } else {
+                  this.updateExhibitor(params);
                 }
               }.bind(this),function(error){
                   console.log(error)
               })
+            } else {
+              this.updateExhibitor(params);
             }
-            vm.$axios.post('/user/updateByVO', params).then(function (res){
-              var result = res.data.result;
-              this.tableData[this.editIndex].username = result.username;
-              if(result.usertype == "CHN"){
-                this.tableData[this.editIndex].usertypeName = "国内"; 
-              }else if(result.usertype == "ENG"){
-                this.tableData[this.editIndex].usertypeName = "国外"; 
-              }
-              this.editFormVisible = false;
-              this.$message({
-                message: "修改成功！",
-                type: "success"
-              });
-            }.bind(this), function (error) {
-                console.log(error)
-            }) 
           }
         } else {
           console.log('error submit!!');
           return false;
         }
       });
+    },
+
+    //修改方法
+    updateExhibitor: function(params) {
+      let vm = this;
+      vm.$axios.post('/user/updateByVO', params).then(function (res){
+        var result = res.data.result;
+        this.tableData[this.editIndex].username = result.username;
+        if(result.usertype == "CHN"){
+          this.tableData[this.editIndex].usertypeName = "国内"; 
+        }else if(result.usertype == "ENG"){
+          this.tableData[this.editIndex].usertypeName = "国外"; 
+        }
+        this.editFormVisible = false;
+        this.$message({
+          message: "修改成功！",
+          type: "success"
+        });
+      }.bind(this), function (error) {
+          console.log(error)
+      })
     },
 
     //编辑页按钮显示
