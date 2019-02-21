@@ -6,7 +6,7 @@
         <div class="login-form" >
           <div class="filed left">
             <i class="iconfont icou"></i>
-            <span >用户名找回</span>
+            <span >密码修改</span>
             <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
@@ -273,7 +273,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 10.5rem;
+    margin-left: 11.5rem;
     a {
       cursor: pointer;
     }
