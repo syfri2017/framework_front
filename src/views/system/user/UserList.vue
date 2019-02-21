@@ -298,7 +298,7 @@ export default {
       //操作方式
       operation: "insert",
       //登陆用户
-      currentUser: "",
+      currentUser: this.CONSTANT.currentUser,
       //修改密码是否显示
       editPasswordShow: false,
       //登陆用户名-旧
@@ -306,10 +306,6 @@ export default {
     };
   },
   created: function() {
-    //table高度
-    this.CONSTANT.tableheight = this.CONSTANT.tableheight10;
-    //登录用户
-    this.currentUser = JSON.parse(localStorage.getItem("CURRENTUSER"));
     this.searchClick("click");
   },
   methods: {
