@@ -9,15 +9,15 @@
             <span >账户重置</span>
             <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
           </div>
-          <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+          <form  ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="单位名称" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+              <el-input v-model="REAcompanyName" name="REAcompanyName" id="REAcompanyName" placeholder="单位名称" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
             </div>
             <div class="filed">
-              <el-input placeholder="社会统一信用代码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+              <el-input v-model="REAunscid" name="REAunscid" id="REAunscid" placeholder="统一社会信用代码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
             </div>
             <div class="filed lgin">
-              <el-button type="danger" @click="GLYlogin" round>确定</el-button>
+              <el-button type="danger" @click="REAIdentify()" round>确定</el-button>
             </div>
           </form>
         </div>
@@ -31,50 +31,55 @@ export default {
   name: 'Login',
   data () {
     return {
-        GLYusername: "",
-        GLYpassword: "",
-        GLYsrc: "/imageCode",
-        GLYvalidateCode: "",
-        GLYmessages: "",
-        GLYloginType: "MyShiro"
+        //重置账户
+        REAcompanyName: "",
+        REAunscid: "",
+        REAtimer: null,
+        REAmobile: "",
+        REAmessageCode: "",
+        REAmessageCodeReal: "",
+        REAmessageCodeText: "获取验证码",
+        REApassword1: "",
+        REApassword2: "",
+        REAregisterData: "",
+        REAmobileBtnDisabled: false,
+        //重置校验标识
+        REAmobileAlertFlag: false,
+        REAmessageCodeAlertFlag: false,
+        REApassword1TipFlag: false,
+        REApassword1AlertFlag: false,
+        REApassword2AlertFlag: false,
     }
   },
   methods:{
-    GLYlogin(){
-      let vm = this;
-      if (this.GLYusername == null || this.GLYusername == '') {
-        alert("用户名不能为空！")
-      } else if (this.GLYpassword == null || this.GLYpassword == '') {
-        alert("密码不能为空！")
-      } else {
-        var params = {
-          username: vm.GLYusername,
-          password: vm.GLYpassword,
-          loginType: vm.GLYloginType
+    //忘记密码
+    //A
+    REAIdentify() {
+        let vm = this;
+        if (this.REAcompanyName == null || this.REAcompanyName == '') {
+            alert("单位名称不能为空！")
+        } else if (this.REAunscid == null || this.REAunscid == '') {
+            alert("统一社会信用代码不能为空！")
+        } else {
+            var params = {
+                unscid: this.REAunscid,
+                companyname: this.REAcompanyName
+            }
+            vm.$axios.post('/signin/findByUnscid/', params).then(function (res) {
+                this.REAregisterData = res.data.result;
+                if (this.REAregisterData.length == 0) {
+                    alert("无记录，请重新输入！");
+                }
+                else {
+                    this.changeForm('REABFlag');
+                    this.REAmobile = this.REAregisterData[0].username;
+                }
+            }.bind(this), function (error) {
+                console.log(error);
+            });
         }
-        vm.$axios.post('/login', params).then(function (res) {
-          if (res.data.code == '00000000') {          
-            localStorage.removeItem('isLogin');
-            localStorage.removeItem('XTOKEN');
-            localStorage.removeItem('CURRENTUSER');
-            localStorage.setItem('isLogin', 'TRUE');
-            localStorage.setItem('XTOKEN',  res.data.data.token);
-            localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
-            this.$router.push({ path: '/index' });
-          
-          } else if (res.data.code == '22222222') {
-            this.$message.error("账号不存在");
-          } else if (res.data.code == '33333333') {
-            this.$message.error("密码不正确");
-          } else {
-            this.$message.error("登录失败");
-            this.$router.push({ path: '/' });
-          }          
-        }.bind(this), function (error) {
-          console.log(error)
-        })
-      }
-    }
+    },
+
   }
 }
 </script>
