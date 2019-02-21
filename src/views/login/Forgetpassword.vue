@@ -1,27 +1,26 @@
 <template>
     <!-- 用户登录 -->
-          <el-row class="logincenter">
-            <el-col :span="8" >&nbsp;</el-col>
-            <el-col :span="8" style="text-align:-webkit-center">
-              <div class="login-form" >
-                <div class="filed left">
-                  <i class="iconfont icou"></i>
-                  <span >密码修改</span>
-                  <span class="signstyle"><router-link :to="{path:'/login/login'}"><a >返回登录</a></router-link></span>
-                </div>
-                <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
-                  
-                  <div class="filed lgin">
-                    <el-button type="danger" @click="GLYlogin" round>邮箱找回</el-button>
-                  </div>
-                  <div class="filed lgin">
-                    <el-button type="danger" @click="GLYlogin" round>手机找回</el-button>
-                  </div>
-                </form>
-              </div>
-            </el-col>
-            <el-col :span="8">&nbsp;</el-col>
-          </el-row>
+    <el-row class="logincenter">
+      <el-col :span="8" >&nbsp;</el-col>
+      <el-col :span="8" style="text-align:-webkit-center">
+        <div class="login-form" >
+          <div class="filed left">
+            <i class="iconfont icou"></i>
+            <span >密码修改</span>
+            <span class="signstyle"><router-link :to="{path:'/login/login'}"><a >返回登录</a></router-link></span>
+          </div>
+          <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+            <div class="filed lgin">
+                <router-link :to="{path:'/login/mailbox'}"><el-button type="danger" round>邮箱找回</el-button></router-link>
+            </div>
+            <div class="filed lgin">
+                <router-link :to="{path:'/login/phone'}"><el-button type="danger" round>手机找回</el-button></router-link>
+            </div>
+          </form>
+        </div>
+      </el-col>
+      <el-col :span="8">&nbsp;</el-col>
+    </el-row>
 </template>
 
 <script>
