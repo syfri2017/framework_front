@@ -576,6 +576,8 @@ export default {
                       type: "error"
                     });
                   } else {
+                    params.createId = this.currentUser.userid;
+                    params.createName = this.currentUser.realname;
                     this.$axios.post("/user/insertByVO", params).then(
                       function(res) {
                         var addData = res.data.result;
@@ -597,7 +599,7 @@ export default {
             params.pkid = val.pkid;
             params.userid = val.userid;
             params.alterId = this.currentUser.userid;
-            params.alterName = this.currentUser.realName;
+            params.alterName = this.currentUser.realname;
             if (this.editForm.username == this.usernameOld) {
               this.editSubmitUpdateDB(params);
             } else {
