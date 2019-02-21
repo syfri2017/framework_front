@@ -10,16 +10,16 @@
             <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
-            <div class="filed">
-              <el-input placeholder="邮箱" v-model="FUmail" name="FUmail" id="FUmail" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
-              <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFUMailCode()" v-text=FUmailCodeText :disabled="FUmailBtnDisabled"></button>
-            </div>
-            <div class="filed">
-              <el-input placeholder="邮件验证码"  v-model="FUmailCode" name="FUmailCode" id="FUmailCode" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
-            </div>
-            <div class="filed lgin">
-              <el-button type="danger" @click="FUIdentify()" round>确定</el-button>
-            </div>
+                <div class="filed">
+                <el-input placeholder="邮箱" v-model="FPBmail" name="FPBmail" id="FPBmail" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+                <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFUMailCode()" v-text=FUmailCodeText :disabled="FUmailBtnDisabled"></button>
+                </div>
+                <div class="filed">
+                <el-input placeholder="邮件验证码"  v-model="FPBmailCode" name="FPBmailCode" id="FPBmailCode" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+                </div>
+                <div class="filed lgin">
+                <el-button type="danger" @click="FPBIdentify()" round>确定</el-button>
+                </div>
           </form>
         </div>
       </el-col>
@@ -32,58 +32,64 @@ export default {
   name: 'Login',
   data () {
     return {
-        //忘记用户名
-        FUmail: "",
-        FUmailCode: "",
-        FUmailCodeReal: "",
-        FUmailCodeText: "获取验证码",
-        FUtimer: null,
-        FUusername: "",
-        FUmessageCode: "",
-        FUmessageCodeReal: "",
-        FUmessageCodeText: "获取验证码",
-        FUpassword: "",
-        FUsrc: "/xfxhapi/imageCode",
-        FUvalidateCode: "",
-        FUmailBtnDisabled: false,
-        FUmobileBtnDisabled: false,
+       //忘记密码
+        FPBmail: "",
+        FPBmailCode: "",
+        FPBmailCodeReal: "",
+        FPBmailCodeText: "获取验证码",
+        FPBtimer: null,
+        FPCmobile: "",
+        FPCmessageCode: "",
+        FPCmessageCodeReal: "",
+        FPCmessageCodeText: "获取验证码",
+        FPCtimer: null,
+        FPDusername: "",
+        FPDpassword1: "",
+        FPDpassword2: "",
+        FPDregisterData: "",
+        FPBmailBtnDisabled: false,
+        FPCmobileBtnDisabled: false,
+        //提交校验标识
+        FPDpassword1TipFlag: false,
+        FPDpassword1AlertFlag: false,
+        FPDpassword2AlertFlag: false,
     }
   },
   methods:{
-    //忘记用户名
-    FUmailCheck() {
-            if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.FUmail))) {
+   //B
+        FPBmailCheck() {
+            if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.FPBmail))) {
                 alert("邮箱格式不正确");
                 return false;
             } else {
                 return true;
             }
         },
-        getFUMailCode() {
+        getFPBMailCode() {
             let vm = this;
-            this.FUmailCode = "";
-            if (this.FUmailCheck()) {
-                this.FUmailCodeText = "发送中...";
-                this.FUmailBtnDisabled = true;
-                vm.$axios.get('/signin/getMailNum/' + this.FUmail + "/static").then(function (res) {
+            this.FPBmailCode = "";
+            if (this.FPBmailCheck()) {
+                this.FPBmailCodeText = "发送中...";
+                this.FPBmailBtnDisabled = true;
+                vm.$axios.get('/signin/getMailNum/' + this.FPBmail + "/static").then(function (res) {
                     if (res.data.result == 0) {
                         alert("该邮箱未注册！");
-                        this.FUmailCodeText = "获取验证码";
-                        this.FUmailBtnDisabled = false;
+                        this.FPBmailCodeText = "获取验证码";
+                        this.FPBmailBtnDisabled = false;
                     } else if (res.data.result == 1) {
-                        vm.$axios.get('/signin/sendMail?mail=' + this.FUmail).then(function (res) {
-                            this.FUmailCodeReal = res.data.msg;
+                        vm.$axios.get('/signin/sendMail?mail=' + this.FPBmail).then(function (res) {
+                            this.FPBmailCodeReal = res.data.msg;
                             var count = this.time;
-                            this.timer = setInterval(() => {
+                            this.FPBtimer = setInterval(() => {
                                 if (count == 0) {
-                                    clearInterval(this.timer);
-                                    this.timer = null;
-                                    this.FUmailCodeText = "获取验证码";
-                                    this.FUmailBtnDisabled = false;
+                                    clearInterval(this.FPBtimer);
+                                    this.FPBtimer = null;
+                                    this.FPBmailCodeText = "获取验证码";
+                                    this.FPBmailBtnDisabled = false;
                                 } else {
-                                    this.FUmailCodeText = count + "秒后获取"
+                                    this.FPBmailCodeText = count + "秒后获取"
                                     count--;
-                                    this.FUmailBtnDisabled = true;
+                                    this.FPBmailBtnDisabled = true;
                                 }
                             }, 1000)
                         }.bind(this), function (error) {
@@ -95,75 +101,25 @@ export default {
                 });
             }
         },
-        FUIdentify() {
+        FPBIdentify() {
             let vm = this;
-            if (this.FUmail == null || this.FUmail == '') {
+            if (this.FPBmail == null || this.FPBmail == '') {
                 alert("邮箱不能为空！")
-            } else if (this.FUmailCode == null || this.FUmailCode == '') {
+            } else if (this.FPBmailCode == null || this.FPBmailCode == '') {
                 alert("验证码不能为空！")
             } else {
-                if (this.FUmailCode == this.FUmailCodeReal) {
-                    vm.$axios.get('/signin/getMailNum/' + this.FUmail + "/static").then(function (res) {
-                        if (res.data.result == 0) {
-                            alert("该邮箱未注册！");
-                        } else if (res.data.result == 1) {
-                            axios.get('/signin/getUsernameByMail/' + this.FUmail + "/static").then(function (res) {
-                                alert("用户名找回成功！");
-                                this.username = res.data;
-                                this.changeForm('loginFlag');
-                            }.bind(this), function (error) {
-                                console.log(error);
-                            });
-                        }
+                if (this.FPBmailCode == this.FPBmailCodeReal) {
+                    vm.$axios.get('/signin/findByMail/' + this.FPBmail + "/static").then(function (res) {
+                        this.changeForm('FPDFlag');
+                        this.FPDregisterData = res.data.result;
+                        this.FPDusername = this.FPDregisterData[0].username;
+                        // alert("请输入新密码！");
                     }.bind(this), function (error) {
                         console.log(error);
                     });
-
                 } else {
                     alert("验证码输入错误，请核对后再试");
                 }
-            }
-        },
-        //作废
-        getFUMessageCode() {
-            let vm = this;
-            vm.$axios.get('/signin/sendMessage?phone=' + this.FUusername).then(function (res) {
-                this.FUmessageCodeReal = res.data.msg;
-                var count = this.time;
-                this.FUtimer = setInterval(() => {
-                    if (count == 0) {
-                        clearInterval(this.FUtimer);
-                        this.FUtimer = null;
-                        this.FUmessageCodeText = "获取验证码";
-                        this.FUmobileBtnDisabled = false;
-                    } else {
-                        this.FUmessageCodeText = count + "秒后获取"
-                        count--;
-                        this.FUmobileBtnDisabled = true;
-                    }
-                }, 1000)
-            }.bind(this), function (error) {
-                console.log(error);
-            });
-        },
-        reloadFUCode() {
-            // this.FUsrc = '/xfxhapi/imageCode?' + ((new Date()).valueOf());
-            this.FUsrc = '/imageCode?' + ((new Date()).valueOf());
-        },
-        FUlogin() {
-            if (this.FUusername == null || this.FUusername == '') {
-                alert("用户名不能为空！")
-            } else if (this.FUmessageCode == null || this.FUmessageCode == '') {
-                alert("短信验证码不能为空！")
-            } else if (this.FUpassword == null || this.FUpassword == '') {
-                alert("密码不能为空！")
-            } else if (this.FUvalidateCode == null || this.FUvalidateCode == '') {
-                alert("验证码不能为空！")
-            } else {
-                this.username = this.FUusername;
-                this.password = this.FUpassword;
-                this.validateCode = this.FUvalidateCode;
-                this.$refs.loginForm.submit();
             }
         },
 
