@@ -5,7 +5,7 @@
       <el-col :span="8" style="text-align:-webkit-center">
         <div class="login-form" >
           <div class="filed left">
-            <i class="iconfont icon-user"></i>
+            <i class="iconfont icou"></i>
             <span >账户重置</span>
             <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
           </div>
@@ -153,7 +153,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lgin {
-  margin-top: 2.5rem;
+  margin-top: 8.1rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -181,7 +181,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 7.5rem;
+    margin-left:11.5rem;
     a {
       cursor: pointer;
     }
@@ -458,6 +458,10 @@ $blackcolor: #2c2c2c;
 a {
     text-decoration: none;
     color:$bgcolor;
+}
+
+.icou{
+  font-size:1.8rem;
 }
 
 

@@ -1,33 +1,29 @@
 <template>
     <!-- 用户登录 -->
-          <el-row class="logincenter">
-            <el-col :span="8" >&nbsp;</el-col>
-            <el-col :span="8" style="text-align:-webkit-center">
-              <div class="login-form" >
-                <div class="filed left">
-                  <i class="iconfont icon-user"></i>
-                  <span >用户名找回</span>
-                  <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
-                </div>
-                <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
-                  
-                  <div class="filed">
-                    <el-input placeholder="邮箱" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
-                  </div>
-                  <div class="filed">
-                    <el-input placeholder="邮件验证码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
-                  </div>
-                  <div class="filed right" >
-                    <span class="muchtab"><a></a>  |  <a></a>  |  <a></a></span>
-                  </div>
-                  <div class="filed lgin">
-                    <el-button type="danger" @click="GLYlogin" round>确定</el-button>
-                  </div>
-                </form>
-              </div>
-            </el-col>
-            <el-col :span="8">&nbsp;</el-col>
-          </el-row>
+    <el-row class="logincenter">
+      <el-col :span="8" >&nbsp;</el-col>
+      <el-col :span="8" style="text-align:-webkit-center">
+        <div class="login-form" >
+          <div class="filed left">
+            <i class="iconfont icou"></i>
+            <span >用户名找回</span>
+            <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
+          </div>
+          <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+            <div class="filed">
+              <el-input placeholder="邮箱" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+            </div>
+            <div class="filed">
+              <el-input placeholder="邮件验证码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+            </div>
+            <div class="filed lgin">
+              <el-button type="danger" @click="GLYlogin" round>确定</el-button>
+            </div>
+          </form>
+        </div>
+      </el-col>
+      <el-col :span="8">&nbsp;</el-col>
+    </el-row>
 </template>
 
 <script>
@@ -157,7 +153,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lgin {
-  margin-top: 2.5rem;
+  margin-top: 8.1rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -185,7 +181,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 7.5rem;
+    margin-left: 10.5rem;
     a {
       cursor: pointer;
     }
@@ -463,6 +459,11 @@ a {
     text-decoration: none;
     color:$bgcolor;
 }
+
+.icou{
+  font-size:1.8rem;
+}
+
 
 
 </style>
