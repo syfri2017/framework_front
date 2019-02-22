@@ -103,6 +103,8 @@ export default {
     };
   },
   methods: {
+    //校验
+    
     //注册
     mobileCheck() {
       if (!/^1[34578]\d{9}$/.test(this.mobile)) {
