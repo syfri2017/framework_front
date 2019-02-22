@@ -75,7 +75,7 @@ export default {
           }else if(this.picLyanzhengma.toUpperCase() != this.checkCode ) { //若输入的验证码与产生的验证码不一致时    
               console.log(this.picLyanzhengma.toUpperCase())
               console.log(code)           
-              // $(".login_content1 span:eq(2)").text("验证码不正确")
+              alert("验证码错误！")
               // $(".login_content1 span:eq(2)").removeClass("disappear");
               this.createCode();//刷新验证码   
               this.picLyanzhengma = '';
@@ -93,8 +93,8 @@ export default {
       } else if (this.GLYpassword == null || this.GLYpassword == '') {
         alert("密码不能为空！")
       } 
-      else if(this.checkLpicma() == false){
-        alert("验证码错误！")
+      else if(this.picLyanzhengma == null || this.picLyanzhengma == ''){
+        alert("验证码不能为空！")
       } 
       else if(this.checkLpicma() == true){
         var params = {

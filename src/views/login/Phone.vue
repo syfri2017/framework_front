@@ -11,11 +11,11 @@
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="手机号" v-model="FPCmobile" name="FPCmobile" id="FPCmobile" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+              <el-input placeholder="手机号" v-model="FPCmobile" name="FPCmobile" id="FPCmobile" prefix-icon="iconfont icon-web-icon-"></el-input>
               <button type="button" id="FUmail-btn" class="verficode phonebtn"  @click="getFPCMessageCode()" v-text=FPCmessageCodeText :disabled="FPCmobileBtnDisabled"></button>
             </div>
             <div class="filed">
-              <el-input v-model="FPCmessageCode" name="FPCmessageCode" id="FPCmessageCode" placeholder="短信验证码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+              <el-input v-model="FPCmessageCode" name="FPCmessageCode" id="FPCmessageCode" placeholder="短信验证码" prefix-icon="iconfont icon-message-channel"></el-input>
             </div>
             <div class="filed lgin">
               <el-button type="danger"  @click="FPCIdentify()" round>确定</el-button>

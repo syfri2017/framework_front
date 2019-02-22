@@ -11,11 +11,11 @@
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="邮箱" v-model="FUmail" name="FUmail" id="FUmail" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+              <el-input placeholder="邮箱" v-model="FUmail" name="FUmail" id="FUmail" prefix-icon="iconfont icon-youxiang"></el-input>
               <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFUMailCode()" v-text=FUmailCodeText :disabled="FUmailBtnDisabled"></button>
             </div>
             <div class="filed">
-              <el-input placeholder="邮件验证码"  v-model="FUmailCode" name="FUmailCode" id="FUmailCode" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+              <el-input placeholder="邮件验证码"  v-model="FUmailCode" name="FUmailCode" id="FUmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
             </div>
             <div class="filed lgin">
               <el-button type="danger" @click="FUIdentify()" round>确定</el-button>

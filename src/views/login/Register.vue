@@ -28,7 +28,7 @@
               name="mobile"
               id="mobile"
               placeholder="请输入手机号"
-              prefix-icon="iconfont icon-icon_zhanghao"
+              prefix-icon="iconfont icon-web-icon-"
               @blur="mobileCheck"
             ></el-input>
             <button
@@ -41,11 +41,11 @@
             ></button>
           </div>
           <div class="filed">
-            <el-input placeholder="请输入手机验证码" v-model="messageCode" name="messageCode" id="messageCode" @blur="messageCodeCheck" prefix-icon="iconfont icon-password"></el-input>
+            <el-input placeholder="请输入手机验证码"  name="messageCode" id="messageCode" @blur="messageCodeCheck" prefix-icon="iconfont icon-message-channel"></el-input>
             <!-- <p class="alert" v-show="messageCodeAlertFlag">*请填写正确的手机验证码</p> -->
           </div>
           <div class="filed">
-            <el-input placeholder="请输入密码" prefix-icon="iconfont icon-querenmima-copy" type="password" class="inputstyle" v-model="password1" name="password1" id="password1" @focus="password1Tip"
+            <el-input placeholder="请输入密码" prefix-icon="iconfont icon-password" type="password" class="inputstyle" v-model="password1" name="password1" id="password1" @focus="password1Tip"
                                         @blur="password1Check"></el-input>
             <!-- <p class="tip" v-show="password1TipFlag">*密码需为6-16位字母数字组合</p>
             <p class="alert" v-show="password1AlertFlag">*密码不合规，请重新填写</p> -->

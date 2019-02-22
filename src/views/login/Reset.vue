@@ -11,10 +11,10 @@
           </div>
           <form  ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input v-model="REAcompanyName" name="REAcompanyName" id="REAcompanyName" placeholder="单位名称" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+              <el-input v-model="REAcompanyName" name="REAcompanyName" id="REAcompanyName" placeholder="单位名称" prefix-icon="iconfont icon-danwei"></el-input>
             </div>
             <div class="filed">
-              <el-input v-model="REAunscid" name="REAunscid" id="REAunscid" placeholder="统一社会信用代码" prefix-icon="iconfont icon-zhanghaoquanxianguanli"></el-input>
+              <el-input v-model="REAunscid" name="REAunscid" id="REAunscid" placeholder="统一社会信用代码" prefix-icon="iconfont icon-credentials_icon"></el-input>
             </div>
             <div class="filed lgin">
               <el-button type="danger" @click="REAIdentify()" round>确定</el-button>
