@@ -10,7 +10,10 @@
         <div class="header-user-con">
           <!-- 全屏显示 -->
           <div class="btn-fullscreen" @click="handleFullScreen">
-            <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
+            <el-tooltip v-if="usertype == 'ENG'" effect="dark" :content="fullscreen?`Cancel FullScreen`:`FullScreen`" placement="bottom">
+              <i class="el-icon-rank"></i>
+            </el-tooltip>
+            <el-tooltip v-else effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
               <i class="el-icon-rank"></i>
             </el-tooltip>
           </div>
@@ -22,18 +25,24 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-if="personalFlag" command="personal" class="iconfont icon-personal iconfontDrop">&nbsp;个人中心</el-dropdown-item>
-              <el-dropdown-item command="logout" class="iconfont icon-logout iconfontDrop">&nbsp;退出</el-dropdown-item>
+              <el-dropdown-item v-if="personalFlag" command="personal" class="iconfont icon-personal iconfontDrop">&nbsp;
+                <span v-if="usertype == 'ENG'">User Center</span>
+                <span v-else>个人中心</span>
+              </el-dropdown-item>
+              <el-dropdown-item command="logout" class="iconfont icon-logout iconfontDrop">&nbsp;
+                <span v-if="usertype == 'ENG'">Log Out</span>
+                <span v-else>退出</span>
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
       </div>
-      <el-dialog title="个人中心" :visible.sync="dialogVisible" width="30%">
-        <el-form id="userForm" ref="userForm" :model="userForm" label-width="80px" :label-position="'left'" :rules="userInforRules">
+      <el-dialog :title="DialogTitle" :visible.sync="dialogVisible" width="30%">
+        <el-form id="userForm" ref="userForm" :model="userForm" :label-width="labelWidth" :label-position="'left'" :rules="userInforRules">
           <el-row class="mb5">
             <el-col :span="21">
-              <el-form-item prop="username" label="用户名">
-                <el-input size="small" v-model="userForm.username" placeholder="用户名" :disabled="!userForm.usernameFlag"></el-input>
+              <el-form-item prop="username" :label="usernameLabel" class="is-required">
+                <el-input size="small" v-model="userForm.username" :placeholder="usernameLabel" :disabled="!userForm.usernameFlag" clearable></el-input>
                 <el-button class="abs hqyzm" size="mini" v-text="userForm.messageCodeText" type="text" v-show="userForm.usernameFlag" :disabled="userForm.messageBtnFlag"
                     @click="getMessageCode()"></el-button>
               </el-form-item>
@@ -45,15 +54,15 @@
           </el-row>
           <el-row class="mb5" v-show="userForm.usernameFlag">
             <el-col :span="21">
-              <el-form-item prop="messageCode" label="验证码" :rules="this.userForm.usernameFlag?userInforRules.messageCode:[{ required: false, message: '请输入验证码', trigger: 'blur' }]">
-                <el-input size="small" v-model="userForm.messageCode" placeholder="验证码"></el-input>
+              <el-form-item prop="messageCode" :label="messageCodeLabel" class="is-required">
+                <el-input size="small" v-model="userForm.messageCode" :placeholder="messageCodeLabel" clearable></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="mb5">
             <el-col :span="21">
-              <el-form-item prop="password" label="密码">
-                <el-input type="password" size="small" v-model="userForm.password" placeholder="密码" :disabled="!userForm.passwordFlag"></el-input>
+              <el-form-item prop="password" :label="passwordLabel" class="is-required">
+                <el-input type="password" size="small" v-model="userForm.password" :placeholder="passwordLabel" :disabled="!userForm.passwordFlag" clearable></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="1">&nbsp;</el-col>
@@ -63,15 +72,15 @@
           </el-row>
           <el-row class="mb5" v-show="userForm.passwordFlag">
             <el-col :span="21">
-              <el-form-item prop="passwordAgain" label="确认密码" :rules="this.userForm.passwordFlag?userInforRules.passwordAgain:[{ required: false, message: '请输入确认密码', trigger: 'blur' }]">
-                <el-input type="password" size="small" v-model="userForm.passwordAgain" placeholder="确认密码"></el-input>
+              <el-form-item prop="passwordAgain" :label="checkPassLabel" class="is-required">
+                <el-input type="password" size="small" v-model="userForm.passwordAgain" :placeholder="checkPassLabel" clearable></el-input>
               </el-form-item>
             </el-col>
           </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="dialogVisible = false">取 消</el-button>
-        <el-button size="small" type="primary" @click="confirm()">确 定</el-button>
+        <el-button size="small" @click="dialogVisible = false"><span v-if="usertype=='ENG'">cancel</span><span v-else>取 消</span></el-button>
+        <el-button size="small" type="primary" @click="confirm()"><span v-if="usertype=='ENG'">confirm</span><span v-else>确 定</span></el-button>
       </span>
     </el-dialog>
   </div>
@@ -80,22 +89,6 @@
     import bus from '../../common/js/bus';
     export default {
       data() {
-        var validatePwdAgain = (rule, value, callback) => {
-          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value) == false) {
-            callback(new Error("密码应为6-16位字母和数字组合"));
-          } else if (value !== this.userForm.password) {
-            callback(new Error("两次输入密码不一致"));
-          } else {
-            callback();
-          }
-        };
-        var validateMsgCode = (rule, value, callback) => {
-          if (value !== this.userForm.messageCodeReal) {
-            callback(new Error("验证码输入错误"));
-          } else {
-            callback();
-          }
-        };
         return {
           collapse: false,
           fullscreen: false,
@@ -105,6 +98,15 @@
           dialogVisible: false,
           //个人中心DropDown显示与隐藏
           personalFlag: false,
+          //用户类型，中文还是英文
+          usertype: 'CHN',
+          //DialogTitle
+          DialogTitle: "个人中心",
+          usernameLabel: "用户名",
+          messageCodeLabel: "验证码",
+          passwordLabel: "密码",
+          checkPassLabel: "确认密码",
+          labelWidth: '80px',
           //修改用户名密码的Form表单
           userForm: {
             usernameWord: "",//保存原用户名
@@ -129,37 +131,74 @@
           //Form表单的Rules
           userInforRules: {
             username: [
-              { required: true, message: '请输入手机号', trigger: 'blur' },
               { validator: (rule, value, callback) => {
-                if (this.currentUser.usertype == 'CHN') {
-                  if (/^[1][3,4,5,7,8][0-9]{9}$/.test(value) == false) {
-                    callback(new Error("手机号格式不正确"));
+                  if (value == null || value == '') {
+                    callback(new Error(this.usertype=='ENG' ? 'Please input a email.' : "请输入手机号"));
                   } else {
-                    callback();
-                  }
-                  } else if (this.currentUser.usertype == 'ENG') {
-                    if (/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(value) == false) {
-                      callback(new Error("邮箱格式不正确"));
+                    if (this.usertype == 'ENG') {
+                      if (/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(value) == false) {
+                        callback(new Error("The email format is not correct."));
+                      } else {
+                        callback();
+                      }
                     } else {
-                      callback();
+                      if (/^[1][3,4,5,7,8][0-9]{9}$/.test(value) == false) {
+                        callback(new Error("手机号格式不正确"));
+                      } else {
+                        callback();
+                      }
                     }
-                  } else {
-                      callback();
+                    callback();
                   }
                 }, trigger: 'blur'
               }
             ],
             messageCode: [
-              { required: true, message: '请输入验证码', trigger: 'blur' },
-              { validator: validateMsgCode, trigger: 'blur' }
+              { validator: (rule, value, callback) => {
+                  if (!this.userForm.usernameFlag) {
+                    callback();
+                  } else {
+                    if (value == null || value == '') {
+                      callback(new Error(this.usertype=='ENG' ? 'Please input the verification code.' : "请输入验证码"));
+                    } else if (value !== this.userForm.messageCodeReal) {
+                      callback(new Error(this.usertype=='ENG' ? 'The verification code is error.' : "验证码输入错误"));
+                    } else {
+                      callback();
+                    }
+                  }
+                }, trigger: 'blur' }
             ],
             password: [
-              { required: true, message: '请输入密码', trigger: 'blur' },
-              { pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/, message: '密码应为6-16位字母和数字组合', trigger: 'blur' }
+              { validator: (rule, value, callback) => {
+                  if (!this.userForm.passwordFlag) {
+                    callback();
+                  } else {
+                    if (value == null || value == '') {
+                      callback(new Error(this.usertype=='ENG' ? 'Please input a password.' : "请输入密码"));
+                    } else if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value) == false) {
+                      callback(new Error(this.usertype=='ENG' ? 'Password must be 6-16-bit alphanumeric combination.' : "密码应为6-16位字母和数字组合"));
+                    } else {
+                      callback();
+                    }
+                  }
+                }, trigger: 'blur' }
             ],
             passwordAgain: [
-              { required: true, message: '请再次输入密码', trigger: 'blur' },
-              { validator: validatePwdAgain, trigger: "blur" }
+              { validator: (rule, value, callback) => {
+                if (!this.userForm.passwordFlag) {
+                  callback();
+                } else {
+                  if (value == null || value == '') {
+                    callback(new Error(this.usertype=='ENG' ? 'Please input the password again.' : "请再次输入密码"));
+                  } else if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value) == false) {
+                    callback(new Error(this.usertype=='ENG' ? 'Password must be 6-16-bit alphanumeric combination.' : "密码应为6-16位字母和数字组合"));
+                  } else if (value !== this.userForm.password) {
+                    callback(new Error(this.usertype=='ENG' ? 'The two entries do not match.' : "两次输入密码不一致"));
+                  } else {
+                    callback();
+                  }
+                }
+              }, trigger: "blur" }
             ],
           },
         }
@@ -167,15 +206,37 @@
       created() {
         let vm = this;
         if(vm.currentUser != null){
-          vm.realname = this.currentUser.realname ? this.currentUser.realname : "欢迎您！";
+          vm.usertype = this.currentUser.usertype;
+          vm.realname = this.currentUser.realname ? this.currentUser.realname : (vm.usertype=='ENG' ? 'Welcome!' : "欢迎您！");
           vm.personalFlag = this.currentUser.deptid == 'ZSYH' ? true : false;
           vm.userForm.userid = vm.currentUser.userid;
           vm.userForm.usernameWord = vm.currentUser.username;
           vm.userForm.passwordWord = "admin123";
         }
+        //显示中文还是英文
+        this.showCHNorENG();
       },
       methods:{
-        // 用户名下拉菜单选择事件
+        //显示中文还是英文
+        showCHNorENG() {
+          let vm = this;
+          if (vm.usertype == 'ENG') {
+            vm.DialogTitle = 'Personal Center';
+            vm.usernameLabel = 'username';
+            vm.messageCodeLabel = 'validate code';
+            vm.passwordLabel = 'password';
+            vm.checkPassLabel = 'confirm password';
+            vm.labelWidth = '150px';
+          } else {
+            vm.DialogTitle = "个人中心";
+            vm.usernameLabel = "用户名";
+            vm.messageCodeLabel = "验证码";
+            vm.passwordLabel = "密码";
+            vm.checkPassLabel = "确认密码";
+            vm.labelWidth = '80px';
+          }
+        },
+        //用户名下拉菜单选择事件
         handleCommand(command) {
           if("personal" == command) {
             this.personal();
@@ -200,14 +261,19 @@
         //个人中心
         personal: function () {
           this.dialogVisible = true;
-          this.userForm.usernameText = "修改";
-          this.userForm.passwordText = "修改";
           this.userForm.usernameFlag = false;
           this.userForm.passwordFlag = false;
           this.timer = null;
-          this.userForm.messageCodeText = "获取验证码";
           this.userForm.messageBtnFlag = false;
-
+          if (this.usertype == 'ENG') {
+            this.userForm.usernameText = 'edit';
+            this.userForm.passwordText = 'edit';
+            this.userForm.messageCodeText = 'Get Verification Code';
+          } else {
+            this.userForm.usernameText = "修改";
+            this.userForm.passwordText = "修改";
+            this.userForm.messageCodeText = "获取验证码";
+          }
           this.$nextTick(() => {
               this.$refs.userForm.resetFields();
           })
@@ -220,10 +286,10 @@
         changeUsername: function () {
           if (this.userForm.usernameFlag == false) {
             this.userForm.usernameFlag = true;
-            this.userForm.usernameText = "取消";
+            this.userForm.usernameText = this.usertype == 'ENG' ? 'cancel' : "取消";
           } else if (this.userForm.usernameFlag == true) {
             this.userForm.usernameFlag = false;
-            this.userForm.usernameText = "修改";
+            this.userForm.usernameText = this.usertype == 'ENG' ? 'edit' : "修改";
             this.userForm.username = this.userForm.usernameWord;
           }
         },
@@ -231,57 +297,89 @@
         changePassword: function () {
           if (this.userForm.passwordFlag == false) {
             this.userForm.passwordFlag = true;
-            this.userForm.passwordText = "取消";
+            this.userForm.passwordText = this.usertype == 'ENG' ? 'cancel' : "取消";
             this.userForm.password = "";
             this.userForm.passwordAgain = "";
           } else if (this.userForm.passwordFlag == true) {
             this.userForm.passwordFlag = false;
-            this.userForm.passwordText = "修改";
+            this.userForm.passwordText = this.usertype == 'ENG' ? 'edit' : "修改";
             this.userForm.password = this.userForm.passwordWord;
           }
         },
         //获取验证码
         getMessageCode: function () {
           let vm = this;
-
           if (vm.userForm.username === vm.userForm.usernameWord) {
             vm.$message({
-              message: '用户名未变化',
+              message: this.usertype == 'ENG' ? 'The username did not change.' : '用户名未变化',
               type: 'error'
             });
             return;
           } else {
+            //首先需要判断手机号码和邮箱是否符合规则
+            if (this.usertype == 'ENG') {
+              if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(vm.userForm.username))) {
+                return false;
+              } 
+            } else {
+              if (!(/^[1][3,4,5,7,8][0-9]{9}$/.test(vm.userForm.username))) { 
+                return false;
+              } 
+            }
+      
             vm.userForm.messageCode = "";
-            vm.userForm.messageCodeText = "发送中...";
+            vm.userForm.messageCodeText = this.usertype == 'ENG' ? 'sending...' : "发送中...";
             vm.userForm.messageBtnFlag = true;
 
             vm.$axios.get('/signin/getUsernameNum/' + vm.userForm.username + "/static").then(function (res) {
               if (res.data.result != 0) {
                 vm.$message({
-                  message: '用户名已存在',
+                  message: this.usertype == 'ENG' ? 'The email is registered.' : '用户名已存在',
                   type: 'error'
                 });
-                vm.userForm.messageCodeText = "获取验证码";
+                vm.userForm.messageCodeText = this.usertype == 'ENG' ? 'Get Verification Code' : "获取验证码";
                 vm.userForm.messageBtnFlag = false;
               } else {
-                vm.$axios.get('/signin/sendMessage?phone=' + vm.userForm.username).then(function (res) {
-                  vm.userForm.messageCodeReal = res.data.msg;
-                  var count = vm.time;
-                  vm.timer = setInterval(() => {
-                    if (count == 0) {
-                      clearInterval(vm.timer);
-                      vm.timer = null;
-                      vm.userForm.messageCodeText = "获取验证码";
-                      vm.userForm.messageBtnFlag = false;
-                    } else {
-                      vm.userForm.messageCodeText = count + "秒后获取"
-                      count--;
-                      vm.userForm.messageBtnFlag = true;
-                    }
-                  }, 1000)
-                }.bind(this), function (error) {
-                    console.log(error);
-                });
+                //如果是中文展商，调用手机号收验证码的方法；如果是英文展商，调用邮箱收验证码的方法
+                if (vm.usertype == 'ENG') {
+                  vm.$axios.get('/signin/sendMailEng?mail=' + this.userForm.username).then(function (res) {
+                      vm.userForm.messageCodeReal = res.data.msg;
+                      var count = vm.time;
+                      vm.timer = setInterval(() => {
+                        if (count == 0) {
+                            clearInterval(vm.timer);
+                            vm.timer = null;
+                            vm.userForm.messageCodeText = "Get Verification Code";
+                            vm.userForm.messageBtnFlag = false;
+                        } else {
+                            vm.userForm.messageCodeText = count + "seconds later"
+                            count--;
+                            vm.userForm.messageBtnFlag = true;
+                        }
+                      }, 1000)
+                  }.bind(this), function (error) {
+                      console.log(error);
+                  });
+                } else {
+                  vm.$axios.get('/signin/sendMessage?phone=' + vm.userForm.username).then(function (res) {
+                    vm.userForm.messageCodeReal = res.data.msg;
+                    var count = vm.time;
+                    vm.timer = setInterval(() => {
+                      if (count == 0) {
+                        clearInterval(vm.timer);
+                        vm.timer = null;
+                        vm.userForm.messageCodeText = "获取验证码";
+                        vm.userForm.messageBtnFlag = false;
+                      } else {
+                        vm.userForm.messageCodeText = count + "秒后获取"
+                        count--;
+                        vm.userForm.messageBtnFlag = true;
+                      }
+                    }, 1000)
+                  }.bind(this), function (error) {
+                      console.log(error);
+                  });
+                }
               }
             }.bind(this), function (error) {
                 console.log(error)
@@ -290,11 +388,12 @@
         },
         //Dialog中的确定按钮
         confirm: function () {
+         
           let vm = this;
           if(!this.userForm.usernameFlag && !this.userForm.passwordFlag){
             this.$message({
               showClose: true,
-              message: '用户名密码未修改！',
+              message: this.usertype == 'ENG' ? 'The username and password did not change.' : '用户名密码未变化',
               type: 'warning'
             });
             return;
@@ -317,7 +416,7 @@
                 var result = res.data.result;
                 if (result == 1) {
                   vm.$message({
-                      message: '修改成功，3秒后退出登录',
+                      message: this.usertype == 'ENG' ? 'Modify success, log out after 3 seconds.' : '修改成功，3秒后退出登录',
                       duration: 2000,
                       type: 'success'
                   });
@@ -332,7 +431,7 @@
                   }, 1000);
                 } else {
                   this.$message({
-                      message: '修改失败，请重试',
+                      message: this.usertype == 'ENG' ? 'Modify the failure, please try again.' : '修改失败，请重试',
                       type: 'error'
                   });
                 }
