@@ -149,7 +149,7 @@
 						<el-row>
 							<el-col :span="23">
 								<el-form-item label="角色" prop="roles" id="roleDiv" style="height:34px;overflow:hidden;">
-									<el-checkbox-group v-model="editForm.roles" size="small" style="float:left;width:90%;">
+									<el-checkbox-group v-model="editForm.roles" size="small" style="float:left;width:88%;">
 										<el-checkbox v-for="role in allRoles" :label="role.rolename" :key="role.id">{{role.roleinfo}}</el-checkbox>
 									</el-checkbox-group>
 									<el-button id="roleSpread" size="mini" type="info" plain style="float:right;margin-top:6px;" @click="spread">展开</el-button>
