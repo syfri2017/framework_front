@@ -11,7 +11,8 @@
           </div>
           <el-form :model="editForm" :rules="editFormRules" ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input :rules="[{ required: true, message: '请输入姓名', trigger: 'blur' }]" placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username"></el-input>
+              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username" @blur="mobileCheck"></el-input>
+              <p class="alert" v-show="mobileAlertFlag">*请填写正确的手机号码</p>
             </div>
             <div class="filed">
               <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
@@ -51,10 +52,27 @@ export default {
         LUserPsd:'',
         picLyanzhengma:'',
         checkCode:'',
+        // 校验标识符
+        //注册校验标识
+        mobileAlertFlag: false,
+        // messageCodeAlertFlag: false,
+        // password1TipFlag: false,
+        // password1AlertFlag: false,
+        // password2AlertFlag: false
 
     }
   },
   methods:{
+      // 输入框校验
+      mobileCheck() {
+        if (!/^1[34578]\d{9}$/.test(this.mobile)) {
+          this.mobileAlertFlag = true;
+          return false;
+        } else {
+          this.mobileAlertFlag = false;
+          return true;
+        }
+      },
      // 图片验证码
       createCode(){
           code = "";    
@@ -522,6 +540,13 @@ a {
   color:yellow !important;
   background:chocolate !important;
   border:0px;
+}
+
+.alert{
+  position:absolute;
+  top:58px;
+  margin-left:0px !important;
+  color:#EA2530;
 }
 
 </style>
