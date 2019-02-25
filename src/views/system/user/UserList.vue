@@ -201,7 +201,7 @@ export default {
       
       allRoles: [],
       //显示加载中样
-      loading: true,
+      loading: false,
       labelPosition: "right",
       //多选值
       multipleSelection: [],
