@@ -1,14 +1,11 @@
 <template>
-  <div >
-    <h1>Role</h1>
+  <div id="role">
     <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
-  methods: {
-    
-  }
+  name: 'role'
 }
 </script>
 

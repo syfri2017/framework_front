@@ -310,7 +310,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'role',
-              component: resolve => require(['@/views/system/role/Role'], resolve)
+              component: resolve => require(['@/views/system/role/RoleList'], resolve)
             },
           ]
         },
