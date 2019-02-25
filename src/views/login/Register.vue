@@ -27,7 +27,7 @@
               v-text="messageCodeText"
               :disabled="mobileBtnDisabled"
             ></button>
-             <!-- <p class="alert" v-show="mobileAlertFlag">*请填写正确的手机号码</p> -->
+             <p class="alert" v-show="mobileAlertFlag">*请填写正确的手机号码</p>
           </div>
           <div class="filed">
             <el-input
@@ -38,7 +38,7 @@
               @blur="messageCodeCheck"
               prefix-icon="iconfont icon-message-channel"
             ></el-input>
-            <!-- <p class="alert" v-show="messageCodeAlertFlag">*请填写正确的手机验证码</p> -->
+            <p class="alert1" v-show="messageCodeAlertFlag">*请填写正确的手机验证码</p>
           </div>
           <div class="filed">
             <el-input
@@ -52,8 +52,8 @@
               @focus="password1Tip"
               @blur="password1Check"
             ></el-input>
-            <!-- <p class="tip" v-show="password1TipFlag">*密码需为6-16位字母数字组合</p>
-            <p class="alert" v-show="password1AlertFlag">*密码不合规，请重新填写</p> -->
+            <p class="tip" v-show="password1TipFlag">*密码需为6-16位字母数字组合</p>
+            <p class="alert2" v-show="password1AlertFlag">*密码不合规，请重新填写</p>
           </div>
           <div class="filed">
             <el-input
@@ -66,7 +66,7 @@
               @blur="password2Check"
               prefix-icon="iconfont icon-querenmima-copy"
             ></el-input>
-            <!-- <p class="alert" v-show="password2AlertFlag">*两次填写不一致，请重新填写</p> -->
+            <p class="alert3" v-show="password2AlertFlag">*两次填写不一致，请重新填写</p>
           </div>
 
           <div class="filed lgin">
@@ -621,4 +621,39 @@ a {
   color: #fb6a74;
   cursor: pointer;
 }
+
+.alert{
+  position:absolute;
+  top:58px;
+  margin-left:0px !important;
+  color:#EA2530;
+  }
+
+  .alert1{
+  position:absolute;
+  top:118px;
+  margin-left:0px !important;
+  color:#EA2530;
+  }
+
+  .alert2{
+  position:absolute;
+  top:178px;
+  margin-left:0px !important;
+  color:#EA2530;
+  }
+
+  .tip{
+  position:absolute;
+  top:178px;
+  margin-left:0px !important;
+  color:#EA2530;
+  }
+
+  .alert3{
+  position:absolute;
+  top:540px;
+  margin-left:0px !important;
+  color:#EA2530;
+  }
 </style>

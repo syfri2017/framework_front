@@ -95,7 +95,7 @@
             <el-button v-if="dialogTitle=='展商用户编辑'" v-text="editFlagText" type="text" size="small" @click="editFlagChange" style="margin-top:6px;"></el-button>
           </el-col>
         </el-row>
-          <el-row v-if="editPasswordShow">
+        <el-row v-if="editPasswordShow">
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="21">
             <el-form-item label="密码" prop="password">

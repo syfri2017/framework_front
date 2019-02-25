@@ -9,9 +9,9 @@
             <span >用户登录</span>
             <span class="signstyle">没有账户?<router-link :to="{path:'/login/Register'}"><a>去注册</a></router-link></span>
           </div>
-          <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+          <el-form :model="editForm" :rules="editFormRules" ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username"></el-input>
+              <el-input :rules="[{ required: true, message: '请输入姓名', trigger: 'blur' }]" placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username"></el-input>
             </div>
             <div class="filed">
               <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
@@ -26,7 +26,7 @@
             <div class="filed lgin">
               <el-button type="danger" @click="GLYlogin" round>登录</el-button>
             </div>
-          </form>
+          </el-form>
         </div>
       </el-col>
       <el-col :span="8">&nbsp;</el-col>
@@ -50,7 +50,8 @@ export default {
         UserPhone:'',
         LUserPsd:'',
         picLyanzhengma:'',
-        checkCode:''
+        checkCode:'',
+
     }
   },
   methods:{
