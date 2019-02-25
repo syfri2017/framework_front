@@ -323,7 +323,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'resource',
-              component: resolve => require(['@/views/system/resource/Resource'], resolve)
+              component: resolve => require(['@/views/system/resource/ResourceList'], resolve)
             },
           ]
         },
