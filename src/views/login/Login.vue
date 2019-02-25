@@ -18,7 +18,7 @@
             </div>
             <div class="filed">
               <el-input placeholder="验证码" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-validate"></el-input>
-              <input type="button" id="code" @click="createCode"  class="verification1" v-model="checkCode"/>
+              <input type="button"  class="verification1 bk" id="code" @click="createCode"  v-model="checkCode"/>
             </div>
             <div class="filed right">
               <span class="muchtab"><router-link :to="{path:'/login/ForgetUsername'}"><a>忘记用户名</a></router-link>  |  <router-link :to="{path:'/login/ForgetPassword'}"><a>忘记密码</a></router-link>  |  <router-link :to="{path:'/login/Reset'}"><a>重置账户</a></router-link></span>
@@ -515,6 +515,12 @@ a {
 
 .icou{
   font-size:1.8rem;
+}
+
+.bk{
+  color:yellow !important;
+  background:chocolate !important;
+  border:0px;
 }
 
 </style>
