@@ -652,7 +652,7 @@ a {
 
   .alert3{
   position:absolute;
-  top:540px;
+  top:236px;
   margin-left:0px !important;
   color:#EA2530;
   }
