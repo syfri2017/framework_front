@@ -625,35 +625,35 @@ a {
 
 .alert{
   position:absolute;
-  top:58px;
+  top:48px;
   margin-left:0px !important;
   color:#EA2530;
   }
 
   .alert1{
   position:absolute;
-  top:118px;
+  top:103px;
   margin-left:0px !important;
   color:#EA2530;
   }
 
   .alert2{
   position:absolute;
-  top:178px;
+  top:159px;
   margin-left:0px !important;
   color:#EA2530;
   }
 
   .tip{
   position:absolute;
-  top:178px;
+  top:159px;
   margin-left:0px !important;
   color:#EA2530;
   }
 
   .alert3{
   position:absolute;
-  top:236px;
+  top:218px;
   margin-left:0px !important;
   color:#EA2530;
   }
