@@ -547,7 +547,6 @@ export default {
                 };
                 vm.$axios.post("/resource/insertByVO", params).then(
                   function(res) {
-                    debugger;
                     this.$message({
                       showClose: true,
                       message: "新增成功",
