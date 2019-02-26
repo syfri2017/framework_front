@@ -17,7 +17,19 @@ export default {
         if (rowDate == null || rowDate == "") {
           return '';
         } else {
-          return dateFormat(rowDate);
+          var date = new Date(rowDate);
+          if (date == undefined) {
+            return rowDate;
+          }
+          var month = '' + (date.getMonth() + 1),
+            day = '' + date.getDate(),
+            year = date.getFullYear();
+
+          if (month.length < 2) month = '0' + month;
+          if (day.length < 2) day = '0' + day;
+
+          var newDate = [year, month, day].join('-');
+          return newDate;
         }
       }
 
