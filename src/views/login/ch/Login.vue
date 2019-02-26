@@ -227,7 +227,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lgin {
-  margin-top: 0.6rem;
+  margin-top: 3rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -255,7 +255,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 6.5rem;
+    margin-left: 7.2rem;
     a {
       cursor: pointer;
     }
