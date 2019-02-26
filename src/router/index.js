@@ -223,7 +223,9 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'plan',
-              component: resolve => require(['@/views/venue/plan/Plan'], resolve)
+              component: resolve => require(['@/views/booth/select/PositionSelect'], resolve)
+              //component: resolve => require(['@/views/venue/plan/Plan'], resolve)
+
             },
           ]
         },
@@ -249,7 +251,8 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'position',
-              component: resolve => require(['@/views/booth/position/Position'], resolve)
+              //component: resolve => require(['@/views/booth/position/Position'], resolve)
+              component: resolve => require(['@/views/booth/select/PositionSelect'], resolve)
             },
           ]
         },
@@ -257,17 +260,17 @@ const router = new VueRouter({
         {
           path: '/booth/positionDesign',
           meta: {auth: true, title: "展位设计"},
-          component: resolve => require(['@/views/ploter/Plot'], resolve)
-          // component: PositionDesign,
-          // children: [
-          //   {
-          //     path: '/',
-          //     name: 'positionDesign',
-          //     //component: resolve => require(['@/views/booth/design/PositionDesign'], resolve)
-          //     component: resolve => require(['@/views/ploter/Plot'], resolve),
-          //     props: true
-          //   }
-          // ]
+          
+          component: PositionDesign,
+          children: [
+            {
+              path: '/',
+              name: 'positionDesign',
+              //component: resolve => require(['@/views/booth/design/PositionDesign'], resolve)
+              component: resolve => require(['@/views/ploter/Plot'], resolve),
+              props: true
+            }
+          ]
         },
         //----------展位管理-展位分类----------
         {

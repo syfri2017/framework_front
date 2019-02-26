@@ -90,7 +90,7 @@
                 })
                 if (businessRecord) {
                     if (this.ploterConfig.readOnly) {
-                        window.wrapHandshake.emit('evtBusinessShapeSelected', businessRecord)
+                        window.wrapHandshake.$emit('evtBusinessShapeSelected', businessRecord)
                     } else {
                         this.attributeModule.data = deepClone(businessRecord)
                         this.attributeModule.show = true
