@@ -1,14 +1,11 @@
 <template>
-  <div >
-    <h1>Codelist</h1>
+  <div id="codelist">
     <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
-  methods: {
-    
-  }
+  name: 'codelist'
 }
 </script>
 
