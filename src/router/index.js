@@ -395,7 +395,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'permission',
-              component: resolve => require(['@/views/system/permission/Permission'], resolve)
+              component: resolve => require(['@/views/system/permission/PermissionList'], resolve)
             },
           ]
         },
