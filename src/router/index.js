@@ -83,62 +83,62 @@ const router = new VueRouter({
       ],
       redirect:'/login/Login'
     },
-    {
-      path: '/',
-      name: 'loginEN',
-      component: LoginEN,
-      children: [
-        {
-          path: '/loginEN/Phone',
-          name: 'loginEN/Phone',
-          meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/loginEN/Phone'], resolve)
-        },
-        {
-          path: '/loginEN/Mailbox',
-          name: 'loginEN/Mailbox',
-          meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/loginEN/Mailbox'], resolve)
-        },
-        {
-          path: '/loginEN/Administrator',
-          name: 'loginEN/Administrator',
-          meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/loginEN/Administrator'], resolve)
-        },
-        {
-          path: '/loginEN/Reset',
-          name: 'loginEN/Reset',
-          meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/loginEN/Reset'], resolve)
-        },
-        {
-          path: '/loginEN/ForgetPassword',
-          name: 'loginEN/ForgetPassword',
-          meta: {auth: true, title: "忘记用户名", operation: true},
-          component: resolve => require(['@/views/loginEN/ForgetPassword'], resolve)
-        },
-        {
-          path: '/loginEN/ForgetUsername',
-          name: 'loginEN/ForgetUsername',
-          meta: {auth: true, title: "忘记密码", operation: true},
-          component: resolve => require(['@/views/loginEN/ForgetUsername'], resolve)
-        },
-        {
-          path: '/loginEN/Register',
-          name: 'loginEN/Register',
-          meta: {auth: true, title: "用户注册", operation: true},
-          component: resolve => require(['@/views/loginEN/Register'], resolve)
-        },
-        {
-          path: '/loginEN/Login',
-          name: 'loginEN/Login',
-          meta: {auth: true, title: "用户登录", operation: true},
-          component: resolve => require(['@/views/loginEN/Login'], resolve)
-        }
-      ],
-      redirect:'/login/LoginEN'
-    },
+    // {
+    //   path: '/',
+    //   name: 'loginEN',
+    //   component: LoginEN,
+    //   children: [
+    //     {
+    //       path: '/loginEN/Phone',
+    //       name: 'loginEN/Phone',
+    //       meta: {auth: true, title: "账户重置", operation: true},
+    //       component: resolve => require(['@/views/loginEN/Phone'], resolve)
+    //     },
+    //     {
+    //       path: '/loginEN/Mailbox',
+    //       name: 'loginEN/Mailbox',
+    //       meta: {auth: true, title: "账户重置", operation: true},
+    //       component: resolve => require(['@/views/loginEN/Mailbox'], resolve)
+    //     },
+    //     {
+    //       path: '/loginEN/Administrator',
+    //       name: 'loginEN/Administrator',
+    //       meta: {auth: true, title: "账户重置", operation: true},
+    //       component: resolve => require(['@/views/loginEN/Administrator'], resolve)
+    //     },
+    //     {
+    //       path: '/loginEN/Reset',
+    //       name: 'loginEN/Reset',
+    //       meta: {auth: true, title: "账户重置", operation: true},
+    //       component: resolve => require(['@/views/loginEN/Reset'], resolve)
+    //     },
+    //     {
+    //       path: '/loginEN/ForgetPassword',
+    //       name: 'loginEN/ForgetPassword',
+    //       meta: {auth: true, title: "忘记用户名", operation: true},
+    //       component: resolve => require(['@/views/loginEN/ForgetPassword'], resolve)
+    //     },
+    //     {
+    //       path: '/loginEN/ForgetUsername',
+    //       name: 'loginEN/ForgetUsername',
+    //       meta: {auth: true, title: "忘记密码", operation: true},
+    //       component: resolve => require(['@/views/loginEN/ForgetUsername'], resolve)
+    //     },
+    //     {
+    //       path: '/loginEN/Register',
+    //       name: 'loginEN/Register',
+    //       meta: {auth: true, title: "用户注册", operation: true},
+    //       component: resolve => require(['@/views/loginEN/Register'], resolve)
+    //     },
+    //     {
+    //       path: '/loginEN/Login',
+    //       name: 'loginEN/Login',
+    //       meta: {auth: true, title: "用户登录", operation: true},
+    //       component: resolve => require(['@/views/loginEN/Login'], resolve)
+    //     }
+    //   ],
+    //   redirect:'/login/LoginEN'
+    // },
     {
       path: '/index',
       name: 'index',
