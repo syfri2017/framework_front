@@ -55,21 +55,21 @@
 </template>
 
 <script>
-// import Login from "@/views/login/ch/Login";
-// import Register from "@/views/login/ch/Register";
-// import Reset from "@/views/login/ch/Reset";
-// import ForgetPassword from "@/views/login/ch/ForgetPassword";
-// import ForgetUsername from "@/views/login/ch/ForgetUsername";
+import Login from "@/views/login/ch/Login";
+import Register from "@/views/login/ch/Register";
+import Reset from "@/views/login/ch/Reset";
+import ForgetPassword from "@/views/login/ch/ForgetPassword";
+import ForgetUsername from "@/views/login/ch/ForgetUsername";
 
 export default {
   name: "Login",
-  // components: {
-  //   login: Login,
-  //   register: Register,
-  //   forgetpassword: ForgetPassword,
-  //   forgetusername: ForgetUsername,
-  //   reset: Reset
-  // },
+  components: {
+    login: Login,
+    register: Register,
+    forgetpassword: ForgetPassword,
+    forgetusername: ForgetUsername,
+    reset: Reset
+  },
   data() {
     return {
       //默认第一个选项卡
@@ -137,14 +137,14 @@ $blackcolor: #2c2c2c;
 }
 
 .lana {
-  color: $whitecolor;
+  color: $blackcolor;
   font-size: 1rem;
   cursor: pointer;
   letter-spacing: 0.1rem;
 }
 
 .lanb {
-  color: $blackcolor;
+  color: $whitecolor;
   font-size: 1rem;
   cursor: pointer;
 }
@@ -275,7 +275,7 @@ $blackcolor: #2c2c2c;
     display: block;
     margin-left: 30px;
     line-height: 30px;
-   
+
 }
 .yanzhengma_input{
   width: 170px;
