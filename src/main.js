@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
     if (localStorage.isLogin === 'TRUE') {
       next();
     } else {
-      // Message.error('您还未登录，请登陆');
+      //  Message.error('您还未登录，请登陆');
       next();
       // next({path: '/'});
     }
@@ -65,7 +65,8 @@ axios.interceptors.request.use(
     config.headers.PATHURL = router.currentRoute.path;
     config.headers.PATHNAME = encodeURI(router.currentRoute.name);
 
-    if(config.url != '/login' && config.url != '/logout'){
+    if(config.url != '/login' && config.url != '/logout' 
+        && config.url.indexOf('/signin/sendMessage')>-1 && config.url.indexOf('/signin/sendMailEng')>-1){
       var isLogin = localStorage.getItem('isLogin');
       if(isLogin != 'TRUE'){
         router.push({path: '/'});
