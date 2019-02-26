@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     clk(){
-      this.$router.push({ path: '/common/LoginEN' });
+      this.$router.push({ path: '/login/en/Login' });
     },
   }
 };
