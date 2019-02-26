@@ -55,11 +55,11 @@
 </template>
 
 <script>
-import Login from "@/views/login/Login";
-import Register from "@/views/login/Register";
-import Reset from "@/views/login/Reset";
-import ForgetPassword from "@/views/login/ForgetPassword";
-import ForgetUsername from "@/views/login/ForgetUsername";
+import Login from "@/views/login/ch/Login";
+import Register from "@/views/login/ch/Register";
+import Reset from "@/views/login/ch/Reset";
+import ForgetPassword from "@/views/login/ch/ForgetPassword";
+import ForgetUsername from "@/views/login/ch/ForgetUsername";
 
 export default {
   name: "Login",
