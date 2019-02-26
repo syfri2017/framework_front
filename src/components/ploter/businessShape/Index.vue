@@ -58,7 +58,7 @@
             }
         },
         mounted () {
-            // debugger
+            // 
             // window.wrapHandshake.model['updateBusinessData'] = this.updateBusinessData
             // window.wrapHandshake.model['updateBusinessRecord'] = this.updateBusinessRecord
 
@@ -70,7 +70,7 @@
         },
         methods: {
             onStageReady () {
-                // debugger
+                // 
                 if (window.ploterStage) {
                     window.ploterStage.on('evt_stage_element_dblclick', this.onStageElementDblclick)
                     window.ploterStage.on('evt_stage_element_changed', this.onStageElementChanged)
@@ -236,7 +236,7 @@
                 }
             },
             onStageElementMouseenter (context) {
-                // debugger
+                // 
                 const shapeUuid = context.element.getAttr('shapeUuid')
                 if (this.componentsBusinessShapeData && this.componentsBusinessShapeData.length > 0) {
                     const businessRecord = this.componentsBusinessShapeData.find(item => {
@@ -322,7 +322,7 @@
                             shapeUuid: shapeWrap.getAttr('shapeUuid'),
                             jsonData: JSON.stringify(shapeWrap.toObject())
                         }
-                        debugger
+                        
                         window.wrapHandshake.$emit('evtStageElementSave', {
                             shape: shapeWrapObj,
                             business: businessRecord

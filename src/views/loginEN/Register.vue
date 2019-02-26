@@ -193,7 +193,7 @@ export default {
       }
     },
     register() {
-      debugger
+      
       let vm = this;
       this.mobileCheck();
       this.messageCodeCheck();
