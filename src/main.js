@@ -66,7 +66,10 @@ axios.interceptors.request.use(
     config.headers.PATHNAME = encodeURI(router.currentRoute.name);
 
     if(config.url != '/login' && config.url != '/logout' 
-        && config.url.indexOf('/signin/sendMessage')>-1 && config.url.indexOf('/signin/sendMailEng')>-1){
+        && config.url.indexOf('/signin/sendMessage')>-1 && config.url.indexOf('/signin/sendMailEng')>-1
+        && config.url.indexOf('/signin/getUsernameByMail')>-1 && config.url.indexOf('/signin/findByMail')>-1 
+        && config.url.indexOf('/signin/findByUsername')>-1
+        ){
       var isLogin = localStorage.getItem('isLogin');
       if(isLogin != 'TRUE'){
         router.push({path: '/'});
