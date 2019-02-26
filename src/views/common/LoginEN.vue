@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="12" class="logincenter" style="text-align:-webkit-center">
         <p class="pstyle">
-          <img class="titlestyle" src="/static/images/login/title.png">
+          <img class="titlestyle" src="/static/images/login/title_en.png">
         </p>
       </el-col>
       <el-col :span="6" style="text-align:-webkit-center">
@@ -18,7 +18,7 @@
             <a class="lana" href="http://61.161.226.197:8090/templates/帮助手册.doc">帮助手册</a>
           </span>
           <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-          <span class="lana">中文</span>
+          <span class="lana" @click="clk()">中文</span>
           <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
           <span class="lanb">English</span>
         </p>
@@ -46,8 +46,7 @@
     <el-row class="footerstyle">
       <el-col :span="4">&nbsp;</el-col>
       <el-col :span="16" class="footer">
-        <div>建议使用谷歌、搜狗、360和火狐浏览器</div>
-        <div>如在登录、注册、信息录入时遇到问题，请联系技术支持024-31530337，分机号608；13998821420</div>
+       
       </el-col>
       <el-col :span="4">&nbsp;</el-col>
     </el-row>
@@ -76,7 +75,11 @@ export default {
       activeName: "first"
     };
   },
-  methods: {}
+  methods: {
+    clk(){
+      this.$router.push({ path: '/login/ch/Login' });
+    },
+  }
 };
 </script>
 
@@ -86,8 +89,8 @@ $height: 22rem; //全局变量声明
 $width: 22rem;
 $heightimg: 8.75rem;
 $widthimg: 8.75rem;
-$heighttitle: 90%;
-$widthtitle: 90%;
+$heighttitle: 120%;
+$widthtitle: 120%;
 $bottomfooter: 3.125rem;
 $heightfooter: 3.125rem;
 $widthlgbtn: 12rem;
@@ -127,6 +130,7 @@ $blackcolor: #2c2c2c;
   }
 
   .titlestyle {
+    margin-left: -11%;
     height: $heighttitle;
     width: $widthtitle;
   }
