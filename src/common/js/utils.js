@@ -30,5 +30,19 @@ export default {
         return rowDate;
       }
     }
+
+    //table中性别格式化
+    Vue.prototype.tableSexFormat = function(row, column) {
+      switch (row[column.property]) {
+        case "1":
+          return "男";
+          break;
+        case "2":
+          return "女";
+          break;
+        default:
+          return "";
+      }
+    }
   }
 }
