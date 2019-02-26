@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import router from '@/router';
+import Components from './modules/components/index.js'
 
 export const UPDATE_PLOTER_CONFIG = 'updatePloterCongig'
 export const UPDATE_STAGE_DATA = 'updateStageData'
@@ -17,11 +17,12 @@ const store = new Vuex.Store ({
         isLogin: 'FALSE',
         //-----plot 开始 ---------- 
         ploterCfg: {
-                        readOnly: false,
-                        businessShape: {
-                            enable: true,
-                            requestLoop: 0 // 0为不轮询
-                        }},
+            readOnly: false,
+            businessShape: {
+                enable: true,
+                 requestLoop: 0 // 0为不轮询
+            }
+        },
         stageData: null,
         stageSize: {
             width: 800,
@@ -36,7 +37,7 @@ const store = new Vuex.Store ({
                 state.user = JSON.parse(localStorage.getItem(key));
                 state.isLogin = localStorage.getItem(isLogin);
             }
-            return state.user
+            return state.user;
         },
         //-----plot 开始 ---------- 
         ploterConfig: state => state.ploterCfg,

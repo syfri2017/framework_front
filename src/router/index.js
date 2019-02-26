@@ -257,16 +257,17 @@ const router = new VueRouter({
         {
           path: '/booth/positionDesign',
           meta: {auth: true, title: "展位设计"},
-          component: PositionDesign,
-          children: [
-            {
-              path: '/',
-              name: 'positionDesign',
-              //component: resolve => require(['@/views/booth/design/PositionDesign'], resolve)
-              component: resolve => require(['@/views/ploter/Plot'], resolve),
-              props: true
-            },
-          ]
+          component: resolve => require(['@/views/ploter/Plot'], resolve)
+          // component: PositionDesign,
+          // children: [
+          //   {
+          //     path: '/',
+          //     name: 'positionDesign',
+          //     //component: resolve => require(['@/views/booth/design/PositionDesign'], resolve)
+          //     component: resolve => require(['@/views/ploter/Plot'], resolve),
+          //     props: true
+          //   }
+          // ]
         },
         //----------展位管理-展位分类----------
         {

@@ -11,6 +11,7 @@ import utils from './common/js/utils'
 import constant from './common/js/constant'
 import 'element-ui/lib/theme-chalk/index.css'
 import './common/scss/index.scss'
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true;
@@ -125,6 +126,7 @@ axios.interceptors.response.use(
 window.wrapHandshake =new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

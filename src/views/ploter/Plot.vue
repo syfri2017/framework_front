@@ -55,7 +55,6 @@
 							<el-input size="small" v-model="searchForm.gsmc" placeholder="公司名称" clearable></el-input>
 						</el-col>
 						<el-col :span="7" class="btnSearchPlus">
-							<!-- <el-button type="success" icon="el-icon-search" size="small" @click="confirm">确定</el-button> -->
 							<el-button type="primary" icon="el-icon-search" size="small" @click="searchClick">查询</el-button>
 							<el-button type="clear" icon="el-icon-refresh" size="small" @click="clearClick">重置</el-button>
 						</el-col>
@@ -472,6 +471,7 @@
 
 
             getStage(uuid){
+                
                 const me = this
                 window.moftPloter = {}
                 var params = {
@@ -486,7 +486,8 @@
                             stageData: currentAreaStage,
                             shapesData: currentShapesData,
                             uuid: params.uuid
-                        }
+                    }
+                    debugger
                     me.$store.commit('updateStageData', stageRecord)
                     me.initPloter(currentAreaStage || null, currentShapesData || null)
                     plotundo.init()
