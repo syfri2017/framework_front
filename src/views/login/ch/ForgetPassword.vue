@@ -5,18 +5,16 @@
       <el-col :span="8" style="text-align:-webkit-center">
         <div class="login-form" >
           <div class="filed left">
-            <router-link :to="{path:'/login/Login'}"><i class="iconfont icon-yonghu icou"></i></router-link>
-            <span >管理员登录</span>
+            <i class="iconfont icou"></i>
+            <span >密码修改</span>
+            <span class="signstyle"><router-link :to="{path:'/login/ch/login'}"><a >返回登录</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
-            <div class="filed ">
-              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username"></el-input>
-            </div>
-            <div class="filed">
-              <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
+            <div class="filed lgin">
+                <router-link :to="{path:'/login/ch/mailbox'}"><el-button type="danger" round>邮箱找回</el-button></router-link>
             </div>
             <div class="filed lgin">
-              <el-button type="danger" @click="GLYlogin" round>登录</el-button>
+                <router-link :to="{path:'/login/ch/phone'}"><el-button type="danger" round>手机找回</el-button></router-link>
             </div>
           </form>
         </div>
@@ -39,9 +37,6 @@ export default {
     }
   },
   methods:{
-    clk(){
-      this.$router.push({ path: '/login/Register' });
-    },
     GLYlogin(){
       let vm = this;
       if (this.GLYusername == null || this.GLYusername == '') {
@@ -62,7 +57,6 @@ export default {
             localStorage.setItem('isLogin', 'TRUE');
             localStorage.setItem('XTOKEN',  res.data.data.token);
             localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
-            this.CONSTANT.currentUser = res.data.data.currentUser;
             this.$router.push({ path: '/index' });
           
           } else if (res.data.code == '22222222') {
@@ -156,7 +150,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lgin {
-  margin-top: 8.1rem;
+  margin-top: 2.5rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -184,7 +178,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 7.5rem;
+    margin-left:11.5rem;
     a {
       cursor: pointer;
     }

@@ -6,26 +6,25 @@
         <div class="login-form" >
           <div class="filed left">
             <i class="iconfont icou"></i>
-            <span >密码修改</span>
-            <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
+            <span>密码修改</span>
+            <span class="signstyle"><router-link :to="{path:'/login/ch/login'}"><a>返回登录</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="手机号" v-model="FPCmobile" name="FPCmobile" id="FPCmobile" prefix-icon="iconfont icon-web-icon-"></el-input>
-              <button type="button" id="FUmail-btn" class="verficode phonebtn"  @click="getFPCMessageCode()" v-text=FPCmessageCodeText :disabled="FPCmobileBtnDisabled"></button>
+            <el-input placeholder="邮箱" v-model="FPBmail" name="FPBmail" id="FPBmail" prefix-icon="iconfont icon-youxiang"></el-input>
+            <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFPBMailCode()" v-text=FPBmailCodeText :disabled="FPBmailBtnDisabled"></button>
             </div>
             <div class="filed">
-              <el-input v-model="FPCmessageCode" name="FPCmessageCode" id="FPCmessageCode" placeholder="短信验证码" prefix-icon="iconfont icon-message-channel"></el-input>
+            <el-input placeholder="邮件验证码"  v-model="FPBmailCode" name="FPBmailCode" id="FPBmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
             </div>
             <div class="filed lgin">
-              <el-button type="danger"  @click="FPCIdentify()" round>确定</el-button>
+            <el-button type="danger" @click="FPBIdentify()" round>确定</el-button>
             </div>
           </form>
         </div>
       </el-col>
       <el-col :span="8">&nbsp;</el-col>
     </el-row>
-
 </template>
 
 <script>
@@ -57,42 +56,40 @@ export default {
     }
   },
   methods:{
-        FPCmobileCheck() {
-            if (this.FPCmobile == null || this.FPCmobile == '') {
-                alert("手机号不能为空！")
-                return false;
-            } else if (!(/^1[34578]\d{9}$/.test(this.FPCmobile))) {
-                alert("请填写正确的手机号码！")
+   //B
+        FPBmailCheck() {
+            if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.FPBmail))) {
+                alert("邮箱格式不正确");
                 return false;
             } else {
                 return true;
             }
         },
-        getFPCMessageCode() {
+        getFPBMailCode() {
             let vm = this;
-            this.FPCmessageCode = "";
-            if (this.FPCmobileCheck()) {
-                this.FPCmessageCodeText = "发送中...";
-                this.FPCmobileBtnDisabled = true;
-                vm.$axios.get('/signin/getUsernameNum/' + this.FPCmobile + "/static").then(function (res) {
+            this.FPBmailCode = "";
+            if (this.FPBmailCheck()) {
+                this.FPBmailCodeText = "发送中...";
+                this.FPBmailBtnDisabled = true;
+                vm.$axios.get('/signin/getMailNum/' + this.FPBmail + "/static").then(function (res) {
                     if (res.data.result == 0) {
-                        alert("用户名不存在！");
-                        this.FPCmessageCodeText = "获取验证码";
-                        this.FPCmobileBtnDisabled = false;
-                    } else {
-                        vm.$axios.get('/signin/sendMessage?phone=' + this.FPCmobile).then(function (res) {
-                            this.FPCmessageCodeReal = res.data.msg;
+                        alert("该邮箱未注册！");
+                        this.FPBmailCodeText = "获取验证码";
+                        this.FPBmailBtnDisabled = false;
+                    } else if (res.data.result == 1) {
+                        vm.$axios.get('/signin/sendMail?mail=' + this.FPBmail).then(function (res) {
+                            this.FPBmailCodeReal = res.data.msg;
                             var count = this.time;
-                            this.FPCtimer = setInterval(() => {
+                            this.FPBtimer = setInterval(() => {
                                 if (count == 0) {
-                                    clearInterval(this.FPCtimer);
-                                    this.FPCtimer = null;
-                                    this.FPCmessageCodeText = "获取验证码";
-                                    this.FPCmobileBtnDisabled = false;
+                                    clearInterval(this.FPBtimer);
+                                    this.FPBtimer = null;
+                                    this.FPBmailCodeText = "获取验证码";
+                                    this.FPBmailBtnDisabled = false;
                                 } else {
-                                    this.FPCmessageCodeText = count + "秒后获取"
+                                    this.FPBmailCodeText = count + "秒后获取"
                                     count--;
-                                    this.FPCmobileBtnDisabled = true;
+                                    this.FPBmailBtnDisabled = true;
                                 }
                             }, 1000)
                         }.bind(this), function (error) {
@@ -104,15 +101,15 @@ export default {
                 });
             }
         },
-        FPCIdentify() {
+        FPBIdentify() {
             let vm = this;
-            if (this.FPCmobile == null || this.FPCmobile == '') {
-                alert("手机号不能为空！")
-            } else if (this.FPCmessageCode == null || this.FPCmessageCode == '') {
+            if (this.FPBmail == null || this.FPBmail == '') {
+                alert("邮箱不能为空！")
+            } else if (this.FPBmailCode == null || this.FPBmailCode == '') {
                 alert("验证码不能为空！")
             } else {
-                if (this.FPCmessageCode == this.FPCmessageCodeReal) {
-                    vm.$axios.get('/signin/findByUsername/' + this.FPCmobile + "/static").then(function (res) {
+                if (this.FPBmailCode == this.FPBmailCodeReal) {
+                    vm.$axios.get('/signin/findByMail/' + this.FPBmail + "/static").then(function (res) {
                         this.changeForm('FPDFlag');
                         this.FPDregisterData = res.data.result;
                         this.FPDusername = this.FPDregisterData[0].username;

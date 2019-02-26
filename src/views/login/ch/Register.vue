@@ -8,7 +8,7 @@
           <i class="iconfont icou"></i>
           <span>用户注册</span>
           <span class="signstyle">没有账户?
-            <router-link :to="{path:'/login/login'}">
+            <router-link :to="{path:'/login/ch/login'}">
               <a>去登录</a>
             </router-link>
           </span>
@@ -116,6 +116,7 @@ export default {
       }
     },
     getMessageCode() {
+      
       let vm = this;
       this.messageCode = "";
       if (this.mobileCheck()) {
@@ -193,7 +194,6 @@ export default {
       }
     },
     register() {
-      
       let vm = this;
       this.mobileCheck();
       this.messageCodeCheck();
@@ -204,7 +204,7 @@ export default {
         this.messageCodeCheck() &&
         this.password1Check() &&
         this.password2Check() &&
-        this.messageCode == this.messageCodeReal
+        this.messageCode == vm.messageCodeReal
       ) {
         var params = {
           username: this.mobile,

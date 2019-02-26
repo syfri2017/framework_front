@@ -6,24 +6,26 @@
         <div class="login-form" >
           <div class="filed left">
             <i class="iconfont icou"></i>
-            <span >账户重置</span>
-            <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
+            <span >密码修改</span>
+            <span class="signstyle"><router-link :to="{path:'/login/ch/login'}"><a>返回登录</a></router-link></span>
           </div>
-          <form  ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+          <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input v-model="REAcompanyName" name="REAcompanyName" id="REAcompanyName" placeholder="单位名称" prefix-icon="iconfont icon-danwei"></el-input>
+              <el-input placeholder="手机号" v-model="FPCmobile" name="FPCmobile" id="FPCmobile" prefix-icon="iconfont icon-web-icon-"></el-input>
+              <button type="button" id="FUmail-btn" class="verficode phonebtn"  @click="getFPCMessageCode()" v-text=FPCmessageCodeText :disabled="FPCmobileBtnDisabled"></button>
             </div>
             <div class="filed">
-              <el-input v-model="REAunscid" name="REAunscid" id="REAunscid" placeholder="统一社会信用代码" prefix-icon="iconfont icon-credentials_icon"></el-input>
+              <el-input v-model="FPCmessageCode" name="FPCmessageCode" id="FPCmessageCode" placeholder="短信验证码" prefix-icon="iconfont icon-message-channel"></el-input>
             </div>
             <div class="filed lgin">
-              <el-button type="danger" @click="REAIdentify()" round>确定</el-button>
+              <el-button type="danger"  @click="FPCIdentify()" round>确定</el-button>
             </div>
           </form>
         </div>
       </el-col>
       <el-col :span="8">&nbsp;</el-col>
     </el-row>
+
 </template>
 
 <script>
@@ -31,54 +33,98 @@ export default {
   name: 'Login',
   data () {
     return {
-        //重置账户
-        REAcompanyName: "",
-        REAunscid: "",
-        REAtimer: null,
-        REAmobile: "",
-        REAmessageCode: "",
-        REAmessageCodeReal: "",
-        REAmessageCodeText: "获取验证码",
-        REApassword1: "",
-        REApassword2: "",
-        REAregisterData: "",
-        REAmobileBtnDisabled: false,
-        //重置校验标识
-        REAmobileAlertFlag: false,
-        REAmessageCodeAlertFlag: false,
-        REApassword1TipFlag: false,
-        REApassword1AlertFlag: false,
-        REApassword2AlertFlag: false,
+       //忘记密码
+        FPBmail: "",
+        FPBmailCode: "",
+        FPBmailCodeReal: "",
+        FPBmailCodeText: "获取验证码",
+        FPBtimer: null,
+        FPCmobile: "",
+        FPCmessageCode: "",
+        FPCmessageCodeReal: "",
+        FPCmessageCodeText: "获取验证码",
+        FPCtimer: null,
+        FPDusername: "",
+        FPDpassword1: "",
+        FPDpassword2: "",
+        FPDregisterData: "",
+        FPBmailBtnDisabled: false,
+        FPCmobileBtnDisabled: false,
+        //提交校验标识
+        FPDpassword1TipFlag: false,
+        FPDpassword1AlertFlag: false,
+        FPDpassword2AlertFlag: false,
     }
   },
   methods:{
-    //忘记密码
-    //A
-    REAIdentify() {
-        let vm = this;
-        if (this.REAcompanyName == null || this.REAcompanyName == '') {
-            alert("单位名称不能为空！")
-        } else if (this.REAunscid == null || this.REAunscid == '') {
-            alert("统一社会信用代码不能为空！")
-        } else {
-            var params = {
-                unscid: this.REAunscid,
-                companyname: this.REAcompanyName
+        FPCmobileCheck() {
+            if (this.FPCmobile == null || this.FPCmobile == '') {
+                alert("手机号不能为空！")
+                return false;
+            } else if (!(/^1[34578]\d{9}$/.test(this.FPCmobile))) {
+                alert("请填写正确的手机号码！")
+                return false;
+            } else {
+                return true;
             }
-            vm.$axios.post('/signin/findByUnscid/', params).then(function (res) {
-                this.REAregisterData = res.data.result;
-                if (this.REAregisterData.length == 0) {
-                    alert("无记录，请重新输入！");
+        },
+        getFPCMessageCode() {
+            let vm = this;
+            this.FPCmessageCode = "";
+            if (this.FPCmobileCheck()) {
+                this.FPCmessageCodeText = "发送中...";
+                this.FPCmobileBtnDisabled = true;
+                vm.$axios.get('/signin/getUsernameNum/' + this.FPCmobile + "/static").then(function (res) {
+                    if (res.data.result == 0) {
+                        alert("用户名不存在！");
+                        this.FPCmessageCodeText = "获取验证码";
+                        this.FPCmobileBtnDisabled = false;
+                    } else {
+                        vm.$axios.get('/signin/sendMessage?phone=' + this.FPCmobile).then(function (res) {
+                            this.FPCmessageCodeReal = res.data.msg;
+                            var count = this.time;
+                            this.FPCtimer = setInterval(() => {
+                                if (count == 0) {
+                                    clearInterval(this.FPCtimer);
+                                    this.FPCtimer = null;
+                                    this.FPCmessageCodeText = "获取验证码";
+                                    this.FPCmobileBtnDisabled = false;
+                                } else {
+                                    this.FPCmessageCodeText = count + "秒后获取"
+                                    count--;
+                                    this.FPCmobileBtnDisabled = true;
+                                }
+                            }, 1000)
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        });
+                    }
+                }.bind(this), function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        FPCIdentify() {
+            let vm = this;
+            if (this.FPCmobile == null || this.FPCmobile == '') {
+                alert("手机号不能为空！")
+            } else if (this.FPCmessageCode == null || this.FPCmessageCode == '') {
+                alert("验证码不能为空！")
+            } else {
+                if (this.FPCmessageCode == this.FPCmessageCodeReal) {
+                    vm.$axios.get('/signin/findByUsername/' + this.FPCmobile + "/static").then(function (res) {
+                        this.changeForm('FPDFlag');
+                        this.FPDregisterData = res.data.result;
+                        this.FPDusername = this.FPDregisterData[0].username;
+                        // alert("请输入新密码！");
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    });
+                } else {
+                    alert("验证码输入错误，请核对后再试");
                 }
-                else {
-                    this.changeForm('REABFlag');
-                    this.REAmobile = this.REAregisterData[0].username;
-                }
-            }.bind(this), function (error) {
-                console.log(error);
-            });
-        }
-    },
+            }
+        },
 
   }
 }
@@ -186,7 +232,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left:11.5rem;
+    margin-left: 11.5rem;
     a {
       cursor: pointer;
     }
@@ -469,5 +515,12 @@ a {
   font-size:1.8rem;
 }
 
+/*获取验证码样式*/
+.phonebtn{
+    position: absolute;
+    margin-top: -1.82rem;
+    margin-left: 4.2rem;
+    border: none;background: #ffffff;color:#fb6a74;cursor: pointer;
+}
 
 </style>
