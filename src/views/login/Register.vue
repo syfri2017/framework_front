@@ -116,6 +116,7 @@ export default {
       }
     },
     getMessageCode() {
+      debugger
       let vm = this;
       this.messageCode = "";
       if (this.mobileCheck()) {
