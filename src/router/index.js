@@ -252,8 +252,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'position',
-              //component: resolve => require(['@/views/booth/position/Position'], resolve)
-              component: resolve => require(['@/views/booth/select/PositionSelect'], resolve)
+              component: resolve => require(['@/views/booth/position/Position'], resolve)
             },
           ]
         },
