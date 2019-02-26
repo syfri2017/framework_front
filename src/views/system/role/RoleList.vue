@@ -61,8 +61,8 @@
             </template>
           </el-table-column>
         </el-table>
+        <!--翻页组件-->
         <paginator></paginator>
-				
 			</div>
 
 			<!--资源详情界面-->

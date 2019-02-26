@@ -55,8 +55,8 @@
             </template>
           </el-table-column>
         </el-table>
+        <!--翻页组件-->
         <paginator></paginator>
-				
 			</div>
 
       <!-- 编辑-->
