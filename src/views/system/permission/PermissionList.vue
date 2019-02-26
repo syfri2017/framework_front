@@ -1,5 +1,5 @@
 <template>
-  <div id="role">
+  <div id="permission">
     <div id="tableView" v-loading="this.loading" element-loading-text="加载中">
 			<el-row>
         <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
