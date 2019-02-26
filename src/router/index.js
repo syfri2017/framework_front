@@ -352,7 +352,12 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'codelist',
-              component: resolve => require(['@/views/system/codelist/Codelist'], resolve)
+              component: resolve => require(['@/views/system/codelist/CodelistList'], resolve)
+            },
+            {
+              path: '/system/codelist/detail',
+              name: 'codelistDetail',
+              component: resolve => require(['@/views/system/codelist/CodelistDetail'], resolve)
             },
           ]
         },
