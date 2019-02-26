@@ -154,7 +154,7 @@ $blackcolor: #2c2c2c;
 }
 
 .filed {
-  margin: 0px 1.875rem 1.25rem 1.875rem;
+  margin: 0px 1.875rem 1rem 1.875rem;
 }
 
 .lgin {
@@ -466,7 +466,7 @@ a {
 }
 
 .icou{
-  font-size:1.8rem;
+  font-size:1.2rem;
 }
 
 
