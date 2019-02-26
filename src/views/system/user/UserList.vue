@@ -46,7 +46,7 @@
 					<el-table-column prop="realname" show-overflow-tooltip label="真实姓名" min-width="12%" align="center"></el-table-column>
 					<el-table-column prop="organizationName" show-overflow-tooltip label="组织机构" min-width="13%" align="center"></el-table-column>
 					<!-- <el-table-column prop="birth" show-overflow-tooltip label="生日" min-width="13%" align="center" :formatter="tableDateFormat"></el-table-column> -->
-					<el-table-column prop="sex" show-overflow-tooltip label="性别" min-width="7%" align="center" :formatter="sexFormat"></el-table-column>
+					<el-table-column prop="sex" show-overflow-tooltip label="性别" min-width="7%" align="center" :formatter="tableSexFormat"></el-table-column>
 					<el-table-column prop="mobile" show-overflow-tooltip label="手机号" min-width="14%" align="center"></el-table-column>
 					<el-table-column prop="email" show-overflow-tooltip label="邮箱" min-width="13%" align="center"></el-table-column>
 					<el-table-column prop="role" show-overflow-tooltip label="角色" min-width="10%" align="center">
@@ -367,19 +367,7 @@ export default {
       this.multipleSelection = val;
       console.info(val);
     },
-    //性别格式化
-    sexFormat: function(row, column) {
-      switch (row[column.property]) {
-        case "1":
-          return "男";
-          break;
-        case "2":
-          return "女";
-          break;
-        default:
-          return "";
-      }
-    },
+    
     //增加、修改时“生日”表单赋值
     dateChangebirthday(val) {
       this.editForm.birth = val;
