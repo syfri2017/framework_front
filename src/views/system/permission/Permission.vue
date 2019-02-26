@@ -1,14 +1,11 @@
 <template>
-  <div >
-    <h1>Permission</h1>
+  <div id="permission">
     <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
-  methods: {
-    
-  }
+  name: 'permission'
 }
 </script>
 
