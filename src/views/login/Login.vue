@@ -119,7 +119,9 @@ export default {
         var params = {
           username: vm.GLYusername,
           password: vm.GLYpassword,
-          loginType: vm.GLYloginType
+          loginType: vm.GLYloginType,
+          usertype: "CHN",
+          deptid: "ZSYH"
         }
         vm.$axios.post('/login', params).then(function (res) {
           if (res.data.code == '00000000') {          

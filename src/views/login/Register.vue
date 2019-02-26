@@ -193,7 +193,6 @@ export default {
       }
     },
     register() {
-      debugger
       let vm = this;
       this.mobileCheck();
       this.messageCodeCheck();
@@ -204,7 +203,7 @@ export default {
         this.messageCodeCheck() &&
         this.password1Check() &&
         this.password2Check() &&
-        this.messageCode == this.messageCodeReal
+        this.messageCode == vm.messageCodeReal
       ) {
         var params = {
           username: this.mobile,
