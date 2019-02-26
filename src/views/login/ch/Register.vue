@@ -122,14 +122,14 @@ export default {
       if (this.mobileCheck()) {
         this.messageCodeText = "发送中...";
         this.mobileBtnDisabled = true;
-        vm.$axios.post("/signin/getUsernameNum/" + this.mobile + "/static").then(
+        vm.$axios.get("/signin/getUsernameNum/" + this.mobile + "/static").then(
           function(res) {
             if (res.data.result != 0) {
               alert("用户名已存在！");
               this.messageCodeText = "获取验证码";
               this.mobileBtnDisabled = false;
             } else {
-              vm.$axios.post("/signin/sendMessage?phone=" + this.mobile).then(
+              vm.$axios.get("/signin/sendMessage?phone=" + this.mobile).then(
                 function(res) {
                   this.messageCodeReal = res.data.msg;
                   var count = this.time;
@@ -299,11 +299,11 @@ $blackcolor: #2c2c2c;
 }
 
 .filed {
-  margin: 0px 1.875rem 1.25rem 1.875rem;
+  margin: 0px 1.875rem 1rem 1.875rem;
 }
 
 .lgin {
-  margin-top: -0.65rem;
+  margin-top: 1.8rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -609,7 +609,7 @@ a {
 }
 
 .icou {
-  font-size: 1.8rem;
+  font-size:1.2rem;
 }
 
 /*获取验证码样式*/

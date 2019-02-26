@@ -12,7 +12,7 @@
           <el-form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
               <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username" @blur="mobileCheck"></el-input>
-              <p class="alert" v-show="mobileAlertFlag">*请填写正确的手机号码</p>
+              <!-- <p class="alert" v-show="mobileAlertFlag">*请填写正确的手机号码</p> -->
             </div>
             <div class="filed">
               <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
@@ -223,11 +223,11 @@ $blackcolor: #2c2c2c;
 }
 
 .filed {
-  margin: 0px 1.875rem 1.25rem 1.875rem;
+  margin: 0px 1.875rem 1rem 1.875rem;
 }
 
 .lgin {
-  margin-top: 1.8rem;
+  margin-top: 3rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -255,7 +255,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 6.5rem;
+    margin-left: 7.2rem;
     a {
       cursor: pointer;
     }
@@ -535,7 +535,7 @@ a {
 }
 
 .icou{
-  font-size:1.8rem;
+  font-size:1.2rem;
 }
 
 .bk{
@@ -546,7 +546,7 @@ a {
 
 .alert{
   position:absolute;
-  top:58px;
+  top:68px;
   margin-left:0px !important;
   color:#EA2530;
 }
