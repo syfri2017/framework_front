@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import Login from '@/views/common/Login'
+import LoginEN from '@/views/common/LoginEN'
 import Index from '@/views/common/Index'
 import Home from '@/views/home/Home'
 import Exhprediction from '@/views/prediction/exhprediction/Exhprediction'
@@ -82,6 +83,62 @@ const router = new VueRouter({
         }
       ],
       redirect:'/login/ch/Login'
+    },
+    {
+      path: '/',
+      name: 'loginEN',
+      component: LoginEN,
+      children: [
+        {
+          path: '/login/en/Phone',
+          name: 'login/en/Phone',
+          meta: {auth: true, title: "账户重置", operation: true},
+          component: resolve => require(['@/views/login/en/Phone'], resolve)
+        },
+        {
+          path: '/login/en/Mailbox',
+          name: 'login/en/Mailbox',
+          meta: {auth: true, title: "账户重置", operation: true},
+          component: resolve => require(['@/views/login/en/Mailbox'], resolve)
+        },
+        {
+          path: '/login/en/Administrator',
+          name: 'login/en/Administrator',
+          meta: {auth: true, title: "账户重置", operation: true},
+          component: resolve => require(['@/views/login/en/Administrator'], resolve)
+        },
+        {
+          path: '/login/en/Reset',
+          name: 'login/en/Reset',
+          meta: {auth: true, title: "账户重置", operation: true},
+          component: resolve => require(['@/views/login/en/Reset'], resolve)
+        },
+        {
+          path: '/login/en/ForgetPassword',
+          name: 'login/en/ForgetPassword',
+          meta: {auth: true, title: "忘记用户名", operation: true},
+          component: resolve => require(['@/views/login/en/ForgetPassword'], resolve)
+        },
+        {
+          path: '/login/en/ForgetUsername',
+          name: 'login/en/ForgetUsername',
+          meta: {auth: true, title: "忘记密码", operation: true},
+          component: resolve => require(['@/views/login/en/ForgetUsername'], resolve)
+        },
+        {
+          path: '/login/en/Register',
+          name: 'login/en/Register',
+          meta: {auth: true, title: "用户注册", operation: true},
+          component: resolve => require(['@/views/login/en/Register'], resolve)
+        },
+        {
+          path: '/login/en/Login',
+          name: 'login/en/Login',
+          meta: {auth: true, title: "用户登录", operation: true},
+          component: resolve => require(['@/views/login/en/Login'], resolve)
+        }
+      ],
+      redirect:'/login/en/Login'
     },
     {
       path: '/index',

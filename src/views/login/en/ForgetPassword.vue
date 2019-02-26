@@ -7,14 +7,14 @@
           <div class="filed left">
             <i class="iconfont icou"></i>
             <span >密码修改</span>
-            <span class="signstyle"><router-link :to="{path:'/login/login'}"><a >返回登录</a></router-link></span>
+            <span class="signstyle"><router-link :to="{path:'/login/ch/login'}"><a >返回登录</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed lgin">
-                <router-link :to="{path:'/login/mailbox'}"><el-button type="danger" round>邮箱找回</el-button></router-link>
+                <router-link :to="{path:'/login/ch/mailbox'}"><el-button type="danger" round>邮箱找回</el-button></router-link>
             </div>
             <div class="filed lgin">
-                <router-link :to="{path:'/login/phone'}"><el-button type="danger" round>手机找回</el-button></router-link>
+                <router-link :to="{path:'/login/ch/phone'}"><el-button type="danger" round>手机找回</el-button></router-link>
             </div>
           </form>
         </div>
@@ -146,7 +146,7 @@ $blackcolor: #2c2c2c;
 }
 
 .filed {
-  margin: 0px 1.875rem 1.25rem 1.875rem;
+ margin: 0px 1.875rem 1rem 1.875rem;
 }
 
 .lgin {
@@ -458,7 +458,7 @@ a {
 }
 
 .icou{
-  font-size:1.8rem;
+  font-size:1.2rem;
 }
 
 </style>

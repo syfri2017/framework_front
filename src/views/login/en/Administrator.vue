@@ -5,7 +5,7 @@
       <el-col :span="8" style="text-align:-webkit-center">
         <div class="login-form" >
           <div class="filed left">
-            <router-link :to="{path:'/login/Login'}"><i class="iconfont icon-yonghu icou"></i></router-link>
+            <router-link :to="{path:'/login/ch/Login'}"><i class="iconfont icon-yonghu icou"></i></router-link>
             <span >管理员登录</span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
@@ -154,11 +154,11 @@ $blackcolor: #2c2c2c;
 }
 
 .filed {
-  margin: 0px 1.875rem 1.25rem 1.875rem;
+  margin: 0px 1.875rem 1rem 1.875rem;
 }
 
 .lgin {
-  margin-top: 8.1rem;
+  margin-top: 8.8rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -466,7 +466,7 @@ a {
 }
 
 .icou{
-  font-size:1.8rem;
+  font-size:1.2rem;
 }
 
 </style>

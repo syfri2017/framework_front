@@ -20,7 +20,7 @@
           <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
           <span class="lana">中文</span>
           <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-          <span class="lanb">English</span>
+          <span class="lanb" @click="clk()">English</span>
         </p>
       </el-col>
     </el-row>
@@ -76,7 +76,11 @@ export default {
       activeName: "first"
     };
   },
-  methods: {}
+  methods: {
+    clk(){
+      this.$router.push({ path: '/common/LoginEN' });
+    },
+  }
 };
 </script>
 
