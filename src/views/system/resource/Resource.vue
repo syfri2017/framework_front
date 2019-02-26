@@ -1,14 +1,11 @@
 <template>
-  <div >
-    <h1>Resource</h1>
+  <div id="resource">
     <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
-  methods: {
-    
-  }
+  name:'resource'
 }
 </script>
 
