@@ -357,6 +357,7 @@ const router = new VueRouter({
             {
               path: '/system/codelist/detail',
               name: 'codelist/detail',
+              meta: {auth: true, title: "代码集详情", operation: true},
               component: resolve => require(['@/views/system/codelist/CodelistDetail'], resolve)
             },
           ]
