@@ -32,7 +32,7 @@ function init (toolCfg, stage) {
 }
 
 function draw (stage, eventPoint, cfg, drawn) {
-    // debugger
+    // 
     const ploterScroll = window.ploterScroll
     let point = {
         x: eventPoint.x + ploterScroll.left,
@@ -118,7 +118,7 @@ function draw (stage, eventPoint, cfg, drawn) {
                 rect.setFillPriority('pattern')
                 shapeGroup.setAttr('_isDrawn', true)
                 shapeWrap.on('dblclick', e => {
-                    debugger
+                    
                     stage.fire('evt_stage_element_dblclick', shapeWrap)
                 })
 

@@ -411,7 +411,7 @@
         //保存展馆展位数据
         savePlotData(data) {
             const me = this
-            debugger
+            
             var business = data.business
             var shape = data.shape
             shape.stageUuid = business.stageUuid
@@ -481,13 +481,12 @@
                 me.$axios.post('/zgjbxx/doSearchHbMKListByVO', params).then(function (res) {
                     var currentAreaStage = res.data.result.zgjbxxVOs[0].zgzwhbStr
                     var currentShapesData = res.data.result.zwmoJsonDatas
-                    //window.wrapHandshake = handshake
                     var stageRecord={
                             stageData: currentAreaStage,
                             shapesData: currentShapesData,
                             uuid: params.uuid
                     }
-                    debugger
+                    
                     me.$store.commit('updateStageData', stageRecord)
                     me.initPloter(currentAreaStage || null, currentShapesData || null)
                     plotundo.init()
@@ -751,7 +750,7 @@
                 me.currentPlotActiveItem = null
             },
             doSelectShape (target) {
-                // debugger
+                // 
                 const me = this
                 const targetWrap = target.findAncestor('.shapeWrap')
                 const targetMain = targetWrap.findOne('.mainShape')
@@ -863,7 +862,7 @@
             },
             // 发射画布数据
             emitSaveData () {
-                debugger
+                
                 const me = this
                 me.onBeforeSave()
                 function checkFlags () {
