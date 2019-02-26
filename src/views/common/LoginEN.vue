@@ -26,23 +26,6 @@
     </el-row>
     <!-- <login></login> -->
     <router-view></router-view>
-    <!-- <el-tabs v-model="activeName">
-      <el-tab-pane label="登录" name="first" :key="'first'">
-        <login></login>
-      </el-tab-pane>
-      <el-tab-pane label="注册" name="second" :key="'second'">
-        <register></register>
-      </el-tab-pane>
-      <el-tab-pane label="忘记用户名" name="third" :key="'third'">
-        <forgetpassword></forgetpassword>
-      </el-tab-pane>
-      <el-tab-pane label="忘记密码" name="forth" :key="'forth'">
-        <forgetusername></forgetusername>
-      </el-tab-pane>
-      <el-tab-pane label="重置账户" name="fifth" :key="'fifth'">
-        <reset></reset>
-      </el-tab-pane>
-    </el-tabs> -->
     <el-row class="footerstyle">
       <el-col :span="4">&nbsp;</el-col>
       <el-col :span="16" class="footer">
@@ -54,21 +37,9 @@
 </template>
 
 <script>
-import Login from "@/views/login/ch/Login";
-import Register from "@/views/login/ch/Register";
-import Reset from "@/views/login/ch/Reset";
-import ForgetPassword from "@/views/login/ch/ForgetPassword";
-import ForgetUsername from "@/views/login/ch/ForgetUsername";
 
 export default {
   name: "Login",
-  components: {
-    login: Login,
-    register: Register,
-    forgetpassword: ForgetPassword,
-    forgetusername: ForgetUsername,
-    reset: Reset
-  },
   data() {
     return {
       //默认第一个选项卡

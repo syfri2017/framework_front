@@ -102,12 +102,6 @@ const router = new VueRouter({
           component: resolve => require(['@/views/login/en/Mailbox'], resolve)
         },
         {
-          path: '/login/en/Administrator',
-          name: 'login/en/Administrator',
-          meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/login/en/Administrator'], resolve)
-        },
-        {
           path: '/login/en/Reset',
           name: 'login/en/Reset',
           meta: {auth: true, title: "账户重置", operation: true},
