@@ -8,7 +8,7 @@
           <i class="iconfont icou"></i>
           <span>用户注册</span>
           <span class="signstyle">没有账户?
-            <router-link :to="{path:'/login/login'}">
+            <router-link :to="{path:'/login/ch/login'}">
               <a>去登录</a>
             </router-link>
           </span>
@@ -116,19 +116,20 @@ export default {
       }
     },
     getMessageCode() {
+      
       let vm = this;
       this.messageCode = "";
       if (this.mobileCheck()) {
         this.messageCodeText = "发送中...";
         this.mobileBtnDisabled = true;
-        vm.$axios.post("/signin/getUsernameNum/" + this.mobile + "/static").then(
+        vm.$axios.get("/signin/getUsernameNum/" + this.mobile + "/static").then(
           function(res) {
             if (res.data.result != 0) {
               alert("用户名已存在！");
               this.messageCodeText = "获取验证码";
               this.mobileBtnDisabled = false;
             } else {
-              vm.$axios.post("/signin/sendMessage?phone=" + this.mobile).then(
+              vm.$axios.get("/signin/sendMessage?phone=" + this.mobile).then(
                 function(res) {
                   this.messageCodeReal = res.data.msg;
                   var count = this.time;
@@ -193,7 +194,6 @@ export default {
       }
     },
     register() {
-      
       let vm = this;
       this.mobileCheck();
       this.messageCodeCheck();
@@ -204,7 +204,7 @@ export default {
         this.messageCodeCheck() &&
         this.password1Check() &&
         this.password2Check() &&
-        this.messageCode == this.messageCodeReal
+        this.messageCode == vm.messageCodeReal
       ) {
         var params = {
           username: this.mobile,
@@ -299,11 +299,11 @@ $blackcolor: #2c2c2c;
 }
 
 .filed {
-  margin: 0px 1.875rem 1.25rem 1.875rem;
+  margin: 0px 1.875rem 1rem 1.875rem;
 }
 
 .lgin {
-  margin-top: -0.65rem;
+  margin-top: 1.8rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -609,7 +609,7 @@ a {
 }
 
 .icou {
-  font-size: 1.8rem;
+  font-size:1.2rem;
 }
 
 /*获取验证码样式*/
@@ -625,35 +625,35 @@ a {
 
 .alert{
   position:absolute;
-  top:58px;
+  top:48px;
   margin-left:0px !important;
   color:#EA2530;
   }
 
   .alert1{
   position:absolute;
-  top:118px;
+  top:103px;
   margin-left:0px !important;
   color:#EA2530;
   }
 
   .alert2{
   position:absolute;
-  top:178px;
+  top:159px;
   margin-left:0px !important;
   color:#EA2530;
   }
 
   .tip{
   position:absolute;
-  top:178px;
+  top:159px;
   margin-left:0px !important;
   color:#EA2530;
   }
 
   .alert3{
   position:absolute;
-  top:236px;
+  top:218px;
   margin-left:0px !important;
   color:#EA2530;
   }

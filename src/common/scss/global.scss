@@ -25,6 +25,7 @@
 .buttonSubmit{
   margin-top: 35px;
   margin-bottom: 20px;
+  text-align: center;
 }
 .el-button--clear{
   color:#fff;
@@ -83,10 +84,10 @@
   float: right !important;
 }
 .el-form-item{
-  margin-bottom: 2px;
+  margin-bottom: 5px;
 }
 .el-form-item__error {
-  padding-top: 0px;
+  padding-top: 2px;
   line-height: 0;
 }
 .el-date-editor .el-range-separator{
@@ -115,4 +116,13 @@
 }
 .el-card__body{
   padding: 13px 15px;    
+}
+.f14{
+  font-size:14px;
+}
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
 }

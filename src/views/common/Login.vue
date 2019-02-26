@@ -20,7 +20,7 @@
           <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
           <span class="lana">中文</span>
           <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-          <span class="lanb">English</span>
+          <span class="lanb" @click="clk()">English</span>
         </p>
       </el-col>
     </el-row>
@@ -55,11 +55,11 @@
 </template>
 
 <script>
-import Login from "@/views/login/Login";
-import Register from "@/views/login/Register";
-import Reset from "@/views/login/Reset";
-import ForgetPassword from "@/views/login/ForgetPassword";
-import ForgetUsername from "@/views/login/ForgetUsername";
+import Login from "@/views/login/ch/Login";
+import Register from "@/views/login/ch/Register";
+import Reset from "@/views/login/ch/Reset";
+import ForgetPassword from "@/views/login/ch/ForgetPassword";
+import ForgetUsername from "@/views/login/ch/ForgetUsername";
 
 export default {
   name: "Login",
@@ -76,7 +76,11 @@ export default {
       activeName: "first"
     };
   },
-  methods: {}
+  methods: {
+    clk(){
+      this.$router.push({ path: '/login/en/Login' });
+    },
+  }
 };
 </script>
 

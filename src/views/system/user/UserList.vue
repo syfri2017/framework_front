@@ -1,5 +1,5 @@
 <template>
-  <div id="user">
+  <div id="userList">
     <div id="tableView" v-loading="this.loading" element-loading-text="加载中">
 			<el-row>
 				<el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
@@ -60,8 +60,8 @@
 						</template>
 					</el-table-column>
 				</el-table>
+        <!--翻页组件-->
         <paginator></paginator>
-				
 			</div>
 			<!--角色列表页-->
 			<el-dialog title="用户角色列表" :visible.sync="roleDetailVisible" :close-on-click-modal="false">
@@ -158,11 +158,9 @@
 						</el-row>
 						<el-row class="buttonSubmit">
 							<el-row>
-								<el-col :span="24" style="text-align: center">
-									<el-button v-if="dialogTitle == '用户编辑'" type="warning" icon="edit" size="small" @click="editPassword">修改密码</el-button>
-									<el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog(editForm)"> 取消</el-button>
-									<el-button type="success" icon="el-icon-check" size="small" class="btn_save" @click="editSubmit('editForm')">保存</el-button>
-								</el-col>
+                <el-button v-if="dialogTitle == '用户编辑'" type="warning" icon="edit" size="small" @click="editPassword">修改密码</el-button>
+                <el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog(editForm)"> 取消</el-button>
+                <el-button type="success" icon="el-icon-check" size="small" class="btn_save" @click="editSubmit('editForm')">保存</el-button>
 							</el-row>
 						</el-row>
 					</el-form>
@@ -560,7 +558,7 @@ export default {
                     });
                   } else {
                     params.createId = this.currentUser.userid;
-                    params.createName = this.currentUser.realname;
+                    params.createName = this.currentUser.username;
                     this.$axios.post("/user/insertByVO", params).then(
                       function(res) {
                         var addData = res.data.result;
@@ -582,7 +580,7 @@ export default {
             params.pkid = val.pkid;
             params.userid = val.userid;
             params.alterId = this.currentUser.userid;
-            params.alterName = this.currentUser.realname;
+            params.alterName = this.currentUser.username;
             if (this.editForm.username == this.usernameOld) {
               this.editSubmitUpdateDB(params);
             } else {

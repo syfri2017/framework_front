@@ -6,19 +6,18 @@
         <div class="login-form" >
           <div class="filed left">
             <i class="iconfont icou"></i>
-            <span >用户名找回</span>
-            <span class="signstyle"><router-link :to="{path:'/login/login'}"><a>返回登录</a></router-link></span>
+            <span >账户重置</span>
+            <span class="signstyle"><router-link :to="{path:'/login/ch/login'}"><a>返回登录</a></router-link></span>
           </div>
-          <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+          <form  ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="邮箱" v-model="FUmail" name="FUmail" id="FUmail" prefix-icon="iconfont icon-youxiang"></el-input>
-              <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFUMailCode()" v-text=FUmailCodeText :disabled="FUmailBtnDisabled"></button>
+              <el-input v-model="REAcompanyName" name="REAcompanyName" id="REAcompanyName" placeholder="单位名称" prefix-icon="iconfont icon-danwei"></el-input>
             </div>
             <div class="filed">
-              <el-input placeholder="邮件验证码"  v-model="FUmailCode" name="FUmailCode" id="FUmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
+              <el-input v-model="REAunscid" name="REAunscid" id="REAunscid" placeholder="统一社会信用代码" prefix-icon="iconfont icon-credentials_icon"></el-input>
             </div>
             <div class="filed lgin">
-              <el-button type="danger" @click="FUIdentify()" round>确定</el-button>
+              <el-button type="danger" @click="REAIdentify()" round>确定</el-button>
             </div>
           </form>
         </div>
@@ -32,140 +31,54 @@ export default {
   name: 'Login',
   data () {
     return {
-        //忘记用户名
-        FUmail: "",
-        FUmailCode: "",
-        FUmailCodeReal: "",
-        FUmailCodeText: "获取验证码",
-        FUtimer: null,
-        FUusername: "",
-        FUmessageCode: "",
-        FUmessageCodeReal: "",
-        FUmessageCodeText: "获取验证码",
-        FUpassword: "",
-        FUsrc: "/xfxhapi/imageCode",
-        FUvalidateCode: "",
-        FUmailBtnDisabled: false,
-        FUmobileBtnDisabled: false,
+        //重置账户
+        REAcompanyName: "",
+        REAunscid: "",
+        REAtimer: null,
+        REAmobile: "",
+        REAmessageCode: "",
+        REAmessageCodeReal: "",
+        REAmessageCodeText: "获取验证码",
+        REApassword1: "",
+        REApassword2: "",
+        REAregisterData: "",
+        REAmobileBtnDisabled: false,
+        //重置校验标识
+        REAmobileAlertFlag: false,
+        REAmessageCodeAlertFlag: false,
+        REApassword1TipFlag: false,
+        REApassword1AlertFlag: false,
+        REApassword2AlertFlag: false,
     }
   },
   methods:{
-    //忘记用户名
-    FUmailCheck() {
-            if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.FUmail))) {
-                alert("邮箱格式不正确");
-                return false;
-            } else {
-                return true;
+    //忘记密码
+    //A
+    REAIdentify() {
+        let vm = this;
+        if (this.REAcompanyName == null || this.REAcompanyName == '') {
+            alert("单位名称不能为空！")
+        } else if (this.REAunscid == null || this.REAunscid == '') {
+            alert("统一社会信用代码不能为空！")
+        } else {
+            var params = {
+                unscid: this.REAunscid,
+                companyname: this.REAcompanyName
             }
-        },
-        getFUMailCode() {
-            let vm = this;
-            this.FUmailCode = "";
-            if (this.FUmailCheck()) {
-                this.FUmailCodeText = "发送中...";
-                this.FUmailBtnDisabled = true;
-                vm.$axios.get('/signin/getMailNum/' + this.FUmail + "/static").then(function (res) {
-                    if (res.data.result == 0) {
-                        alert("该邮箱未注册！");
-                        this.FUmailCodeText = "获取验证码";
-                        this.FUmailBtnDisabled = false;
-                    } else if (res.data.result == 1) {
-                        vm.$axios.get('/signin/sendMail?mail=' + this.FUmail).then(function (res) {
-                            this.FUmailCodeReal = res.data.msg;
-                            var count = this.time;
-                            this.timer = setInterval(() => {
-                                if (count == 0) {
-                                    clearInterval(this.timer);
-                                    this.timer = null;
-                                    this.FUmailCodeText = "获取验证码";
-                                    this.FUmailBtnDisabled = false;
-                                } else {
-                                    this.FUmailCodeText = count + "秒后获取"
-                                    count--;
-                                    this.FUmailBtnDisabled = true;
-                                }
-                            }, 1000)
-                        }.bind(this), function (error) {
-                            console.log(error);
-                        });
-                    }
-                }.bind(this), function (error) {
-                    console.log(error);
-                });
-            }
-        },
-        FUIdentify() {
-            let vm = this;
-            if (this.FUmail == null || this.FUmail == '') {
-                alert("邮箱不能为空！")
-            } else if (this.FUmailCode == null || this.FUmailCode == '') {
-                alert("验证码不能为空！")
-            } else {
-                if (this.FUmailCode == this.FUmailCodeReal) {
-                    vm.$axios.get('/signin/getMailNum/' + this.FUmail + "/static").then(function (res) {
-                        if (res.data.result == 0) {
-                            alert("该邮箱未注册！");
-                        } else if (res.data.result == 1) {
-                            axios.get('/signin/getUsernameByMail/' + this.FUmail + "/static").then(function (res) {
-                                alert("用户名找回成功！");
-                                this.username = res.data;
-                                this.changeForm('loginFlag');
-                            }.bind(this), function (error) {
-                                console.log(error);
-                            });
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    });
-
-                } else {
-                    alert("验证码输入错误，请核对后再试");
+            vm.$axios.post('/signin/findByUnscid/', params).then(function (res) {
+                this.REAregisterData = res.data.result;
+                if (this.REAregisterData.length == 0) {
+                    alert("无记录，请重新输入！");
                 }
-            }
-        },
-        //作废
-        getFUMessageCode() {
-            let vm = this;
-            vm.$axios.get('/signin/sendMessage?phone=' + this.FUusername).then(function (res) {
-                this.FUmessageCodeReal = res.data.msg;
-                var count = this.time;
-                this.FUtimer = setInterval(() => {
-                    if (count == 0) {
-                        clearInterval(this.FUtimer);
-                        this.FUtimer = null;
-                        this.FUmessageCodeText = "获取验证码";
-                        this.FUmobileBtnDisabled = false;
-                    } else {
-                        this.FUmessageCodeText = count + "秒后获取"
-                        count--;
-                        this.FUmobileBtnDisabled = true;
-                    }
-                }, 1000)
+                else {
+                    this.changeForm('REABFlag');
+                    this.REAmobile = this.REAregisterData[0].username;
+                }
             }.bind(this), function (error) {
                 console.log(error);
             });
-        },
-        reloadFUCode() {
-            // this.FUsrc = '/xfxhapi/imageCode?' + ((new Date()).valueOf());
-            this.FUsrc = '/imageCode?' + ((new Date()).valueOf());
-        },
-        FUlogin() {
-            if (this.FUusername == null || this.FUusername == '') {
-                alert("用户名不能为空！")
-            } else if (this.FUmessageCode == null || this.FUmessageCode == '') {
-                alert("短信验证码不能为空！")
-            } else if (this.FUpassword == null || this.FUpassword == '') {
-                alert("密码不能为空！")
-            } else if (this.FUvalidateCode == null || this.FUvalidateCode == '') {
-                alert("验证码不能为空！")
-            } else {
-                this.username = this.FUusername;
-                this.password = this.FUpassword;
-                this.validateCode = this.FUvalidateCode;
-                this.$refs.loginForm.submit();
-            }
-        },
+        }
+    },
 
   }
 }
@@ -241,11 +154,11 @@ $blackcolor: #2c2c2c;
 }
 
 .filed {
-  margin: 0px 1.875rem 1.25rem 1.875rem;
+  margin: 0px 1.875rem 1rem 1.875rem;
 }
 
 .lgin {
-  margin-top: 8.1rem;
+  margin-top: 8.8rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -273,7 +186,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 10.5rem;
+    margin-left:11.5rem;
     a {
       cursor: pointer;
     }
@@ -553,15 +466,8 @@ a {
 }
 
 .icou{
-  font-size:1.8rem;
+  font-size:1.2rem;
 }
 
-/*获取验证码样式*/
-.phonebtn{
-    position: absolute;
-    margin-top: -1.82rem;
-    margin-left: 4.2rem;
-    border: none;background: #ffffff;color:#fb6a74;cursor: pointer;
-}
 
 </style>
