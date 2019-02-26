@@ -17,7 +17,15 @@ Vue.config.devtools = true;
 Vue.use(ElementUI); 
 Vue.use(VueAxios, axios);
 Vue.use(utils);
+//-----plot 开始 ---------- 
+// 注册组件
+import Components from './components/ploter/'
+Components.init()
 
+// 注册插件
+import Plugins from './plugins/'
+Plugins.init()
+//-----plot 结束 ---------- 
 // 后台项目地址
 axios.defaults.baseURL = window.config.domain;
 //解决跨域
@@ -112,7 +120,9 @@ axios.interceptors.response.use(
     
   })
 
-new Vue({
+
+//plot:window.wrapHandshake =
+window.wrapHandshake =new Vue({
   el: '#app',
   router,
   components: { App },
