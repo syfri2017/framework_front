@@ -6,19 +6,29 @@ export default {
           var permissions = JSON.parse(localStorage.getItem("CURRENTUSER")).permissions;
           var index = permissions.indexOf(val);
           if(index == -1){
-              return false;
+            return false;
           }else{
-              return true;
+            return true;
           }
       };
       //table日期格式化
       Vue.prototype.tableDateFormat = function (row, column) { 
         var rowDate = row[column.property];
         if (rowDate == null || rowDate == "") {
-            return '';
+          return '';
         } else {
-            return dateFormat(rowDate);
+          return dateFormat(rowDate);
         }
       }
+
+      //table中NULL值格式化
+      Vue.prototype.tableNullFormat = function (row, column) {
+      var rowDate = row[column.property];
+      if (rowDate == null || rowDate == "") {
+        return '无';
+      } else {
+        return rowDate;
+      }
+    }
   }
 }
