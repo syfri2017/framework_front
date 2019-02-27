@@ -4,27 +4,24 @@
 			<el-row>
         <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
           <el-row>
-            <el-col :span="8" class="searchInline">
-              <label class="el-form-item__label searchLabel">权限名称</label>
-              <el-input size="small" v-model="searchForm.permissionname" placeholder="权限名称"></el-input>
+            <el-col :span="1">&nbsp;</el-col>
+            <el-col :span="9" class="searchInline">
+              <label class="el-form-item__label searchLabel">代码值</label>
+              <el-input size="small" v-model="searchForm.codeValue" placeholder="代码值" prefix-icon="el-icon-search" clearable></el-input>
             </el-col>
-            <el-col :span="8" class="searchInline">
-              <label class="el-form-item__label searchLabel">权限描述</label>
-              <el-input size="small" v-model="searchForm.permissioninfo" placeholder="权限描述"></el-input>
+            <el-col :span="2">&nbsp;</el-col>
+            <el-col :span="9" class="searchInline">
+              <label class="el-form-item__label searchLabel">代码名称</label>
+              <el-input size="small" v-model="searchForm.codeName" placeholder="代码名称" prefix-icon="el-icon-search" clearable></el-input>
             </el-col>
-            <el-col :span="8" class="searchInline">
-              <label class="el-form-item__label searchLabel">创建时间</label>
-              <el-date-picker type="daterange" format="yyyy/MM/dd" value-format="yyyy/MM/dd" size="small" v-model="searchForm.createTime"
-                range-separator="~" placeholder="创建时间" start-placeholder="开始日期" end-placeholder="结束日期" class="searchDatePicker">
-              </el-date-picker>
-            </el-col>
+            <el-col :span="2">&nbsp;</el-col>
           </el-row>
           <div>
             <el-form>
               <el-col :span="12" class="btnEditDelete">
                 <el-form-item align="left">
-                  <el-button v-if="hasPermission('system/permission:add')" type="success" icon="el-icon-plus" size="small" @click="addClick">新增</el-button>
-                  <el-button v-if="hasPermission('system/permission:delete')" type="danger" icon="el-icon-delete" size="small" @click="removeSelection">删除</el-button>
+                  <el-button v-if="hasPermission('system/codelist:add')" type="success" icon="el-icon-plus" size="small" @click="addClick">新增</el-button>
+                  <el-button v-if="hasPermission('system/codelist:delete')" type="danger" icon="el-icon-delete" size="small" @click="removeSelection">删除</el-button>
                 </el-form-item>
               </el-col>
               <el-col :span="12"></el-col>
@@ -38,49 +35,57 @@
           </div>
         </el-form>
       </el-row>
-			<div class="table_container">
-				<el-table class="tableStyle" border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
+			<el-table class="table-formal" border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
           :height="tableheight">
           <el-table-column type="selection" width="35"></el-table-column>
           <el-table-column type="index" show-overflow-tooltip label="序号" align="center" width="65"></el-table-column>
-          <el-table-column prop="permissionname" show-overflow-tooltip label="权限名称" min-width="20%" align="center"></el-table-column>
-          <el-table-column prop="permissioninfo" show-overflow-tooltip label="权限描述" min-width="15%" align="center"></el-table-column>
-          <el-table-column prop="createName" show-overflow-tooltip label="创建人" min-width="12%" align="center"></el-table-column>
+          <el-table-column prop="codeValue" show-overflow-tooltip label="代码值" min-width="10%" align="center"></el-table-column>
+          <el-table-column prop="codeName" show-overflow-tooltip label="代码名称" min-width="15%" align="center"></el-table-column>
+          <el-table-column prop="createName" show-overflow-tooltip label="创建人" min-width="11%" align="center"></el-table-column>
           <el-table-column prop="createTime" show-overflow-tooltip label="创建时间" min-width="13%" align="center" :formatter="tableDateFormat"></el-table-column>
-          <el-table-column prop="alterName" show-overflow-tooltip label="修改人" min-width="12%" align="center"></el-table-column>
+          <el-table-column prop="alterName" show-overflow-tooltip label="修改人" min-width="11%" align="center"></el-table-column>
           <el-table-column prop="alterTime" show-overflow-tooltip label="修改时间" min-width="13%" align="center" :formatter="tableDateFormat"></el-table-column>
-          <el-table-column label="操作" width="65" align="center" v-if="hasPermission('system/permission:edit')">
-            <template slot-scope="scope">
-              <el-button type="text" @click="editClick(scope.row, scope.$index)">编辑</el-button>
-            </template>
+          <el-table-column prop="remark" show-overflow-tooltip label="备注" min-width="12%" align="center"></el-table-column>
+          <el-table-column label="操作" width="65" align="center" v-if="hasPermission('system/codelist:edit')">
+              <template slot-scope="scope">
+                  <el-button type="text" @click="editClick(scope.row,scope.$index)">编辑</el-button>
+              </template>
           </el-table-column>
         </el-table>
+        <!--翻页组件-->
         <paginator></paginator>
-				
 			</div>
 
       <!-- 编辑-->
       <el-dialog :title="dialogTitle" :visible.sync="editFormVisible" :close-on-click-modal="false">
-        <el-form :model="editForm" label-width="100px" :rules="editFormRules" ref="editForm">
-          <div v-show="false" v-once v-model="permissionnameOld"></div>
+        <el-form :model="editForm" label-width="120px" :rules="editFormRules" ref="editForm">
+          <div v-show="false" v-once v-model="codeValueOld"></div>
           <el-row>
             <el-col :span="23">
-              <el-form-item label="权限名称" prop="permissionname">
-                <el-input v-model="editForm.permissionname" auto-complete="off" placeholder="权限名称" size="small" maxlength="15"></el-input>
+              <el-form-item label="代码值" prop="codeValue">
+                <el-input v-model="editForm.codeValue" size="small" auto-complete="off" placeholder="代码值" maxlength="30" clearable></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="1">&nbsp;</el-col>
           </el-row>
           <el-row>
             <el-col :span="23">
-              <el-form-item label="权限描述" prop="permissioninfo">
-                <el-input type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="editForm.permissioninfo" auto-complete="off" placeholder="权限描述" size="small" maxlength="50"></el-input>
+              <el-form-item label="代码名称" prop="codeName">
+                <el-input v-model="editForm.codeName" size="small" auto-complete="off" placeholder="代码名称" maxlength="64" clearable></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="1">&nbsp;</el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="23">
+              <el-form-item label="备注" prop="remark">
+                <el-input v-model="editForm.remark" size="small" auto-complete="off" placeholder="备注" maxlength="128" clearable></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="1">&nbsp;</el-col>
           </el-row>
           <el-row class="buttonSubmit">
-            <el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog(editForm)"> 取消</el-button>
+            <el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog"> 取消</el-button>
             <el-button type="success" icon="el-icon-check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
           </el-row>
         </el-form>
@@ -99,11 +104,11 @@ export default {
     return {
       //当前登陆用户
       currentUser: this.CONSTANT.currentUser,
+      codeid: null,
       //搜索表单
       searchForm: {
-        permissionname: "",
-        permissioninfo: "",
-        createTime: new Array()
+        codeValue: '',
+        codeName: ''
       },
       tableData: [],
       //table高度
@@ -118,30 +123,43 @@ export default {
       pageSize: 10,
       //总记录数
       total: 0,
-      //选中的序号
-      editIndex: -1,
       //修改界面是否显示
       editFormVisible: false,
       editFormRules: {
-        permissionname: [
-          { required: true, message: "请输入权限名称", trigger: "blur" },
-          { pattern: /^[0-9A-Za-z]{2,15}$/, message: '长度为2-15个字母或数字', trigger: 'blur' },
+        codeValue: [
+          { required: true, message: "请输入代码值", trigger: "blur" },
+          { pattern: /^[a-zA-Z0-9_-]{1,30}$/, message: '长度为1-30个字母、数字、_-符号',trigger: 'blur'},
         ],
-        permissioninfo: [{ required: true, message: "请输入权限描述", trigger: "blur" }]
+        codeName: [{ required: true, message: "请输入代码名称", trigger: "blur" }]
       },
       //修改界面数据
       editForm: {
-          permissionname: "",
-          permissioninfo: ""
+          codetype: "",
+          codetypeName: ""
       },
-      //权限名称-旧
-      permissionnameOld: "",
+      //代码值名称-旧
+      codeValueOld: "",
       //Dialog Title
-      dialogTitle: "权限编辑",
+      dialogTitle: "代码集详情编辑",
+      //选中的序号
+      editIndex: -1
     };
   },
   created: function() {
-    this.searchClick("click");
+    this.codeid = this.$route.query.codeid;
+    var params = {
+        codeid: this.codeid,
+        pageSize: this.pageSize,
+        pageNum: this.currentPage
+    };
+    this.$axios.post('/codelist/detail/doFindByCodeid', params).then(function (res) {
+        var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+        this.tableData = tableTemp.concat(res.data.result.list);
+        this.total = res.data.result.total;
+        this.loading = false;
+    }.bind(this), function (error) {
+        console.log(error)
+    })
   },
   methods: {
     //表格查询事件
@@ -155,29 +173,27 @@ export default {
       }
       vm.loading = true;//表格重新加载
       var params = {
-        permissionname: vm.searchForm.permissionname.replace(/%/g,"\\%"),
-        permissioninfo: vm.searchForm.permissioninfo.replace(/%/g,"\\%"),
-        createTimeBegin: vm.searchForm.createTime[0],
-        createTimeEnd: vm.searchForm.createTime[1],
+        codeid: vm.codeid,
+        codeValue: vm.searchForm.codeValue.replace(/%/g,"\\%"),
+        codeName: vm.searchForm.codeName.replace(/%/g,"\\%"),
         pageSize: vm.pageSize,
         pageNum: vm.currentPage
       };
 
-      vm.$axios.post('/permission/findByVO', params).then(function (res) {
-        var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+      vm.$axios.post('/codelist/detail/findByVO', params).then(function (res) {
+        var tableTemp = new Array((vm.currentPage-1)*vm.pageSize);
         vm.tableData = tableTemp.concat(res.data.result.list);
         vm.total = res.data.result.total;
         vm.loading = false;
       }.bind(this), function (error) {
-          console.log(error)
+        console.log(error)
       })
     },
 
     //清空查询条件
     clearClick: function() {
-      this.searchForm.permissioninfo = "",
-      this.searchForm.permissionname = "",
-      this.searchForm.createTime = new Array(),
+      this.searchForm.codeValue = "",
+      this.searchForm.codeName = "",
       this.searchClick('reset');
     },
 
@@ -191,7 +207,7 @@ export default {
    
     //新增事件
     addClick: function() {
-      this.dialogTitle = "权限新增";
+      this.dialogTitle = "代码集详情新增";
       //清空edit表单
       if (this.$refs["editForm"] !== undefined) {
           this.$refs["editForm"].resetFields();
@@ -203,14 +219,15 @@ export default {
     editClick: function(val, index) {
       let vm = this;
       vm.editIndex = index;
-      vm.dialogTitle = "权限编辑";
+      vm.dialogTitle = "代码集详情编辑";
       var params = {
-        permissionid: val.permissionid
+        codeid: this.codeid,
+        pkid: val.pkid
       };
-      vm.$axios.post('/permission/findByVO', params).then(function (res) {
+      vm.$axios.post('/codelist/detail/findByVO', params).then(function (res) {
         vm.editForm = res.data.result.list[0];
-        //保存当前用户名permissionname
-        vm.permissionnameOld = this.editForm.permissionname;
+        //保存当前用户名codevalue
+        vm.codeValueOld = this.editForm.codeValue;
       }.bind(this), function (error) {
         console.log(error)
       })
@@ -223,48 +240,54 @@ export default {
         if (valid) {
           let vm = this;
           var params = {
-              permissionid: val.permissionid,
-              permissionname: val.permissionname,
-              permissioninfo: val.permissioninfo
+            codeid: this.codeid,
+            codeValue: val.codeValue,
+            codeName: val.codeName,
+            remark: val.remark
           };
-          if(vm.dialogTitle == "权限新增"){
-            vm.$axios.get('/permission/getNum/' + vm.editForm.permissionname).then(function(res){
+          if(vm.dialogTitle == "代码集详情新增"){
+            vm.$axios.get('/codelist/detail/getNum/' + vm.codeid + '/' + vm.editForm.codeValue).then(function(res){
               if(res.data.result != 0){
                 vm.$message({
-                  message: "权限名已存在",
+                  message: "代码值已存在",
                   type: "error"
                 });
               }else{
                 params.createId = vm.currentUser.userid;
                 params.createName = vm.currentUser.username;
-                vm.$axios.post('/permission/insertByVO', params).then(function (res) {
-                  res.data.result.createTime = new Date();
-                  vm.tableData.unshift(res.data.result);
+                vm.$axios.post('/codelist/detail/insertByVO', params).then(function (res) {
+                  var addData = res.data.result;
+                  addData.createTime = new Date();
+                  vm.tableData.unshift(addData);
                   vm.total = this.tableData.length;
+                  vm.$message({
+                    message: "代码集详情新增成功",
+                    type: "success"
+                  });
                 }.bind(this), function (error) {
                   console.log(error)
                 })
                 vm.editFormVisible = false;
               }
             }.bind(this),function(error){
-              console.log(error)
+                console.log(error)
             })
-          }else if(vm.dialogTitle == "权限编辑"){
-            params.permissionid = val.permissionid;
+          }else if(vm.dialogTitle == "代码集详情编辑"){
+            params.pkid = val.pkid;
             params.alterId = vm.currentUser.userid;
             params.alterName = vm.currentUser.username;
-            if(vm.editForm.permissionname == vm.permissionnameOld){
-              vm.editSubmitUpdateDB(params);
+            if(vm.editForm.codeValue == vm.codeValueOld){
+                vm.editSubmitUpdateDB(params);
             }else{
-              vm.$axios.get('/permission/getNum/' + vm.editForm.permissionname).then(function(res){
-                  if(res.data.result != 0){
-                    vm.$message({
-                      message: "权限名已存在",
-                      type: "error"
-                    });
-                  }else{
-                    vm.editSubmitUpdateDB(params);
-                  }
+              vm.$axios.get('/codelist/detail/getNum/' + vm.codeid + '/' + vm.editForm.codeValue).then(function(res){
+                if(res.data.result != 0){
+                  vm.$message({
+                    message: "代码值已存在",
+                    type: "error"
+                  });
+                }else{
+                  vm.editSubmitUpdateDB(params);
+                }
               }.bind(this),function(error){
                 console.log(error)
               })
@@ -280,16 +303,17 @@ export default {
     //修改方法-update数据库  by li.xue 2018/11/22 15:46
     editSubmitUpdateDB: function(params) {
       let vm = this;
-      vm.$axios.post('/permission/updateByVO', params).then(function (res) {
+      vm.$axios.post('/codelist/detail/updateByVO', params).then(function (res) {
         var result = res.data.result;
-        this.tableData[vm.editIndex].permissionname = result.permissionname;
-        this.tableData[vm.editIndex].permissioninfo = result.permissioninfo;
-        this.tableData[vm.editIndex].alterName = result.alterName;
-        this.tableData[vm.editIndex].alterTime = new Date();
-        this.editFormVisible = false;
-    }.bind(this), function (error) {
+        vm.tableData[vm.editIndex].codeValue = result.codeValue;
+        vm.tableData[vm.editIndex].codeName = result.codeName;
+        vm.tableData[vm.editIndex].remark = result.remark;
+        vm.tableData[vm.editIndex].alterName = result.alterName;
+        vm.tableData[vm.editIndex].alterTime = new Date();
+        vm.editFormVisible = false;
+      }.bind(this), function (error) {
         console.log(error)
-    })
+      })
     },
 
     //删除所选，批量删除
@@ -307,9 +331,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        vm.$axios.post('/permission/deleteByList', vm.multipleSelection).then(function (res) {
+        vm.$axios.post('/codelist/detail/deleteByList', vm.multipleSelection).then(function (res) {
           vm.$message({
-            message: "成功删除" + res.data.result + "条权限信息",
+            message: "成功删除" + res.data.result + "条代码集信息",
             showClose: true,
             onClose: this.searchClick('delete')
           });
@@ -330,11 +354,6 @@ export default {
       val.permissionname = "";
       val.permissioninfo = "";
       this.$refs["editForm"].resetFields();
-    },
-
-    //关闭资源详情Dialog
-    closeResourceDialog: function () {
-      this.resourceVisible = false;
     }
   }
 };
