@@ -418,7 +418,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'mail',
-              component: resolve => require(['@/views/system/mail/Mail'], resolve)
+              component: resolve => require(['@/views/system/mail/MailList'], resolve)
             },
           ]
         }
