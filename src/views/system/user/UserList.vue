@@ -291,8 +291,6 @@ export default {
       roleDetailVisible: false,
       roleDetailList: [],
       roleDetailSelect: [],
-      //操作方式
-      operation: "insert",
       //登陆用户
       currentUser: this.CONSTANT.currentUser,
       //修改密码是否显示
