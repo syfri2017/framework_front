@@ -7,7 +7,7 @@
           <div class="filed left">
             <i class="iconfont icou"></i>
             <span >密码修改</span>
-            <span class="signstyle"><router-link :to="{path:'/login/ch/login'}"><a >返回登录</a></router-link></span>
+            <span class="signstyle"><router-link :to="{path:'/login/en/login'}"><a >返回登录</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed lgin">
