@@ -6,10 +6,10 @@
       <div class="login-form">
         <div class="filed left">
           <i class="iconfont icou"></i>
-          <span>用户注册</span>
-          <span class="signstyle">没有账户?
+          <span>User Registration</span>
+          <span class="signstyle">Existing Accounts?
             <router-link :to="{path:'/login/en/login'}">
-              <a>去登录</a>
+              <a>Go Login</a>
             </router-link>
           </span>
         </div>
@@ -90,7 +90,7 @@ export default {
       mobile: "",
       messageCode: "",
       messageCodeReal: "",
-      messageCodeText: "获取验证码",
+      messageCodeText: "Get Verification Code",
       password1: "",
       password2: "",
       mobileBtnDisabled: false,
@@ -126,7 +126,7 @@ export default {
           function(res) {
             if (res.data.result != 0) {
               alert("用户名已存在！");
-              this.messageCodeText = "获取验证码";
+              this.messageCodeText = "Get Verification Code";
               this.mobileBtnDisabled = false;
             } else {
               vm.$axios.get("/signin/sendMessage?phone=" + this.mobile).then(
@@ -137,7 +137,7 @@ export default {
                     if (count == 0) {
                       clearInterval(this.timer);
                       this.timer = null;
-                      this.messageCodeText = "获取验证码";
+                      this.messageCodeText = "Get Verification Code";
                       this.mobileBtnDisabled = false;
                     } else {
                       this.messageCodeText = count + "秒后获取";
@@ -612,7 +612,7 @@ a {
   font-size:1.2rem;
 }
 
-/*获取验证码样式*/
+/*Get Verification Code样式*/
 .phonebtn {
   position: absolute;
   margin-top: -1.82rem;

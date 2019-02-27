@@ -37,12 +37,12 @@ export default {
         FPBmail: "",
         FPBmailCode: "",
         FPBmailCodeReal: "",
-        FPBmailCodeText: "获取验证码",
+        FPBmailCodeText: "Get Verification Code",
         FPBtimer: null,
         FPCmobile: "",
         FPCmessageCode: "",
         FPCmessageCodeReal: "",
-        FPCmessageCodeText: "获取验证码",
+        FPCmessageCodeText: "Get Verification Code",
         FPCtimer: null,
         FPDusername: "",
         FPDpassword1: "",
@@ -77,7 +77,7 @@ export default {
                 vm.$axios.get('/signin/getUsernameNum/' + this.FPCmobile + "/static").then(function (res) {
                     if (res.data.result == 0) {
                         alert("用户名不存在！");
-                        this.FPCmessageCodeText = "获取验证码";
+                        this.FPCmessageCodeText = "Get Verification Code";
                         this.FPCmobileBtnDisabled = false;
                     } else {
                         vm.$axios.get('/signin/sendMessage?phone=' + this.FPCmobile).then(function (res) {
@@ -87,7 +87,7 @@ export default {
                                 if (count == 0) {
                                     clearInterval(this.FPCtimer);
                                     this.FPCtimer = null;
-                                    this.FPCmessageCodeText = "获取验证码";
+                                    this.FPCmessageCodeText = "Get Verification Code";
                                     this.FPCmobileBtnDisabled = false;
                                 } else {
                                     this.FPCmessageCodeText = count + "秒后获取"
@@ -515,7 +515,7 @@ a {
   font-size:1.2rem;
 }
 
-/*获取验证码样式*/
+/*Get Verification Code样式*/
 .phonebtn{
     position: absolute;
     margin-top: -1.82rem;
