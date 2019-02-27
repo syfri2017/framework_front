@@ -15,12 +15,18 @@
         <p style="margin:30px 50px 0px 0px">
           <span>
             <i class="iconfont icon-help lana"></i>
-            <a class="lana" href="http://61.161.226.197:8090/templates/帮助手册.doc">帮助手册</a>
+            <a class="lana" href="http://61.161.226.197:8090/templates/帮助手册.doc">Help</a>
           </span>
           <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
           <span class="lana" @click="clk()">中文</span>
           <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
           <span class="lanb">English</span>
+        </p>
+        <p style="margin:10px 0px 0px -110px">
+          <span>
+            <i class="iconfont icon-help lana"></i>
+            <a class="lana" href="http://61.161.226.197:8090/templates/展馆图片.zip">Download Pavilion Pictures</a>
+          </span>
         </p>
       </el-col>
     </el-row>

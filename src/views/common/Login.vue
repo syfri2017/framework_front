@@ -22,6 +22,12 @@
           <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
           <span class="lanb" @click="clk()">English</span>
         </p>
+        <p style="margin:10px 0px 0px 80px">
+          <span>
+            <i class="iconfont icon-help lana"></i>
+            <a class="lana" href="http://61.161.226.197:8090/templates/展馆图片.zip">下载展位图</a>
+          </span>
+        </p>
       </el-col>
     </el-row>
     <!-- <login></login> -->
