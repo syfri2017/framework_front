@@ -621,7 +621,6 @@ export default {
           window.ploterStage = stage;
           //  stage 存到store
           me.$store.commit("updatePloterStage", stage);
-          debugger;
           me.setStageLayout();
           drawLib.reloadShapes(stage);
           me.initStageEvent(stage);
@@ -1039,12 +1038,14 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~@/assets/app.scss";
-// .content[data-v-57ee01a8]{
-//   overflow-y: hidden;
-// }
+</style>
+<style lang="scss" scoped>
+
+.content[data-v-57ee01a8]{
+  overflow-y: hidden;
+}
 #menu-toggle-btn {
   right: -26px;
   transform: rotateY(180deg);
