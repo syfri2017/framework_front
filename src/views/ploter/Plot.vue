@@ -1033,9 +1033,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@/assets/app.scss";
-.content[data-v-57ee01a8]{
-  overflow-y: hidden;
-}
+// .content[data-v-57ee01a8]{
+//   overflow-y: hidden;
+// }
 #menu-toggle-btn {
   right: -26px;
   transform: rotateY(180deg);

@@ -12,8 +12,8 @@ export default {
 </script>
 
 <style>
-.content[data-v-57ee01a8]{
+/* .content[data-v-57ee01a8]{
   overflow-y: hidden;
-}
+} */
 
 </style>
