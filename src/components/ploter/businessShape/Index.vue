@@ -36,7 +36,9 @@
                 wrapStageData: 'wrapStageData',
                 ploterConfig: 'ploterConfig',
                 stageElements: 'stageElements',
-                componentsBusinessShapeData: 'componentsBusinessShapeData'
+                componentsBusinessShapeData: 'componentsBusinessShapeData',
+                ploterStage: 'ploterStage'
+                // get到store里面的stage
             })
         },
         watch: {
@@ -55,15 +57,17 @@
                     this.updateStageFromBusinessData(data)
                 },
                 deep: true
+            },
+            // 监听stage变动，写mounted里的代码
+            ploterStage(){
+                this.onStageReady()
             }
         },
         mounted () {
             // 
             // window.wrapHandshake.model['updateBusinessData'] = this.updateBusinessData
             // window.wrapHandshake.model['updateBusinessRecord'] = this.updateBusinessRecord
-
-            this.onStageReady()
-
+            //0227  this.onStageReady()
             setTimeout(() => {
                 this.getBusinessData(this.wrapStageData.uuid)
             }, 1000)
@@ -71,6 +75,7 @@
         methods: {
             onStageReady () {
                 // 
+                debugger
                 if (window.ploterStage) {
                     window.ploterStage.on('evt_stage_element_dblclick', this.onStageElementDblclick)
                     window.ploterStage.on('evt_stage_element_changed', this.onStageElementChanged)
