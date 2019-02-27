@@ -60,7 +60,8 @@ export default {
         this.$router.push(path);
         return;
       }
-      this.$router.push(this.pathCompile(path));
+      // this.$router.push(this.pathCompile(path));
+      this.$router.back(-1);
     }
   }
 }
