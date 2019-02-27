@@ -212,7 +212,7 @@ export default {
 
     //代码集详情
     codetypeCilck: function (val) {
-      this.$router.push({name:"codelist/detail", params: {codeid: val.codeid}})
+      this.$router.push({name:"codelist/detail", query: {codeid: val.codeid}})
     },
    
     //新增事件
@@ -353,11 +353,6 @@ export default {
     closeDialog: function(val) {
       this.editFormVisible = false;
       this.$refs["editForm"].resetFields();
-    },
-
-    //关闭资源详情Dialog
-    closeResourceDialog: function () {
-      this.resourceVisible = false;
     }
   }
 };
