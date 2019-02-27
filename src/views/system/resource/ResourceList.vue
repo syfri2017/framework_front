@@ -407,7 +407,7 @@ export default {
             createElement("span", {}, [
               createElement("el-button", {
                 style: {
-                  "font-size": " 14px",
+                  "font-size": " 12px",
                   float: "right",
                   "margin-right": "10px"
                 },
@@ -417,7 +417,7 @@ export default {
                     vm.$options.methods.remove(store, data, vm);
                   }
                 },
-                domProps: { innerHTML: "-" }
+                domProps: { innerHTML: "<i class='el-icon-delete'></i>" }
               }),
               createElement("el-button", {
                 style: {
@@ -462,7 +462,7 @@ export default {
               createElement("span", {}, [
                 createElement("el-button", {
                   style: {
-                    "font-size": " 14px",
+                    "font-size": " 12px",
                     float: "right",
                     "margin-right": "10px"
                   },
@@ -472,7 +472,7 @@ export default {
                       vm.$options.methods.append(store, data, vm);
                     }
                   },
-                  domProps: { innerHTML: "-" }
+                  domProps: { innerHTML: "<i class='el-icon-delete'></i>" }
                 })
               ])
             ]);
@@ -650,7 +650,7 @@ export default {
     line-height: 40px;
   }
   .el-checkbox+.el-checkbox{
-    margin-left: 15px;
+    margin-left: 14px;
   }
 }
 </style>
