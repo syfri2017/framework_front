@@ -1,15 +1,12 @@
 <template>
-  <div id="home">
+  <div id="boothLog">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'home',
-  methods: {
-    
-  },
+  name: 'boothLog'
 }
 </script>
 

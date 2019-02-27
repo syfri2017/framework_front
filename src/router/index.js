@@ -321,7 +321,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'boothLog',
-              component: resolve => require(['@/views/log/booth/BoothLog'], resolve)
+              component: resolve => require(['@/views/log/booth/BoothLogList'], resolve)
             },
           ]
         },
@@ -334,7 +334,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'smsLog',
-              component: resolve => require(['@/views/log/sms/SmsLog'], resolve)
+              component: resolve => require(['@/views/log/sms/SmsLogList'], resolve)
             },
           ]
         },
