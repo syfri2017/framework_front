@@ -13,7 +13,7 @@ export default {
 
 <style>
 .content[data-v-57ee01a8]{
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 </style>
