@@ -7,7 +7,6 @@
             <!-- <el-menu v-for = "zg in zgtableData" :key = "zg.uuid"  class="el-menu-demo" mode="horizontal" @select="getStage" >
                     <el-menu-item :index= "zg.uuid">{{ zg.zgmc }}</el-menu-item>
             </el-menu>-->
-            <el-button @click="onToolSelected">画展位</el-button>
             <!-- 画布容器 -->
             <div class="app-ploter-main-canvas" ref="plotStage"></div>
             <div class="app-ploter-main-mask"></div>
@@ -23,132 +22,37 @@
         @evtStageScaleChanged="onStageScaleChanged"
         @evtStageScaleReset="onStageScaleReset"
       ></AppPloterWidgetScale>
-      <!-- <Footer class="app-footer app-state-bar" v-if="footer.show">
-        <AppPloterBBarMessage
-            :plotTool="currentPlotTool"
-        ></AppPloterBBarMessage>
-        <AppPloterBBarCoordinate
-            :coordinate="coordinateSystem"
-        ></AppPloterBBarCoordinate>
-        <AppPloterBBarStageAttr
-            :stage="stage"
-            @evtStageCfgChanged="onStageCfgChanged"
-            @evtStageScaleChanged="onStageScaleChanged"
-            @evtStageScaleReset="onStageScaleReset"
-        ></AppPloterBBarStageAttr>
-      </Footer>-->
     </Layout>
-    <el-dialog
-      title="选择企业"
-      :visible.sync="dialogVisible"
-      v-if="dialogVisible"
-      :close-on-click-modal="false"
-    >
-      <!-- 选择企业 -->
-      <div id="tableView">
-        <el-row>
-          <el-col :span="17" class="searchInline">
-            <label class="el-form-item__label" style="width:95px;">公司名称</label>
-            <el-input size="small" v-model="searchForm.gsmc" placeholder="公司名称" clearable></el-input>
-          </el-col>
-          <el-col :span="7" class="btnSearchPlus">
-            <el-button type="primary" icon="el-icon-search" size="small" @click="searchClick">查询</el-button>
-            <el-button type="clear" icon="el-icon-refresh" size="small" @click="clearClick">重置</el-button>
-          </el-col>
-        </el-row>
-        <div class="table_container">
-          <el-table
-            id="table"
-            border
-            class="tableStyle poi"
-            :height="tableheight"
-            :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-            highlight-current-row
-            row-style="height:40px"
-            @row-click="confirm"
-          >
-            <el-table-column
-              type="index"
-              label="序号"
-              show-overflow-tooltip
-              width="65"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="zwgsmc"
-              label="公司名称"
-              show-overflow-tooltip
-              min-width="25%"
-              align="center"
-            >
-              <template slot-scope="scope">
-                <span v-if="scope.row.usertype == 'ENG'" v-text="scope.row.ywgsmc"></span>
-                <span v-else v-text="scope.row.zwgsmc"></span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="tyshxydm"
-              label="统一社会信用代码"
-              show-overflow-tooltip
-              min-width="20%"
-              align="center"
-              :formatter="tableLongNumFormat"
-            ></el-table-column>
-            <el-table-column
-              prop="wz"
-              label="公司网址"
-              show-overflow-tooltip
-              min-width="20%"
-              align="center"
-            ></el-table-column>
-          </el-table>
-          <!--列表底部工具条和分页符-->
-          <el-row type="flex" justify="end">
-            <el-col :span="18">
-              <el-pagination
-                @current-change="currentPageChange"
-                @size-change="pageSizeChange"
-                :current-page="currentPage"
-                :page-sizes="[10, 20, 30]"
-                :page-size="pageSize"
-                layout="total, prev, pager, next, jumper"
-                :total="parseInt(total)"
-              ></el-pagination>
-            </el-col>
-          </el-row>
-        </div>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import drawLib from "./draw";
+import drawLib from "@/views/ploter/draw";
 import plotundo from "@/plugins/plotundo";
 import {
   exitPlotTool,
   deleteShape
   // ,pasteShape
-} from "./draw/utils";
+} from "@/views/ploter/draw/utils";
 import {
   prepareStageData,
   prepareStageElements,
   getShapeOnStage,
   clearShapeStyle,
   updateStageBackgroundImg
-} from "./draw/stage";
+} from "@/views/ploter/draw/stage";
 import { Base64 } from "js-base64";
 import { deepClone } from "@/common/ploter/utils";
 // 共通组件
 import componentsBusinessShape from "@/components/ploter/businessShape";
 // 标绘组件
-import appPloterBBarMessage from "./bbar/Message";
-import appPloterBBarCoordinate from "./bbar/Coordinate";
-import appPloterBBarStageAttr from "./bbar/StageAttr";
+import appPloterBBarMessage from "@/views/ploter/bbar/Message";
+import appPloterBBarCoordinate from "@/views/ploter/bbar/Coordinate";
+import appPloterBBarStageAttr from "@/views/ploter/bbar/StageAttr";
 // widget
-import appPloterWidgetScale from "./widget/Scale";
-import appPloterWidgetMove from "./widget/Move";
+import appPloterWidgetScale from "@/views/ploter/widget/Scale";
+import appPloterWidgetMove from "@/views/ploter/widget/Move";
 
 export default {
   name: "AppPloterMain",
@@ -162,31 +66,18 @@ export default {
   },
   data() {
     return {
-      zgtableData: null,
       //当前展位数据
       currentBusinessData: {},
-      //搜索表单
-      searchForm: {
-        gsmc: ""
-      },
+      currentUuid: "",
+      zguuid: "",
+      yxzwData: [],
+      blnbzwsj: "2018-12-27 9:25:34", //显示内部展位时间
+      now: "",
+      lastEl: "",
+      lastEvent: "",
       //显示加载中样
       loading: false,
-      //当前页
-      currentPage: 1,
-      //分页大小
-      pageSize: 10,
-      //总记录数
-      total: 0,
-      shiroData: [], //当前用户信息
-      shztData: [], //审核状态下拉框
-      currentRow: "", //选中行数据
-      isReject: false, //未通过flag
-      previewTitle: "",
-      previewImg: "",
-      imgViewVisible: false,
-      approveFormVisible: false,
-      //弹出框是否打开
-      dialogVisible: false,
+      shiroData: this.CONSTANT.currentUser,
       stage: null,
       currentPlotTool: null,
       currentPlotActiveItem: null,
@@ -199,48 +90,13 @@ export default {
         x: 0,
         y: 0
       },
-      //展位图标
-      area: [
-        {
-          name: "展位",
-          id: "base_text_jxwbk",
-          src: "../../static/images/plot/tools/base/jxwbk",
-          type: "area",
-          businessCode: "AREA",
-          businessShape: true,
-          style: {
-            shapeType: "rectangle",
-            textShape: [
-              {
-                alias: "code",
-                text: "code",
-                fontFamily: "simsun",
-                fill: "#666",
-                fontSize: 10,
-                padding: 4,
-                align: "left",
-                verticalAlign: "top"
-              },
-              {
-                alias: "name",
-                text: "名称",
-                fontFamily: "simsun",
-                fill: "#666",
-                fontSize: 14,
-                fontStyle: "bold",
-                align: "center",
-                verticalAlign: "middle"
-              }
-            ],
-            mainShape: {
-              stroke: "#666",
-              strokeWidth: 1,
-              fill: "#eaeaea",
-              fillPriority: "color"
-            }
-          }
+      ploterCfg: {
+        readOnly: true,
+        businessShape: {
+          enable: true,
+          requestLoop: 0 // 0为不轮询
         }
-      ]
+      }
     };
   },
   computed: {
@@ -255,48 +111,26 @@ export default {
   watch: {},
   created() {
     drawLib.initLocalSetting();
-    window.wrapHandshake.$on("evtStageElementSave", this.savePlotData);
-    window.wrapHandshake.$on("evtBusinessDataAllot", this.allotBusinessData);
     window.wrapHandshake.$on(
-      "evtBusinessDataUnAllot",
-      this.evtBusinessDataUnAllot
-    );
-    window.wrapHandshake.$on(
-      "evtStageElementRemove",
-      this.evtStageElementRemove
+      "evtBusinessShapeSelected",
+      this.handlerBusinessShapeSelected
     );
   },
   mounted() {
-    const me = this;
-    // const postmate = new Postmate.Model({
-    //     saveHandler: me.emitSaveData,
-    //     selectToolHandler: me.onToolSelected,
-    //     updateBackgroundImage: updateStageBackgroundImg
-    // })
-
-    // postmate.then(function (handshake) {
-    //     window.moftPloter = {}
-    //     window.wrapHandshake = handshake
-    //     const stageRecord = handshake.model.stageRecord
-    //     me.$store.commit('updateStageData', stageRecord)
-    //     const ploterCfg = handshake.model.config
-    //     if (ploterCfg) {
-    //         me.$store.commit('updatePloterCongig', ploterCfg)
-    //     }
-    //     me.initPloter(stageRecord.stageData || null, stageRecord.shapesData || null)
-    // })
-    // plotundo.init()
-
-    // me.ploterCfg = {
-    //             readOnly: false,
-    //             businessShape: {
-    //                 enable: true,
-    //                 requestLoop: 0 // 0为不轮询
-    //             }}
+    this.getNow();
+    // this.currentUuid = getQueryString("uuid");
+    // if (this.currentUuid) {
+    //     this.getStage(this.currentUuid)
+    // }
+    this.getYxzwData();
     this.initZg();
+    setInterval(() => {
+      this.refresh();
+    }, 300000);
   },
   methods: {
     //lxy 0225 开始
+    //初始化当前页面
     initZg() {
       const me = this;
       //获取展馆列表
@@ -312,193 +146,269 @@ export default {
         }
       );
     },
-    //指定展位
-    allotBusinessData(businessData) {
-      this.currentBusinessData = businessData;
-      if (!this.isSaved()) {
-        return;
-      }
-      this.dialogVisible = true;
-      this.searchClick("page");
-    },
-    /**
-     *选择企业信息
-     */
-    //表格查询事件
-    searchClick: function(type) {
+    getNow: function() {
       const me = this;
-      //按钮事件的选择
-      if (type == "page") {
-        this.tableData = [];
-      } else if (type == "delete") {
-      } else {
-        this.currentPage = 1;
-      }
-      this.loading = true; //表格重新加载
-      var params = {
-        gsmc: this.searchForm.gsmc.replace(/%/g, "\\%"),
-        // yjdz: this.searchForm.yjdz,
-        //shzt: this.searchForm.shzt,
-        shzt: "03",
-        approveflag: "y",
-        pageSize: this.pageSize,
-        pageNum: this.currentPage
-      };
-      me.$axios.post("/qyjbxx/page", params).then(
+      me.$axios.post("/zwjbxx/getNow").then(
         function(res) {
-          var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
-          this.tableData = tableTemp.concat(res.data.result.list);
-          this.total = res.data.result.total;
-          this.loading = false;
+          this.now = res.data;
         }.bind(this),
         function(error) {
           console.log(error);
         }
       );
     },
-    //清空查询条件
-    clearClick: function() {
-      this.searchForm.gsmc = "";
-      this.searchForm.yjdz = "";
-      this.searchForm.shzt = "01";
-      this.searchClick("reset");
+    refresh: function() {
+      this.getStage(this.zguuid, this.lastEvent);
     },
-    //确认功能
-    confirm(val) {
+    //已选展位
+    getYxzwData: function() {
       const me = this;
-      var params = {
-        uuid: this.currentBusinessData.uuid,
-        qyid: val.qyid
-      };
-      me.$axios.post("/zwjbxx/doAssign", params).then(
+      me.$axios.post("/zwjbxx/getSelectedPos").then(
         function(res) {
-          if (res.data.msg == "success") {
-            var businessData = this.back2plot(res.data.result);
-            //需要新增
-            me.$store.dispatch("updateBusinessRecord", businessData);
-            this.currentBusinessData.qyid = {};
-            this.dialogVisible = false;
-            this.$message({
-              message: "展位指定成功",
-              type: "success",
-              center: true
-            });
-          } else {
-            var msg = res.data.msg;
-            if (!msg) {
-              msg = "展位指定失败！";
-            }
-            var businessData = this.back2plot(res.data.result);
-            //需要新增
-            editorHandshake.call("updateBusinessRecord", businessData);
-            this.$alert(
-              '<span style="color:red"><h3>' + msg + "</h3></span>",
-              "注意",
-              {
-                confirmButtonText: "确定",
-                type: "error",
-                dangerouslyUseHTMLString: true
+          if (res.data.result.length > 0) {
+            this.yxzwData = res.data.result;
+          }
+        }.bind(this),
+        function(error) {
+          console.log(error);
+        }
+      );
+    },
+    handlerDel: function(event, uuid) {
+      var el = event.currentTarget;
+      this.$confirm("此操作将取消该展位选择, 是否继续?", "提示", {
+        confirmButtonText: "是",
+        cancelButtonText: "否",
+        type: "warning"
+      })
+        .then(() => {
+          if (uuid) {
+            var params = {
+              uuid: uuid,
+              reserve2: 0
+            };
+            const me = this;
+            me.$axios.post("/xfxhapi/zwjbxx/doCancelByVO", params).then(
+              function(res) {
+                if (res.data.msg == "success") {
+                  this.yxzwData = [];
+                  this.getYxzwData();
+                  var businessData = this.back2plot(res.data.result);
+                  //需要新增
+                  me.$store.dispatch("updateBusinessRecord", businessData);
+                  this.$message({
+                    message: "展位取消成功",
+                    type: "success",
+                    center: true
+                  });
+                  el.style.display = "none";
+                } else {
+                  var msg = res.data.msg;
+                  if (!msg) {
+                    msg = "展位取消失败！";
+                  }
+                  this.$message({
+                    message: msg,
+                    type: "error",
+                    center: true
+                  });
+                }
+              }.bind(this),
+              function(error) {
+                console.log(error);
               }
             );
           }
-        }.bind(this),
-        function(error) {
-          console.log(error);
-        }
-      );
-    },
-    //取消指定
-    evtBusinessDataUnAllot(businessData) {
-      const me = this;
-      if ("normal" == businessData.status) {
-        this.$message({
-          message: "当前展位未指定，请先右键指定展位！",
-          type: "warning",
-          center: true
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "展位取消成功"
+          });
         });
+    },
+    handlerExport: function() {
+      if (this.zguuid) {
+        var params = {
+          uuid: this.zguuid
+        };
+        const me = this;
+        me.$axios.post("/xfxhapi/zgjbxx/doExportTp", params).then(
+          function(res) {
+            if (res.status == 200) {
+              this.$message({
+                message: "已将展馆图片发送到您当前账户绑定邮箱，请查收！",
+                type: "success",
+                center: true
+              });
+              this.isExportDisabled = true;
+            }
+          }.bind(this),
+          function(error) {
+            console.log(error);
+          }
+        );
       }
-      this.currentBusinessData = businessData;
-      if (!this.isSaved()) {
+    },
+    handlerBusinessShapeSelected(data) {
+      var msg = "";
+      if (this.shiroData.deptid != "ZSYH") {
         return;
       }
-      var params = {
-        uuid: businessData.uuid
-      };
-      me.$axios.post("/zwjbxx/doCancelByVO", params).then(
-        function(res) {
-          if (res.data.msg == "success") {
-            var businessData = this.back2plot(res.data.result);
-            //需要新增
-            //editorHandshake.call('updateBusinessRecord', businessData)
-            me.$store.dispatch("updateBusinessRecord", businessData);
-            this.currentBusinessData.qyid = {};
-            this.dialogVisible = false;
-            this.$message({
-              message: "展位取消指定成功",
-              type: "success",
-              center: true
-            });
+      if (this.yxzwData.length > 0) {
+        var yxzwxx = "";
+        for (var i = 0; i < this.yxzwData.length; i++) {
+          if (i == 0) {
+            yxzwxx += this.yxzwData[i].zwh;
+          } else {
+            yxzwxx += "，" + this.yxzwData[i].zwh;
           }
-        }.bind(this),
-        function(error) {
-          console.log(error);
         }
-      );
-    },
-    //删除展位
-    evtStageElementRemove(businessData) {
-      const me = this;
-      var zwjbxxVO = {};
-      var zwmkVO = {};
-      zwjbxxVO.uuid = businessData.businessUuid;
-      zwmkVO.shapeUuid = businessData.shapeUuid;
-      var params = {
-        zwjbxxVO: zwjbxxVO,
-        zwmkVO: zwmkVO
-      };
-      me.$axios.post("/zwjbxx/doDelByVO", params).then(
-        function(res) {
+        msg = "您已选择展位" + yxzwxx + " 是否继续选择此展位？";
+      } else {
+        msg = "是否确定选择此展位?";
+      }
+      this.$confirm(msg, "提示", {
+        confirmButtonText: "是",
+        cancelButtonText: "否",
+        type: "warning"
+      })
+        .then(() => {
+          const me = this;
+          var params = {
+            uuid: data.uuid,
+            reserve2: 2
+          };
+          me.$axios.post("/zwjbxx/doUpdateByVO", params).then(
+            function(res) {
+              if (res.data.msg == "success") {
+                this.yxzwData.push(res.data.result);
+                var businessData = this.back2plot(res.data.result);
+                //需要新增
+                me.$store.dispatch("updateBusinessRecord", businessData);
+                this.$message({
+                  message: "展位选择成功",
+                  type: "success",
+                  center: true
+                });
+              } else {
+                var msg = res.data.msg;
+                if (!msg) {
+                  msg = "选择展位失败！";
+                }
+                var businessData = this.back2plot(res.data.result);
+                //需要新增
+                me.$store.dispatch("updateBusinessRecord", businessData);
+                this.$alert(
+                  '<span style="color:red"><h3>' + msg + "</h3></span>",
+                  "注意",
+                  {
+                    confirmButtonText: "确定",
+                    type: "error",
+                    dangerouslyUseHTMLString: true
+                  }
+                );
+              }
+            }.bind(this),
+            function(error) {
+              console.log(error);
+            }
+          );
+        })
+        .catch(() => {
           this.$message({
-            message: "删除展位成功",
-            type: "warning",
-            center: true
+            type: "info",
+            message: "已取消选择"
           });
-        }.bind(this),
-        function(error) {
-          console.log(error);
-        }
-      );
+        });
     },
-    //保存展馆展位数据
-    savePlotData(data) {
-      const me = this;
-
-      var business = data.business;
-      var shape = data.shape;
-      shape.stageUuid = business.stageUuid;
-      //this.isDisabled = true
-      var params = {
-        zwjbxxVO: this.plot2back(business),
-        zwmkVO: shape
-      };
-      me.$axios.post("/zwjbxx/doSaveByVO", params).then(
-        function(res) {
-          if (res.data.result) {
-            var businessData = this.back2plot(res.data.result);
-            //需要新增
-            //editorHandshake.call('updateBusinessRecord', businessData)
-            me.$store.dispatch("updateBusinessRecord", businessData);
-            this.$message({
-              message: "保存展位成功",
-              type: "success",
-              center: true
-            });
-          }
-        }.bind(this),
-        function(error) {
-          console.log(error);
+    back2plot(bd) {
+      var pd = {};
+      pd.uuid = bd.uuid;
+      pd.code = bd.zwh;
+      pd.codeFontSize = parseInt(bd.bhzh);
+      pd.codeFontStyle = bd.bhzc;
+      pd.codeFontFamily = bd.bhzt;
+      pd.name = bd.zwmc;
+      pd.nameFontSize = parseInt(bd.mczh);
+      pd.nameFontStyle = bd.mczc;
+      pd.nameFontFamily = bd.mczt;
+      //展位类型
+      pd.boothType = bd.zwlb;
+      //出口类型
+      pd.entryType = bd.cklx;
+      //企业名称
+      pd.tenantName = bd.qymc;
+      pd.lateralLength = bd.zwcd;
+      pd.verticalLength = bd.zwkd;
+      pd.area = parseInt(bd.zwmj);
+      pd.status = bd.zwzt;
+      pd.stageUuid = bd.zgid;
+      pd.shapeUuid = bd.reserve1;
+      pd.tenantId = bd.qyid;
+      if (pd.tenantName) {
+        if (bd.gsjc != null && parseInt(bd.zwmj) <= 12) {
+          pd.name = bd.gsjc;
+          pd.tenantName = bd.gsjc;
+        } else {
+          pd.name = pd.tenantName;
         }
-      );
+      }
+      // blnbzwsj 显示内部展位时间
+      if (this.compareDate(this.blnbzwsj, this.now)) {
+        //如果展位状态为内部预留则展位显示初始状态
+        if (bd.reserve2 && bd.reserve2 != "0") {
+          if (backData.length > 1) {
+            pd.status = "normal";
+          }
+          pd.name = "";
+          pd.tenantName = "";
+        }
+      }
+      //当前企业查看本公司展位为红色
+      for (var j in this.yxzwData) {
+        if (this.yxzwData[j].zwh == bd.zwh) {
+          pd.status = "allotted";
+          if (bd.qymc) {
+            pd.name = bd.qymc;
+          }
+        }
+      }
+      return pd;
+    },
+    compareDate(d1, d2) {
+      return new Date(d1.replace(/-/g, "/")) > new Date(d2.replace(/-/g, "/"));
+    },
+    plot2back(plotData) {
+      var backData = [];
+      for (var i = 0; i < plotData.length; i++) {
+        var pd = plotData[i];
+        var bd = {};
+        bd.uuid = pd.uuid;
+        bd.zwh = pd.code;
+        bd.bhzh = pd.codeFontSize;
+        bd.bhzc = pd.codeFontStyle;
+        bd.bhzt = pd.codeFontFamily;
+        bd.zwmc = pd.name;
+        bd.mczh = pd.nameFontSize;
+        bd.mczc = pd.nameFontStyle;
+        bd.mczt = pd.nameFontFamily;
+        //展位类型
+        bd.zwlb = pd.boothType;
+        //出口类型
+        bd.cklx = pd.entryType;
+        //企业名称
+        bd.qymc = pd.tenantName;
+        bd.zwcd = pd.lateralLength;
+        bd.zwkd = pd.verticalLength;
+        bd.zwmj = pd.area;
+        bd.zwzt = pd.status;
+        bd.zgid = pd.stageUuid;
+        bd.reserve1 = pd.shapeUuid;
+        bd.qyid = pd.tenantId;
+        backData.push(bd);
+      }
+      return backData;
     },
 
     //lxy 0225 结束
@@ -519,7 +429,6 @@ export default {
             shapesData: currentShapesData,
             uuid: params.uuid
           };
-
           me.$store.commit("updateStageData", stageRecord);
           me.initPloter(currentAreaStage || null, currentShapesData || null);
           plotundo.init();
@@ -551,6 +460,7 @@ export default {
     },
     initPloter(stageData, shapesData) {
       const me = this;
+      me.$store.commit("updatePloterCongig", this.ploterCfg);
       if (!stageData) {
         if (me.stage) {
           const warn = confirm(
@@ -802,7 +712,6 @@ export default {
       me.currentPlotActiveItem = null;
     },
     doSelectShape(target) {
-      //
       const me = this;
       const targetWrap = target.findAncestor(".shapeWrap");
       const targetMain = targetWrap.findOne(".mainShape");
@@ -935,87 +844,6 @@ export default {
         }
       }
       checkFlags();
-    },
-    //展会后台数据转绘图工具数据
-    back2plot(bd) {
-      var pd = {};
-      pd.uuid = bd.uuid;
-      pd.code = bd.zwh;
-      pd.codeFontSize = parseInt(bd.bhzh);
-      pd.codeFontStyle = bd.bhzc;
-      pd.codeFontFamily = bd.bhzt;
-      pd.name = bd.zwmc;
-      pd.nameFontSize = parseInt(bd.mczh);
-      pd.nameFontStyle = bd.mczc;
-      pd.nameFontFamily = bd.mczt;
-      //展位类型
-      pd.boothType = bd.zwlb;
-      //出口类型
-      pd.entryType = bd.cklx;
-      //企业名称
-      pd.tenantName = bd.qymc;
-      pd.lateralLength = parseInt(bd.zwcd);
-      pd.verticalLength = parseInt(bd.zwkd);
-      pd.area = bd.zwmj;
-      pd.status = bd.zwzt;
-      pd.stageUuid = bd.zgid;
-      //绘图工具展位ID
-      pd.shapeUuid = bd.reserve1;
-      pd.tenantId = bd.qyid;
-
-      if (!pd.name && pd.tenantName) {
-        //pd.name=pd.tenantName
-        if (bd.gsjc != null && parseInt(bd.zwmj) <= 12) {
-          pd.name = bd.gsjc;
-          pd.tenantName = bd.gsjc;
-        } else {
-          pd.name = pd.tenantName;
-        }
-      }
-      return pd;
-    },
-    //绘图工具数据转展会后台数据
-    plot2back(pd) {
-      var bd = {};
-      bd.uuid = pd.uuid;
-      bd.zwh = pd.code;
-      bd.bhzh = pd.codeFontSize;
-      bd.bhzc = pd.codeFontStyle;
-      bd.bhzt = pd.codeFontFamily;
-      if (pd.name != pd.tenantName) {
-        bd.zwmc = pd.name;
-      }
-      bd.mczh = pd.nameFontSize;
-      bd.mczc = pd.nameFontStyle;
-      bd.mczt = pd.nameFontFamily;
-      //展位类型
-      bd.zwlb = pd.boothType;
-      //出口类型
-      bd.cklx = pd.entryType;
-      //企业名称
-      bd.qymc = pd.tenantName;
-      bd.zwcd = pd.lateralLength;
-      bd.zwkd = pd.verticalLength;
-      bd.zwmj = pd.area;
-      bd.zwzt = pd.status;
-      bd.zgid = pd.stageUuid;
-      bd.reserve1 = pd.shapeUuid;
-      bd.qyid = pd.tenantId;
-
-      return bd;
-    },
-    //判断当前展位是否已保存
-    isSaved() {
-      if (this.currentBusinessData.uuid.indexOf("-") > 0) {
-        this.$message({
-          message: "当前展位未保存，请先右键保存展位！",
-          type: "warning",
-          center: true
-        });
-        return false;
-      } else {
-        return true;
-      }
     }
   }
 };

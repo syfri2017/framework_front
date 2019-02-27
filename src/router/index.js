@@ -102,18 +102,6 @@ const router = new VueRouter({
           component: resolve => require(['@/views/login/en/Mailbox'], resolve)
         },
         {
-          path: '/login/en/Administrator',
-          name: 'login/en/Administrator',
-          meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/login/en/Administrator'], resolve)
-        },
-        {
-          path: '/login/en/Reset',
-          name: 'login/en/Reset',
-          meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/login/en/Reset'], resolve)
-        },
-        {
           path: '/login/en/ForgetPassword',
           name: 'login/en/ForgetPassword',
           meta: {auth: true, title: "忘记用户名", operation: true},
@@ -224,7 +212,9 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'plan',
-              component: resolve => require(['@/views/venue/plan/Plan'], resolve)
+              component: resolve => require(['@/views/booth/select/PositionSelect'], resolve)
+              //component: resolve => require(['@/views/venue/plan/Plan'], resolve)
+
             },
           ]
         },
@@ -258,17 +248,17 @@ const router = new VueRouter({
         {
           path: '/booth/positionDesign',
           meta: {auth: true, title: "展位设计"},
-          component: resolve => require(['@/views/ploter/Plot'], resolve)
-          // component: PositionDesign,
-          // children: [
-          //   {
-          //     path: '/',
-          //     name: 'positionDesign',
-          //     //component: resolve => require(['@/views/booth/design/PositionDesign'], resolve)
-          //     component: resolve => require(['@/views/ploter/Plot'], resolve),
-          //     props: true
-          //   }
-          // ]
+          
+          component: PositionDesign,
+          children: [
+            {
+              path: '/',
+              name: 'positionDesign',
+              //component: resolve => require(['@/views/booth/design/PositionDesign'], resolve)
+              component: resolve => require(['@/views/ploter/Plot'], resolve),
+              props: true
+            }
+          ]
         },
         //----------展位管理-展位分类----------
         {

@@ -1,31 +1,31 @@
 <template>
-    <!-- 用户登录 -->
+    <!-- 用户Login -->
     <el-row class="logincenter">
       <el-col :span="8" >&nbsp;</el-col>
       <el-col :span="8" style="text-align:-webkit-center">
         <div class="login-form" >
           <div class="filed left">
-            <router-link :to="{path:'/login/ch/Administrator'}"><i class="iconfont icon-yonghu icou"></i></router-link>
-            <span >用户登录</span>
-            <span class="signstyle">没有账户?<router-link :to="{path:'/login/ch/Register'}"><a>去注册</a></router-link></span>
+            <i class="iconfont icou"></i>
+            <span >User Login</span>
+            <span class="signstyle">No Account?<router-link :to="{path:'/login/ch/Register'}"><a>To Register</a></router-link></span>
           </div>
           <el-form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username" @blur="mobileCheck"></el-input>
+              <el-input placeholder="Username" v-model="GLYusername" prefix-icon="iconfont icon-username" @blur="mobileCheck"></el-input>
               <!-- <p class="alert" v-show="mobileAlertFlag">*请填写正确的手机号码</p> -->
             </div>
             <div class="filed">
-              <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
+              <el-input placeholder="Password" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
             </div>
             <div class="filed">
-              <el-input placeholder="验证码" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-validate"></el-input>
+              <el-input placeholder="Verification Code" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-validate"></el-input>
               <input type="button"  class="verification1 bk" id="code" @click="createCode"  v-model="checkCode"/>
             </div>
             <div class="filed right">
-              <span class="muchtab"><router-link :to="{path:'/login/ch/ForgetUsername'}"><a>忘记用户名</a></router-link>  |  <router-link :to="{path:'/login/ch/ForgetPassword'}"><a>忘记密码</a></router-link>  |  <router-link :to="{path:'/login/ch/Reset'}"><a>重置账户</a></router-link></span>
+              <span class="muchtab"><router-link :to="{path:'/login/ch/ForgetUsername'}"><a>Forget Your Username</a></router-link>  |  <router-link :to="{path:'/login/ch/ForgetPassword'}"><a>Forget Your Password</a></router-link></span>
             </div>
             <div class="filed lgin">
-              <el-button type="danger" @click="GLYlogin" round>登录</el-button>
+              <el-button type="danger" @click="GLYlogin" round>Login</el-button>
             </div>
           </el-form>
         </div>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-var code ; //在全局定义验证码
+var code ; //在全局定义Verification Code
 export default {
   name: 'Login',
   data () {
@@ -73,34 +73,34 @@ export default {
           return true;
         }
       },
-     // 图片验证码
+     // 图片Verification Code
       createCode(){
           code = "";    
-          var codeLength = 4;//验证码的长度   
+          var codeLength = 4;//Verification Code的长度   
           var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',   
            'S','T','U','V','W','X','Y','Z');//随机数   
           for(var i = 0; i < codeLength; i++) {//循环操作   
               var index = Math.floor(Math.random()*36);//取得随机数的索引（0~35）   
               code += random[index];//根据索引取得随机数加到code上   
           }   
-              this.checkCode = code;//把code值赋给验证码   
+              this.checkCode = code;//把code值赋给Verification Code   
       },
-      // 失焦验证图和密码
+      // 失焦验证图和Password
       checkLpicma(){
-          this.picLyanzhengma.toUpperCase();//取得输入的验证码并转化为大写         
+          this.picLyanzhengma.toUpperCase();//取得输入的Verification Code并转化为大写         
           if(this.picLyanzhengma == '') {
-              // $(".login_content1 span:eq(2)").text("请输入验证码")
+              // $(".login_content1 span:eq(2)").text("请输入Verification Code")
               // $(".login_content1 span:eq(2)").removeClass("disappear");
-          }else if(this.picLyanzhengma.toUpperCase() != this.checkCode ) { //若输入的验证码与产生的验证码不一致时    
+          }else if(this.picLyanzhengma.toUpperCase() != this.checkCode ) { //若输入的Verification Code与产生的Verification Code不一致时    
               console.log(this.picLyanzhengma.toUpperCase())
               console.log(code)           
-              alert("验证码错误！")
+              alert("Verification Code错误！")
               // $(".login_content1 span:eq(2)").removeClass("disappear");
-              this.createCode();//刷新验证码   
+              this.createCode();//刷新Verification Code   
               this.picLyanzhengma = '';
           }else { //输入正确时   
               // $(".login_content1 span:eq(2)").addClass("disappear");
-              // $(".login_content1 span:eq(2)").text("请输入验证码")
+              // $(".login_content1 span:eq(2)").text("请输入Verification Code")
               return true;
           } 
 
@@ -108,12 +108,12 @@ export default {
     GLYlogin(){
       let vm = this;
       if (this.GLYusername == null || this.GLYusername == '') {
-        alert("用户名不能为空！")
+        alert("Username不能为空！")
       } else if (this.GLYpassword == null || this.GLYpassword == '') {
-        alert("密码不能为空！")
+        alert("Password不能为空！")
       } 
       else if(this.picLyanzhengma == null || this.picLyanzhengma == ''){
-        alert("验证码不能为空！")
+        alert("Verification Code不能为空！")
       } 
       else if(this.checkLpicma() == true){
         var params = {
@@ -136,9 +136,9 @@ export default {
           } else if (res.data.code == '22222222') {
             this.$message.error("账号不存在");
           } else if (res.data.code == '33333333') {
-            this.$message.error("密码不正确");
+            this.$message.error("Password不正确");
           } else {
-            this.$message.error("登录失败");
+            this.$message.error("Login失败");
             this.$router.push({ path: '/' });
           }          
         }.bind(this), function (error) {
@@ -421,7 +421,7 @@ $blackcolor: #2c2c2c;
     cursor: pointer;
 
 }
-/*登录模块*/
+/*Login模块*/
 .login_content1{
     width:400px;
     background-color: #fff;
