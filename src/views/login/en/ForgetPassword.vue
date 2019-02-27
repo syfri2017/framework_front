@@ -11,10 +11,10 @@
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed lgin">
-                <router-link :to="{path:'/login/ch/mailbox'}"><el-button type="danger" round>邮箱找回</el-button></router-link>
+                <router-link :to="{path:'/login/en/mailbox'}"><el-button type="danger" round>邮箱找回</el-button></router-link>
             </div>
             <div class="filed lgin">
-                <router-link :to="{path:'/login/ch/phone'}"><el-button type="danger" round>手机找回</el-button></router-link>
+                <router-link :to="{path:'/login/en/phone'}"><el-button type="danger" round>手机找回</el-button></router-link>
             </div>
           </form>
         </div>
