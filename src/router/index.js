@@ -149,7 +149,7 @@ const router = new VueRouter({
             {
               path: '/home/detail',
               name: 'home/detail',
-              meta: {auth: true, title: "首页详情", operation: true},
+              meta: {auth: true, title: "首页详情"},
               component: resolve => require(['@/views/home/homeDetail'], resolve)
             }
           ]
@@ -321,7 +321,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'boothLog',
-              component: resolve => require(['@/views/log/booth/BoothLog'], resolve)
+              component: resolve => require(['@/views/log/booth/BoothLogList'], resolve)
             },
           ]
         },
@@ -334,7 +334,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'smsLog',
-              component: resolve => require(['@/views/log/sms/SmsLog'], resolve)
+              component: resolve => require(['@/views/log/sms/SmsLogList'], resolve)
             },
           ]
         },
@@ -399,12 +399,13 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'codelist',
+              meta: {keepAlive: true},
               component: resolve => require(['@/views/system/codelist/CodelistList'], resolve)
             },
             {
               path: '/system/codelist/detail',
               name: 'codelist/detail',
-              meta: {auth: true, title: "代码集详情", operation: true},
+              meta: {auth: true, title: "代码集详情", keepAlive: false},
               component: resolve => require(['@/views/system/codelist/CodelistDetail'], resolve)
             },
           ]

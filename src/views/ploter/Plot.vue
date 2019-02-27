@@ -4,20 +4,26 @@
       <Content class="app-body">
         <div class="app-ploter-main">
           <div class="app-ploter-main-body">
-
-          <div ref="ploterWrap" v-loading="loading" element-loading-text="加载中" class="app-editor-ploter-wrap positionlist">
-            <div class="app-editor-ploter-navigation" style="  background: #ccc;">
-
-              <div class="ploter-navigation-list">
-                <el-button v-for="data in zgtableData" :key = "data.uuid" @click="getStage(data.uuid,$event)" class="app-ploter-tools-graphs-menu-item">
-                  {{data.zgmc}}
-                </el-button>
-              </div>
-              <div class="ploter-navigation-tools">
-                <el-button icon="el-icon-position" class="btn" @click="onToolSelected">绘制展位</el-button>
-              </div>
+            <div
+              ref="ploterWrap"
+              v-loading="loading"
+              element-loading-text="加载中"
+              class="app-editor-ploter-wrap positionlist"
+            >
+              <div class="app-editor-ploter-navigation">
+                <div class="ploter-navigation-list">
+                  <el-button
+                    v-for="data in zgtableData"
+                    :key="data.uuid"
+                    @click="getStage(data.uuid,$event)"
+                    class="app-ploter-tools-graphs-menu-item"
+                  >{{data.zgmc}}</el-button>
+                </div>
+                <div class="ploter-navigation-tools">
+                  <el-button icon="el-icon-position" class="btn" @click="onToolSelected">绘制展位</el-button>
+                </div>
+              </div>/
             </div>
-          </div>
 
             <!-- 画布容器 -->
             <div class="app-ploter-main-canvas" ref="plotStage"></div>
@@ -560,7 +566,7 @@ export default {
     },
     initPloter(stageData, shapesData) {
       const me = this;
-     
+
       if (!stageData) {
         if (me.stage) {
           const warn = confirm(
@@ -613,6 +619,8 @@ export default {
           const stage = Konva.Node.create(data, wrap);
           me.stage = stage;
           window.ploterStage = stage;
+          //  stage 存到store
+          me.$store.commit("updatePloterStage", stage);
           me.setStageLayout();
           drawLib.reloadShapes(stage);
           me.initStageEvent(stage);
@@ -1030,12 +1038,14 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~@/assets/app.scss";
-// .content[data-v-57ee01a8]{
-//   overflow-y: hidden;
-// }
+</style>
+<style lang="scss" scoped>
+
+.content[data-v-57ee01a8]{
+  overflow-y: hidden;
+}
 #menu-toggle-btn {
   right: -26px;
   transform: rotateY(180deg);
@@ -1096,7 +1106,7 @@ export default {
 
 .app-editor-ploter-navigation {
   position: fixed;
-  z-index:9999;
+  z-index: 9999;
   display: flex;
   height: 40px;
 
@@ -1111,7 +1121,7 @@ export default {
     .ploter-navigation-tools {
       padding: 4px;
       position: absolute;
-      top:-8px;
+      top: -8px;
       left: 1300px;
     }
   }
@@ -1147,11 +1157,11 @@ export default {
 }
 
 .btn {
-  border: 5px solid #0684E5;
+  border: 5px solid #0684e5;
   border-radius: 100px;
   height: 10px;
   line-height: 0px;
-  background: #E56606;
+  background: #e56606;
   color: #fff;
   margin: 5px 3px 5px 3px;
   // padding-left: 35px;
@@ -1178,7 +1188,7 @@ export default {
 .app-ploter-tools-graphs-menu-item {
   height: 30px;
   line-height: 0px;
-  background: #0684E5;
+  background: #0684e5;
   color: #fff;
   margin: 5px 3px 5px 0px;
 }
@@ -1210,6 +1220,4 @@ export default {
   font-weight: bold;
   text-align: center;
 }
-
-
 </style>

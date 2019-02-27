@@ -6,6 +6,7 @@ export const UPDATE_PLOTER_CONFIG = 'updatePloterCongig'
 export const UPDATE_STAGE_DATA = 'updateStageData'
 export const UPDATE_STAGE_SIZE = 'updateStageSize'
 export const UPDATE_STAGE_ELEMENTS = 'updateStageElements'
+export const UPDATE_PLOTER_STAGE = 'updatePloterStage'
 
 Vue.use(Vuex);
 
@@ -28,7 +29,8 @@ const store = new Vuex.Store ({
             width: 800,
             height: 600
         },
-        stageElements: null
+        stageElements: null,
+        ploterStage: null
         //-----plot 结束 ---------- 
     },
     getters: {
@@ -43,7 +45,8 @@ const store = new Vuex.Store ({
         ploterConfig: state => state.ploterCfg,
         wrapStageData: state => state.stageData,
         stageSize: state => state.stageSize,
-        stageElements: state => state.stageElements
+        stageElements: state => state.stageElements,
+        ploterStage: state => state.ploterStage
         //-----plot 结束 ---------- 
     },
     mutations: {
@@ -73,6 +76,9 @@ const store = new Vuex.Store ({
         },
         [UPDATE_STAGE_ELEMENTS]: (state, payload) => {
             state.stageElements = payload
+        },
+        [UPDATE_PLOTER_STAGE]: (state, payload) => {
+            state.ploterStage = payload
         }
         //-----plot 结束 ---------- 
     },
