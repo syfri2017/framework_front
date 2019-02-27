@@ -1,5 +1,5 @@
 <template>
-  <div id="position">
+  <div id="position" class="ploterstyle">
     <h1>Position</h1>
     <router-view></router-view>
   </div>
@@ -12,5 +12,8 @@ export default {
 </script>
 
 <style>
+.content[data-v-57ee01a8]{
+  overflow: hidden;
+}
 
 </style>

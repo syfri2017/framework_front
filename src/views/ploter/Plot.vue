@@ -5,19 +5,19 @@
         <div class="app-ploter-main">
           <div class="app-ploter-main-body">
 
-            <div ref="ploterWrap" v-loading="loading" element-loading-text="加载中" class="app-editor-ploter-wrap positionlist" :style="ploterStyle">
-				<div class="app-editor-ploter-navigation">
+          <div ref="ploterWrap" v-loading="loading" element-loading-text="加载中" class="app-editor-ploter-wrap positionlist">
+            <div class="app-editor-ploter-navigation" style="  background: #ccc;">
 
-					<div class="ploter-navigation-list">
-						<el-button v-for="data in zgtableData" :key = "data.uuid" @click="getStage(data.uuid,$event)" class="app-ploter-tools-graphs-menu-item">
-							{{data.zgmc}}
-						</el-button>
-					</div>
-					<div class="ploter-navigation-tools">
-						<el-button icon="el-icon-position" class="btn" @click="onToolSelected">绘制展位</el-button>
-					</div>
-				</div>
-			</div>
+              <div class="ploter-navigation-list">
+                <el-button v-for="data in zgtableData" :key = "data.uuid" @click="getStage(data.uuid,$event)" class="app-ploter-tools-graphs-menu-item">
+                  {{data.zgmc}}
+                </el-button>
+              </div>
+              <div class="ploter-navigation-tools">
+                <el-button icon="el-icon-position" class="btn" @click="onToolSelected">绘制展位</el-button>
+              </div>
+            </div>
+          </div>
 
             <!-- 画布容器 -->
             <div class="app-ploter-main-canvas" ref="plotStage"></div>
@@ -1031,180 +1031,185 @@ export default {
 };
 </script>
 
-<style lang="scss" scope>
-// #menu-toggle-btn{
-// 			right: -26px; 
-// 			transform: rotateY(180deg);
-// 		}
-// 		.app-editor {
-// 			width: 960px;
-// 			margin: 16px auto;
-// 		}
-	
-// 		.app-editor-list-item {
-// 			display: flex;
-// 			flex-direction: column;
-// 			float: left;
-// 			width: 300px;
-// 			height: 240px;
-// 			margin: 10px;
-// 		}
-	
-// 		.app-editor-list-item>.ivu-card-extra {
-// 			top: 8px;
-// 			right: 8px;
-// 		}
-	
-// 		.app-editor-list-item>.ivu-card-extra .ivu-btn-text {
-// 			padding: 4px 8px;
-// 		}
-	
-// 		.app-editor-list-item>.ivu-card-extra .ivu-icon {
-// 			font-size: 16px;
-// 		}
-	
-// 		.app-editor-list-item>.ivu-card-body {
-// 			position: relative;
-// 			flex: 1;
-// 			padding: 8px;
-// 			background-color: #fafafa;
-// 		}
-	
-// 		.app-editor-list-item-add {
-// 			text-align: center;
-// 		}
-	
-// 		.app-editor-list-item-add>.ivu-icon {
-// 			line-height: 140px;
-// 			font-size: 80px;
-// 			font-weight: bold;
-// 		}
-	
-		.app-editor-list-item-thumb {
-			height: 100%;
-			background-repeat: no-repeat;
-			background-position: center center;
-			background-size: contain;
-		}
-	
-		.app-editor-ploter-wrap {
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			 left: 0;
-			flex-direction: column;
-			// background-color: #666;
-		}
-	
-		.app-editor-ploter-wrap iframe {
-			display: none;
-		}
-	
-		.app-editor-ploter-navigation {
-			display: flex;
-			height: 40px;
-			background-color: #f5f7f9;
-			border-bottom: 1px solid #eee;
-		}
-	
-		// .app-editor-ploter-navigation>.ploter-navigation-list {
-		// 	flex: 1;
-		// 	line-height: 36px;
-		// 	font-size: 16px;
-		// 	text-indent: 24px;
-		// }
-	
-		.app-editor-ploter-navigation>.ploter-navigation-tools {
-			/* padding: 4px; */
-		}
-	
-		// .app-editor-ploter-iframe {
-		// 	display: block !important;
-		// 	flex: 1;
-		// 	border: none;
-		// }
-	
-		.app-editor-create-model>.file-name {
-			margin-left: 16px;
-		}
-	
-		.app-editor-cropper-model>.ivu-modal-body {
-			padding: 0;
-		}
-	
-		.app-editor-cropper-model>.moft-cropper {
-			height: 64vh !important;
-		}
+<style lang="scss" scoped>
+@import "~@/assets/app.scss";
+.content[data-v-57ee01a8]{
+  overflow: hidden;
+}
+#menu-toggle-btn {
+  right: -26px;
+  transform: rotateY(180deg);
+}
 
-		// .positionlist{
-		// 	height: 100%;
-		// 	overflow:auto;
-		// 	-webkit-transition-duration: 0.3s;
-		// 	-moz-transition-duration: 0.3s;
-		// 	-o-transition-duration: 0.3s;
-		// 	-ms-transition-duration: 0.3s;
-		//   }
+.app-editor {
+  width: 960px;
+  margin: 16px auto;
+}
 
-		.btn{
-			border: 0px;
-			height:30px;
-			line-height: 0px;
-			background:#E56606;
-			color: #fff;
-			margin:5px 3px 5px 3px;
-			padding-left: 35px;
-		}  
-		.btn:hover{
-			border: 0px;
-			height:30px;
-			line-height: 0px;
-			background:rgb(199, 89, 5);
-			color: #fff;
-			margin:5px 3px 5px 3px;
-			padding-left: 35px;
-		} 
-		.btn:focus{
-			border: 0px;
-			height:30px;
-			line-height: 0px;
-			background:rgb(165, 74, 4);
-			color: #fff;
-			margin:5px 3px 5px 3px;
-			padding-left: 35px;
-		} 
+.app-editor-list-item {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  width: 300px;
+  height: 240px;
+  margin: 10px;
+  > {
+    .ivu-card-extra {
+      top: 8px;
+      right: 8px;
+      .ivu-btn-text {
+        padding: 4px 8px;
+      }
+      .ivu-icon {
+        font-size: 16px;
+      }
+    }
+    .ivu-card-body {
+      position: relative;
+      flex: 1;
+      padding: 8px;
+      background-color: #fafafa;
+    }
+  }
+}
 
-		.app-ploter-tools-graphs-menu-item{
-			height:30px;
-			line-height: 0px;
-			background: #0684E5;
-			color: #fff;
-			margin:5px 3px 5px 0px;
-		  }
+.app-editor-list-item-add {
+  text-align: center;
+  > .ivu-icon {
+    line-height: 140px;
+    font-size: 80px;
+    font-weight: bold;
+  }
+}
 
-		// .imagez{
-		// 	float:left;
-		// 	width:100px;
-		// 	height:100px;
-		// 	padding: 5px;
-		// }
-		// .box-card {
-		// 	float: left;
-		// 	width: 130px;
-		// 	margin: 5px;
-		//   }
-		// .box-cardz{
-		// 	float: left;
-		// 	width: 270px;
-		// 	margin: 5px;
-		//   }
-		// .text {
-		// 	font-size: 14px;
-		// }
-		// .clearfix{
-		// 	font-weight:bold;
-		// 	text-align: center;
-		// }
+.app-editor-list-item-thumb {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
+.app-editor-ploter-wrap {
+  flex-direction: column;
+  background-color: #666;
+}
+
+.app-editor-ploter-navigation {
+  position: fixed;
+  z-index:9999;
+  display: flex;
+  height: 40px;
+
+  // border-bottom: 1px solid #eee;
+  > {
+    .ploter-navigation-list {
+      flex: 1;
+      line-height: 36px;
+      font-size: 16px;
+      text-indent: 24px;
+    }
+    .ploter-navigation-tools {
+      padding: 4px;
+      position: absolute;
+      top:-8px;
+      left: 1300px;
+    }
+  }
+}
+
+.app-editor-ploter-iframe {
+  display: block !important;
+  flex: 1;
+  border: none;
+}
+
+.app-editor-create-model > .file-name {
+  margin-left: 16px;
+}
+
+.app-editor-cropper-model > {
+  .ivu-modal-body {
+    padding: 0;
+  }
+  .moft-cropper {
+    height: 64vh !important;
+  }
+}
+
+.positionlist {
+  // height: 100%;
+  overflow: hidden;
+
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+}
+
+.btn {
+  border: 5px solid #0684E5;
+  border-radius: 100px;
+  height: 10px;
+  line-height: 0px;
+  background: #E56606;
+  color: #fff;
+  margin: 5px 3px 5px 3px;
+  // padding-left: 35px;
+  &:hover {
+    border: 0px;
+    height: 30px;
+    line-height: 0px;
+    background: rgb(199, 89, 5);
+    color: #fff;
+    margin: 5px 3px 5px 3px;
+    // padding-left: 35px;
+  }
+  &:focus {
+    border: 0px;
+    height: 30px;
+    line-height: 0px;
+    background: rgb(165, 74, 4);
+    color: #fff;
+    margin: 5px 3px 5px 3px;
+    // padding-left: 35px;
+  }
+}
+
+.app-ploter-tools-graphs-menu-item {
+  height: 30px;
+  line-height: 0px;
+  background: #0684E5;
+  color: #fff;
+  margin: 5px 3px 5px 0px;
+}
+
+.imagez {
+  float: left;
+  width: 100px;
+  height: 100px;
+  padding: 5px;
+}
+
+.box-card {
+  float: left;
+  width: 130px;
+  margin: 5px;
+}
+
+.box-cardz {
+  float: left;
+  width: 270px;
+  margin: 5px;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.clearfix {
+  font-weight: bold;
+  text-align: center;
+}
 
 
 </style>
