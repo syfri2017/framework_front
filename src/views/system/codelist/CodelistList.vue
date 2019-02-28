@@ -37,7 +37,7 @@
       </el-row>
 			<div class="table_container">
 				<el-table class="table-formal" border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
-          :height="tableheight" tooltip-effect="dark">
+          :height="tableheight" tooltip-effect="dark" :row-style="rowStyle">
           <el-table-column type="selection" width="35"></el-table-column>
           <el-table-column type="index" show-overflow-tooltip label="序号" align="center" width="65"></el-table-column>
           <el-table-column prop="codetype" show-overflow-tooltip label="代码类型" min-width="10%" align="center">
@@ -204,9 +204,6 @@ export default {
 
     //表格勾选事件
     selectionChange: function(val) {
-      for (var i = 0; i < val.length; i++) {
-        var row = val[i];
-      }
       this.multipleSelection = val;
     },
 

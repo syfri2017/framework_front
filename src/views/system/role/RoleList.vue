@@ -41,7 +41,7 @@
       </el-row>
 			<div class="table_container">
 				<el-table class="tableStyle" border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
-          :height="tableheight">
+          :height="tableheight" :row-style="rowStyle">
           <el-table-column type="selection" width="35"></el-table-column>
           <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
           <el-table-column prop="rolename" show-overflow-tooltip label="角色名称" min-width="14%" align="center"></el-table-column>
@@ -248,9 +248,6 @@ export default {
 
     //表格勾选事件
     selectionChange: function(val) {
-      for (var i = 0; i < val.length; i++) {
-        var row = val[i];
-      }
       this.multipleSelection = val;
     },
    

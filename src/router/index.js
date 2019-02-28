@@ -163,16 +163,37 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'exhprediction',
-              component: resolve => require(['@/views/prediction/exhprediction/Exhprediction'], resolve)
+              meta: {keepAlive: true},
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionList'], resolve)
             },
             {
-              path: '/prediction/exhprediction/edit',
-              name: 'exhpredictionEdit',
+              path: '/prediction/exhprediction/detail',
+              name: 'exhpredictionDetail',
+              meta: {auth: true, title: "展会报名管理详情", keepAlive: false},
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionDetail'], resolve)
+            },
+            {
+              path: '/prediction/exhprediction/insert',
+              name: 'exhpredictionInsert',
+              meta: {auth: true, title: "展会报名管理新增", keepAlive: false},
               component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit'], resolve)
             },
             {
-              path: '/prediction/exhprediction/edit_ENG',
-              name: 'exhpredictionEdit_ENG',
+              path: '/prediction/exhprediction/update',
+              name: 'exhpredictionUpdate',
+              meta: {auth: true, title: "展会报名管理编辑", keepAlive: false},
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit'], resolve)
+            },
+            {
+              path: '/prediction/exhprediction/insert_ENG',
+              name: 'exhpredictionInsert_ENG',
+              meta: {auth: true, title: "展会报名管理新增", keepAlive: false},
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit_ENG'], resolve)
+            },
+            {
+              path: '/prediction/exhprediction/update_ENG',
+              name: 'exhpredictionUpdate_ENG',
+              meta: {auth: true, title: "展会报名管理编辑", keepAlive: false},
               component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit_ENG'], resolve)
             },
           ]
