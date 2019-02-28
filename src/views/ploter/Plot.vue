@@ -22,7 +22,7 @@
                 <div class="ploter-navigation-tools">
                   <el-button icon="el-icon-position" class="btn" @click="onToolSelected">绘制展位</el-button>
                 </div>
-              </div>/
+              </div>
             </div>
 
             <!-- 画布容器 -->
@@ -518,8 +518,21 @@ export default {
 
     //lxy 0225 结束
 
-    getStage(uuid) {
+    getStage(uuid,event) {
       const me = this;
+      if (event) {
+        this.lastEvent = event;
+        if (this.lastEl) {
+          this.lastEl.style.background = "#0684E5";
+          this.lastEl.disabled = false;
+        }
+        var el = event.currentTarget;
+        if (el) {
+          this.lastEl = el;
+          el.style.background = "#666666";
+          el.disabled = true;
+        }
+      }
       window.moftPloter = {};
       var params = {
         uuid: uuid

@@ -4,9 +4,27 @@
       <Content class="app-body">
         <div class="app-ploter-main">
           <div class="app-ploter-main-body">
-            <!-- <el-menu v-for = "zg in zgtableData" :key = "zg.uuid"  class="el-menu-demo" mode="horizontal" @select="getStage" >
-                    <el-menu-item :index= "zg.uuid">{{ zg.zgmc }}</el-menu-item>
-            </el-menu>-->
+            <div class="app-editor-ploter-navigation">
+              <div class="ploter-navigation-list">
+                <el-button
+                  v-for="data in zgtableData"
+                  :key="data.uuid"
+                  @click="getStage(data.uuid,$event)"
+                  class="app-ploter-tools-graphs-menu-item"
+                >{{data.zgmc}}</el-button>
+              </div>
+              <div class="ploter-navigation-tools">
+                <el-button
+                  class="cancelbtn"
+                  v-for="data1 in yxzwData"
+                  :key="data1.uuid"
+                  icon="el-icon-cancel"
+                  id="closebtn"
+                  @click="handlerDel($event,data1.uuid)"
+                >{{data1.zwh}}</el-button>
+                <!-- <el-button icon="el-icon-export"  :disabled="isExportDisabled" class="btn" @click="handlerExport">展馆导出</el-button> -->
+              </div>
+            </div>
             <!-- 画布容器 -->
             <div class="app-ploter-main-canvas" ref="plotStage"></div>
             <div class="app-ploter-main-mask"></div>
@@ -70,11 +88,12 @@ export default {
       currentBusinessData: {},
       currentUuid: "",
       zguuid: "",
+      zgtableData: null,
       yxzwData: [],
       blnbzwsj: "2018-12-27 9:25:34", //显示内部展位时间
       now: "",
-      lastEl: "",
-      lastEvent: "",
+      lastEl: null,
+      lastEvent: null,
       //显示加载中样
       loading: false,
       shiroData: this.CONSTANT.currentUser,
@@ -118,15 +137,11 @@ export default {
   },
   mounted() {
     this.getNow();
-    // this.currentUuid = getQueryString("uuid");
-    // if (this.currentUuid) {
-    //     this.getStage(this.currentUuid)
-    // }
     this.getYxzwData();
     this.initZg();
     setInterval(() => {
       this.refresh();
-    }, 300000);
+    }, 30000);
   },
   methods: {
     //lxy 0225 开始
@@ -158,6 +173,9 @@ export default {
       );
     },
     refresh: function() {
+      if(this.lastEvent&&this.lastEl){
+        this.lastEvent.currentTargetRefresh=this.lastEl
+      }
       this.getStage(this.zguuid, this.lastEvent);
     },
     //已选展位
@@ -188,7 +206,7 @@ export default {
               reserve2: 0
             };
             const me = this;
-            me.$axios.post("/xfxhapi/zwjbxx/doCancelByVO", params).then(
+            me.$axios.post("/zwjbxx/doCancelByVO", params).then(
               function(res) {
                 if (res.data.msg == "success") {
                   this.yxzwData = [];
@@ -233,7 +251,7 @@ export default {
           uuid: this.zguuid
         };
         const me = this;
-        me.$axios.post("/xfxhapi/zgjbxx/doExportTp", params).then(
+        me.$axios.post("/zgjbxx/doExportTp", params).then(
           function(res) {
             if (res.status == 200) {
               this.$message({
@@ -413,13 +431,29 @@ export default {
 
     //lxy 0225 结束
 
-    getStage(uuid) {
+    getStage(uuid, event) {
       const me = this;
+      if (event) {
+        this.lastEvent = event;
+        var el = event.currentTarget;
+        if(!el&&event.currentTargetRefresh){
+          el = event.currentTargetRefresh
+        }
+        if (this.lastEl) {
+          this.lastEl.style.background = "#0684E5";
+          this.lastEl.disabled = false;
+        }
+        if (el) {
+          this.lastEl = el;
+          el.style.background = "#666666";
+          el.disabled = true;
+        }
+      }
       window.moftPloter = {};
       var params = {
         uuid: uuid
       };
-      //this.zguuid = uuid
+      this.zguuid = uuid;
       me.$axios.post("/zgjbxx/doSearchHbMKListByVO", params).then(
         function(res) {
           var currentAreaStage = res.data.result.zgjbxxVOs[0].zgzwhbStr;
@@ -513,6 +547,8 @@ export default {
           const stage = Konva.Node.create(data, wrap);
           me.stage = stage;
           window.ploterStage = stage;
+          //  stage 存到store
+          me.$store.commit("updatePloterStage", stage);
           me.setStageLayout();
           drawLib.reloadShapes(stage);
           me.initStageEvent(stage);
@@ -851,4 +887,162 @@ export default {
 
 <style lang="scss">
 @import "~@/assets/app.scss";
+</style>
+<style lang="scss" scoped>
+.content[data-v-57ee01a8] {
+  overflow-y: hidden;
+}
+#menu-toggle-btn {
+  right: -26px;
+  transform: rotateY(180deg);
+}
+
+.app-editor {
+  width: 960px;
+  margin: 16px auto;
+}
+
+.app-editor-list-item {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  width: 300px;
+  height: 240px;
+  margin: 10px;
+  > {
+    .ivu-card-extra {
+      top: 8px;
+      right: 8px;
+      .ivu-btn-text {
+        padding: 4px 8px;
+      }
+      .ivu-icon {
+        font-size: 16px;
+      }
+    }
+    .ivu-card-body {
+      position: relative;
+      flex: 1;
+      padding: 8px;
+      background-color: #fafafa;
+    }
+  }
+}
+
+.app-editor-list-item-add {
+  text-align: center;
+  > .ivu-icon {
+    line-height: 140px;
+    font-size: 80px;
+    font-weight: bold;
+  }
+}
+
+.app-editor-list-item-thumb {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
+.app-editor-ploter-wrap {
+  flex-direction: column;
+  background-color: #666;
+}
+/* 展位选择右侧按钮样式 */
+.cancelbtn {
+  border: 0px;
+  height: 30px;
+  line-height: 0px;
+  background: rgb(243, 26, 55);
+  color: #fff;
+  margin: 5px 3px 5px 3px;
+  padding-left: 35px;
+}
+.app-ploter-tools-graphs-menu-item {
+  height: 30px;
+  line-height: 0px;
+  background: #0684e5;
+  color: #fff;
+  margin: 5px 3px 5px 0px;
+}
+.app-editor-ploter-navigation {
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  height: 40px;
+
+  // border-bottom: 1px solid #eee;
+  > {
+    .ploter-navigation-list {
+      flex: 1;
+      line-height: 36px;
+      font-size: 16px;
+      text-indent: 24px;
+    }
+    // .ploter-navigation-tools {
+    //   padding: 4px;
+    //   position: absolute;
+    //   top: -8px;
+    //   left: 1300px;
+    // }
+  }
+}
+
+.app-editor-ploter-iframe {
+  display: block !important;
+  flex: 1;
+  border: none;
+}
+
+.app-editor-create-model > .file-name {
+  margin-left: 16px;
+}
+
+.app-editor-cropper-model > {
+  .ivu-modal-body {
+    padding: 0;
+  }
+  .moft-cropper {
+    height: 64vh !important;
+  }
+}
+
+.positionlist {
+  // height: 100%;
+  overflow: hidden;
+
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+}
+
+.imagez {
+  float: left;
+  width: 100px;
+  height: 100px;
+  padding: 5px;
+}
+
+.box-card {
+  float: left;
+  width: 130px;
+  margin: 5px;
+}
+
+.box-cardz {
+  float: left;
+  width: 270px;
+  margin: 5px;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.clearfix {
+  font-weight: bold;
+  text-align: center;
+}
 </style>
