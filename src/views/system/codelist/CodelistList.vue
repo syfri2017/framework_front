@@ -169,23 +169,19 @@ export default {
     //表格查询事件
     searchClick: function(type) {
       let vm = this;
-      //按钮事件的选择
-      if(type == 'page'){
-        vm.tableData = [];     
-      }else{
-        vm.currentPage = 1;
+      this.tableData = [];
+      if (type != 'page') {
+        this.currentPage = 1;
       }
       vm.loading = true;//表格重新加载
       var params = {
         codetype: vm.searchForm.codetype.replace(/%/g,"\\%"),
         codetypeName: vm.searchForm.codetypeName.replace(/%/g,"\\%"),
-        createTimeBegin: vm.searchForm.createTime[0],
-        createTimeEnd: vm.searchForm.createTime[1],
         pageSize: vm.pageSize,
         pageNum: vm.currentPage
       };
       vm.$axios.post('/codelist/findByVO', params).then(function (res) {
-        var tableTemp = new Array((vm.currentPage-1)*this.pageSize);
+        var tableTemp = new Array((vm.currentPage-1)*vm.pageSize);
         vm.tableData = tableTemp.concat(res.data.result.list);
         vm.total = res.data.result.total;
         vm.loading = false;

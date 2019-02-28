@@ -68,7 +68,9 @@ axios.interceptors.request.use(
     if(config.url != '/login' && config.url != '/logout' 
         && config.url.indexOf('/signin/sendMessage')>-1 && config.url.indexOf('/signin/sendMailEng')>-1
         && config.url.indexOf('/signin/getUsernameByMail')>-1 && config.url.indexOf('/signin/findByMail')>-1 
-        && config.url.indexOf('/signin/findByUsername')>-1
+        && config.url.indexOf('/signin/findByUsername')>-1 && config.url.indexOf('/signin/insertByVO')>-1
+        && config.url.indexOf('/signin/findByUnscid/')>-1 && config.url.indexOf('/signin/getMailNum/')>-1
+        && config.url.indexOf('/signin/sendMail')>-1
         ){
       var isLogin = localStorage.getItem('isLogin');
       if(isLogin != 'TRUE'){

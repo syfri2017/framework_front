@@ -308,17 +308,27 @@ export default {
           };
           vm.$axios.post("/resource/updateByVO", params).then(
             function(res) {
-              this.editForm.resourceinfo = res.data.result.resourceinfo;
-            //  this.changeTreeLable(this.tableData, this.editForm.resourceid);
-              this.$message({
-                showClose: true,
-                message: "更新成功",
-                type: "success"
-              });
-              //location.reload();
-              this.getAllTree();
-              //取消保存按钮的隐藏
-              this.editFlag = true;
+              if(res.data.result != null && res.data.result !=undefined && res.data.result != ''){
+                this.editForm.resourceinfo = res.data.result.resourceinfo;
+              //  this.changeTreeLable(this.tableData, this.editForm.resourceid);
+                this.$message({
+                  showClose: true,
+                  message: "更新成功",
+                  type: "success"
+                });
+                //location.reload();
+                this.getAllTree();
+                this.getParentData();
+                //取消保存按钮的隐藏
+                this.editFlag = true;
+                }else{
+                  this.$message({
+                    showClose: true,
+                    message: "更新失败",
+                    type: "error"
+                  });
+                }
+              
             }.bind(this),
             function(error) {
               this.$message({
@@ -353,15 +363,22 @@ export default {
         type: "warning"
       }).then(() => {
           var id = data.resourceid;
-          vm.$axios.get("/resource/deleteOneById/" + id).then(
-            function(res) {
+          vm.$axios.get("/resource/deleteOneById/" + id).then(function(res) {
+            if(res.data.message = "删除成功"){
               store.remove(data);
               vm.$message({
                 showClose: true,
                 message: "删除成功",
                 type: "success"
               });
-            }.bind(vm),
+            }else{
+              vm.$message({
+                showClose: true,
+                message: "删除失败",
+                type: "error"
+              });
+            }
+          }.bind(vm),
             function(error) {
               console.log(error);
             }
@@ -536,9 +553,9 @@ export default {
             createElement("span", {}, [
               createElement("el-button", {
                 style: {
-                  "font-size": " 14px",
+                  "font-size": " 12px",
                   float: "right",
-                  "margin-right": "10px"
+                  "margin-left": "10px"
                 },
                 attrs: { type: "text" },
                 on: {
@@ -546,7 +563,7 @@ export default {
                     vm.$options.methods.remove(store, data, vm);
                   }
                 },
-                domProps: { innerHTML: "-" }
+                domProps: { innerHTML: "<i class='el-icon-delete'></i>" }
               })
             ])
           ]);
@@ -593,6 +610,7 @@ export default {
                   createName: this.currentUser.username
                 };
                 vm.$axios.post("/resource/insertByVO", params).then(function(res) {
+                  if(res.data.result != null && res.data.result !=undefined && res.data.result != ''){
                     this.$message({
                       showClose: true,
                       message: "新增成功",
@@ -601,7 +619,15 @@ export default {
                     //location.reload();
                     this.closeDialog();
                     this.getAllTree();
-                  }.bind(this),
+                    this.getParentData();
+                  }else{
+                    this.$message({
+                      showClose: true,
+                      message: "新增失败",
+                      type: "error"
+                    });
+                  }
+                }.bind(this),
                   function(error) {
                     console.log(error);
                   }

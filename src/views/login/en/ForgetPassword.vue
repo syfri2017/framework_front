@@ -6,15 +6,19 @@
         <div class="login-form" >
           <div class="filed left">
             <i class="iconfont icou"></i>
-            <span >密码修改</span>
-            <span class="signstyle"><router-link :to="{path:'/login/en/login'}"><a >返回登录</a></router-link></span>
+            <span>Password Modification</span>
+            <span class="signstyle"><router-link :to="{path:'/login/en/login'}"><a>Return Login</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
-            <div class="filed lgin">
-                <router-link :to="{path:'/login/en/mailbox'}"><el-button type="danger" round>邮箱找回</el-button></router-link>
+            <div class="filed">
+            <el-input placeholder="Email" v-model="FPBmail" name="FPBmail" id="FPBmail" prefix-icon="iconfont icon-youxiang"></el-input>
+            <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFPBMailCode()" v-text=FPBmailCodeText :disabled="FPBmailBtnDisabled"></button>
+            </div>
+            <div class="filed">
+            <el-input placeholder="Mail Verification Code"  v-model="FPBmailCode" name="FPBmailCode" id="FPBmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
             </div>
             <div class="filed lgin">
-                <router-link :to="{path:'/login/en/phone'}"><el-button type="danger" round>手机找回</el-button></router-link>
+            <el-button type="danger" @click="FPBIdentify()" round>Confirm</el-button>
             </div>
           </form>
         </div>
@@ -28,50 +32,97 @@ export default {
   name: 'Login',
   data () {
     return {
-        GLYusername: "",
-        GLYpassword: "",
-        GLYsrc: "/imageCode",
-        GLYvalidateCode: "",
-        GLYmessages: "",
-        GLYloginType: "MyShiro"
+       //忘记密码
+        FPBmail: "",
+        FPBmailCode: "",
+        FPBmailCodeReal: "",
+        FPBmailCodeText: "Get Verification Code",
+        FPBtimer: null,
+        FPCmobile: "",
+        FPCmessageCode: "",
+        FPCmessageCodeReal: "",
+        FPCmessageCodeText: "Get Verification Code",
+        FPCtimer: null,
+        FPDusername: "",
+        FPDpassword1: "",
+        FPDpassword2: "",
+        FPDregisterData: "",
+        FPBmailBtnDisabled: false,
+        FPCmobileBtnDisabled: false,
+        //提交校验标识
+        FPDpassword1TipFlag: false,
+        FPDpassword1AlertFlag: false,
+        FPDpassword2AlertFlag: false,
     }
   },
   methods:{
-    GLYlogin(){
-      let vm = this;
-      if (this.GLYusername == null || this.GLYusername == '') {
-        alert("用户名不能为空！")
-      } else if (this.GLYpassword == null || this.GLYpassword == '') {
-        alert("密码不能为空！")
-      } else {
-        var params = {
-          username: vm.GLYusername,
-          password: vm.GLYpassword,
-          loginType: vm.GLYloginType
-        }
-        vm.$axios.post('/login', params).then(function (res) {
-          if (res.data.code == '00000000') {          
-            localStorage.removeItem('isLogin');
-            localStorage.removeItem('XTOKEN');
-            localStorage.removeItem('CURRENTUSER');
-            localStorage.setItem('isLogin', 'TRUE');
-            localStorage.setItem('XTOKEN',  res.data.data.token);
-            localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
-            this.$router.push({ path: '/index' });
-          
-          } else if (res.data.code == '22222222') {
-            this.$message.error("账号不存在");
-          } else if (res.data.code == '33333333') {
-            this.$message.error("密码不正确");
-          } else {
-            this.$message.error("登录失败");
-            this.$router.push({ path: '/' });
-          }          
-        }.bind(this), function (error) {
-          console.log(error)
-        })
-      }
-    }
+   //B
+        FPBmailCheck() {
+            if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.FPBmail))) {
+                alert("邮箱格式不正确");
+                return false;
+            } else {
+                return true;
+            }
+        },
+        getFPBMailCode() {
+            let vm = this;
+            this.FPBmailCode = "";
+            if (this.FPBmailCheck()) {
+                this.FPBmailCodeText = "发送中...";
+                this.FPBmailBtnDisabled = true;
+                vm.$axios.get('/signin/getMailNum/' + this.FPBmail + "/static").then(function (res) {
+                    if (res.data.result == 0) {
+                        alert("该邮箱未注册！");
+                        this.FPBmailCodeText = "Get Verification Code";
+                        this.FPBmailBtnDisabled = false;
+                    } else if (res.data.result == 1) {
+                        vm.$axios.get('/signin/sendMail?mail=' + this.FPBmail).then(function (res) {
+                            this.FPBmailCodeReal = res.data.msg;
+                            var count = this.time;
+                            this.FPBtimer = setInterval(() => {
+                                if (count == 0) {
+                                    clearInterval(this.FPBtimer);
+                                    this.FPBtimer = null;
+                                    this.FPBmailCodeText = "Get Verification Code";
+                                    this.FPBmailBtnDisabled = false;
+                                } else {
+                                    this.FPBmailCodeText = count + "秒后获取"
+                                    count--;
+                                    this.FPBmailBtnDisabled = true;
+                                }
+                            }, 1000)
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        });
+                    }
+                }.bind(this), function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        FPBIdentify() {
+            let vm = this;
+            if (this.FPBmail == null || this.FPBmail == '') {
+                alert("邮箱不能为空！")
+            } else if (this.FPBmailCode == null || this.FPBmailCode == '') {
+                alert("验证码不能为空！")
+            } else {
+                if (this.FPBmailCode == this.FPBmailCodeReal) {
+                    vm.$axios.get('/signin/findByMail/' + this.FPBmail + "/static").then(function (res) {
+                        this.changeForm('FPDFlag');
+                        this.FPDregisterData = res.data.result;
+                        this.FPDusername = this.FPDregisterData[0].username;
+                        // alert("请输入新密码！");
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    });
+                } else {
+                    alert("验证码输入错误，请核对后再试");
+                }
+            }
+        },
+
   }
 }
 </script>
@@ -146,11 +197,11 @@ $blackcolor: #2c2c2c;
 }
 
 .filed {
- margin: 0px 1.875rem 1rem 1.875rem;
+  margin: 0px 1.875rem 1rem 1.875rem;
 }
 
 .lgin {
-  margin-top: 2.5rem;
+  margin-top: 8.8rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -178,7 +229,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left:11.5rem;
+    margin-left: 4rem;
     a {
       cursor: pointer;
     }
@@ -459,6 +510,18 @@ a {
 
 .icou{
   font-size:1.2rem;
+}
+
+/*Get Verification Code样式*/
+.phonebtn {
+  position: absolute;
+  margin-top: -2.52rem;
+  margin-left: 2.2rem;
+  border: none;
+  background:rgba(0, 0, 0, 0);
+  color: #fb6a74;
+  cursor: pointer;
+  width: 100px;
 }
 
 </style>
