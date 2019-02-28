@@ -108,12 +108,15 @@ export default {
     GLYlogin(){
       let vm = this;
       if (this.GLYusername == null || this.GLYusername == '') {
-        alert("Username不能为空！")
+         //用户名不能为空！ 
+        alert("User name can not be empty!")
       } else if (this.GLYpassword == null || this.GLYpassword == '') {
-        alert("Password不能为空！")
+        //密码不能为空！ 
+        alert("The password can not be empty!")
       } 
       else if(this.picLyanzhengma == null || this.picLyanzhengma == ''){
-        alert("Verification Code不能为空！")
+        //验证码不能为空！ 
+        alert("The verification code can not be empty!")
       } 
       else if(this.checkLpicma() == true){
         var params = {
