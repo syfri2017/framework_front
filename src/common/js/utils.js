@@ -57,6 +57,16 @@ export default {
       }
     },
 
+    //table每4位加一个空格格式化
+    Vue.prototype.tableLongNumFormat =  function (row, column) {
+      var rowNum = row[column.property];
+      if (rowNum == null || rowNum == "") {
+        return '';
+      } else {
+        return rowNum.replace(/(.{4})/g,'$1 ');
+      }
+    }
+
     //table的行样式
     Vue.prototype.rowStyle = function() {
       return "height: 40px";
