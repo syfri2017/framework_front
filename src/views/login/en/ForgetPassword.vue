@@ -38,28 +38,20 @@ export default {
         FPBmailCodeReal: "",
         FPBmailCodeText: "Get Verification Code",
         FPBtimer: null,
-        FPCmobile: "",
-        FPCmessageCode: "",
-        FPCmessageCodeReal: "",
-        FPCmessageCodeText: "Get Verification Code",
-        FPCtimer: null,
         FPDusername: "",
         FPDpassword1: "",
         FPDpassword2: "",
         FPDregisterData: "",
         FPBmailBtnDisabled: false,
-        FPCmobileBtnDisabled: false,
-        //提交校验标识
-        FPDpassword1TipFlag: false,
-        FPDpassword1AlertFlag: false,
-        FPDpassword2AlertFlag: false,
     }
   },
   methods:{
-   //B
+   //忘记密码
+        //B
         FPBmailCheck() {
             if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.FPBmail))) {
-                alert("邮箱格式不正确");
+                //邮箱格式不正确
+                alert("The email format is not correct");
                 return false;
             } else {
                 return true;
@@ -69,15 +61,16 @@ export default {
             let vm = this;
             this.FPBmailCode = "";
             if (this.FPBmailCheck()) {
-                this.FPBmailCodeText = "发送中...";
+                this.FPBmailCodeText = "Sending...";
                 this.FPBmailBtnDisabled = true;
-                vm.$axios.get('/signin/getMailNum/' + this.FPBmail + "/static").then(function (res) {
+                vm.$axios.get('/signin/getUsernameNum/' + this.FPBmail + "/static").then(function (res) {
                     if (res.data.result == 0) {
-                        alert("该邮箱未注册！");
+                        //该邮箱未注册！
+                        alert("The email is not registered!");
                         this.FPBmailCodeText = "Get Verification Code";
                         this.FPBmailBtnDisabled = false;
                     } else if (res.data.result == 1) {
-                        vm.$axios.get('/signin/sendMail?mail=' + this.FPBmail).then(function (res) {
+                        vm.$axios.get('/signin/sendMailEng?mail=' + this.FPBmail).then(function (res) {
                             this.FPBmailCodeReal = res.data.msg;
                             var count = this.time;
                             this.FPBtimer = setInterval(() => {
@@ -87,7 +80,7 @@ export default {
                                     this.FPBmailCodeText = "Get Verification Code";
                                     this.FPBmailBtnDisabled = false;
                                 } else {
-                                    this.FPBmailCodeText = count + "秒后获取"
+                                    this.FPBmailCodeText = count + "seconds later"
                                     count--;
                                     this.FPBmailBtnDisabled = true;
                                 }
@@ -104,12 +97,14 @@ export default {
         FPBIdentify() {
             let vm = this;
             if (this.FPBmail == null || this.FPBmail == '') {
-                alert("邮箱不能为空！")
+                // 邮箱不能为空！
+                alert("The email can not be empty!")
             } else if (this.FPBmailCode == null || this.FPBmailCode == '') {
-                alert("验证码不能为空！")
+                //验证码不能为空!
+                alert("The verification code can not be empty!")
             } else {
                 if (this.FPBmailCode == this.FPBmailCodeReal) {
-                    vm.$axios.get('/signin/findByMail/' + this.FPBmail + "/static").then(function (res) {
+                    vm.$axios.get('/signin/findByUsername/' + this.FPBmail + "/static").then(function (res) {
                         this.changeForm('FPDFlag');
                         this.FPDregisterData = res.data.result;
                         this.FPDusername = this.FPDregisterData[0].username;
@@ -118,8 +113,57 @@ export default {
                         console.log(error);
                     });
                 } else {
-                    alert("验证码输入错误，请核对后再试");
+                    //验证码输入错误，请核对后再试
+                    alert("Verification code input error, please check and try again.");
                 }
+            }
+        },
+        //D
+        FPDpassword1Check() {
+            if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(this.FPDpassword1))) {
+                this.FPDpassword1TipFlag = false;
+                this.FPDpassword1AlertFlag = true;
+                return false;
+            } else {
+                this.FPDpassword1TipFlag = false;
+                this.FPDpassword1AlertFlag = false;
+                return true;
+            }
+        },
+        FPDpassword1Tip() {
+            this.FPDpassword1TipFlag = true;
+            this.FPDpassword1AlertFlag = false;
+        },
+        FPDpassword2Check() {
+            if (this.FPDpassword1 !== this.FPDpassword2) {
+                this.FPDpassword2AlertFlag = true;
+                return false;
+            } else {
+                this.FPDpassword2AlertFlag = false;
+                return true;
+            }
+        },
+        FPregister() {
+            let vm = this;
+            this.FPDpassword1Check();
+            this.FPDpassword2Check();
+            if (this.FPDpassword1Check() && this.FPDpassword2Check() && this.FPDmessageCode == this.FPDmessageCodeReal) {
+                var params = {
+                    userid: this.FPDregisterData[0].userid,
+                    username: this.FPDusername,
+                    password: this.FPDpassword1,
+                }
+                vm.$axios.post('/xfxhapi/signin/updateByVO', params).then(function (res) {
+                    if (res.data.result == 1) {
+                        //密码修改成功！
+                        alert("Password changed successfully!");
+                        this.username = this.FPDusername;
+                        this.password = this.FPDpassword1;
+                        this.changeForm('loginFlag');
+                    }
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
             }
         },
 

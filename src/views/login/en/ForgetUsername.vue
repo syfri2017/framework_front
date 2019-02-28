@@ -32,28 +32,21 @@ export default {
   name: 'Login',
   data () {
     return {
-        //忘记用户名
+         //忘记用户名
         FUmail: "",
         FUmailCode: "",
         FUmailCodeReal: "",
         FUmailCodeText: "Get Verification Code",
         FUtimer: null,
-        FUusername: "",
-        FUmessageCode: "",
-        FUmessageCodeReal: "",
-        FUmessageCodeText: "Get Verification Code",
-        FUpassword: "",
-        FUsrc: "/xfxhapi/imageCode",
-        FUvalidateCode: "",
         FUmailBtnDisabled: false,
-        FUmobileBtnDisabled: false,
     }
   },
   methods:{
     //忘记用户名
-    FUmailCheck() {
+        FUmailCheck() {
             if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.FUmail))) {
-                alert("邮箱格式不正确");
+                // 邮箱格式不正确
+                alert("The email format is not correct");
                 return false;
             } else {
                 return true;
@@ -63,15 +56,16 @@ export default {
             let vm = this;
             this.FUmailCode = "";
             if (this.FUmailCheck()) {
-                this.FUmailCodeText = "发送中...";
+                this.FUmailCodeText = "Sending...";
                 this.FUmailBtnDisabled = true;
-                vm.$axios.get('/signin/getMailNum/' + this.FUmail + "/static").then(function (res) {
-                    if (res.data.result == 0) {
-                        alert("该邮箱未注册！");
+                vm.$axios.get('/signin/getMailNumENG/' + this.FUmail + "/static").then(function (res) {
+                    if (res.data.result == 0) { 
+                        // 该邮箱未注册！
+                        alert("The email is not registered!");
                         this.FUmailCodeText = "Get Verification Code";
                         this.FUmailBtnDisabled = false;
                     } else if (res.data.result == 1) {
-                        vm.$axios.get('/signin/sendMail?mail=' + this.FUmail).then(function (res) {
+                        vm.$axios.get('/signin/sendMailEng?mail=' + this.FUmail).then(function (res) {
                             this.FUmailCodeReal = res.data.msg;
                             var count = this.time;
                             this.timer = setInterval(() => {
@@ -81,7 +75,7 @@ export default {
                                     this.FUmailCodeText = "Get Verification Code";
                                     this.FUmailBtnDisabled = false;
                                 } else {
-                                    this.FUmailCodeText = count + "秒后获取"
+                                    this.FUmailCodeText = count + "seconds later"
                                     count--;
                                     this.FUmailBtnDisabled = true;
                                 }
@@ -98,17 +92,17 @@ export default {
         FUIdentify() {
             let vm = this;
             if (this.FUmail == null || this.FUmail == '') {
-                alert("邮箱不能为空！")
+                alert("The email can not be empty!")
             } else if (this.FUmailCode == null || this.FUmailCode == '') {
-                alert("验证码不能为空！")
+                alert("The verification code can not be empty!")
             } else {
                 if (this.FUmailCode == this.FUmailCodeReal) {
-                    vm.$axios.get('/signin/getMailNum/' + this.FUmail + "/static").then(function (res) {
+                    vm.$axios.get('/signin/getMailNumENG/' + this.FUmail + "/static").then(function (res) {
                         if (res.data.result == 0) {
-                            alert("该邮箱未注册！");
+                            alert("The email is not registered!");
                         } else if (res.data.result == 1) {
-                            axios.get('/signin/getUsernameByMail/' + this.FUmail + "/static").then(function (res) {
-                                alert("用户名找回成功！");
+                            vm.$axios.get('/signin/getUsernameByMail/' + this.FUmail + "/static").then(function (res) {
+                                alert("User name back to success!");
                                 this.username = res.data;
                                 this.changeForm('loginFlag');
                             }.bind(this), function (error) {
@@ -120,50 +114,9 @@ export default {
                     });
 
                 } else {
-                    alert("验证码输入错误，请核对后再试");
+                    //验证码输入错误，请核对后再试 
+                    alert("Verification code input error, please check and try again");
                 }
-            }
-        },
-        //作废
-        getFUMessageCode() {
-            let vm = this;
-            vm.$axios.get('/signin/sendMessage?phone=' + this.FUusername).then(function (res) {
-                this.FUmessageCodeReal = res.data.msg;
-                var count = this.time;
-                this.FUtimer = setInterval(() => {
-                    if (count == 0) {
-                        clearInterval(this.FUtimer);
-                        this.FUtimer = null;
-                        this.FUmessageCodeText = "Get Verification Code";
-                        this.FUmobileBtnDisabled = false;
-                    } else {
-                        this.FUmessageCodeText = count + "秒后获取"
-                        count--;
-                        this.FUmobileBtnDisabled = true;
-                    }
-                }, 1000)
-            }.bind(this), function (error) {
-                console.log(error);
-            });
-        },
-        reloadFUCode() {
-            // this.FUsrc = '/xfxhapi/imageCode?' + ((new Date()).valueOf());
-            this.FUsrc = '/imageCode?' + ((new Date()).valueOf());
-        },
-        FUlogin() {
-            if (this.FUusername == null || this.FUusername == '') {
-                alert("用户名不能为空！")
-            } else if (this.FUmessageCode == null || this.FUmessageCode == '') {
-                alert("短信验证码不能为空！")
-            } else if (this.FUpassword == null || this.FUpassword == '') {
-                alert("密码不能为空！")
-            } else if (this.FUvalidateCode == null || this.FUvalidateCode == '') {
-                alert("验证码不能为空！")
-            } else {
-                this.username = this.FUusername;
-                this.password = this.FUpassword;
-                this.validateCode = this.FUvalidateCode;
-                this.$refs.loginForm.submit();
             }
         },
 
