@@ -6,19 +6,19 @@
         <div class="login-form" >
           <div class="filed left">
             <i class="iconfont icou"></i>
-            <span >用户名找回</span>
-            <span class="signstyle"><router-link :to="{path:'/login/en/login'}"><a>返回登录</a></router-link></span>
+            <span >Username Recovery</span>
+            <span class="signstyle"><router-link :to="{path:'/login/en/login'}"><a>Back to Login</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="邮箱" v-model="FUmail" name="FUmail" id="FUmail" prefix-icon="iconfont icon-youxiang"></el-input>
+              <el-input placeholder="Association Email" v-model="FUmail" name="FUmail" id="FUmail" prefix-icon="iconfont icon-youxiang"></el-input>
               <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFUMailCode()" v-text=FUmailCodeText :disabled="FUmailBtnDisabled"></button>
             </div>
             <div class="filed">
-              <el-input placeholder="邮件验证码"  v-model="FUmailCode" name="FUmailCode" id="FUmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
+              <el-input placeholder="Mail Verification Code"  v-model="FUmailCode" name="FUmailCode" id="FUmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
             </div>
             <div class="filed lgin">
-              <el-button type="danger" @click="FUIdentify()" round>确定</el-button>
+              <el-button type="danger" @click="FUIdentify()" round>Confirm</el-button>
             </div>
           </form>
         </div>
@@ -273,7 +273,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 10.5rem;
+    margin-left: 4.5rem;
     a {
       cursor: pointer;
     }
@@ -557,11 +557,15 @@ a {
 }
 
 /*Get Verification Code样式*/
-.phonebtn{
-    position: absolute;
-    margin-top: -1.82rem;
-    margin-left: 4.2rem;
-    border: none;background: #ffffff;color:#fb6a74;cursor: pointer;
+.phonebtn {
+  position: absolute;
+  margin-top: -2.52rem;
+  margin-left: 2.2rem;
+  border: none;
+  background:rgba(0, 0, 0, 0);
+  color: #fb6a74;
+  cursor: pointer;
+  width: 100px;
 }
 
 </style>

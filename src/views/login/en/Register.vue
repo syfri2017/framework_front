@@ -7,16 +7,13 @@
         <div class="filed left">
           <i class="iconfont icou"></i>
           <span>User Registration</span>
-          <span class="signstyle">Existing Accounts?
-            <router-link :to="{path:'/login/en/login'}">
-              <a>Go Login</a>
-            </router-link>
+          <span class="signstyle">Existing Accounts?<router-link :to="{path:'/login/en/login'}"><a>Go Login</a></router-link>
           </span>
         </div>
 
         <form autocomplete="off" name="reg-form">
           <div class="filed">
-            <el-input type="text" class="inputstyle" v-model="mobile" name="mobile" id="mobile" placeholder="请输入手机号" prefix-icon="iconfont icon-web-icon-"
+            <el-input type="text" class="inputstyle" v-model="mobile" name="mobile" id="mobile" placeholder="Email" prefix-icon="iconfont icon-youxiang"
               @blur="mobileCheck"
             ></el-input>
             <button
@@ -27,22 +24,22 @@
               v-text="messageCodeText"
               :disabled="mobileBtnDisabled"
             ></button>
-             <p class="alert" v-show="mobileAlertFlag">*请填写正确的手机号码</p>
+             <p class="alert" v-show="mobileAlertFlag">*Please fill in the correct E-mail number!</p>
           </div>
           <div class="filed">
             <el-input
               v-model="messageCode" 
               name="messageCode" 
               id="messageCode"
-              placeholder="请输入手机验证码"
+              placeholder="Mail Verification Code"
               @blur="messageCodeCheck"
-              prefix-icon="iconfont icon-message-channel"
+              prefix-icon="iconfont icon-youxiang1"
             ></el-input>
-            <p class="alert1" v-show="messageCodeAlertFlag">*请填写正确的手机验证码</p>
+            <p class="alert1" v-show="messageCodeAlertFlag">*The verification code can not be empty!</p>
           </div>
           <div class="filed">
             <el-input
-              placeholder="请输入密码"
+              placeholder="Please input a password"
               prefix-icon="iconfont icon-password"
               type="password"
               class="inputstyle"
@@ -52,8 +49,8 @@
               @focus="password1Tip"
               @blur="password1Check"
             ></el-input>
-            <p class="tip" v-show="password1TipFlag">*密码需为6-16位字母数字组合</p>
-            <p class="alert2" v-show="password1AlertFlag">*密码不合规，请重新填写</p>
+            <p class="tip" v-show="password1TipFlag">*Password must be 6-16-bit alphanumeric combination.</p>
+            <p class="alert2" v-show="password1AlertFlag">*Password is not in order. Please fill it out again.</p>
           </div>
           <div class="filed">
             <el-input
@@ -62,15 +59,15 @@
               v-model="password2"
               name="password2"
               id="password2"
-              placeholder="请再次输入密码"
+              placeholder="Please input the password again"
               @blur="password2Check"
               prefix-icon="iconfont icon-querenmima-copy"
             ></el-input>
-            <p class="alert3" v-show="password2AlertFlag">*两次填写不一致，请重新填写</p>
+            <p class="alert3" v-show="password2AlertFlag">*The two entries do not match. Please fill in again.</p>
           </div>
 
           <div class="filed lgin">
-            <el-button type="danger" @click="register()" round>注册</el-button>
+            <el-button type="danger" @click="register()" round>Register</el-button>
           </div>
         </form>
       </div>
@@ -125,7 +122,7 @@ export default {
         vm.$axios.get("/signin/getUsernameNum/" + this.mobile + "/static").then(
           function(res) {
             if (res.data.result != 0) {
-              alert("用户名已存在！");
+              alert("The email is registered!");
               this.messageCodeText = "Get Verification Code";
               this.mobileBtnDisabled = false;
             } else {
@@ -331,7 +328,7 @@ $blackcolor: #2c2c2c;
   width: $width;
   background: url("/static/images/login/form_bg.png") no-repeat;
   .signstyle {
-    margin-left: 8.3rem;
+    margin-left: 0.6rem;
     a {
       cursor: pointer;
     }
@@ -615,13 +612,15 @@ a {
 /*Get Verification Code样式*/
 .phonebtn {
   position: absolute;
-  margin-top: -1.82rem;
-  margin-left: 4.2rem;
+  margin-top: -2.52rem;
+  margin-left: 2.2rem;
   border: none;
-  background: #ffffff;
+  background:rgba(0, 0, 0, 0);
   color: #fb6a74;
   cursor: pointer;
+  width: 100px;
 }
+
 
 .alert{
   position:absolute;
