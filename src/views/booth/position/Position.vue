@@ -1,7 +1,9 @@
 <template>
   <div id="position" class="ploterstyle">
-    <h1>Position</h1>
-    <router-view></router-view>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
