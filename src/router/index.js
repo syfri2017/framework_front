@@ -164,7 +164,7 @@ const router = new VueRouter({
               path: '/',
               name: 'exhprediction',
               meta: {keepAlive: true},
-              component: resolve => require(['@/views/prediction/exhprediction/Exhprediction'], resolve)
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionList'], resolve)
             },
             {
               path: '/prediction/exhprediction/detail',
