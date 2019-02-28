@@ -39,7 +39,9 @@
           <el-row>				
             <el-col :span="23">
               <el-form-item label="父资源" prop="parentid">
-                <el-input v-model="editForm.parentid" auto-complete="off" placeholder="父资源" size="small" clearable :disabled="editFlag"></el-input>
+              <!--  <el-input v-model="editForm.parentid" auto-complete="off" placeholder="父资源" size="small" clearable :disabled="editFlag"></el-input>-->
+              <el-cascader :options="parentData" :props="cascaderProps" size="small" v-model="editForm.parentid" placeholder="父资源" class="searchSelect"
+                  clearable change-on-select :show-all-levels="false" :disabled="editFlag"></el-cascader>
               </el-form-item>
             </el-col>
           </el-row>
@@ -151,14 +153,23 @@ export default {
       currentUser: this.CONSTANT.currentUser,
       //表数据
       tableData: [], //Grid中数据
+      //父资源级联下拉数据
+      parentData: [],
+      //资源树结构配置
       defaultProps: {
         children: "children",
         label: "resourceinfo"
       },
+      //级联下拉结构配置
+      cascaderProps: {
+        children: 'children',
+        label: 'resourceinfo',
+        value: 'resourceid'
+      },
       editForm: {
         resourcename: "",
         resourceinfo: "",
-        parentid: "",
+        parentid: [],
         type: "",
         seqno: "",
         icon: "",
@@ -182,6 +193,9 @@ export default {
         ],
         resourceinfo: [
           { required: true, message: "请输入资源描述", trigger: "blur" }
+        ],
+        parentid:[
+          { required: true, message: '请选父资源', trigger: 'change' }
         ],
         type: [
           {
@@ -237,19 +251,27 @@ export default {
     };
   },
   created: function() {
-    let vm = this;
-    vm.$axios.get("/resource/getAll").then(
-      function(res) {
-        this.tableData = res.data.result;
-        this.total = this.tableData.length;
-      }.bind(this),
-      function(error) {
-        console.log(error);
-      }
-    ),
-      this.getAllPermissions();
+    //获取资源树
+    this.getAllTree();
+    //获取父资源级联下拉data
+    this.getParentData();
+    //获取全部权限
+    this.getAllPermissions();
   },
   methods: {
+    //获取资源树
+    getAllTree:function(){
+      let vm = this;
+      vm.$axios.get("/resource/getAll").then(
+        function(res) {
+          this.tableData = res.data.result;
+          this.total = this.tableData.length;
+        }.bind(this),
+        function(error) {
+          console.log(error);
+        }
+      )
+    },
     //左侧树点击事件
     handleNodeClick(data, node) {
       this.findResourceById(data.resourceid);
@@ -276,7 +298,7 @@ export default {
             resourceid: this.editForm.resourceid,
             resourcename: this.editForm.resourcename,
             resourceinfo: this.editForm.resourceinfo,
-            parentid: this.editForm.parentid,
+            parentid: this.editForm.parentid[this.editForm.parentid.length -1],
             seqno: this.editForm.seqno,
             icon: this.editForm.icon,
             type: this.editForm.type,
@@ -287,12 +309,14 @@ export default {
           vm.$axios.post("/resource/updateByVO", params).then(
             function(res) {
               this.editForm.resourceinfo = res.data.result.resourceinfo;
-              this.changeTreeLable(this.tableData, this.editForm.resourceid);
+            //  this.changeTreeLable(this.tableData, this.editForm.resourceid);
               this.$message({
                 showClose: true,
                 message: "更新成功",
                 type: "success"
               });
+              //location.reload();
+              this.getAllTree();
               //取消保存按钮的隐藏
               this.editFlag = true;
             }.bind(this),
@@ -368,6 +392,29 @@ export default {
       vm.$axios.get("/resource/" + resourceid).then(
         function(res) {
           this.editForm = res.data.result;
+          //父资源级联下拉数据处理
+          var parentidArray = [];
+          var temp = this.editForm.parentid;
+          if(temp!=null && temp!=""){
+            for(var i in this.parentData){
+              if(temp == this.parentData[i].resourceid){
+                parentidArray.push(this.parentData[i].resourceid);
+              }else{
+                for(var j in this.parentData[i].children){
+                  if(temp == this.parentData[i].children[j].resourceid){
+                    parentidArray.push(this.parentData[i].resourceid, this.parentData[i].children[j].resourceid);
+                  }else{
+                    for(var k in this.parentData[i].children[j].children){
+                      if(temp == this.parentData[i].children[j].children[k].resourceid){
+                        parentidArray.push(this.parentData[i].resourceid, this.parentData[i].children[j].resourceid, this.parentData[i].children[j].children[k].resourceid);
+                      }
+                    }
+                  }
+                }
+              }
+            }  
+          }
+          this.editForm.parentid = parentidArray;
           //获取资源权限
           this.permissionDetails(resourceid);
         }.bind(this),
@@ -545,14 +592,15 @@ export default {
                   createId: this.currentUser.userid,
                   createName: this.currentUser.username
                 };
-                vm.$axios.post("/resource/insertByVO", params).then(
-                  function(res) {
+                vm.$axios.post("/resource/insertByVO", params).then(function(res) {
                     this.$message({
                       showClose: true,
                       message: "新增成功",
                       type: "success"
                     });
-                    location.reload();
+                    //location.reload();
+                    this.closeDialog();
+                    this.getAllTree();
                   }.bind(this),
                   function(error) {
                     console.log(error);
@@ -584,6 +632,20 @@ export default {
           this.changeTreeLable(children, searchKey);
         }
       }
+    },
+    //获取父资源级联下拉框数据
+    getParentData:function(){
+      let vm = this;
+      vm.$axios.get('/resource/parentidMenuTree').then(function (res) {
+        var temp = [{
+          resourceid:'-1',
+          resourceinfo:'根目录',
+          children:res.data.result
+        }];
+        vm.parentData = temp;
+      }.bind(this), function (error) {
+        console.log(error)
+      })
     }
   }
 };
