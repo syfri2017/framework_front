@@ -55,6 +55,11 @@ export default {
         default:
           return "";
       }
+    },
+
+    //table的行样式
+    Vue.prototype.rowStyle = function() {
+      return "height: 40px";
     }
   }
 }
