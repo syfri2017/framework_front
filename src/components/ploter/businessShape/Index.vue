@@ -74,8 +74,6 @@
         },
         methods: {
             onStageReady () {
-                // 
-                debugger
                 if (window.ploterStage) {
                     window.ploterStage.on('evt_stage_element_dblclick', this.onStageElementDblclick)
                     window.ploterStage.on('evt_stage_element_changed', this.onStageElementChanged)

@@ -90,18 +90,6 @@ const router = new VueRouter({
       component: LoginEN,
       children: [
         {
-          path: '/login/en/Phone',
-          name: 'login/en/Phone',
-          meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/login/en/Phone'], resolve)
-        },
-        {
-          path: '/login/en/Mailbox',
-          name: 'login/en/Mailbox',
-          meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/login/en/Mailbox'], resolve)
-        },
-        {
           path: '/login/en/ForgetPassword',
           name: 'login/en/ForgetPassword',
           meta: {auth: true, title: "忘记用户名", operation: true},
