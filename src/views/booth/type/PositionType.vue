@@ -1,8 +1,6 @@
 <template>
   <div id="positionType">
     <div class="main-container" v-loading="loading" element-loading-text="加载中">
-      <!-- 面包屑 -->
-      <div id="breadcrumb_box"></div>
       <div id="tableView">
         <el-row>
           <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
@@ -538,6 +536,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>
