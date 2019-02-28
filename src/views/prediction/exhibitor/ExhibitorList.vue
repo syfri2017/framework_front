@@ -240,10 +240,8 @@ export default {
     //表格查询事件
     searchClick: function(type) {
       let vm = this;
-      //按钮事件的选择
-      if(type == 'page'){
-        this.tableData = [];
-      }else{
+      this.tableData = [];
+      if (type != 'page') {
         this.currentPage = 1;
       }
       this.loading = true;//表格重新加载

@@ -113,11 +113,9 @@ export default {
     //表格查询事件
     searchClick: function(type) {
       let vm = this;
-      //按钮事件的选择
-      if(type == 'page'){
-        vm.tableData = [];    
-      }else{
-        vm.currentPage = 1;
+      this.tableData = [];
+      if (type != 'page') {
+        this.currentPage = 1;
       }
       vm.loading = true;//表格重新加载
       var params = {
