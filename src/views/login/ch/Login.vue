@@ -63,6 +63,7 @@ export default {
     }
   },
   methods:{
+      
       // 输入框校验
       mobileCheck() {
         if (!/^1[34578]\d{9}$/.test(this.mobile)) {

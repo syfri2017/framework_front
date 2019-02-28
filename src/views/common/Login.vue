@@ -82,10 +82,22 @@ export default {
       activeName: "first"
     };
   },
+  created(){
+    this.autoWide();
+  },
   methods: {
     clk(){
       this.$router.push({ path: '/login/en/Login' });
     },
+    //适配屏幕分辨率
+      // autoWide() {
+      //     //判断是否宽屏
+      //     var winWide = window.screen.availWidth;
+      //     // alert(winWide);
+      //     var wideScreen = false;
+      //     var zm = winWide / 1920;
+      //     document.body.style.zoom = zm * 1;
+      //   },
   }
 };
 </script>
