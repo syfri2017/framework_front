@@ -221,9 +221,6 @@ export default {
     },
     //表格勾选事件
     selectionChange: function(val) {
-      for (var i = 0; i < val.length; i++) {
-        var row = val[i];
-      }
       this.multipleSelection = val;
     },
     //新增事件
