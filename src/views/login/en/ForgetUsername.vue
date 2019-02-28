@@ -7,7 +7,7 @@
           <div class="filed left">
             <i class="iconfont icou"></i>
             <span >用户名找回</span>
-            <span class="signstyle"><router-link :to="{path:'/login/ch/login'}"><a>返回登录</a></router-link></span>
+            <span class="signstyle"><router-link :to="{path:'/login/en/login'}"><a>返回登录</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
@@ -36,12 +36,12 @@ export default {
         FUmail: "",
         FUmailCode: "",
         FUmailCodeReal: "",
-        FUmailCodeText: "获取验证码",
+        FUmailCodeText: "Get Verification Code",
         FUtimer: null,
         FUusername: "",
         FUmessageCode: "",
         FUmessageCodeReal: "",
-        FUmessageCodeText: "获取验证码",
+        FUmessageCodeText: "Get Verification Code",
         FUpassword: "",
         FUsrc: "/xfxhapi/imageCode",
         FUvalidateCode: "",
@@ -68,7 +68,7 @@ export default {
                 vm.$axios.get('/signin/getMailNum/' + this.FUmail + "/static").then(function (res) {
                     if (res.data.result == 0) {
                         alert("该邮箱未注册！");
-                        this.FUmailCodeText = "获取验证码";
+                        this.FUmailCodeText = "Get Verification Code";
                         this.FUmailBtnDisabled = false;
                     } else if (res.data.result == 1) {
                         vm.$axios.get('/signin/sendMail?mail=' + this.FUmail).then(function (res) {
@@ -78,7 +78,7 @@ export default {
                                 if (count == 0) {
                                     clearInterval(this.timer);
                                     this.timer = null;
-                                    this.FUmailCodeText = "获取验证码";
+                                    this.FUmailCodeText = "Get Verification Code";
                                     this.FUmailBtnDisabled = false;
                                 } else {
                                     this.FUmailCodeText = count + "秒后获取"
@@ -134,7 +134,7 @@ export default {
                     if (count == 0) {
                         clearInterval(this.FUtimer);
                         this.FUtimer = null;
-                        this.FUmessageCodeText = "获取验证码";
+                        this.FUmessageCodeText = "Get Verification Code";
                         this.FUmobileBtnDisabled = false;
                     } else {
                         this.FUmessageCodeText = count + "秒后获取"
@@ -556,7 +556,7 @@ a {
   font-size:1.2rem;
 }
 
-/*获取验证码样式*/
+/*Get Verification Code样式*/
 .phonebtn{
     position: absolute;
     margin-top: -1.82rem;

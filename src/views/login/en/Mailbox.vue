@@ -7,7 +7,7 @@
           <div class="filed left">
             <i class="iconfont icou"></i>
             <span>密码修改</span>
-            <span class="signstyle"><router-link :to="{path:'/login/ch/login'}"><a>返回登录</a></router-link></span>
+            <span class="signstyle"><router-link :to="{path:'/login/en/login'}"><a>返回登录</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
@@ -36,12 +36,12 @@ export default {
         FPBmail: "",
         FPBmailCode: "",
         FPBmailCodeReal: "",
-        FPBmailCodeText: "获取验证码",
+        FPBmailCodeText: "Get Verification Code",
         FPBtimer: null,
         FPCmobile: "",
         FPCmessageCode: "",
         FPCmessageCodeReal: "",
-        FPCmessageCodeText: "获取验证码",
+        FPCmessageCodeText: "Get Verification Code",
         FPCtimer: null,
         FPDusername: "",
         FPDpassword1: "",
@@ -74,7 +74,7 @@ export default {
                 vm.$axios.get('/signin/getMailNum/' + this.FPBmail + "/static").then(function (res) {
                     if (res.data.result == 0) {
                         alert("该邮箱未注册！");
-                        this.FPBmailCodeText = "获取验证码";
+                        this.FPBmailCodeText = "Get Verification Code";
                         this.FPBmailBtnDisabled = false;
                     } else if (res.data.result == 1) {
                         vm.$axios.get('/signin/sendMail?mail=' + this.FPBmail).then(function (res) {
@@ -84,7 +84,7 @@ export default {
                                 if (count == 0) {
                                     clearInterval(this.FPBtimer);
                                     this.FPBtimer = null;
-                                    this.FPBmailCodeText = "获取验证码";
+                                    this.FPBmailCodeText = "Get Verification Code";
                                     this.FPBmailBtnDisabled = false;
                                 } else {
                                     this.FPBmailCodeText = count + "秒后获取"
@@ -512,7 +512,7 @@ a {
   font-size:1.2rem;
 }
 
-/*获取验证码样式*/
+/*Get Verification Code样式*/
 .phonebtn{
     position: absolute;
     margin-top: -1.82rem;
