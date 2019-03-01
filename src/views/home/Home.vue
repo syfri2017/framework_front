@@ -16,9 +16,9 @@ export default {
     this.currentUser = this.CONSTANT.currentUser;
     if (this.currentUser.deptid == 'ZSYH') {
       if (this.currentUser.usertype == 'CHN') {
-        this.$router.push({ path: '/prediction/exhprediction/edit' });
+        this.$router.push({ name: '/exhpredictionInsert' });
       } else if (this.currentUser.usertype == 'EHN') {
-        this.$router.push({ path: '/prediction/exhprediction/edit_ENG' });
+        this.$router.push({ name: '/exhpredictionInsert_ENG' });
       }
     }
   },
