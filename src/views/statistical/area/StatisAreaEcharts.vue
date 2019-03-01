@@ -1,31 +1,30 @@
 <template>
   <div id="statisAreaList">
     <div id="tableView" v-loading="this.loading" element-loading-text="加载中">
-			<div class="echartsBox staticStyle">
-        <div id="bar" class="echartsDiv"></div>
+			<div class="echartsBox tjfxstyle" style="relative">
+        <div id="bar" style="height:100%; width:60%"></div>
+        <div id="pie" style="height:100%; width:30%"></div>
       </div>
       <div class="inform-content">
         <div class="table_container">
-          <el-table border id="table" class="tableStyle" :data="this.tjfxdata" :height="tableheight" :row-style="rowStyle">
+          <el-table id="table" border class="tableStyle" :height="tableheight" :data="this.tjfxtabledata" :row-style="rowStyle">
             <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-            <el-table-column prop="cplxmc" label="产品类型" show-overflow-tooltip min-width="28%" align="center">
+            <el-table-column prop="zwmjfwmc" label="展位面积范围" show-overflow-tooltip min-width="28%" align="center">
               <template slot-scope="scope">
-                <a v-text="scope.row.cplxmc" @click="toCompanyList(scope.row)"></a>
+                <a v-text="scope.row.zwmjfwmc" @click="toCompanyList(scope.row)"></a>
               </template>
             </el-table-column>
-            <el-table-column prop="czqysl" label="参展企业数量" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
-            <el-table-column prop="bwzwgssl" label="标准展位数量" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
-            <el-table-column prop="gdzwmj" label="光地展位面积m²" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
+            <el-table-column prop="sl" label="展位数量" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
           </el-table>
-          <el-row type="flex" justify="end" class="mt10 mb10">
-            <el-col :span="15">
-              <el-pagination layout="total" :total=parseInt(total)></el-pagination>
-            </el-col>
-            <div class="buttonExport">
-              <el-button type="success" icon="el-icon-download" size="small" @click="exportClick">导出</el-button>
-            </div>
-          </el-row>
         </div>
+        <el-row type="flex" justify="end">
+          <el-col :span="15">
+            <el-pagination layout="total" :total=parseInt(total)></el-pagination>
+          </el-col>
+          <div class="buttonExport">
+            <el-button type="success" icon="el-icon-download" size="small" @click="exportClick">导出</el-button>
+          </div>
+        </el-row>
       </div>
 		</div>
   </div>
@@ -35,6 +34,8 @@
 let echarts = require('echarts/lib/echarts')
 // 引入柱状图组件
 require('echarts/lib/chart/bar')
+// 引入饼状图
+require('echarts/lib/chart/pie')
 // 引入提示框和title组件
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
@@ -43,60 +44,69 @@ export default {
     return {
       //当前登陆用户
       currentUser: this.CONSTANT.currentUser,
-      //页面获取的uuid
-			uuid: "",
 			//搜索表单
 			searchForm: {
 				dateStart: "",
 				dateEnd: "",
 			},
-			//统计分析的数据
-			tjfxdata: [],
-			tjfxname: [],
-			tjfxczqysl: [],
-			tjfxgdzwmj: [],
-			tjfxbwzwgssl: [],
-			tabledata: [],
+			tjfxbarData:"",
+			//tabledata
+			tjfxtabledata:[],
+			//展位面积范围
+			zwmjfwmc:[],
+			zwmjfwmcsl:[],
+			//pieTitle
+			pieTitle: '',
+			pieTitle0: '光地展位面积范围比例图',
+		  pieDataz:[],
+			//bardata
+			tjfxname:[],
+			//总记录数
 			total: 0,
-			//表高度变量
-			tableheight: 331,
 			//显示加载中样
 			loading: false,
-			labelPosition: 'right',
+			//表高度变量
+      tableheight: 291
     };
   },
   created: function() {
     this.getCPLX();
   },
   methods: {
-    //获取统计分析图表数据
-		getCPLX: function () {
-      var params = {};
+    getCPLX: function () {
       let vm = this;
-			vm.$axios.post('/qyzwyx/dofindtjfx', params).then(function (res) {
-				this.tjfxdata = res.data.result;
+			var params = {};
+			vm.$axios.post('/qyzwyx/dofindtjfxsj',params).then(function (res) {	
+				this.tjfxtabledata = res.data.result;
 				this.total = res.data.result.length;
-				for (var i = 0; i < this.tjfxdata.length; i++) {
-					this.tjfxname.push(this.tjfxdata[i].cplxmc)
-					this.tjfxczqysl.push(this.tjfxdata[i].czqysl)
-					this.tjfxgdzwmj.push(this.tjfxdata[i].gdzwmj)
-					this.tjfxbwzwgssl.push(this.tjfxdata[i].bwzwgssl)
+				for(var i=0; i<this.tjfxtabledata.length;i++){
+					this.zwmjfwmc.push(this.tjfxtabledata[i].zwmjfwmc)				
+					this.zwmjfwmcsl.push(this.tjfxtabledata[i].sl)
+					var arr1={};
+					arr1.value=this.tjfxtabledata[i].sl
+					arr1.name=this.tjfxtabledata[i].zwmjfwmc	
+					//饼状图数据
+					this.pieDataz.push(arr1)
 				}
-				this.loading = false;
-				this.echarts1();
+				//画柱状图
+				this.barChart();
+				//画饼图
+				this.pieTitle=this.pieTitle0;
+			  this.pieChart();
+				this.loading = false;			
 			}.bind(this), function (error) {
 				console.log(error)
 			})
 		},
 
-		// 中央下部按产品分类柱状图
-		echarts1: function () {
-			var myBarChart = echarts.init(document.getElementById('bar'));
-			var option = {
+		// 左侧柱状图
+		barChart: function () {
+			var myChart = echarts.init(document.getElementById('bar'));
+			var optionBar = {
 				title: {
-					text: '按产品类型统计展会报名情况',
+					text: '按光地展位面积范围统计展位数量',
 					x: 'center',
-					y: '-3',
+					y: '-3'
 				},
 				tooltip: {
 					trigger: 'axis',
@@ -104,18 +114,8 @@ export default {
 						type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
 					}
 				},
-				legend: {
-					orient: 'horizontal',
-					top: 20,
-					right: 80,
-					iGap: 16,
-					iWidth: 18,
-					align: 'left',
-					iGap: 8,
-				},
-				color: ['#C1232B', '#B5C334', '#FCCE10'],
 				grid: {
-					top: '50',
+					top: '30',
 					bottom: '10',
 					left: '15',
 					right: '20',
@@ -124,105 +124,113 @@ export default {
 				xAxis: [
 					{
 						type: 'category',
-						data: this.tjfxname,
+						data: this.zwmjfwmc,
 						axisLabel: {
 							interval: 0,
-							rotate: 15,
 						},
 					}
 				],
-
 				yAxis: [
-					{
+					{ 
+						name:'数量',
 						type: 'value',
-						name: '企业',
-						position: 'left',
-						offset: 28,
-						minInterval: 1,
-						axisLine: {
-							lineStyle: {
-								color: '#C1232B'
-							}
-						},
+						minInterval : 1,
 						splitLine: {
 							show: false
-						}
-					},
-					{
-						type: 'value',
-						name: '展位',
-						position: 'left',
-						minInterval: 1,//设置为整数的刻度值
-						axisLine: {
-							lineStyle: {
-								color: '#B5C334'
-							}
 						},
-						splitLine: {
-							show: false
-						}
-					},
-					{
-						type: 'value',
-						name: '面积m²',
-						axisLine: {
-							lineStyle: {
-								color: '#FCCE10'
-							}
-						},
-						splitLine: {
-							show: false
-						}
 					}
 				],
+				
 				series: [
 					{
-						name: '参展企业数量',
+						name: '数量',
 						type: 'bar',
-						data: this.tjfxczqysl,
+						barWidth: '100%',
+						stack: '面积',
+						barWidth: '45',
+						//柱状图
+						data:this.zwmjfwmcsl,
+						smooth: true,
+						// color: ['#ff6364', '#fdc107', '#29bb9d'],
 						itemStyle: {
 							normal: {
 								barBorderRadius: [5, 5, 0, 0],
+								color: function(params) {
+									var colorList = ['#C1232B','#B5C334','#FCCE10','#E87C25','#27727B','#FE8463'];
+									return colorList[params.dataIndex]
+								},
 								opacity: 0.85
 							}
-						},
-					},
-					{
-						name: '标准展位数量',
-						type: 'bar',
-						yAxisIndex: 1,
-						data: this.tjfxbwzwgssl,
-						itemStyle: {
-							normal: {
-								barBorderRadius: [5, 5, 0, 0],
-								opacity: 0.85
-							}
-						},
-					},
-					{
-						name: '光地展位面积m²',
-						type: 'bar',
-						yAxisIndex: 2,
-						data: this.tjfxgdzwmj,
-						itemStyle: {
-							normal: {
-								barBorderRadius: [5, 5, 0, 0],
-								opacity: 0.85
-							}
-						},
+						}
 					}
 				]
 			};
-			myBarChart.setOption(option);
+			myChart.setOption(optionBar);
 		},
+
+		// 右侧玫瑰图
+		pieChart: function () {
+			var myChart = echarts.init(document.getElementById('pie'));
+			var optionPie = {
+				title: {
+					text: this.pieTitle,
+					left: 'center',
+					top: -3,
+				},
+				tooltip: {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					x: '68%',
+					y: 'center',
+					itemGap: 16,
+					itemWidth: 18,
+					data:this.pieDataz.name,
+					align: 'right',
+					itemGap: 8,
+				},
+				series: [
+					{
+						name: this.pieTitle,
+						type: 'pie',
+						radius: '46.5%',
+						center: ['35%', '50%'],
+						data:this.pieDataz,
+						label: {
+							show: true,
+							formatter: '{d}%',
+						},
+						labelLine: {
+							show: true,
+							length: 5
+						},
+						animationType: 'scale',
+						animationEasing: 'elasticOut',
+						animationDelay: function (idx) {
+							return Math.random() * 200;
+						},
+						itemStyle: {
+							normal: {
+								opacity: 0.85
+							}
+						}
+					}
+				],
+				color: ['#C1232B','#B5C334','#FCCE10','#E87C25','#27727B','#FE8463']
+			};
+			myChart.setOption(optionPie);
+    },
+    
+    //导出EXCEL
     exportClick: function () {
-			window.open(window.config.domain + "/qyzwyx/doExportTjfxByCplx");
-		},
+			window.open(window.config.domain + "/qyzwyx/doExportTjfxByZwmjfw");
+    },
+    
+    //跳转到企业列表
 		toCompanyList: function (val) {
-			var params = {
-				cplx: val.cplx
-			}
-			loadDivParam("statistical/exhprediction_product", params);
+      this.$router.push({name:"statislProductList", query: {zwmjfw: val.zwmjfw}});
 		}
   }
 };
