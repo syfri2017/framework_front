@@ -29,26 +29,28 @@
 					</div>
 				</el-form>
 			</el-row>
-			<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-        @selection-change="selectionChange" class="tableStyle" :height="tableheight" :row-style="rowStyle">
-        <el-table-column type="selection" width="35"></el-table-column>
-        <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-        <el-table-column prop="username" show-overflow-tooltip label="邮箱名称" min-width="14%" align="center"></el-table-column>
-        <el-table-column prop="password" show-overflow-tooltip label="邮箱密码" min-width="12%" align="center"></el-table-column>
-        <el-table-column prop="encoding" show-overflow-tooltip label="编码" min-width="11%" align="center"></el-table-column>
-        <el-table-column prop="host" show-overflow-tooltip label="SMTP" min-width="13%" align="center"></el-table-column>
-        <el-table-column prop="port" show-overflow-tooltip label="端口" min-width="11%" align="center"></el-table-column>
-        <el-table-column prop="protocol" show-overflow-tooltip label="授权码" min-width="13%" align="center"></el-table-column>
-        <el-table-column label="操作" width="65" align="center" v-if="hasPermission('system/mail:edit')">
-          <template slot-scope="scope">
-            <el-button type="text" @click="editClick(scope.row,scope.$index)">编辑</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <!--翻页组件-->
-      <el-row type="flex" justify="end">
-        <paginator></paginator>
-      </el-row>
+      <div class="table_container">
+        <el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+          @selection-change="selectionChange" class="tableStyle" :height="tableheight" :row-style="rowStyle">
+          <el-table-column type="selection" width="35"></el-table-column>
+          <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
+          <el-table-column prop="username" show-overflow-tooltip label="邮箱名称" min-width="14%" align="center"></el-table-column>
+          <el-table-column prop="password" show-overflow-tooltip label="邮箱密码" min-width="12%" align="center"></el-table-column>
+          <el-table-column prop="encoding" show-overflow-tooltip label="编码" min-width="11%" align="center"></el-table-column>
+          <el-table-column prop="host" show-overflow-tooltip label="SMTP" min-width="13%" align="center"></el-table-column>
+          <el-table-column prop="port" show-overflow-tooltip label="端口" min-width="11%" align="center"></el-table-column>
+          <el-table-column prop="protocol" show-overflow-tooltip label="授权码" min-width="13%" align="center"></el-table-column>
+          <el-table-column label="操作" width="65" align="center" v-if="hasPermission('system/mail:edit')">
+            <template slot-scope="scope">
+              <el-button type="text" @click="editClick(scope.row,scope.$index)">编辑</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <!--翻页组件-->
+        <el-row type="flex" justify="end">
+          <paginator></paginator>
+        </el-row>
+      </div>
       <!--修改界面-->
       <el-dialog :title="dialogTitle" :visible.sync="editFormVisible" @close="closeDialog(editForm)" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="100px" ref="editForm" :rules="editFormRules">  
