@@ -44,8 +44,8 @@
         watch: {
             ploterConfig (cfg) {
                 if (cfg.businessShape && cfg.businessShape.enable) {
-                    window.wrapHandshake.model['updateBusinessData'] = this.updateBusinessData
-                    window.wrapHandshake.model['updateBusinessRecord'] = this.updateBusinessRecord
+                    // window.wrapHandshake.model['updateBusinessData'] = this.updateBusinessData
+                    // window.wrapHandshake.model['updateBusinessRecord'] = this.updateBusinessRecord
                     this.onStageReady()
                     setTimeout(() => {
                         this.getBusinessData(this.wrapStageData.uuid)
