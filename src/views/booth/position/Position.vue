@@ -297,7 +297,7 @@ export default {
         },
         //展位分析功能 add by yushch 20181228
         analysisClick: function () {
-            loadDivParam("venue/position_analysis");
+            this.$router.push({ path: '/booth/analysis' });            
         },
         //取消指定
         cancleVenue: function (val) {
