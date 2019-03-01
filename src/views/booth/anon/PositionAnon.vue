@@ -121,7 +121,7 @@ export default {
     this.initZg();
     setInterval(() => {
       this.refresh();
-    }, 30000);
+    }, 120000);
   },
   methods: {
     //lxy 0225 开始
