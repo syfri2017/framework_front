@@ -375,7 +375,7 @@ const router = new VueRouter({
               component: resolve => require(['@/views/statistical/product/StatisProductEcharts'], resolve)
             },
             {
-              path: '/statistical/statisProduct',
+              path: '/statistical/statisProductList',
               name: 'statislProductList',
               meta: {auth: true, title: "按产品类型统计企业列表"},
               component: resolve => require(['@/views/statistical/product/StatisProAreaList'], resolve)
@@ -394,7 +394,7 @@ const router = new VueRouter({
               component: resolve => require(['@/views/statistical/area/StatisAreaEcharts'], resolve)
             },
             {
-              path: '/',
+              path: '/statistical/statisAreaList',
               name: 'statisAreaList',
               meta: {auth: true, title: "按光地展位面积统计企业列表"},
               component: resolve => require(['@/views/statistical/product/StatisProAreaList'], resolve)
@@ -413,7 +413,7 @@ const router = new VueRouter({
               component: resolve => require(['@/views/statistical/confirm/StatisConfirmEcharts'], resolve)
             },
             {
-              path: '/',
+              path: '/statistical/statisConfirmList',
               name: 'statisConfirmList',
               meta: {auth: true, title: "按确认信息统计企业列表"},
               component: resolve => require(['@/views/statistical/confirm/StatisConfirmList'], resolve)
