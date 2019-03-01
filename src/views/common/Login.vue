@@ -82,9 +82,6 @@ export default {
       activeName: "first"
     };
   },
-  created(){
-    this.autoWide();
-  },
   methods: {
     clk(){
       this.$router.push({ path: '/login/en/Login' });
