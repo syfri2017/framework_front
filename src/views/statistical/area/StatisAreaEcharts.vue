@@ -1,9 +1,9 @@
 <template>
   <div id="statisAreaList">
     <div id="tableView" v-loading="this.loading" element-loading-text="加载中">
-			<div class="echartsBox tjfxstyle" style="relative">
-        <div id="bar" style="height:100%; width:60%"></div>
-        <div id="pie" style="height:100%; width:30%"></div>
+			<div class="echartsBox staticStyle" style="relative">
+        <div id="bar" class="echartsBoxLeft"></div>
+        <div id="pie" class="echartsBoxRight"></div>
       </div>
       <div class="inform-content">
         <div class="table_container">
@@ -39,6 +39,7 @@ require('echarts/lib/chart/pie')
 // 引入提示框和title组件
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
+require('echarts/lib/component/legend')
 export default {
   data() {
     return {
@@ -230,7 +231,7 @@ export default {
     
     //跳转到企业列表
 		toCompanyList: function (val) {
-      this.$router.push({name:"statislProductList", query: {zwmjfw: val.zwmjfw}});
+      this.$router.push({name:"statisAreaList", query: {zwmjfw: val.zwmjfw}});
 		}
   }
 };
