@@ -43,8 +43,6 @@ export default {
     return {
       //当前登陆用户
       currentUser: this.CONSTANT.currentUser,
-      //页面获取的uuid
-			uuid: "",
 			//搜索表单
 			searchForm: {
 				dateStart: "",
@@ -61,8 +59,7 @@ export default {
 			//表高度变量
 			tableheight: 331,
 			//显示加载中样
-			loading: false,
-			labelPosition: 'right',
+			loading: false
     };
   },
   created: function() {
@@ -214,10 +211,14 @@ export default {
 				]
 			};
 			myBarChart.setOption(option);
-		},
+    },
+
+    //导出EXCEL
     exportClick: function () {
 			window.open(window.config.domain + "/qyzwyx/doExportTjfxByCplx");
-		},
+    },
+    
+    //跳转到企业列表
 		toCompanyList: function (val) {
       this.$router.push({name:"statislProductList", query: {cplx: val.cplx}});
 		}
