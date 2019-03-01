@@ -299,7 +299,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'positionType',
-              component: resolve => require(['@/views/booth/type/PositionType'], resolve)
+              component: resolve => require(['@/views/booth/type/PositionTypeList'], resolve)
             },
           ]
         },
