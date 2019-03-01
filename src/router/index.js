@@ -365,39 +365,57 @@ const router = new VueRouter({
         },
         //----------统计分析-按产品类型统计----------
         {
-          path: '/statistical/statistical_product',
+          path: '/statistical/statisProduct',
           meta: {auth: true, title: "按产品类型统计"},
           component: StatisProduct,
           children: [
             {
               path: '/',
-              name: 'statisticalProduct',
-              component: resolve => require(['@/views/statistical/product/StatisProductList'], resolve)
+              name: 'statisProduct',
+              component: resolve => require(['@/views/statistical/product/StatisProductEcharts'], resolve)
+            },
+            {
+              path: '/statistical/statisProduct',
+              name: 'statislProductList',
+              meta: {auth: true, title: "按产品类型统计企业列表"},
+              component: resolve => require(['@/views/statistical/product/StatisProAreaList'], resolve)
             },
           ]
         },
         //----------统计分析-按光地展位面积统计----------
         {
-          path: '/statistical/statistical_area',
+          path: '/statistical/statisArea',
           meta: {auth: true, title: "按光地展位面积统计"},
           component: StatisArea,
           children: [
             {
               path: '/',
               name: 'statisArea',
-              component: resolve => require(['@/views/statistical/area/StatisAreaList'], resolve)
+              component: resolve => require(['@/views/statistical/area/StatisAreaEcharts'], resolve)
+            },
+            {
+              path: '/',
+              name: 'statisAreaList',
+              meta: {auth: true, title: "按光地展位面积统计企业列表"},
+              component: resolve => require(['@/views/statistical/product/StatisProAreaList'], resolve)
             },
           ]
         },
         //----------统计分析-按确认信息统计----------
         {
-          path: '/statistical/statistical_confirm',
+          path: '/statistical/statisConfirm',
           meta: {auth: true, title: "按确认信息统计"},
           component: StatisConfirm,
           children: [
             {
               path: '/',
               name: 'statisConfirm',
+              component: resolve => require(['@/views/statistical/confirm/StatisConfirmEcharts'], resolve)
+            },
+            {
+              path: '/',
+              name: 'statisConfirmList',
+              meta: {auth: true, title: "按确认信息统计企业列表"},
               component: resolve => require(['@/views/statistical/confirm/StatisConfirmList'], resolve)
             },
           ]
