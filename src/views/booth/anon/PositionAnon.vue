@@ -72,6 +72,8 @@ export default {
   },
   data() {
     return {
+      //上个路由页面传过来的数据
+      query: this.$route.query,
       //当前展位数据
       currentBusinessData: {},
       currentUuid: "",
@@ -130,9 +132,9 @@ export default {
       me.$axios.post("/zgjbxx/doSearchDataListByVO").then(
         function(res) {
           this.zgtableData = res.data.result;
-          if(me.$route.query.uuid){
-            this.getStage(this.$route.query.uuid);
-            this.$route.query.uuid=null
+          if(me.query.uuid){
+            this.getStage(this.query.uuid);
+            this.query=null
             return
           }
           if (this.zgtableData.length > 0) {
