@@ -28,6 +28,7 @@ import Resource from '@/views/system/resource/Resource'
 import Permission from '@/views/system/permission/Permission'
 import Codelist from '@/views/system/codelist/Codelist'
 import Mail from '@/views/system/mail/Mail'
+import ExhpredictionEdit from '@/views/prediction/exhprediction/ExhpredictionEdit'
 
 const router = new VueRouter({
   routes: [
@@ -510,6 +511,20 @@ const router = new VueRouter({
               name: 'mail',
               component: resolve => require(['@/views/system/mail/MailList'], resolve)
             },
+          ]
+        },
+        //--------------展商端报名----------------
+        {
+          path: '/exhprediction',
+          meta: {auth: true, title: "展会报名"},
+          component: ExhpredictionEdit,
+          children: [
+            {
+              path: '/',
+              name: 'exhpredictionInsert',
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit'], resolve)
+            },
+            
           ]
         }
       ]
