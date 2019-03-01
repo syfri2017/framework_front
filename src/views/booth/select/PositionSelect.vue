@@ -92,7 +92,7 @@ export default {
       zguuid: "",
       zgtableData: null,
       yxzwData: [],
-      blnbzwsj: "2018-12-27 9:25:34", //显示内部展位时间
+      blnbzwsj: window.config.booth.showHideTime, //显示内部展位时间
       now: "",
       lastEl: null,
       lastEvent: null,
@@ -143,7 +143,7 @@ export default {
     this.initZg();
     setInterval(() => {
       this.refresh();
-    }, 120000);
+    }, window.config.booth.anontRefreshTime);
   },
   methods: {
     //lxy 0225 开始
