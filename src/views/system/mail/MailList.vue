@@ -46,7 +46,9 @@
         </el-table-column>
       </el-table>
       <!--翻页组件-->
-      <paginator></paginator>
+      <el-row type="flex" justify="end">
+        <paginator></paginator>
+      </el-row>
       <!--修改界面-->
       <el-dialog :title="dialogTitle" :visible.sync="editFormVisible" @close="closeDialog(editForm)" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="100px" ref="editForm" :rules="editFormRules">  

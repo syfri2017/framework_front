@@ -64,7 +64,9 @@
         </el-table-column>
       </el-table>
       <!--列表底部工具条和分页符-->
-      <paginator></paginator>
+      <el-row type="flex" justify="end">
+        <paginator></paginator>
+      </el-row>
     </div>
 
     <!-- 编辑-->

@@ -59,7 +59,9 @@
           </el-table-column>
         </el-table>
         <!--翻页组件-->
-        <paginator></paginator>
+        <el-row type="flex" justify="end">
+          <paginator></paginator>
+        </el-row>
 			</div>
 
       <!-- 编辑-->

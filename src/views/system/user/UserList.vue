@@ -61,7 +61,9 @@
 					</el-table-column>
 				</el-table>
         <!--翻页组件-->
-        <paginator></paginator>
+        <el-row type="flex" justify="end">
+          <paginator></paginator>
+        </el-row>
 			</div>
 			<!--角色列表页-->
 			<el-dialog title="用户角色列表" :visible.sync="roleDetailVisible" :close-on-click-modal="false">
