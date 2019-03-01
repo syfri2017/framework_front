@@ -18,7 +18,7 @@
             <el-input placeholder="Mail Verification Code"  v-model="FPBmailCode" name="FPBmailCode" id="FPBmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
             </div>
             <div class="filed lgin">
-            <el-button type="danger" @click="FPBIdentify()" round>Confirm</el-button>
+            <el-button type="danger" @click="FPBIdentifyen()" round>Confirm</el-button>
             </div>
           </form>
         </div>
@@ -94,7 +94,7 @@ export default {
                 });
             }
         },
-        FPBIdentify() {
+        FPBIdentifyen() {
             let vm = this;
             if (this.FPBmail == null || this.FPBmail == '') {
                 // 邮箱不能为空！
@@ -105,7 +105,8 @@ export default {
             } else {
                 if (this.FPBmailCode == this.FPBmailCodeReal) {
                     vm.$axios.get('/signin/findByUsername/' + this.FPBmail + "/static").then(function (res) {
-                        this.changeForm('FPDFlag');
+                      
+                        // this.changeForm('FPDFlag');
                         this.FPDregisterData = res.data.result;
                         this.FPDusername = this.FPDregisterData[0].username;
                         // alert("请输入新密码！");
@@ -159,7 +160,7 @@ export default {
                         alert("Password changed successfully!");
                         this.username = this.FPDusername;
                         this.password = this.FPDpassword1;
-                        this.changeForm('loginFlag');
+                        // this.changeForm('loginFlag');
                     }
                 }.bind(this), function (error) {
                     console.log(error)
@@ -201,7 +202,6 @@ $blackcolor: #2c2c2c;
   bottom: $bottom0;
   overflow: hidden;
   overflow-y: auto;
-  z-index: 1000;
   background: url("/static/images/login/login.png") center 100% #65809d;
 
   * {

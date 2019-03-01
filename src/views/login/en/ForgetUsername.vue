@@ -13,7 +13,7 @@
             <div class="filed">
               <el-input placeholder="Association Email" v-model="FUmail" name="FUmail" id="FUmail" prefix-icon="iconfont icon-youxiang"></el-input>
               <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFUMailCode()" v-text=FUmailCodeText :disabled="FUmailBtnDisabled"></button>
-            </div>
+             </div>
             <div class="filed">
               <el-input placeholder="Mail Verification Code"  v-model="FUmailCode" name="FUmailCode" id="FUmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
             </div>
@@ -66,6 +66,7 @@ export default {
                         this.FUmailBtnDisabled = false;
                     } else if (res.data.result == 1) {
                         vm.$axios.get('/signin/sendMailEng?mail=' + this.FUmail).then(function (res) {
+                           
                             this.FUmailCodeReal = res.data.msg;
                             var count = this.time;
                             this.timer = setInterval(() => {
@@ -104,7 +105,7 @@ export default {
                             vm.$axios.get('/signin/getUsernameByMail/' + this.FUmail + "/static").then(function (res) {
                                 alert("User name back to success!");
                                 this.username = res.data;
-                                this.changeForm('loginFlag');
+                                // this.changeForm('loginFlag');
                             }.bind(this), function (error) {
                                 console.log(error);
                             });
