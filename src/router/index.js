@@ -237,7 +237,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'trader',
-              component: resolve => require(['@/views/venue/trader/Trader'], resolve)
+              component: resolve => require(['@/views/venue/trader/TraderList'], resolve)
             },
           ]
         },
