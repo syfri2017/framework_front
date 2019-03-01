@@ -28,6 +28,7 @@ import Resource from '@/views/system/resource/Resource'
 import Permission from '@/views/system/permission/Permission'
 import Codelist from '@/views/system/codelist/Codelist'
 import Mail from '@/views/system/mail/Mail'
+import ExhpredictionEdit from '@/views/prediction/exhprediction/ExhpredictionEdit'
 
 const router = new VueRouter({
   routes: [
@@ -364,39 +365,57 @@ const router = new VueRouter({
         },
         //----------统计分析-按产品类型统计----------
         {
-          path: '/statistical/statistical_product',
+          path: '/statistical/statisProduct',
           meta: {auth: true, title: "按产品类型统计"},
           component: StatisProduct,
           children: [
             {
               path: '/',
-              name: 'statisticalProduct',
-              component: resolve => require(['@/views/statistical/product/StatisProductList'], resolve)
+              name: 'statisProduct',
+              component: resolve => require(['@/views/statistical/product/StatisProductEcharts'], resolve)
+            },
+            {
+              path: '/statistical/statisProduct',
+              name: 'statislProductList',
+              meta: {auth: true, title: "按产品类型统计企业列表"},
+              component: resolve => require(['@/views/statistical/product/StatisProAreaList'], resolve)
             },
           ]
         },
         //----------统计分析-按光地展位面积统计----------
         {
-          path: '/statistical/statistical_area',
+          path: '/statistical/statisArea',
           meta: {auth: true, title: "按光地展位面积统计"},
           component: StatisArea,
           children: [
             {
               path: '/',
               name: 'statisArea',
-              component: resolve => require(['@/views/statistical/area/StatisAreaList'], resolve)
+              component: resolve => require(['@/views/statistical/area/StatisAreaEcharts'], resolve)
+            },
+            {
+              path: '/',
+              name: 'statisAreaList',
+              meta: {auth: true, title: "按光地展位面积统计企业列表"},
+              component: resolve => require(['@/views/statistical/product/StatisProAreaList'], resolve)
             },
           ]
         },
         //----------统计分析-按确认信息统计----------
         {
-          path: '/statistical/statistical_confirm',
+          path: '/statistical/statisConfirm',
           meta: {auth: true, title: "按确认信息统计"},
           component: StatisConfirm,
           children: [
             {
               path: '/',
               name: 'statisConfirm',
+              component: resolve => require(['@/views/statistical/confirm/StatisConfirmEcharts'], resolve)
+            },
+            {
+              path: '/',
+              name: 'statisConfirmList',
+              meta: {auth: true, title: "按确认信息统计企业列表"},
               component: resolve => require(['@/views/statistical/confirm/StatisConfirmList'], resolve)
             },
           ]
@@ -510,6 +529,20 @@ const router = new VueRouter({
               name: 'mail',
               component: resolve => require(['@/views/system/mail/MailList'], resolve)
             },
+          ]
+        },
+        //--------------展商端报名----------------
+        {
+          path: '/exhprediction',
+          meta: {auth: true, title: "展会报名"},
+          component: ExhpredictionEdit,
+          children: [
+            {
+              path: '/',
+              name: 'exhpredictionInsert',
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit'], resolve)
+            },
+            
           ]
         }
       ]

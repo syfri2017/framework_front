@@ -1,5 +1,5 @@
 <template>
-  <div id="statisConfirmList">
+  <div id="statisProductList">
     <div id="tableView" v-loading="this.loading" element-loading-text="加载中">
 			<div class="echartsBox staticStyle">
         <div id="bar" class="echartsDiv"></div>
@@ -219,10 +219,7 @@ export default {
 			window.open(window.config.domain + "/qyzwyx/doExportTjfxByCplx");
 		},
 		toCompanyList: function (val) {
-			var params = {
-				cplx: val.cplx
-			}
-			loadDivParam("statistical/exhprediction_product", params);
+      this.$router.push({name:"statislProductList", query: {cplx: val.cplx}});
 		}
   }
 };
