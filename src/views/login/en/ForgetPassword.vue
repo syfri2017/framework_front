@@ -96,6 +96,31 @@ export default {
                 });
             }
         },
+        changeForm(flag) {
+            if (flag == 'loginFlag') {
+            } else if (flag == 'regFlag') {
+            } else if (flag == 'FUAFlag') {
+                this.FUmail = "";
+                this.FUmailCode = "";
+            } else if (flag == 'FPBFlag') {
+                this.FPBmail = "";
+                this.FPBmailCode = "";
+                this.FPBmailCodeReal = "";
+                this.FPBmailCodeText = "Get Verification Code";
+                this.FPBtimer = null;
+            } else if (flag == 'FPDFlag') {
+                this.FPDusername = "";
+                this.FPDpassword1 = "";
+                this.FPDpassword2 = "";
+            } else if (flag == 'bakFlag') {
+                // 未保存的数据将丢失，确定返回吗？
+                var r = confirm("Unsaved data will be lost. Do you want to return?");
+                if (r == false) {
+                    return;
+                }
+            }
+            this.formFlag = flag;
+        },
         FPBIdentifyen() {
           
             let vm = this;
@@ -110,7 +135,8 @@ export default {
                       //  console.log(2222222222222)
                       vm.$axios.get('/signin/findByUsername/' + this.FPBmail + "/static").then(function (res) {
                       // console.log(11111111)
-                      // this.changeForm('FPDFlag');
+                       alert("Verification code input error, please check and try again.");
+                      this.changeForm('FPDFlag');
                       this.FPDregisterData = res.data.result;
                       this.FPDusername = this.FPDregisterData[0].username;
                       // alert("请输入新密码！");
