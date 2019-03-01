@@ -104,8 +104,10 @@
               </template>
             </el-table-column>
           </el-table>
-          <!--列表底部工具条和分页符-->
-          <paginator></paginator>
+          <!--翻页组件-->
+          <el-row type="flex" justify="end">
+            <paginator></paginator>
+          </el-row>
         </div>
 
         <!-- 新增上传-->
