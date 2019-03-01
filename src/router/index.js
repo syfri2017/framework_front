@@ -10,10 +10,12 @@ import Exhprediction from '@/views/prediction/exhprediction/Exhprediction'
 import ExhpredictionApprove from '@/views/prediction/exhprediction/ExhpredictionApprove'
 import Exhibitor from '@/views/prediction/exhibitor/Exhibitor'
 import VenuePlan from '@/views/venue/plan/Plan'
+import VenuePlanEN from '@/views/venue/plan/PlanEN'
 import VenueTrader from '@/views/venue/trader/Trader'
 import Position from '@/views/booth/position/Position'
 import PositionDesign from '@/views/booth/design/PositionDesign'
 import PositionSelect from '@/views/booth/select/PositionSelect'
+import PositionAnon from '@/views/booth/anon/PositionAnon'
 import PositionType from '@/views/booth/type/PositionType'
 import StatisProduct from '@/views/statistical/product/StatisProduct'
 import StatisArea from '@/views/statistical/area/StatisArea'
@@ -116,6 +118,45 @@ const router = new VueRouter({
         }
       ],
       redirect:'/login/en/Login'
+    },
+    //----------展馆平面图无登录查看----------
+    {
+      path: '/plan/planAnon',
+      meta: {auth: true, title: "展馆平面图"},
+      component: VenuePlan,
+      children: [
+        {
+          path: '/',
+          name: 'planAnon',
+          component: resolve => require(['@/views/venue/plan/Plan'], resolve),
+        },
+      ]
+    },
+    //----------展馆平面图英文无登录查看----------
+    {
+      path: '/plan/planAnonEN',
+      meta: {auth: true, title: "展馆平面图"},
+      component: VenuePlanEN,
+      children: [
+        {
+          path: '/',
+          name: 'planAnonEN',
+          component: resolve => require(['@/views/venue/plan/PlanEN'], resolve),
+        },
+      ]
+    },
+    //----------展位无登录查看----------
+    {
+      path: '/booth/anon',
+      meta: {auth: true, title: "展位选择"},
+      component: PositionAnon,
+      children: [
+        {
+          path: '/',
+          name: 'positionAnon',
+          component: resolve => require(['@/views/booth/anon/PositionAnon'], resolve)
+        },
+      ]
     },
     {
       path: '/index',
@@ -222,8 +263,20 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'plan',
-              component: resolve => require(['@/views/venue/plan/Plan'], resolve)
-
+              component: resolve => require(['@/views/venue/plan/Plan'], resolve),
+            },
+          ]
+        },
+         //----------展馆管理-展馆平面图----------
+         {
+          path: '/plan/planEN',
+          meta: {auth: true, title: "展馆平面图"},
+          component: VenuePlanEN,
+          children: [
+            {
+              path: '/',
+              name: 'planEN',
+              component: resolve => require(['@/views/venue/plan/PlanEN'], resolve),
             },
           ]
         },
@@ -274,7 +327,6 @@ const router = new VueRouter({
             },
           ]
         },
-        
         //----------展位管理-展位设计----------
         {
           path: '/booth/positionDesign',

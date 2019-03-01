@@ -3,51 +3,49 @@
    <div class="containers clearfix">
                 <div class="zgzongpmt">
                 <div class="title">
-                    <span>展馆平面图</span>
+                    <span>Floor Plan</span>
                 </div>
                 <div class="content">
-                    <div class="west">南登录厅</div>
-                <div class="south">东登录厅</div>
-                <div class="east">西登录厅</div>
+                    <div class="west">South Entrance</div>
+                <div class="south">East Entrance</div>
+                <div class="east">West Entrance</div>
                     <div class="north"><a href="javascript:;" @click="planClick('B409603791EE41E4988C8177843810DB')"  target="_blank">室外展区</a></div>
-                    <!-- <div class="north"><a href="javascript:;" @click="planClick('7DBEDCE714DBEC8DE050007F01003EF1')"  target="_blank">室外展区</a></div> -->
-                <div class="wqu ">
+                    <div class="wqu ">
                     <ul class="clearfix">
-                    <li>
+                        <li>
                         <h1><span><a href="javascript:;" @click="planClick('7D5D040F274DAE6EE050007F010038F8')"  target="_blank">装备器材类展区</a></span></h1>
+                       
                         <!-- <h1><span><a target="_blank">装备器材类展区</a></span></h1> -->
-                        <h2>卸货区</h2>
-                        <!-- <h1><span><a href="javascript:;" @click="planClick('9494385990084C7B9AA05256A3F5E052')"  target="_blank">综合馆</a></span></h1>
-                    -->
-                    <h1><span><a   target="_blank">综合馆</a></span></h1>
+                        <h2 style="font-size:20px;">Loading Area</h2>
+                        <!-- <h1 style="font-size:20px;"><span><a  @click="planClick('9494385990084C7B9AA05256A3F5E052')"  target="_blank">综合馆</a></span></h1> -->
+                        <h1><span><a   target="_blank">综合馆</a></span></h1>
                     </li>
                     <li class="double sec">
-                        <h1><span><a href="javascript:;" @click="planClick('7D6E36A4AFD76787E050007F010078DA')" target="_blank">装备器材类展区</a></span></h1>
-                        <h2>卸货区</h2>
-                        <h1><span><a href="javascript:;" @click="planClick('7D702E88928B3ABFE050007F0100591B')" target="_blank">消防车辆类展区</a></span></h1>
-                        <!-- <h1><span><a  target="_blank">装备器材类展区</a></span></h1>
-                        <h2>卸货区</h2>
-                        <h1><span><a  href="javascript:;" @click="planClick('7D702E88928B3ABFE050007F0100591B')" target="_blank">消防车辆类展区</a></span></h1>  -->
+                        <h1 style="font-size:20px;"><span><a href="javascript:;" @click="planClick('7D6E36A4AFD76787E050007F010078DA')" target="_blank">装备器材类展区</a></span></h1>
+                        
+                         <!-- <h1 style="font-size:20px;"><span><a target="_blank">装备器材类展区</a></span></h1> -->
+                        <h2 style="font-size:20px;">Loading Area</h2>
+                        <h1 style="font-size:20px;"><span><a href="javascript:;" @click="planClick('7D702E88928B3ABFE050007F0100591B')" target="_blank">消防车辆类展区</a></span></h1>
                     </li>
                     <li>
-                        <h1><span><a href="javascript:;" @click="planClick('7D6C9486A4F3BD83E050007F01002DC8')" target="_blank">建筑防火类展区</a></span></h1>
-                        <h2>卸货区</h2>
-                        <h1><span><a href="javascript:;" @click="planClick('7D6E5081F9236243E050007F010078E8')" target="_blank">建筑防火类展区</a></span></h1>
-                        <!-- <h1><span><a  target="_blank">建筑防火类展区</a></span></h1>
-                        <h2>卸货区</h2>
-                        <h1><span><a  target="_blank">建筑防火类展区</a></span></h1> -->
+                        <h1  style="font-size:16px;"><span><a href="javascript:;" @click="planClick('7D6C9486A4F3BD83E050007F01002DC8')" target="_blank">Exhibition Zone of Fire products for building</a></span></h1>
+                        <h2 style="font-size:20px;">Loading Area</h2>
+                        <h1  style="font-size:16px;"><span><a href="javascript:;" @click="planClick('7D6E5081F9236243E050007F010078E8')" target="_blank">Exhibition Zone of Fire products for building</a></span></h1>
+                    
+                        <!-- <h1  style="font-size:16px;"><span><a  target="_blank">Exhibition Zone of Fire products for building</a></span></h1>
+                        <h2 style="font-size:20px;">Loading Area</h2>
+                        <h1  style="font-size:16px;"><span><a  target="_blank">Exhibition Zone of Fire products for building</a></span></h1> -->
                     </li>
                     <li class="double">
-                        <h1><span><a href="javascript:;" @click="planClick('7D702E88928A3ABFE050007F0100591B')" target="_blank">消防车辆类展区</a></span></h1>
-                        <h2>卸货区</h2>
-                        <h1><span><a href="javascript:;" @click="planClick('7D6E508202416243E050007F010078E8')" target="_blank">消防车辆类展区</a></span></h1>
+                        <h1 style="font-size:20px;"><span><a href="javascript:;" @click="planClick('7D702E88928A3ABFE050007F0100591B')" target="_blank">消防车辆类展区</a></span></h1>
+                        <h2 style="font-size:20px;">Loading Area</h2>
+                        <h1 style="font-size:20px;"><span><a href="javascript:;" @click="planClick('7D6E508202416243E050007F010078E8')" target="_blank">消防车辆类展区</a></span></h1>
                     </li>
                     </ul>
-     
                 </div>
-     </div>
-  </div>
-  </div>
+                </div>
+            </div>
+            </div>
   </div>
 </template>
 
@@ -56,14 +54,14 @@ export default {
   name: 'plan',
   methods: {
       planClick(uuid) {
-		  let fullpath=this.$route.fullPath
+           let fullpath=this.$route.fullPath
 		  if(fullpath.indexOf("Anon")>0){
 			this.$router.push({ path: '/booth/anon' ,query: {uuid: uuid}})		  
 		  }else{
 			this.$router.push({ path: '/booth/select' ,query: {uuid: uuid}})
 		  }
       }
-  }
+    }
 }
 </script>
 

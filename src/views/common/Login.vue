@@ -28,6 +28,12 @@
             <a class="lana" href="http://61.161.226.197:8090/templates/展馆图片.zip">下载展位图</a>
           </span>
         </p>
+        <p style="margin:10px 0px 0px 80px">
+          <span>
+            <i class="iconfont icon-help lana"></i>
+            <a class="lana" @click="zgclk">查看展位图</a>
+          </span>
+        </p>
       </el-col>
     </el-row>
     <!-- <login></login> -->
@@ -86,6 +92,9 @@ export default {
     clk(){
       this.$router.push({ path: '/login/en/Login' });
     },
+    zgclk(){
+      this.$router.push({ path: '/plan/planAnon' });
+    }
     //适配屏幕分辨率
       // autoWide() {
       //     //判断是否宽屏

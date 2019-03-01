@@ -28,6 +28,12 @@
             <a class="lana" href="http://61.161.226.197:8090/templates/展馆图片.zip">Download Pavilion Pictures</a>
           </span>
         </p>
+        <p style="margin:10px 0px 0px 80px">
+          <span>
+            <i class="iconfont icon-help lana"></i>
+            <a class="lana" @click="zgclk">View Booth Reservations</a>
+          </span>
+        </p>
       </el-col>
     </el-row>
     <!-- <login></login> -->
@@ -56,6 +62,9 @@ export default {
     clk(){
       this.$router.push({ path: '/login/ch/Login' });
     },
+    zgclk(){
+      this.$router.push({ path: '/plan/planAnonEN' });
+    }
   }
 };
 </script>
