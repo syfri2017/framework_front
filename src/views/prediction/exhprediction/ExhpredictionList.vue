@@ -358,7 +358,7 @@ export default {
 
     //导出
     exportClick: function () {
-      window.open("/qyjbxx/doExportJbxx/" + this.exportForm);
+      window.open(window.config.domain + "/qyjbxx/doExportJbxx/" + this.exportForm);
     }
   }
 };
