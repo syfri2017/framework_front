@@ -1,30 +1,32 @@
 <template>
   <div id="statisConfirmList">
     <div id="tableView" v-loading="this.loading" element-loading-text="加载中">
-			<div class="echartsBox staticStyle">
-        <div id="bar" class="echartsDiv"></div>
+			<el-row class="mb5">
+        <el-form>
+          <el-form-item label="确认时间">
+            <el-date-picker v-model="dataRange" @change="getAllData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" size="small"></el-date-picker>
+          </el-form-item>
+        </el-form>
+      </el-row>
+      <div class="echartsBox staticStyle" style="relative">
+        <div id="bar" class="echartsBoxLeft"></div>
+        <div id="pie" class="echartsBoxRight"></div>
       </div>
       <div class="inform-content">
         <div class="table_container">
-          <el-table border id="table" class="tableStyle" :data="this.tjfxdata" :height="tableheight" :row-style="rowStyle">
-            <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-            <el-table-column prop="cplxmc" label="产品类型" show-overflow-tooltip min-width="28%" align="center">
+          <el-table id="table" border class="tableStyle" :height="tableheight" :data="tjfxtabledata" :row-style="rowStyle">
+            <el-table-column prop="qrztmc" label="是否进行信息确认" show-overflow-tooltip min-width="30%" align="center">
               <template slot-scope="scope">
-                <a v-text="scope.row.cplxmc" @click="toCompanyList(scope.row)"></a>
+                <a v-text="scope.row.qrztmc" @click="toCompanyList(scope.row)"></a>
               </template>
             </el-table-column>
-            <el-table-column prop="czqysl" label="参展企业数量" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
-            <el-table-column prop="bwzwgssl" label="标准展位数量" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
-            <el-table-column prop="gdzwmj" label="光地展位面积m²" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
+            <el-table-column prop="qrztsl" label="企业数量" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
+            <el-table-column prop="qrztpercent" label="比重" show-overflow-tooltip min-width="30%" align="center">
+              <template slot-scope="scope">
+                <span v-text="scope.row.qrztpercent+'%'"></span>
+              </template>
+            </el-table-column>
           </el-table>
-          <el-row type="flex" justify="end" class="mt10 mb10">
-            <el-col :span="15">
-              <el-pagination layout="total" :total=parseInt(total)></el-pagination>
-            </el-col>
-            <div class="buttonExport">
-              <el-button type="success" icon="el-icon-download" size="small" @click="exportClick">导出</el-button>
-            </div>
-          </el-row>
         </div>
       </div>
 		</div>
@@ -35,68 +37,94 @@
 let echarts = require('echarts/lib/echarts')
 // 引入柱状图组件
 require('echarts/lib/chart/bar')
+require('echarts/lib/chart/pie')
 // 引入提示框和title组件
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
+require('echarts/lib/component/legend')
 export default {
   data() {
     return {
       //当前登陆用户
       currentUser: this.CONSTANT.currentUser,
-      //页面获取的uuid
-			uuid: "",
-			//搜索表单
-			searchForm: {
-				dateStart: "",
-				dateEnd: "",
-			},
-			//统计分析的数据
-			tjfxdata: [],
-			tjfxname: [],
-			tjfxczqysl: [],
-			tjfxgdzwmj: [],
-			tjfxbwzwgssl: [],
-			tabledata: [],
+      dataRange: [],
+			date_start: '',
+			date_end: '',
+			//tabledata
+			tjfxtabledata: [],
+			//柱图
+			name_X: [],
+			value_Y: [],
+			//饼图
+			pieTitle: '是否信息确认企业数量比例图',
+			pieDataz: [],
+			//总记录数
 			total: 0,
-			//表高度变量
-			tableheight: 331,
 			//显示加载中样
 			loading: false,
-			labelPosition: 'right',
+			//表高度变量
+			tableheight: 291
     };
   },
   created: function() {
-    this.getCPLX();
+    this.getAllData();
   },
   methods: {
-    //获取统计分析图表数据
-		getCPLX: function () {
-      var params = {};
+    //获取数据
+		getAllData: function () {
       let vm = this;
-			vm.$axios.post('/qyzwyx/dofindtjfx', params).then(function (res) {
-				this.tjfxdata = res.data.result;
-				this.total = res.data.result.length;
-				for (var i = 0; i < this.tjfxdata.length; i++) {
-					this.tjfxname.push(this.tjfxdata[i].cplxmc)
-					this.tjfxczqysl.push(this.tjfxdata[i].czqysl)
-					this.tjfxgdzwmj.push(this.tjfxdata[i].gdzwmj)
-					this.tjfxbwzwgssl.push(this.tjfxdata[i].bwzwgssl)
+			this.date_start = '';
+			this.date_end = '';
+			var params = {};
+			if (this.dataRange != null && this.dataRange.length > 0) {
+				//往详情页传的参数
+				this.date_start = this.dataRange[0];
+				this.date_end = this.dataRange[1];
+				//查询用参数
+				var date = new Date(this.dataRange[0]);
+				var date1 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+				var date2 = new Date(this.dataRange[1]);
+				var date3 = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() + ' ' + date2.getHours() + ':' + date2.getMinutes() + ':' + date2.getSeconds();
+				var params = {
+					qrsj_start: date1,
+					qrsj_end: date3
+				};
+			}
+			vm.$axios.post('/qyjbxx/ifConfirmedTjfx', params).then(function (res) {
+				this.name_X = [];
+				this.value_Y = [];
+				this.pieDataz = [];
+				this.tjfxtabledata = res.data.result;
+				for (var i in this.tjfxtabledata) {
+					//柱状图数据
+					this.name_X.push(this.tjfxtabledata[i].qrztmc);
+					this.value_Y.push(this.tjfxtabledata[i].qrztsl)
+					//饼状图数据
+					var arr1 = {
+						name: this.tjfxtabledata[i].qrztmc,
+						value: this.tjfxtabledata[i].qrztsl
+					}
+					this.pieDataz.push(arr1);
 				}
+				//画柱状图
+				this.barChart();
+				//画饼图
+				this.pieChart();
 				this.loading = false;
-				this.echarts1();
 			}.bind(this), function (error) {
 				console.log(error)
 			})
+
 		},
 
-		// 中央下部按产品分类柱状图
-		echarts1: function () {
-			var myBarChart = echarts.init(document.getElementById('bar'));
-			var option = {
+		// 左侧柱状图
+		barChart: function () {
+			var myChart = echarts.init(document.getElementById('bar'));
+			var optionBar = {
 				title: {
-					text: '按产品类型统计展会报名情况',
+					text: '按是否信息确认统计企业数量',
 					x: 'center',
-					y: '-3',
+					y: '-3'
 				},
 				tooltip: {
 					trigger: 'axis',
@@ -104,125 +132,127 @@ export default {
 						type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
 					}
 				},
-				legend: {
-					orient: 'horizontal',
-					top: 20,
-					right: 80,
-					iGap: 16,
-					iWidth: 18,
-					align: 'left',
-					iGap: 8,
-				},
-				color: ['#C1232B', '#B5C334', '#FCCE10'],
 				grid: {
-					top: '50',
+					top: '20',
 					bottom: '10',
-					left: '15',
-					right: '20',
+					left: '20',
+					right: '50',
 					containLabel: true
 				},
 				xAxis: [
 					{
+						name: '数量',
+						type: 'value',
+						minInterval: 1,
+						splitLine: {
+							show: false
+						},
+					}
+				],
+				yAxis: [
+					{
 						type: 'category',
-						data: this.tjfxname,
+						data: this.name_X,
 						axisLabel: {
 							interval: 0,
-							rotate: 15,
 						},
 					}
 				],
 
-				yAxis: [
+				series: [
 					{
-						type: 'value',
-						name: '企业',
-						position: 'left',
-						offset: 28,
-						minInterval: 1,
-						axisLine: {
-							lineStyle: {
-								color: '#C1232B'
+						name: '数量',
+						type: 'bar',
+						barWidth: '100%',
+						stack: '面积',
+						barWidth: '45',
+						//柱状图
+						data: this.value_Y,
+						smooth: true,
+						itemStyle: {
+							normal: {
+								barBorderRadius: [5, 5, 0, 0],
+								color: function (params) {
+									// build a color map as your need.
+									var colorList = [
+										'#C1232B', '#B5C334'
+									];
+									return colorList[params.dataIndex]
+								},
+								opacity: 0.85
 							}
-						},
-						splitLine: {
-							show: false
 						}
-					},
+					}
+
+				]
+			};
+			myChart.setOption(optionBar);
+		},
+
+		// 右侧玫瑰图
+		pieChart: function () {
+			var myChart = echarts.init(document.getElementById('pie'));
+			var optionPie = {
+				title: {
+					text: this.pieTitle,
+					left: 'center',
+					top: -3,
+				},
+				tooltip: {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					x: '68%',
+					y: 'center',
+					itemGap: 16,
+					itemWidth: 18,
+					data: this.pieDataz.name,
+					align: 'right',
+					itemGap: 8,
+				},
+				series: [
 					{
-						type: 'value',
-						name: '展位',
-						position: 'left',
-						minInterval: 1,//设置为整数的刻度值
-						axisLine: {
-							lineStyle: {
-								color: '#B5C334'
-							}
+						name: this.pieTitle,
+						type: 'pie',
+						radius: '46.5%',
+						center: ['35%', '50%'],
+						data: this.pieDataz,
+						label: {
+							show: true,
+							formatter: '{d}%',
 						},
-						splitLine: {
-							show: false
-						}
-					},
-					{
-						type: 'value',
-						name: '面积m²',
-						axisLine: {
-							lineStyle: {
-								color: '#FCCE10'
-							}
+						labelLine: {
+							show: true,
+							length: 5
 						},
-						splitLine: {
-							show: false
+						animationType: 'scale',
+						animationEasing: 'elasticOut',
+						animationDelay: function (idx) {
+							return Math.random() * 200;
+						},
+						itemStyle: {
+							normal: {
+								opacity: 0.85
+							}
 						}
 					}
 				],
-				series: [
-					{
-						name: '参展企业数量',
-						type: 'bar',
-						data: this.tjfxczqysl,
-						itemStyle: {
-							normal: {
-								barBorderRadius: [5, 5, 0, 0],
-								opacity: 0.85
-							}
-						},
-					},
-					{
-						name: '标准展位数量',
-						type: 'bar',
-						yAxisIndex: 1,
-						data: this.tjfxbwzwgssl,
-						itemStyle: {
-							normal: {
-								barBorderRadius: [5, 5, 0, 0],
-								opacity: 0.85
-							}
-						},
-					},
-					{
-						name: '光地展位面积m²',
-						type: 'bar',
-						yAxisIndex: 2,
-						data: this.tjfxgdzwmj,
-						itemStyle: {
-							normal: {
-								barBorderRadius: [5, 5, 0, 0],
-								opacity: 0.85
-							}
-						},
-					}
-				]
+				color: ['#C1232B', '#B5C334']
 			};
-			myBarChart.setOption(option);
-		},
+
+			myChart.setOption(optionPie);
+    },
+    
+    //导出EXCEL
     exportClick: function () {
-			window.open(window.config.domain + "/qyzwyx/doExportTjfxByCplx");
-		},
+			window.open(window.config.domain + "/qyzwyx/doExportTjfxByZwmjfw");
+    },
+    
+    //跳转到企业列表
 		toCompanyList: function (val) {
-			var params = {
-				cplx: val.cplx
-			}
-			loadDivParam("statistical/exhprediction_product", params);
+      this.$router.push({name:"statisConfirmList", query: {qrsj_start: this.date_start, qrsj_end: this.date_end, qrzt: val.qrzt}});
 		}
   }
 };
