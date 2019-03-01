@@ -237,7 +237,14 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'exhpredictionApprove',
-              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionApprove'], resolve)
+              meta: {keepAlive: true},
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionApproveList'], resolve)
+            },
+            {
+              path: '/prediction/exhprediction_approve/detail',
+              name: 'exhpredictionApproveDetail',
+              meta: {auth: true, title: "展会报名审核详情", keepAlive: false},
+              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionDetail'], resolve)
             },
           ]
         },
