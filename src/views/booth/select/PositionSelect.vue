@@ -84,13 +84,15 @@ export default {
   },
   data() {
     return {
+      //上个路由页面传过来的数据
+      query: this.$route.query,
       //当前展位数据
       currentBusinessData: {},
       currentUuid: "",
       zguuid: "",
       zgtableData: null,
       yxzwData: [],
-      blnbzwsj: "2018-12-27 9:25:34", //显示内部展位时间
+      blnbzwsj: window.config.booth.showHideTime, //显示内部展位时间
       now: "",
       lastEl: null,
       lastEvent: null,
@@ -141,7 +143,7 @@ export default {
     this.initZg();
     setInterval(() => {
       this.refresh();
-    }, 300000);
+    }, window.config.booth.anontRefreshTime);
   },
   methods: {
     //lxy 0225 开始
@@ -152,9 +154,9 @@ export default {
       me.$axios.post("/zgjbxx/doSearchDataListByVO").then(
         function(res) {
           this.zgtableData = res.data.result;
-          if(me.$route.query.uuid){
-            this.getStage(this.$route.query.uuid);
-            this.$route.query.uuid=null
+          if(me.query.uuid){
+            this.getStage(this.query.uuid);
+            this.query=null
             return
           }
           if (this.zgtableData.length > 0) {
