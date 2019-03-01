@@ -53,7 +53,7 @@ export default {
         picLyanzhengma:'',
         checkCode:'',
         // 校验标识符
-        //注册校验标识
+        // 注册校验标识
         mobileAlertFlag: false,
         // messageCodeAlertFlag: false,
         // password1TipFlag: false,

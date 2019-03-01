@@ -123,8 +123,8 @@ export default {
           username: vm.GLYusername,
           password: vm.GLYpassword,
           loginType: vm.GLYloginType,
-          // usertype: "CHN",
-          // deptid: "ZSYH"
+          usertype: "EHN",
+          deptid: "ZSYH"
         }
         vm.$axios.post('/login', params).then(function (res) {
           if (res.data.code == '00000000') {          
