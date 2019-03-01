@@ -14,37 +14,15 @@
               <el-form>
                 <el-col :span="12" class="btnEditDelete">
                   <el-form-item align="left">
-                    <el-button
-                      v-if="hasPermission('venue/trader:add')"
-                      type="success"
-                      icon="el-icon-plus"
-                      size="small"
-                      @click="addClick"
-                    >新增</el-button>
-                    <el-button
-                      v-if="hasPermission('venue/trader:delete')"
-                      type="danger"
-                      icon="el-icon-delete"
-                      size="small"
-                      @click="removeSelection"
-                    >删除</el-button>
+                    <el-button v-if="hasPermission('venue/trader:add')" type="success" icon="el-icon-plus" size="small" @click="addClick">新增</el-button>
+                    <el-button v-if="hasPermission('venue/trader:delete')" type="danger" icon="el-icon-delete" size="small" @click="removeSelection">删除</el-button>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12"></el-col>
                 <el-col :span="12" class="btnSearchPlus">
                   <el-form-item>
-                    <el-button
-                      type="primary"
-                      icon="el-icon-search"
-                      size="small"
-                      @click="searchClick"
-                    >查询</el-button>
-                    <el-button
-                      type="clear"
-                      icon="el-icon-refresh"
-                      size="small"
-                      @click="clearClick"
-                    >重置</el-button>
+                    <el-button type="primary"  icon="el-icon-search" size="small" @click="searchClick">查询</el-button>
+                    <el-button type="clear" icon="el-icon-refresh" size="small" @click="clearClick">重置</el-button>
                   </el-form-item>
                 </el-col>
               </el-form>
@@ -52,53 +30,17 @@
           </el-form>
         </el-row>
         <div class="table_container">
-          <el-table
-            border
-            id="table"
-            :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-            @selection-change="selectionChange"
-            class="tableStyle"
-            :height="tableheight"
-            :row-style="rowStyle"
-          >
+          <el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange" class="tableStyle" :height="tableheight"  :row-style="rowStyle"  >
             <el-table-column type="selection" width="35"></el-table-column>
-            <el-table-column
-              type="index"
-              show-overflow-tooltip
-              label="序号"
-              width="65"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="zgmc"
-              show-overflow-tooltip
-              label="展馆名称"
-              min-width="15%"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="zgtpStr"
-              show-overflow-tooltip
-              label="展馆图片"
-              min-width="12%"
-              align="center"
-            >
+            <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
+            <el-table-column prop="zgmc" show-overflow-tooltip label="展馆名称" min-width="15%" align="center"></el-table-column>
+            <el-table-column prop="zgtpStr" show-overflow-tooltip label="展馆图片" min-width="12%" align="center">
               <!-- 图片加载 -->
               <template slot-scope="scope" v-if="scope.row.zgtpStr">
-                <img
-                  :src="scope.row.zgtpStr"
-                  :alt="scope.row.zgtpStr"
-                  @click="imgPreview(scope.row.zgtpStr)"
-                  style="max-height: 40px;max-width: 130px"
-                >
+                <img :src="scope.row.zgtpStr" :alt="scope.row.zgtpStr" @click="imgPreview(scope.row.zgtpStr)" style="max-height: 40px;max-width: 130px">
               </template>
             </el-table-column>
-            <el-table-column
-              label="操作"
-              width="65"
-              align="center"
-              v-if="hasPermission('venue/trader:edit')"
-            >
+            <el-table-column label="操作" width="65" align="center" v-if="hasPermission('venue/trader:edit')">
               <template slot-scope="scope">
                 <el-button type="text" @click="editClick(scope.row,scope.$index)">编辑</el-button>
               </template>
@@ -111,31 +53,13 @@
         </div>
 
         <!-- 新增上传-->
-        <el-dialog
-          :title="dialogTitle"
-          :visible.sync="editFormVisible"
-          @close="closeDialog(createForm)"
-          :close-on-click-modal="false"
-        >
-          <el-form
-            :model="createForm"
-            label-width="150px"
-            :rules="createFormRules"
-            ref="createForm"
-          >
+        <el-dialog :title="dialogTitle" :visible.sync="editFormVisible" @close="closeDialog(createForm)" :close-on-click-modal="false">
+          <el-form :model="createForm" label-width="150px" :rules="createFormRules" ref="createForm">
             <el-row>
               <el-col :span="1">&nbsp;</el-col>
               <el-col :span="12">
                 <el-form-item label="展馆名称" prop="name">
-                  <el-input
-                    maxlength="25"
-                    style="width:400px;"
-                    v-model="createForm.name"
-                    placeholder="请填写展馆名称..."
-                    size="small"
-                    auto-complete="off"
-                    clearable
-                  ></el-input>
+                  <el-input maxlength="25" style="width:400px;" v-model="createForm.name" placeholder="请输入展馆名称" size="small" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -150,14 +74,7 @@
 													<template v-if="createForm.photoName">已选择：{{createForm.photoName}}</template>
 													<template v-else>未选择图片</template>
                   </span>-->
-                  <input
-                    ref="localImageInput"
-                    type="file"
-                    name="image"
-                    accept="image/*"
-                    style="display:none"
-                    @change="handlerSelectedPhoto"
-                  >
+                  <input ref="localImageInput" type="file" name="image" accept="image/*" style="display:none" @change="handlerSelectedPhoto">
                 </el-form-item>
               </el-col>
             </el-row>
@@ -182,29 +99,13 @@
             <!-- </Form> -->
           </el-form>
           <el-row class="buttonSubmit">
-            <el-button
-              type="clear"
-              icon="el-icon-close"
-              size="small"
-              class="btn_submit"
-              @click="closeDialog(createForm)"
-            >取消</el-button>
-            <el-button
-              type="success"
-              icon="el-icon-check"
-              size="small"
-              @click="handlerCreateModalOK"
-            >保存</el-button>
+            <el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog(createForm)">取消</el-button>
+            <el-button type="success" icon="el-icon-check" size="small" @click="handlerCreateModalOK">保存</el-button>
           </el-row>
         </el-dialog>
 
         <!--图片预览-->
-        <el-dialog
-          id="previewImgDialog"
-          :visible.sync="showPicVisible"
-          :close-on-click-modal="false"
-          size="tiny"
-        >
+        <el-dialog id="previewImgDialog" :visible.sync="showPicVisible" :close-on-click-modal="false" size="tiny">
           <img :src="previewImg" width="100%" class="mt15">
         </el-dialog>
       </div>
@@ -328,9 +229,8 @@ export default {
     //表格查询事件
     searchClick: function(type) {
       //按钮事件的选择
-      if (type == "page") {
-        this.tableData = [];
-      } else {
+      this.tableData = [];
+      if (type != "page") {
         this.currentPage = 1;
       }
       var _self = this;
@@ -688,5 +588,5 @@ export default {
       return stageData;
     }
   }
-}
+};
 </script>
