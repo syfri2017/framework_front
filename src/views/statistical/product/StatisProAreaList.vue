@@ -1,229 +1,200 @@
 <template>
   <div id="statisAreaList">
     <div id="tableView" v-loading="this.loading" element-loading-text="加载中">
-			<div class="echartsBox staticStyle">
-        <div id="bar" class="echartsDiv"></div>
-      </div>
-      <div class="inform-content">
-        <div class="table_container">
-          <el-table border id="table" class="tableStyle" :data="this.tjfxdata" :height="tableheight" :row-style="rowStyle">
-            <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-            <el-table-column prop="cplxmc" label="产品类型" show-overflow-tooltip min-width="28%" align="center">
-              <template slot-scope="scope">
-                <a v-text="scope.row.cplxmc" @click="toCompanyList(scope.row)"></a>
-              </template>
-            </el-table-column>
-            <el-table-column prop="czqysl" label="参展企业数量" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
-            <el-table-column prop="bwzwgssl" label="标准展位数量" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
-            <el-table-column prop="gdzwmj" label="光地展位面积m²" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
-          </el-table>
-          <el-row type="flex" justify="end" class="mt10 mb10">
-            <el-col :span="15">
-              <el-pagination layout="total" :total=parseInt(total)></el-pagination>
+			<el-row>
+        <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
+          <el-row>
+            <el-col :span="1">&nbsp;</el-col>
+            <el-col :span="9" class="searchInline">
+              <label class="el-form-item__label searchLabel">产品类型</label>
+              <el-select size="small" v-model="searchForm.cplx" placeholder="全部" class="searchSelect" clearable>
+                <el-option v-for="item in cplxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+              </el-select>
             </el-col>
-            <div class="buttonExport">
-              <el-button type="success" icon="el-icon-download" size="small" @click="exportClick">导出</el-button>
-            </div>
+            <el-col :span="2">&nbsp;</el-col>
+            <el-col :span="9" class="searchInline">
+              <label class="el-form-item__label searchLabel">光地展位面积</label>
+              <el-select size="small" v-model="searchForm.zwmjfw" placeholder="全部" class="searchSelect" clearable>
+                <el-option v-for="item in zwmjfwData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+              </el-select>
+            </el-col>
+          </el-row>
+          <div>
+            <el-form>
+              <el-col :span="12" class="btnEditDelete">
+                <el-button type="success" icon="el-icon-download" size="small" @click="exportClick">导出</el-button>
+              </el-col>
+              <el-col :span="12" class="btnSearchPlus">
+                <el-button type="primary" icon="el-icon-search" size="small" @click="searchClick">查询</el-button>
+                <el-button type="clear" icon="el-icon-refresh" size="small" @click="clearClick">重置</el-button>
+              </el-col>
+            </el-form>
+          </div>
+        </el-form>
+        </el-row>
+        <div class="table_container" id="singleRow">
+          <el-table id="table" border class="tableStyle" :height="tableheight" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" :row-style="rowStyle">
+            <el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
+            <el-table-column prop="zwgsmc" label="中文公司名称" show-overflow-tooltip min-width="20%" align="center"></el-table-column>
+            <el-table-column prop="ywgsmc" label="英文公司名称" show-overflow-tooltip min-width="20%" align="center"></el-table-column>
+            <el-table-column prop="lxr" label="联系人" show-overflow-tooltip min-width="8%" align="center"></el-table-column>
+            <el-table-column prop="lxrsj" label="联系人手机" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+            <!-- <el-table-column prop="codeName" label="产品类型" show-overflow-tooltip min-width="10%" align="center"></el-table-column> -->
+            <el-table-column prop="bzzwgs" label="标准展位(个)" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+            <el-table-column prop="sngdzw" label="室内光地展位(m²)" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+            <el-table-column prop="swgdzw" label="室外光地展位(m²)" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+          </el-table>
+
+          <!--翻页组件-->
+          <el-row type="flex" justify="end">
+            <paginator></paginator>
           </el-row>
         </div>
       </div>
+      <!--导出界面-->
+      <el-dialog title="选择产品类型" :visible.sync="chooseCplxVisible" @close="closeDialog" width="35%" :close-on-click-modal="false">
+        <div id="selectCplx">
+          <el-row>
+            <el-col :span="7">&nbsp;</el-col>
+            <el-col :span="10">
+              <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+              <el-checkbox-group v-model="checkList" @change="handleCheckedCitiesChange">
+                <el-checkbox v-for="item in cplxData" :label="item.codeValue" :key="item.codeValue">{{item.codeName}}</el-checkbox>
+              </el-checkbox-group>
+            </el-col>
+          </el-row>
+          <el-row class="buttonSubmit">
+            <el-button type="success" icon="el-icon-download" size="small" @click="exportExs">导出Excel至本地</el-button>
+          </el-row>
+        </div>
+      </el-dialog>
 		</div>
   </div>
 </template>
 <script>
-// 引入基本模板
-let echarts = require('echarts/lib/echarts')
-// 引入柱状图组件
-require('echarts/lib/chart/bar')
-// 引入提示框和title组件
-require('echarts/lib/component/tooltip')
-require('echarts/lib/component/title')
+//引入翻页 paginator
+import paginator from '@/components/paginator'
 export default {
+  components: {
+    paginator
+  },
   data() {
     return {
       //当前登陆用户
       currentUser: this.CONSTANT.currentUser,
-      //页面获取的uuid
-			uuid: "",
-			//搜索表单
-			searchForm: {
-				dateStart: "",
-				dateEnd: "",
-			},
-			//统计分析的数据
-			tjfxdata: [],
-			tjfxname: [],
-			tjfxczqysl: [],
-			tjfxgdzwmj: [],
-			tjfxbwzwgssl: [],
-			tabledata: [],
-			total: 0,
-			//表高度变量
-			tableheight: 331,
-			//显示加载中样
-			loading: false,
-			labelPosition: 'right',
+      //搜索表单
+      searchForm: {
+          cplx: '',
+          zwmjfw: ''
+      },
+      tableData: [],//列表信息
+      //tablegaodu
+      tableheight: this.CONSTANT.tableheigh10,
+      cplxData: [],//产品类型大类
+      zwmjfwData: [],
+      allCplxCode: [],
+      //显示加载中样
+      loading: false,
+      //当前页
+      currentPage: 1,
+      //分页大小
+      pageSize: 10,
+      //总记录数
+      total: 0,
+      chooseCplxVisible: false,//选择产品类型弹出页
+      checkList: [],//选中的产品类型
+      isIndeterminate: false,//全选按钮
+      checkAll: false
     };
   },
   created: function() {
-    this.getCPLX();
+    this.searchForm.cplx = this.$route.query.cplx;
+    this.searchForm.zwmjfw = this.$route.query.zwmjfw;
+    //产品类型下拉框
+    this.getCplxData();
+    this.getZwmjfwData();
+    this.searchClick();
   },
   methods: {
-    //获取统计分析图表数据
-		getCPLX: function () {
-      var params = {};
+    //产品类型下拉框
+    getCplxData: function () {
       let vm = this;
-			vm.$axios.post('/qyzwyx/dofindtjfx', params).then(function (res) {
-				this.tjfxdata = res.data.result;
-				this.total = res.data.result.length;
-				for (var i = 0; i < this.tjfxdata.length; i++) {
-					this.tjfxname.push(this.tjfxdata[i].cplxmc)
-					this.tjfxczqysl.push(this.tjfxdata[i].czqysl)
-					this.tjfxgdzwmj.push(this.tjfxdata[i].gdzwmj)
-					this.tjfxbwzwgssl.push(this.tjfxdata[i].bwzwgssl)
-				}
-				this.loading = false;
-				this.echarts1();
-			}.bind(this), function (error) {
-				console.log(error)
-			})
-		},
-
-		// 中央下部按产品分类柱状图
-		echarts1: function () {
-			var myBarChart = echarts.init(document.getElementById('bar'));
-			var option = {
-				title: {
-					text: '按产品类型统计展会报名情况',
-					x: 'center',
-					y: '-3',
-				},
-				tooltip: {
-					trigger: 'axis',
-					axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-						type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-					}
-				},
-				legend: {
-					orient: 'horizontal',
-					top: 20,
-					right: 80,
-					iGap: 16,
-					iWidth: 18,
-					align: 'left',
-					iGap: 8,
-				},
-				color: ['#C1232B', '#B5C334', '#FCCE10'],
-				grid: {
-					top: '50',
-					bottom: '10',
-					left: '15',
-					right: '20',
-					containLabel: true
-				},
-				xAxis: [
-					{
-						type: 'category',
-						data: this.tjfxname,
-						axisLabel: {
-							interval: 0,
-							rotate: 15,
-						},
-					}
-				],
-
-				yAxis: [
-					{
-						type: 'value',
-						name: '企业',
-						position: 'left',
-						offset: 28,
-						minInterval: 1,
-						axisLine: {
-							lineStyle: {
-								color: '#C1232B'
-							}
-						},
-						splitLine: {
-							show: false
-						}
-					},
-					{
-						type: 'value',
-						name: '展位',
-						position: 'left',
-						minInterval: 1,//设置为整数的刻度值
-						axisLine: {
-							lineStyle: {
-								color: '#B5C334'
-							}
-						},
-						splitLine: {
-							show: false
-						}
-					},
-					{
-						type: 'value',
-						name: '面积m²',
-						axisLine: {
-							lineStyle: {
-								color: '#FCCE10'
-							}
-						},
-						splitLine: {
-							show: false
-						}
-					}
-				],
-				series: [
-					{
-						name: '参展企业数量',
-						type: 'bar',
-						data: this.tjfxczqysl,
-						itemStyle: {
-							normal: {
-								barBorderRadius: [5, 5, 0, 0],
-								opacity: 0.85
-							}
-						},
-					},
-					{
-						name: '标准展位数量',
-						type: 'bar',
-						yAxisIndex: 1,
-						data: this.tjfxbwzwgssl,
-						itemStyle: {
-							normal: {
-								barBorderRadius: [5, 5, 0, 0],
-								opacity: 0.85
-							}
-						},
-					},
-					{
-						name: '光地展位面积m²',
-						type: 'bar',
-						yAxisIndex: 2,
-						data: this.tjfxgdzwmj,
-						itemStyle: {
-							normal: {
-								barBorderRadius: [5, 5, 0, 0],
-								opacity: 0.85
-							}
-						},
-					}
-				]
-			};
-			myBarChart.setOption(option);
-		},
+      vm.$axios.get('/codelist/getCplxSelect/CPLX').then(function (res) {
+        this.cplxData = res.data.result;
+        for (var i in this.cplxData) {
+          this.allCplxCode.push(this.cplxData[i].codeValue)
+        }
+      }.bind(this), function (error) {
+        console.log(error);
+      })
+    },
+    //展位面积范围下拉框
+    getZwmjfwData: function () {
+      let vm = this;
+      vm.$axios.get('/codelist/getCodetype/ZWMJFW').then(function (res) {
+          this.zwmjfwData = res.data.result;
+      }.bind(this), function (error) {
+          console.log(error);
+      })
+    },
+    //表格查询事件
+    searchClick: function (type) {
+      let vm = this;
+      vm.tableData = [];
+      if (type != 'page') {
+        vm.currentPage = 1;   
+      }
+      vm.loading = true;//表格重新加载
+      var params = {
+        cplx: vm.searchForm.cplx,
+        zwmjfw: vm.searchForm.zwmjfw,
+        pageSize: vm.pageSize,
+        pageNum: vm.currentPage
+      }
+      vm.$axios.post('/qyzwyx/doFindQyzwyxByCplx', params).then(function (res) {
+        var tableTemp = new Array((vm.currentPage - 1) * vm.pageSize);
+        vm.tableData = tableTemp.concat(res.data.result.list);
+        vm.total = res.data.result.total;
+        vm.loading = false;
+      }.bind(this), function (error) {
+          console.log(error)
+      })
+    },
+    //清空查询条件
+    clearClick: function () {
+      this.searchForm.cplx = this.$route.query.cplx;
+      this.searchForm.zwmjfw = this.$route.query.zwmjfw;
+      this.searchClick('reset');
+    },
+    //点击导出按钮，显示弹出页
     exportClick: function () {
-			window.open(window.config.domain + "/qyzwyx/doExportTjfxByCplx");
-		},
-		toCompanyList: function (val) {
-			var params = {
-				cplx: val.cplx
-			}
-			loadDivParam("statistical/exhprediction_product", params);
-		}
+      this.chooseCplxVisible = true;
+    },
+    //全选按钮change事件
+    handleCheckAllChange(event) {
+      this.checkList = event ? this.allCplxCode : [];
+      this.isIndeterminate = false;
+    },
+    //产品类型选择change事件
+    handleCheckedCitiesChange(value) {
+      let checkedCount = value.length;
+      this.checkAll = checkedCount === this.allCplxCode.length;
+      this.isIndeterminate = checkedCount > 0 && checkedCount < this.allCplxCode.length;
+    },
+    //点击导出至本地按钮
+    exportExs: function () {
+      if (this.checkList.length == 0) {
+        this.$message.error('至少选择一个产品类型');
+      } else {
+        window.open(window.config.domain + "/qyzwyx/doExportQyzwyxByCplx/" + this.checkList);
+      }
+    },
+    //关闭弹出页
+    closeDialog: function () {
+      this.checkList = [];
+      this.isIndeterminate = false;
+      this.checkAll = false;
+    }
   }
 };
 </script>

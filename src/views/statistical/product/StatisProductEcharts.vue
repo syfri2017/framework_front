@@ -219,10 +219,7 @@ export default {
 			window.open(window.config.domain + "/qyzwyx/doExportTjfxByCplx");
 		},
 		toCompanyList: function (val) {
-			var params = {
-				cplx: val.cplx
-			}
-			loadDivParam("statistical/exhprediction_product", params);
+      this.$router.push({name:"statislProductList", query: {cplx: val.cplx}});
 		}
   }
 };
