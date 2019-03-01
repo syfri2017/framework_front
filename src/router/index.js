@@ -15,9 +15,9 @@ import Position from '@/views/booth/position/Position'
 import PositionDesign from '@/views/booth/design/PositionDesign'
 import PositionSelect from '@/views/booth/select/PositionSelect'
 import PositionType from '@/views/booth/type/PositionType'
-import StatisticalProduct from '@/views/statistical/product/StatisticalProduct'
-import StatisticalArea from '@/views/statistical/area/StatisticalArea'
-import StatisticalConfirm from '@/views/statistical/confirm/StatisticalConfirm'
+import StatisProduct from '@/views/statistical/product/StatisProduct'
+import StatisArea from '@/views/statistical/area/StatisArea'
+import StatisConfirm from '@/views/statistical/confirm/StatisConfirm'
 import BoothLog from '@/views/log/booth/BoothLog'
 import SmsLog from '@/views/log/sms/SmsLog'
 import User from '@/views/system/user/User'
@@ -307,12 +307,12 @@ const router = new VueRouter({
         {
           path: '/statistical/statistical_product',
           meta: {auth: true, title: "按产品类型统计"},
-          component: StatisticalProduct,
+          component: StatisProduct,
           children: [
             {
               path: '/',
               name: 'statisticalProduct',
-              component: resolve => require(['@/views/statistical/product/StatisticalProduct'], resolve)
+              component: resolve => require(['@/views/statistical/product/StatisProductList'], resolve)
             },
           ]
         },
@@ -320,12 +320,12 @@ const router = new VueRouter({
         {
           path: '/statistical/statistical_area',
           meta: {auth: true, title: "按光地展位面积统计"},
-          component: StatisticalArea,
+          component: StatisArea,
           children: [
             {
               path: '/',
-              name: 'statisticalArea',
-              component: resolve => require(['@/views/statistical/area/StatisticalArea'], resolve)
+              name: 'statisArea',
+              component: resolve => require(['@/views/statistical/area/StatisAreaList'], resolve)
             },
           ]
         },
@@ -333,12 +333,12 @@ const router = new VueRouter({
         {
           path: '/statistical/statistical_confirm',
           meta: {auth: true, title: "按确认信息统计"},
-          component: StatisticalConfirm,
+          component: StatisConfirm,
           children: [
             {
               path: '/',
-              name: 'statisticalConfirm',
-              component: resolve => require(['@/views/statistical/confirm/StatisticalConfirm'], resolve)
+              name: 'statisConfirm',
+              component: resolve => require(['@/views/statistical/confirm/StatisConfirmList'], resolve)
             },
           ]
         },
