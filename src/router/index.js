@@ -12,6 +12,7 @@ import Exhibitor from '@/views/prediction/exhibitor/Exhibitor'
 import VenuePlan from '@/views/venue/plan/Plan'
 import VenueTrader from '@/views/venue/trader/Trader'
 import Position from '@/views/booth/position/Position'
+import PositionAnalysis from '@/views/booth/analysis/PositionAnalysis'
 import PositionDesign from '@/views/booth/design/PositionDesign'
 import PositionType from '@/views/booth/type/PositionType'
 import StatisticalProduct from '@/views/statistical/product/StatisticalProduct'
@@ -253,11 +254,23 @@ const router = new VueRouter({
             },
           ]
         },
+        //----------展位管理-展位分析----------
+        {
+          path: '/booth/analysis',
+          meta: {auth: true, title: "展位分析"},
+          component: PositionAnalysis,
+          children: [
+            {
+              path: '/',
+              name: 'positionAnalysis',
+              component: resolve => require(['@/views/booth/analysis/PositionAnalysis'], resolve)
+            },
+          ]
+        },
         //----------展位管理-展位设计----------
         {
           path: '/booth/positionDesign',
           meta: {auth: true, title: "展位设计"},
-          
           component: PositionDesign,
           children: [
             {
