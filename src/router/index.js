@@ -12,7 +12,6 @@ import Exhibitor from '@/views/prediction/exhibitor/Exhibitor'
 import VenuePlan from '@/views/venue/plan/Plan'
 import VenueTrader from '@/views/venue/trader/Trader'
 import Position from '@/views/booth/position/Position'
-import PositionAnalysis from '@/views/booth/analysis/PositionAnalysis'
 import PositionDesign from '@/views/booth/design/PositionDesign'
 import PositionSelect from '@/views/booth/select/PositionSelect'
 import PositionType from '@/views/booth/type/PositionType'
@@ -250,36 +249,32 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'position',
-              component: resolve => require(['@/views/booth/position/Position'], resolve)
+              meta: {keepAlive: true},
+              component: resolve => require(['@/views/booth/position/PositionList'], resolve)
+            },
+            {
+              path: '/booth/position/analysis',
+              name: 'positionAnalysis',
+              meta: {auth: true, title: "展位分析", keepAlive: false},
+              component: resolve => require(['@/views/booth/position/PositionAnalysis'], resolve)
             },
           ]
         },
-         //----------展位管理-展位选择----------
-      {
-        path: '/booth/select',
-        meta: {auth: true, title: "展位选择"},
-        component: PositionSelect,
-        children: [
-          {
-            path: '/',
-            name: 'positionSelect',
-            component: resolve => require(['@/views/booth/select/PositionSelect'], resolve)
-          },
-        ]
-      },
-        //----------展位管理-展位分析----------
+        
+        //----------展位管理-展位选择----------
         {
-          path: '/booth/analysis',
-          meta: {auth: true, title: "展位分析"},
-          component: PositionAnalysis,
+          path: '/booth/select',
+          meta: {auth: true, title: "展位选择"},
+          component: PositionSelect,
           children: [
             {
               path: '/',
-              name: 'positionAnalysis',
-              component: resolve => require(['@/views/booth/analysis/PositionAnalysis'], resolve)
+              name: 'positionSelect',
+              component: resolve => require(['@/views/booth/select/PositionSelect'], resolve)
             },
           ]
         },
+        
         //----------展位管理-展位设计----------
         {
           path: '/booth/positionDesign',
