@@ -1,5 +1,5 @@
 <template>
-  <div id="statisConfirmList">
+  <div id="statisProductList">
     <div id="tableView" v-loading="this.loading" element-loading-text="加载中">
 			<div class="echartsBox staticStyle">
         <div id="bar" class="echartsDiv"></div>
