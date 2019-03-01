@@ -235,7 +235,7 @@ export default {
       //表数据
       tableData: [],
       //table高度
-      tableheight: this.CONSTANT.tableheight10,
+      tableheight: 530,
       allRoles: [],
       //显示加载中样
       loading: false,
