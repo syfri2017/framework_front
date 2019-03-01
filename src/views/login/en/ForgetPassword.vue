@@ -12,7 +12,7 @@
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
             <el-input placeholder="Email" v-model="FPBmail" name="FPBmail" id="FPBmail" prefix-icon="iconfont icon-youxiang"></el-input>
-            <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFPBMailCode()" v-text=FPBmailCodeText :disabled="FPBmailBtnDisabled"></button>
+            <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFPBMailCode11()" v-text=FPBmailCodeText :disabled="FPBmailBtnDisabled"></button>
             </div>
             <div class="filed">
             <el-input placeholder="Mail Verification Code"  v-model="FPBmailCode" name="FPBmailCode" id="FPBmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
@@ -43,6 +43,8 @@ export default {
         FPDpassword2: "",
         FPDregisterData: "",
         FPBmailBtnDisabled: false,
+        //忘记密码
+        time: 60
     }
   },
   methods:{
@@ -57,7 +59,7 @@ export default {
                 return true;
             }
         },
-        getFPBMailCode() {
+        getFPBMailCode11() {
             let vm = this;
             this.FPBmailCode = "";
             if (this.FPBmailCheck()) {
@@ -95,6 +97,7 @@ export default {
             }
         },
         FPBIdentifyen() {
+          
             let vm = this;
             if (this.FPBmail == null || this.FPBmail == '') {
                 // 邮箱不能为空！
@@ -104,12 +107,13 @@ export default {
                 alert("The verification code can not be empty!")
             } else {
                 if (this.FPBmailCode == this.FPBmailCodeReal) {
-                    vm.$axios.get('/signin/findByUsername/' + this.FPBmail + "/static").then(function (res) {
-                      
-                        // this.changeForm('FPDFlag');
-                        this.FPDregisterData = res.data.result;
-                        this.FPDusername = this.FPDregisterData[0].username;
-                        // alert("请输入新密码！");
+                      //  console.log(2222222222222)
+                      vm.$axios.get('/signin/findByUsername/' + this.FPBmail + "/static").then(function (res) {
+                      // console.log(11111111)
+                      // this.changeForm('FPDFlag');
+                      this.FPDregisterData = res.data.result;
+                      this.FPDusername = this.FPDregisterData[0].username;
+                      // alert("请输入新密码！");
                     }.bind(this), function (error) {
                         console.log(error);
                     });

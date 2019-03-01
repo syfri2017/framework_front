@@ -39,6 +39,8 @@ export default {
         FUmailCodeText: "Get Verification Code",
         FUtimer: null,
         FUmailBtnDisabled: false,
+        //忘记用户名
+        time: 60
     }
   },
   methods:{
