@@ -130,6 +130,11 @@ export default {
       me.$axios.post("/zgjbxx/doSearchDataListByVO").then(
         function(res) {
           this.zgtableData = res.data.result;
+          if(me.$route.query.uuid){
+            this.getStage(this.$route.query.uuid);
+            this.$route.query.uuid=null
+            return
+          }
           if (this.zgtableData.length > 0) {
             this.getStage(this.zgtableData[0].uuid);
           }
