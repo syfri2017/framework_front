@@ -133,3 +133,28 @@ label {
   margin-bottom: 5px;
   font-weight: 700;
 }
+.staticStyle{
+  height:372px;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-top: 25px;
+  padding-bottom: 5px;
+}
+.echartsDiv{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.echartsBox {
+	background-color: #fff;
+	border: 5px solid #ccc;
+	padding: 0;
+  box-shadow: 2px 3px 5px #ccc;
+}
+.inform-content {
+  border: 5px solid #ccc;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  background-color: #fbfbfb;
+  box-shadow: 2px 3px 5px #ccc;
+}
