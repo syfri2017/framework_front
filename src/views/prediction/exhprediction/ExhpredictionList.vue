@@ -79,7 +79,12 @@
           </el-table-column>
         </el-table>
         <!--翻页组件-->
-        <paginator></paginator>
+        <el-row type="flex" justify="end">
+          <paginator></paginator>
+          <div class="buttonExport">
+            <el-button type="success" icon="el-icon-download" size="small" @click="exportClick">导出</el-button>
+          </div>
+        </el-row>
 			</div>
 
       <!-- 编辑-->
@@ -353,7 +358,7 @@ export default {
 
     //导出
     exportClick: function () {
-      window.open("/xfxhapi/qyjbxx/doExportJbxx/" + this.exportForm);
+      window.open(window.config.domain + "/qyjbxx/doExportJbxx/" + this.exportForm);
     }
   }
 };
