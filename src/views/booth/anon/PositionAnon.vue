@@ -116,6 +116,10 @@ export default {
   watch: {},
   created() {
     drawLib.initLocalSetting();
+    window.wrapHandshake.$on(
+      "evtBusinessShapeSelected",
+      this.handlerBusinessShapeSelected
+    );
   },
   mounted() {
     this.initZg();
@@ -124,6 +128,9 @@ export default {
     }, window.config.booth.anontRefreshTime);
   },
   methods: {
+    handlerBusinessShapeSelected(){
+
+    },
     //lxy 0225 开始
     //初始化当前页面
     initZg() {

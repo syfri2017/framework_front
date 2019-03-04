@@ -179,6 +179,8 @@ export default {
   },
   data() {
     return {
+      //上个路由页面传过来的数据
+      query: this.$route.query,
       zgtableData: null,
       //当前展位数据
       currentBusinessData: {},
@@ -257,7 +259,14 @@ export default {
             }
           }
         }
-      ]
+      ],
+       ploterCfg: {
+            readOnly: false,
+            businessShape: {
+                enable: true,
+                 requestLoop: 0 // 0为不轮询
+            }
+        }
     };
   },
   computed: {
@@ -320,6 +329,11 @@ export default {
       me.$axios.post("/zgjbxx/doSearchDataListByVO").then(
         function(res) {
           this.zgtableData = res.data.result;
+          if(me.query.uuid){
+            this.getStage(this.query.uuid);
+            this.query=null
+            return
+          }
           if (this.zgtableData.length > 0) {
             this.getStage(this.zgtableData[0].uuid);
           }
@@ -579,7 +593,7 @@ export default {
     },
     initPloter(stageData, shapesData) {
       const me = this;
-
+      me.$store.commit("updatePloterCongig", this.ploterCfg);
       if (!stageData) {
         if (me.stage) {
           const warn = confirm(

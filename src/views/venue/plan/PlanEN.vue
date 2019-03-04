@@ -56,7 +56,11 @@ export default {
       planClick(uuid) {
            let fullpath=this.$route.fullPath
 		  if(fullpath.indexOf("Anon")>0){
-			this.$router.push({ path: '/booth/anon' ,query: {uuid: uuid}})		  
+			this.$router.push({ path: '/booth/anon' ,query: {uuid: uuid}})	
+			return	  
+		  }
+		  if(this.CONSTANT.currentUser.deptid != "ZSYH"){
+			this.$router.push({ path: '/booth/positionDesign' ,query: {uuid: uuid}})
 		  }else{
 			this.$router.push({ path: '/booth/select' ,query: {uuid: uuid}})
 		  }
