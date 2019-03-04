@@ -32,13 +32,14 @@
         </div>
         <ComponentsBusinessShape @evt_stage_element_remove="doShapeDelete"/>
       </Content>
-      <appPloterWidgetMove></appPloterWidgetMove>
+      <appPloterWidgetMove class="fx"></appPloterWidgetMove>
       <AppPloterWidgetScale
         v-if="stage"
         :stage="stage"
         @evtStageCfgChanged="onStageCfgChanged"
         @evtStageScaleChanged="onStageScaleChanged"
         @evtStageScaleReset="onStageScaleReset"
+        class="plusmin"
       ></AppPloterWidgetScale>
       <!-- <Footer class="app-footer app-state-bar" v-if="footer.show">
         <AppPloterBBarMessage
@@ -1055,10 +1056,14 @@ export default {
 @import "~@/assets/app.scss";
 </style>
 <style lang="scss" scoped>
-
-.content[data-v-57ee01a8]{
-  overflow-y: hidden;
+.fx{
+  margin-top:40px;
 }
+
+.plusmin{
+margin-top:40px;
+}
+
 #menu-toggle-btn {
   right: -26px;
   transform: rotateY(180deg);
@@ -1170,7 +1175,7 @@ export default {
 }
 
 .btn {
-  border: 5px solid #0684e5;
+  // border: 5px solid #0684e5;
   border-radius: 100px;
   height: 10px;
   line-height: 0px;
