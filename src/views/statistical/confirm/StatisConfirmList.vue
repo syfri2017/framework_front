@@ -21,19 +21,22 @@
             </el-col>
           </el-row>
           <el-row class="tr">
-            <el-button type="primary" icon="el-icon-search" size="small" @click="searchClick">查询</el-button>
-            <el-button type="clear" icon="el-icon-refresh" size="small" @click="clearClick">重置</el-button>
-        </el-row>
+            <el-col :span="12" class="btnEditDelete"></el-col>
+            <el-col :span="12" class="btnSearchPlus">
+              <el-button type="primary" icon="el-icon-search" size="small" @click="searchClick">查询</el-button>
+              <el-button type="clear" icon="el-icon-refresh" size="small" @click="clearClick">重置</el-button>
+            </el-col>
+          </el-row>
         </el-form>
       </el-row>
         <div class="table_container" id="singleRow">
           <el-table id="table" border class="tableStyle" :height="tableheight" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" :row-style="rowStyle">
             <el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
             <el-table-column prop="zwgsmc" label="公司名称" show-overflow-tooltip min-width="30%" align="center">
-                <template slot-scope="scope">
-                    <span v-if="scope.row.usertype == 'ENG'" v-text="scope.row.ywgsmc" @click="qyDetails(scope.row)"></span>
-                    <span v-else v-text="scope.row.zwgsmc"></span>
-                </template>
+              <template slot-scope="scope">
+                <span v-if="scope.row.usertype == 'ENG'" v-text="scope.row.ywgsmc"></span>
+                <span v-else v-text="scope.row.zwgsmc"></span>
+              </template>
             </el-table-column>
             <el-table-column prop="lxr" label="联系人" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
             <el-table-column prop="lxrsj" label="联系人手机" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
@@ -50,7 +53,12 @@
   </div>
 </template>
 <script>
+//引入翻页 paginator
+import paginator from '@/components/paginator'
 export default {
+  components: {
+    paginator
+  },
   data() {
     return {
       //当前登陆用户
@@ -61,6 +69,8 @@ export default {
         qrsj_end: '',
         qrzt: ''
       },
+      qrsjStart: '',
+      qrsjEnd: '',
       dataRange: [],
       tableData: [],
       //table高度
@@ -77,12 +87,12 @@ export default {
     };
   },
   created: function() {
-    this.searchForm.qrsj_start = this.$route.query.qrsj_start;
-    this.searchForm.qrsj_end = this.$route.query.qrsj_end;
-    if (getQueryString("qrsj_start") != null && getQueryString("qrsj_start") != '' && getQueryString("qrsj_start") != undefined &&
-      getQueryString("qrsj_end") != null && getQueryString("qrsj_end") != '' && getQueryString("qrsj_end") != undefined) {
-      this.dataRange = [getQueryString("qrsj_start"), getQueryString("qrsj_end")];
+    this.qrsjStart = this.$route.query.startTime;
+    this.qrsjEnd = this.$route.query.endTime;
+    if (this.qrsjStart != null && this.qrsjStart != '' && this.qrsjStart != undefined && this.qrsjEnd != null && this.qrsjEnd != '' && this.qrsjEnd != undefined) {
+      this.dataRange = [new Date(this.qrsjStart), new Date(this.qrsjEnd)];
     }
+    this.searchForm.qrzt = this.$route.query.qrzt;
     this.searchClick('click');
   },
   methods: {
@@ -122,13 +132,12 @@ export default {
 
     //清空查询条件
     clearClick: function () {
-      if (getQueryString("qrsj_start") != null && getQueryString("qrsj_start") != '' && getQueryString("qrsj_start") != undefined &&
-          getQueryString("qrsj_end") != null && getQueryString("qrsj_end") != '' && getQueryString("qrsj_end") != undefined) {
-          this.dataRange = [getQueryString("qrsj_start"), getQueryString("qrsj_end")];
+      if (this.qrsjStart != null && this.qrsjStart != '' && this.qrsjStart != undefined &&  this.qrsjEnd != null && this.qrsjEnd != '' && this.qrsjEnd != undefined) {
+          this.dataRange = [this.qrsjStart, this.qrsjEnd];
       } else {
           this.dataRange = [];
       }
-      this.searchForm.qrzt = getQueryString("qrzt");
+      this.searchForm.qrzt = this.$route.query.qrzt;
       this.searchClick('reset');
     },
         

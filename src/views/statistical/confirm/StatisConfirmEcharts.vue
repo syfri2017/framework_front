@@ -48,8 +48,8 @@ export default {
       //当前登陆用户
       currentUser: this.CONSTANT.currentUser,
       dataRange: [],
-			date_start: '',
-			date_end: '',
+			startTime: '',
+			endTime: '',
 			//tabledata
 			tjfxtabledata: [],
 			//柱图
@@ -73,23 +73,20 @@ export default {
     //获取数据
 		getAllData: function () {
       let vm = this;
-			this.date_start = '';
-			this.date_end = '';
+			this.startTime = '';
+			this.endTime = '';
 			var params = {};
 			if (this.dataRange != null && this.dataRange.length > 0) {
-				//往详情页传的参数
-				this.date_start = this.dataRange[0];
-				this.date_end = this.dataRange[1];
 				//查询用参数
 				var date = new Date(this.dataRange[0]);
-				var date1 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+				this.startTime = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 				var date2 = new Date(this.dataRange[1]);
-				var date3 = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() + ' ' + date2.getHours() + ':' + date2.getMinutes() + ':' + date2.getSeconds();
+				this.endTime = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() + ' ' + date2.getHours() + ':' + date2.getMinutes() + ':' + date2.getSeconds();
 				var params = {
-					qrsj_start: date1,
-					qrsj_end: date3
+					qrsj_start: this.startTime,
+					qrsj_end: this.endTime
 				};
-			}
+      }
 			vm.$axios.post('/qyjbxx/ifConfirmedTjfx', params).then(function (res) {
 				this.name_X = [];
 				this.value_Y = [];
@@ -252,7 +249,7 @@ export default {
     
     //跳转到企业列表
 		toCompanyList: function (val) {
-      this.$router.push({name:"statisConfirmList", query: {qrsj_start: this.date_start, qrsj_end: this.date_end, qrzt: val.qrzt}});
+      this.$router.push({name:"statisConfirmList", query: {startTime: this.startTime, endTime: this.endTime, qrzt: val.qrzt}});
 		}
   }
 };
