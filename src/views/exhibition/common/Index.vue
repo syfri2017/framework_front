@@ -36,7 +36,7 @@ import AsideDom from '@/views/layout/AsideDom'
 //引入面包屑Breadcrumb
 import Breadcrumb from '@/components/breadcrumb'
 
-import bus from '../../common/js/bus';
+import bus from '../../../common/js/bus';
 export default {
   data(){
     return {
