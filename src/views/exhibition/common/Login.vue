@@ -67,11 +67,11 @@
 </template>
 
 <script>
-import Login from "@/views/login/ch/Login";
-import Register from "@/views/login/ch/Register";
-import Reset from "@/views/login/ch/Reset";
-import ForgetPassword from "@/views/login/ch/ForgetPassword";
-import ForgetUsername from "@/views/login/ch/ForgetUsername";
+import Login from "@/views/exhibition/login/ch/Login";
+import Register from "@/views/exhibition/login/ch/Register";
+import Reset from "@/views/exhibition/login/ch/Reset";
+import ForgetPassword from "@/views/exhibition/login/ch/ForgetPassword";
+import ForgetUsername from "@/views/exhibition/login/ch/ForgetUsername";
 
 export default {
   name: "Login",

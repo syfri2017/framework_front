@@ -34,31 +34,31 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import drawLib from "@/views/ploter/draw";
+import drawLib from "@/views/exhibition/ploter/draw";
 import plotundo from "@/plugins/plotundo";
 import {
   exitPlotTool,
   deleteShape
   // ,pasteShape
-} from "@/views/ploter/draw/utils";
+} from "@/views/exhibition/ploter/draw/utils";
 import {
   prepareStageData,
   prepareStageElements,
   getShapeOnStage,
   clearShapeStyle,
   updateStageBackgroundImg
-} from "@/views/ploter/draw/stage";
+} from "@/views/exhibition/ploter/draw/stage";
 import { Base64 } from "js-base64";
 import { deepClone } from "@/common/ploter/utils";
 // 共通组件
 import componentsBusinessShape from "@/components/ploter/businessShape";
 // 标绘组件
-import appPloterBBarMessage from "@/views/ploter/bbar/Message";
-import appPloterBBarCoordinate from "@/views/ploter/bbar/Coordinate";
-import appPloterBBarStageAttr from "@/views/ploter/bbar/StageAttr";
+import appPloterBBarMessage from "@/views/exhibition/ploter/bbar/Message";
+import appPloterBBarCoordinate from "@/views/exhibition/ploter/bbar/Coordinate";
+import appPloterBBarStageAttr from "@/views/exhibition/ploter/bbar/StageAttr";
 // widget
-import appPloterWidgetScale from "@/views/ploter/widget/Scale";
-import appPloterWidgetMove from "@/views/ploter/widget/Move";
+import appPloterWidgetScale from "@/views/exhibition/ploter/widget/Scale";
+import appPloterWidgetMove from "@/views/exhibition/ploter/widget/Move";
 
 export default {
   name: "AppPloterMain",

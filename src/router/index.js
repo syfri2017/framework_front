@@ -2,33 +2,33 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-import Login from '@/views/common/Login'
-import LoginEN from '@/views/common/LoginEN'
-import Index from '@/views/common/Index'
-import Home from '@/views/home/Home'
-import Exhprediction from '@/views/prediction/exhprediction/Exhprediction'
-import ExhpredictionApprove from '@/views/prediction/exhprediction/ExhpredictionApprove'
-import Exhibitor from '@/views/prediction/exhibitor/Exhibitor'
-import VenuePlan from '@/views/venue/plan/Plan'
-import VenuePlanEN from '@/views/venue/plan/PlanEN'
-import VenueTrader from '@/views/venue/trader/Trader'
-import Position from '@/views/booth/position/Position'
-import PositionDesign from '@/views/booth/design/PositionDesign'
-import PositionSelect from '@/views/booth/select/PositionSelect'
-import PositionAnon from '@/views/booth/anon/PositionAnon'
-import PositionType from '@/views/booth/type/PositionType'
-import StatisProduct from '@/views/statistical/product/StatisProduct'
-import StatisArea from '@/views/statistical/area/StatisArea'
-import StatisConfirm from '@/views/statistical/confirm/StatisConfirm'
-import BoothLog from '@/views/log/booth/BoothLog'
-import SmsLog from '@/views/log/sms/SmsLog'
+import Login from '@/views/exhibition/common/Login'
+import LoginEN from '@/views/exhibition/common/LoginEN'
+import Index from '@/views/exhibition/common/Index'
+import Home from '@/views/exhibition/home/Home'
+import Exhprediction from '@/views/exhibition/prediction/exhprediction/Exhprediction'
+import ExhpredictionApprove from '@/views/exhibition/prediction/exhprediction/ExhpredictionApprove'
+import Exhibitor from '@/views/exhibition/prediction/exhibitor/Exhibitor'
+import VenuePlan from '@/views/exhibition/venue/plan/Plan'
+import VenuePlanEN from '@/views/exhibition/venue/plan/PlanEN'
+import VenueTrader from '@/views/exhibition/venue/trader/Trader'
+import Position from '@/views/exhibition/booth/position/Position'
+import PositionDesign from '@/views/exhibition/booth/design/PositionDesign'
+import PositionSelect from '@/views/exhibition/booth/select/PositionSelect'
+import PositionAnon from '@/views/exhibition/booth/anon/PositionAnon'
+import PositionType from '@/views/exhibition/booth/type/PositionType'
+import StatisProduct from '@/views/exhibition/statistical/product/StatisProduct'
+import StatisArea from '@/views/exhibition/statistical/area/StatisArea'
+import StatisConfirm from '@/views/exhibition/statistical/confirm/StatisConfirm'
+import BoothLog from '@/views/exhibition/log/booth/BoothLog'
+import SmsLog from '@/views/exhibition/log/sms/SmsLog'
 import User from '@/views/system/user/User'
 import Role from '@/views/system/role/Role'
 import Resource from '@/views/system/resource/Resource'
 import Permission from '@/views/system/permission/Permission'
 import Codelist from '@/views/system/codelist/Codelist'
 import Mail from '@/views/system/mail/Mail'
-import ExhpredictionEdit from '@/views/prediction/exhprediction/ExhpredictionEdit'
+import ExhpredictionEdit from '@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'
 
 const router = new VueRouter({
   routes: [
@@ -41,49 +41,49 @@ const router = new VueRouter({
           path: '/login/ch/Phone',
           name: 'login/ch/Phone',
           meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/login/ch/Phone'], resolve)
+          component: resolve => require(['@/views/exhibition/login/ch/Phone'], resolve)
         },
         {
           path: '/login/ch/Mailbox',
           name: 'login/ch/Mailbox',
           meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/login/ch/Mailbox'], resolve)
+          component: resolve => require(['@/views/exhibition/login/ch/Mailbox'], resolve)
         },
         {
           path: '/login/ch/Administrator',
           name: 'login/ch/Administrator',
           meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/login/ch/Administrator'], resolve)
+          component: resolve => require(['@/views/exhibition/login/ch/Administrator'], resolve)
         },
         {
           path: '/login/ch/Reset',
           name: 'login/ch/Reset',
           meta: {auth: true, title: "账户重置", operation: true},
-          component: resolve => require(['@/views/login/ch/Reset'], resolve)
+          component: resolve => require(['@/views/exhibition/login/ch/Reset'], resolve)
         },
         {
           path: '/login/ch/ForgetPassword',
           name: 'login/ch/ForgetPassword',
           meta: {auth: true, title: "忘记用户名", operation: true},
-          component: resolve => require(['@/views/login/ch/ForgetPassword'], resolve)
+          component: resolve => require(['@/views/exhibition/login/ch/ForgetPassword'], resolve)
         },
         {
           path: '/login/ch/ForgetUsername',
           name: 'login/ch/ForgetUsername',
           meta: {auth: true, title: "忘记密码", operation: true},
-          component: resolve => require(['@/views/login/ch/ForgetUsername'], resolve)
+          component: resolve => require(['@/views/exhibition/login/ch/ForgetUsername'], resolve)
         },
         {
           path: '/login/ch/Register',
           name: 'login/ch/Register',
           meta: {auth: true, title: "用户注册", operation: true},
-          component: resolve => require(['@/views/login/ch/Register'], resolve)
+          component: resolve => require(['@/views/exhibition/login/ch/Register'], resolve)
         },
         {
           path: '/login/ch/Login',
           name: 'login/ch/Login',
           meta: {auth: true, title: "用户登录", operation: true},
-          component: resolve => require(['@/views/login/ch/Login'], resolve)
+          component: resolve => require(['@/views/exhibition/login/ch/Login'], resolve)
         }
       ],
       redirect:'/login/ch/Login'
@@ -97,25 +97,25 @@ const router = new VueRouter({
           path: '/login/en/ForgetPassword',
           name: 'login/en/ForgetPassword',
           meta: {auth: true, title: "忘记用户名", operation: true},
-          component: resolve => require(['@/views/login/en/ForgetPassword'], resolve)
+          component: resolve => require(['@/views/exhibition/login/en/ForgetPassword'], resolve)
         },
         {
           path: '/login/en/ForgetUsername',
           name: 'login/en/ForgetUsername',
           meta: {auth: true, title: "忘记密码", operation: true},
-          component: resolve => require(['@/views/login/en/ForgetUsername'], resolve)
+          component: resolve => require(['@/views/exhibition/login/en/ForgetUsername'], resolve)
         },
         {
           path: '/login/en/Register',
           name: 'login/en/Register',
           meta: {auth: true, title: "用户注册", operation: true},
-          component: resolve => require(['@/views/login/en/Register'], resolve)
+          component: resolve => require(['@/views/exhibition/login/en/Register'], resolve)
         },
         {
           path: '/login/en/Login',
           name: 'login/en/Login',
           meta: {auth: true, title: "用户登录", operation: true},
-          component: resolve => require(['@/views/login/en/Login'], resolve)
+          component: resolve => require(['@/views/exhibition/login/en/Login'], resolve)
         }
       ],
       redirect:'/login/en/Login'
@@ -129,7 +129,7 @@ const router = new VueRouter({
         {
           path: '/',
           name: 'planAnon',
-          component: resolve => require(['@/views/venue/plan/Plan'], resolve),
+          component: resolve => require(['@/views/exhibition/venue/plan/Plan'], resolve),
         },
       ]
     },
@@ -142,7 +142,7 @@ const router = new VueRouter({
         {
           path: '/',
           name: 'planAnonEN',
-          component: resolve => require(['@/views/venue/plan/PlanEN'], resolve),
+          component: resolve => require(['@/views/exhibition/venue/plan/PlanEN'], resolve),
         },
       ]
     },
@@ -155,7 +155,7 @@ const router = new VueRouter({
         {
           path: '/',
           name: 'positionAnon',
-          component: resolve => require(['@/views/booth/anon/PositionAnon'], resolve)
+          component: resolve => require(['@/views/exhibition/booth/anon/PositionAnon'], resolve)
         },
       ]
     },
@@ -175,13 +175,13 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'home',
-              component: resolve => require(['@/views/home/homeList'], resolve)
+              component: resolve => require(['@/views/exhibition/home/homeList'], resolve)
             },
             {
               path: '/home/detail',
               name: 'home/detail',
               meta: {auth: true, title: "首页详情"},
-              component: resolve => require(['@/views/home/homeDetail'], resolve)
+              component: resolve => require(['@/views/exhibition/home/homeDetail'], resolve)
             }
           ]
         },
@@ -195,37 +195,37 @@ const router = new VueRouter({
               path: '/',
               name: 'exhprediction',
               meta: {keepAlive: true},
-              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionList'], resolve)
+              component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionList'], resolve)
             },
             {
               path: '/prediction/exhprediction/detail',
               name: 'exhpredictionDetail',
               meta: {auth: true, title: "展会报名管理详情", keepAlive: false},
-              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionDetail'], resolve)
+              component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionDetail'], resolve)
             },
             {
               path: '/prediction/exhprediction/insert',
               name: 'exhpredictionInsert',
               meta: {auth: true, title: "展会报名管理新增", keepAlive: false},
-              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit'], resolve)
+              component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'], resolve)
             },
             {
               path: '/prediction/exhprediction/update',
               name: 'exhpredictionUpdate',
               meta: {auth: true, title: "展会报名管理编辑", keepAlive: false},
-              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit'], resolve)
+              component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'], resolve)
             },
             {
               path: '/prediction/exhprediction/insert_ENG',
               name: 'exhpredictionInsert_ENG',
               meta: {auth: true, title: "展会报名管理新增", keepAlive: false},
-              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit_ENG'], resolve)
+              component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionEdit_ENG'], resolve)
             },
             {
               path: '/prediction/exhprediction/update_ENG',
               name: 'exhpredictionUpdate_ENG',
               meta: {auth: true, title: "展会报名管理编辑", keepAlive: false},
-              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit_ENG'], resolve)
+              component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionEdit_ENG'], resolve)
             },
           ]
         },
@@ -239,13 +239,13 @@ const router = new VueRouter({
               path: '/',
               name: 'exhpredictionApprove',
               meta: {keepAlive: true},
-              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionApproveList'], resolve)
+              component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionApproveList'], resolve)
             },
             {
               path: '/prediction/exhprediction_approve/detail',
               name: 'exhpredictionApproveDetail',
               meta: {auth: true, title: "展会报名审核详情", keepAlive: false},
-              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionDetail'], resolve)
+              component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionDetail'], resolve)
             },
           ]
         },
@@ -258,7 +258,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'exhibitor',
-              component: resolve => require(['@/views/prediction/exhibitor/ExhibitorList'], resolve)
+              component: resolve => require(['@/views/exhibition/prediction/exhibitor/ExhibitorList'], resolve)
             },
           ]
         },
@@ -271,7 +271,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'plan',
-              component: resolve => require(['@/views/venue/plan/Plan'], resolve),
+              component: resolve => require(['@/views/exhibition/venue/plan/Plan'], resolve),
             },
           ]
         },
@@ -284,7 +284,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'planEN',
-              component: resolve => require(['@/views/venue/plan/PlanEN'], resolve),
+              component: resolve => require(['@/views/exhibition/venue/plan/PlanEN'], resolve),
             },
           ]
         },
@@ -297,7 +297,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'trader',
-              component: resolve => require(['@/views/venue/trader/TraderList'], resolve)
+              component: resolve => require(['@/views/exhibition/venue/trader/TraderList'], resolve)
             },
           ]
         },
@@ -311,13 +311,13 @@ const router = new VueRouter({
               path: '/',
               name: 'position',
               meta: {keepAlive: true},
-              component: resolve => require(['@/views/booth/position/PositionList'], resolve)
+              component: resolve => require(['@/views/exhibition/booth/position/PositionList'], resolve)
             },
             {
               path: '/booth/position/analysis',
               name: 'positionAnalysis',
               meta: {auth: true, title: "展位分析", keepAlive: false},
-              component: resolve => require(['@/views/booth/position/PositionAnalysis'], resolve)
+              component: resolve => require(['@/views/exhibition/booth/position/PositionAnalysis'], resolve)
             },
           ]
         },
@@ -331,7 +331,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'positionSelect',
-              component: resolve => require(['@/views/booth/select/PositionSelect'], resolve)
+              component: resolve => require(['@/views/exhibition/booth/select/PositionSelect'], resolve)
             },
           ]
         },
@@ -345,7 +345,7 @@ const router = new VueRouter({
               path: '/',
               name: 'positionDesign',
               //component: resolve => require(['@/views/booth/design/PositionDesign'], resolve)
-              component: resolve => require(['@/views/ploter/Plot'], resolve),
+              component: resolve => require(['@/views/exhibition/ploter/Plot'], resolve),
               props: true
             }
           ]
@@ -359,7 +359,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'positionType',
-              component: resolve => require(['@/views/booth/type/PositionTypeList'], resolve)
+              component: resolve => require(['@/views/exhibition/booth/type/PositionTypeList'], resolve)
             },
           ]
         },
@@ -372,13 +372,13 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'statisProduct',
-              component: resolve => require(['@/views/statistical/product/StatisProductEcharts'], resolve)
+              component: resolve => require(['@/views/exhibition/statistical/product/StatisProductEcharts'], resolve)
             },
             {
               path: '/statistical/statisProductList',
               name: 'statislProductList',
               meta: {auth: true, title: "按产品类型统计企业列表"},
-              component: resolve => require(['@/views/statistical/product/StatisProAreaList'], resolve)
+              component: resolve => require(['@/views/exhibition/statistical/product/StatisProAreaList'], resolve)
             },
           ]
         },
@@ -391,13 +391,13 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'statisArea',
-              component: resolve => require(['@/views/statistical/area/StatisAreaEcharts'], resolve)
+              component: resolve => require(['@/views/exhibition/statistical/area/StatisAreaEcharts'], resolve)
             },
             {
               path: '/statistical/statisAreaList',
               name: 'statisAreaList',
               meta: {auth: true, title: "按光地展位面积统计企业列表"},
-              component: resolve => require(['@/views/statistical/product/StatisProAreaList'], resolve)
+              component: resolve => require(['@/views/exhibition/statistical/product/StatisProAreaList'], resolve)
             },
           ]
         },
@@ -410,13 +410,13 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'statisConfirm',
-              component: resolve => require(['@/views/statistical/confirm/StatisConfirmEcharts'], resolve)
+              component: resolve => require(['@/views/exhibition/statistical/confirm/StatisConfirmEcharts'], resolve)
             },
             {
               path: '/statistical/statisConfirmList',
               name: 'statisConfirmList',
               meta: {auth: true, title: "按确认信息统计企业列表"},
-              component: resolve => require(['@/views/statistical/confirm/StatisConfirmList'], resolve)
+              component: resolve => require(['@/views/exhibition/statistical/confirm/StatisConfirmList'], resolve)
             },
           ]
         },
@@ -429,7 +429,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'boothLog',
-              component: resolve => require(['@/views/log/booth/BoothLogList'], resolve)
+              component: resolve => require(['@/views/exhibition/log/booth/BoothLogList'], resolve)
             },
           ]
         },
@@ -442,7 +442,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'smsLog',
-              component: resolve => require(['@/views/log/sms/SmsLogList'], resolve)
+              component: resolve => require(['@/views/exhibition/log/sms/SmsLogList'], resolve)
             },
           ]
         },
@@ -540,7 +540,7 @@ const router = new VueRouter({
             {
               path: '/',
               name: 'exhpredictionInsert',
-              component: resolve => require(['@/views/prediction/exhprediction/ExhpredictionEdit'], resolve)
+              component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'], resolve)
             },
             
           ]

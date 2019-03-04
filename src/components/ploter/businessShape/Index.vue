@@ -12,8 +12,8 @@
     import { deepClone, isEmpty } from '@/common/ploter/utils'
     import {
         exitPlotTool
-    } from '@/views/ploter/draw/utils'
-    import drawLib from '@/views/ploter/draw'
+    } from '@/views/exhibition/ploter/draw/utils'
+    import drawLib from '@/views/exhibition/ploter/draw'
     import attribute from './attribute'
     import emptyData from './emptyData.json'
     import { tpl } from './tipTpl.js'
