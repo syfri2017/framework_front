@@ -58,7 +58,7 @@ export default {
     },
 
     //table每4位加一个空格格式化
-    Vue.prototype.longNumFormat =  function (row, column) {
+    Vue.prototype.tableLongNumFormat =  function (row, column) {
       var rowNum = row[column.property];
       if (rowNum == null || rowNum == "") {
         return '';
@@ -87,6 +87,15 @@ export default {
 
       var newDate = [year, month, day].join('-');
       return newDate;
+    }
+
+    l//字符串每4位加一个空格
+    Vue.prototype.longNumFormat = function(val){
+      if(val == null){
+          return null;
+      }else{
+          return val.replace(/(.{4})/g,'$1 ');
+      }
     }
   }
 }
