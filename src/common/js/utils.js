@@ -89,7 +89,7 @@ export default {
       return newDate;
     }
 
-    l//字符串每4位加一个空格
+    //字符串每4位加一个空格
     Vue.prototype.longNumFormat = function(val){
       if(val == null){
           return null;
