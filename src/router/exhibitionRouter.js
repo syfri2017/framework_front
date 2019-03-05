@@ -534,7 +534,7 @@ export default [
         children: [
           {
             path: '/',
-            name: 'exhpredictionInsert',
+            name: 'exhpredictionEdit',
             component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'], resolve)
           },
           
