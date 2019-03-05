@@ -58,7 +58,7 @@ export default {
     },
 
     //table每4位加一个空格格式化
-    Vue.prototype.tableLongNumFormat =  function (row, column) {
+    Vue.prototype.longNumFormat =  function (row, column) {
       var rowNum = row[column.property];
       if (rowNum == null || rowNum == "") {
         return '';
@@ -76,11 +76,11 @@ export default {
     Vue.prototype.dateFormat = function(val){
       var date = new Date(val);
       if (date == undefined) {
-          return val;
+        return val;
       }
       var month = '' + (date.getMonth() + 1),
-          day = '' + date.getDate(),
-          year = date.getFullYear();
+        day = '' + date.getDate(),
+        year = date.getFullYear();
 
       if (month.length < 2) month = '0' + month;
       if (day.length < 2) day = '0' + day;

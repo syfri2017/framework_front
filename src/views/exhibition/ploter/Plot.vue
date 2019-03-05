@@ -110,7 +110,7 @@
               show-overflow-tooltip
               min-width="20%"
               align="center"
-              :formatter="tableLongNumFormat"
+              :formatter="longNumFormat"
             ></el-table-column>
             <el-table-column
               prop="wz"
