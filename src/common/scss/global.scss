@@ -168,3 +168,43 @@ label {
   background-color: #fbfbfb;
   box-shadow: 2px 3px 5px #ccc;
 }
+
+#basic-Inform-Title{
+  padding-left: 25px;
+  width: 100%;
+}
+.inform-h3{
+  font-weight: bold;
+  font-size: 24px;
+  color: rgb(78, 78, 78);
+  margin-top: 0px !important;
+}
+.inform-small-title{
+  margin-left: 5px;
+}
+.detail_margin{
+  margin-top: 5px;
+}
+.dtdlStyle{
+  display: inline;
+  margin-left: 15px;
+}
+.detail_picture_top{
+  max-width: 100%;
+  max-height: 100px;
+}
+.card_style{
+  margin-bottom:12px;
+  background-color:#F5FAFC;
+  width: 100%
+}
+dt {
+  font-weight: 700;
+  line-height: 1.42857143;
+  font-size: 14px;
+}
+dd {
+  font-weight: 500;
+  line-height: 1.42857143;
+  font-size: 14px;
+}
