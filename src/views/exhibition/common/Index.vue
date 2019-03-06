@@ -11,20 +11,20 @@
     </el-container>
   </el-container> -->
 
-  <el-container class="wrapper">
-    <el-header><HeaderDom></HeaderDom></el-header>
-    <el-container>
-      <el-aside width="240px"><AsideDom></AsideDom></el-aside>
-      <el-main class="content-box" :class="{'content-collapse':collapse}">
-          <div class="content">
-            <Breadcrumb></Breadcrumb>
-            <transition name="move" mode="out-in">
-                <router-view></router-view>
-            </transition>
-          </div>
-      </el-main>
-    </el-container>
-  </el-container>
+  <div class="wrapper">
+        <el-header><HeaderDom></HeaderDom></el-header>
+        <el-aside><AsideDom></AsideDom></el-aside>
+        <div class="content-box" :class="{'content-collapse':collapse}">
+            <div class="content">
+               <transition name="move" mode="out-in">
+                <el-main>
+                  <Breadcrumb></Breadcrumb>
+                  <router-view></router-view>
+                </el-main>
+                </transition>
+            </div>
+        </div>
+  </div>
 
 </template>
 
@@ -85,30 +85,25 @@ export default {
   background-color: rgb(70, 49, 50);
 } */
 .el-main {
-  padding: 0;
+  padding: 5px 10px 5px 10px;
 }
 .content-box {
-    /* position: absolute;
+    position: absolute;
     left: 240px;
     right: 0;
     top: 60px;
     bottom: 0;
-    padding-bottom: 10px; */
-    display: flex;
-    flex-direction: column;
+    padding-bottom: 10px;
     -webkit-transition: left .3s ease-in-out;
     transition: left .3s ease-in-out;
     background: #fff;
 }
 
 .content {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-    /* width: auto;
-    height: 100%; */
-    /* padding: 10px; */
-    overflow-y: scroll;
+    width: auto;
+    height: 100%;
+    padding: 10px;
+    overflow-y: auto;
     box-sizing: border-box;
 }
 
