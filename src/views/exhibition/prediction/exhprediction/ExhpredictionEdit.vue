@@ -125,8 +125,8 @@
           </el-row>
           <el-row>
             <el-col :span="11">
-              <el-upload class="avatar-uploader" ref="uploadPics" action="/qyjbxx/upload" :data="upLoadData" :on-success="picSuccess"
-                  :before-upload="PicChange" :show-file-list="false">
+              <el-upload class="avatar-uploader" ref="uploadPics" :headers="myHeaders" action="http://localhost:8809/qyjbxx/upload" :data="upLoadData" :on-success="picSuccess"
+                   :before-upload="PicChange" :show-file-list="false">
                 <img v-if="baseInforForm.src!=='' && baseInforForm.src!==null" :src="baseInforForm.imageUrl" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 <div class="el-upload__tip" slot="tip">jpg/png、单页pdf文件，且小于2MB</div>
@@ -144,15 +144,15 @@
         </el-form>
       </div>
       <!--企业开票信息-->
-      <!--
       <div id="kpxxView" class="pt15" v-show="isKpxxShow">
         <el-row class="mb5" style="border-bottom:1px solid #463132;line-height: 29px;">
           <el-col :span="24">
             <strong style="color: #463132;">企业开票信息</strong>
           </el-col>
         </el-row>
+       
         <el-form class="el-form demo-form-inline" ref="kpxxForm" :model="kpxxForm" label-position="right" label-width="150px" :rules="kpxxRules">
-          <el-row class="tr mb5">
+           <el-row class="tr mb5">
             <el-col :span="5">&nbsp;</el-col>
             <el-col :span="12">
               <el-form-item prop="kplx" label="开票类型" style="text-align: left">
@@ -218,23 +218,17 @@
             </el-col>
             <el-col :span="5">&nbsp;</el-col>
           </el-row>
-          <el-row class="mt15 mb20">
-            <el-form class="el-form demo-form-inline">
-              <el-row>
-                <el-col :span="24" class="editform-button">
-                  <el-button type="info" icon="el-icon-arrow-left" size="small" class="btn_submit" @click="cancelKpxx('kpxxForm')">上一步</el-button>
-                  <el-button type="success" size="small" class="btn_submit" @click="submitKpxx('kpxxForm')">下一步&nbsp;
-                    <i class="el-icon-arrow-right"></i>
-                  </el-button>
-                </el-col>
-              </el-row>
-            </el-form>
+          <el-row class="buttonSubmit">
+            <el-col :span="24">
+              <el-button type="info" icon="el-icon-arrow-left" size="small" class="btn_submit" @click="cancelKpxx('kpxxForm')">上一步</el-button>
+              <el-button type="success" size="small" class="btn_submit" @click="submitKpxx('kpxxForm')">下一步&nbsp;
+                <i class="el-icon-arrow-right"></i>
+              </el-button>
+            </el-col>
           </el-row>
         </el-form>
       </div>
-      -->
       <!--企业问卷调查-->
-      <!--
       <div id="wjdcView" class="pt15" v-show="isWjdcShow">
         <el-row class="mb5" style="border-bottom:1px solid #463132;line-height: 29px;">
           <el-col :span="24">
@@ -373,21 +367,16 @@
             </el-col>
             <el-col :span="2">&nbsp;</el-col>
           </el-row>
-          <el-row class="mt15 mb20">
-            <el-form class="el-form demo-form-inline">
-              <el-row>
-                <el-col :span="24" class="editform-button">
-                  <el-button type="info" icon="el-icon-arrow-left" size="small" class="btn_submit" @click="cancelWjdc('wjdcForm')">上一步</el-button>
-                  <el-button type="success" size="small" class="btn_submit" @click="submitWjdc('wjdcForm')">下一步&nbsp;
-                    <i class="el-icon-arrow-right"></i>
-                  </el-button>
-                </el-col>
-              </el-row>
-            </el-form>
+          <el-row class="buttonSubmit">
+            <el-col :span="24">
+              <el-button type="info" icon="el-icon-arrow-left" size="small" class="btn_submit" @click="cancelWjdc('wjdcForm')">上一步</el-button>
+              <el-button type="success" size="small" class="btn_submit" @click="submitWjdc('wjdcForm')">下一步&nbsp;
+                <i class="el-icon-arrow-right"></i>
+              </el-button>
+            </el-col>
           </el-row>
         </el-form>
       </div>
-      -->
       <!--企业和产品介绍-->
       <div id="cpjsView" class="pt15" v-show="isCpjsShow">
         <el-row class="mb5" style="border-bottom:1px solid #463132;line-height: 29px;">
@@ -400,7 +389,7 @@
             <el-row class="tr mb5">
               <el-col :span="9">
                 <el-form-item label="企业LOGO图标" style="text-align: left" class="is-required">
-                  <el-upload class="avatar-uploader" ref="uploadLogo" action="/qyjs/upload" :data="upLoadLogoData" :on-success="logoPicSuccess"
+                  <el-upload class="avatar-uploader" ref="uploadLogo" action="qyjs/upload" :data="upLoadLogoData" :on-success="logoPicSuccess"
                     :before-upload="LogoChange" :show-file-list="false">
                     <img v-if="qyjsForm.src!==''&& qyjsForm.src!==null" :src="qyjsForm.imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -488,17 +477,13 @@
             </el-row>                
           </el-form>
         </el-row>
-        <el-row class="mt15 mb20">
-          <el-form class="el-form demo-form-inline">
-            <el-row>
-              <el-col :span="24" class="editform-button">
-                <el-button type="info" icon="el-icon-arrow-left" size="small" class="btn_submit" @click="cancelCpjs('qyjsForm')">上一步</el-button>
-                <el-button type="success" size="small" class="btn_submit" @click="submitCpjs('qyjsForm')">下一步&nbsp;
-                  <i class="el-icon-arrow-right"></i>
-                </el-button>
-              </el-col>
-            </el-row>
-          </el-form>
+        <el-row class="buttonSubmit">
+          <el-col :span="24">
+            <el-button type="info" icon="el-icon-arrow-left" size="small" class="btn_submit" @click="cancelCpjs('qyjsForm')">上一步</el-button>
+            <el-button type="success" size="small" class="btn_submit" @click="submitCpjs('qyjsForm')">下一步&nbsp;
+              <i class="el-icon-arrow-right"></i>
+            </el-button>
+          </el-col>
         </el-row>
       </div>
     
@@ -615,6 +600,8 @@ export default {
   name: "exhpredictionEdit",
   data() {
     return {
+      baseUrl: window.config.baseUrl,
+      myHeaders: {XTOKEN: localStorage.getItem("XTOKEN")},
       //当前用户
       currentUser: this.CONSTANT.currentUser,
       //菜单编码
@@ -669,7 +656,15 @@ export default {
         imageUrl: ""
       },
       //开票信息表单
-      kpxxForm: [],
+      kpxxForm: {
+        kplx:"",
+        kpgsmc:"",
+        tyshxydm:"",
+        gsdz:"",
+        dhhm:"",
+        khyh:"",
+        yhzh:""
+      },
       //问卷调查表单
       wjdcForm: {
         syxxzl: "",
@@ -857,22 +852,9 @@ export default {
           { min: 1, max: 100, message: "最多可输入100个字", trigger: "blur" }
         ],
         tyshxydm: [
-          {
-            required: true,
-            message: "请输入统一社会信用代码",
-            trigger: "blur"
-          },
-          {
-            pattern: /^[A-Za-z0-9 ]+$/,
-            message: "只能输入数字和字母",
-            trigger: "blur"
-          },
-          {
-            min: 22,
-            max: 22,
-            message: "请输入18位统一社会信用代码（不包含空格）",
-            trigger: "blur"
-          }
+          {required: true,message: "请输入统一社会信用代码",trigger: "blur"},
+          {pattern: /^[A-Za-z0-9 ]+$/, message: "只能输入数字和字母", trigger: "blur"},
+          {min: 22, max: 22, message: "请输入18位统一社会信用代码（不包含空格）", trigger: "blur"}
         ],
         gsdz: [
           { required: true, message: "请输入公司地址", trigger: "blur" },
@@ -880,7 +862,6 @@ export default {
         ],
         dhhm: [
           { required: true, message: "请输入电话号码", trigger: "blur" },
-          { pattern: /^[0-9]*$/, message: "只能输入数字", trigger: "blur" },
           { min: 1, max: 50, message: "最多输入50个数字", trigger: "blur" }
         ],
         khyh: [
@@ -890,12 +871,7 @@ export default {
         yhzh: [
           { required: true, message: "请输入银行账号", trigger: "blur" },
           { pattern: /^[0-9 ]*$/, message: "只能输入数字", trigger: "blur" },
-          {
-            min: 0,
-            max: 37,
-            message: "最多可输入30位银行账号",
-            trigger: "blur"
-          }
+          { min: 0, max: 37, message: "最多可输入30位银行账号", trigger: "blur" }
         ]
       },
       wjdcRules: {
@@ -903,11 +879,7 @@ export default {
           { required: true, message: "请选择公司性质", trigger: "change" }
         ],
         sfhwdlcp: [
-          {
-            required: true,
-            message: "请选择是否代理海外产品",
-            trigger: "change"
-          }
+          { required: true, message: "请选择是否代理海外产品", trigger: "change" }
         ],
         hwdlcppp: [
           { required: true, message: "请输入产品品牌", trigger: "blur" },
@@ -923,21 +895,13 @@ export default {
           { required: true, message: "请输入外观设计专利(项)", trigger: "blur" }
         ],
         sfgxjsqy: [
-          {
-            required: true,
-            message: "请选择是否为高新技术企业",
-            trigger: "change"
-          }
+          { required: true, message: "请选择是否为高新技术企业", trigger: "change" }
         ],
         gxjsjb: [
           { required: true, message: "请选择高新技术级别", trigger: "change" }
         ],
         sfhyxydj: [
-          {
-            required: true,
-            message: "请选择是否在2018年参与中国消防协会消防行业信用等级评价",
-            trigger: "change"
-          }
+          { required: true, message: "请选择是否在2018年参与中国消防协会消防行业信用等级评价", trigger: "change" }
         ],
         hyxydj: [
           { required: true, message: "请选择行业信用等级", trigger: "change" }
@@ -1131,7 +1095,7 @@ export default {
               //曾用公司名称 记录当前中文公司名称
               vm.cygsmc = res.data.result.zwgsmc;
               if (vm.baseInforForm.src !== null &&vm.baseInforForm.src !== "") {
-                vm.baseInforForm.imageUrl = baseUrl + "/upload/" + vm.baseInforForm.src;
+                vm.baseInforForm.imageUrl = vm.baseUrl + "/upload/" + vm.baseInforForm.src;
               }
               //行政区划级联下拉处理
               var xzqhArray = [];
@@ -1258,7 +1222,7 @@ export default {
               qyid: qyid,
               deleteFlag: "N"
             };
-            $axios.post("/qycpjs/list", params).then(
+            vm.$axios.post("/qycpjs/list", params).then(
               function(res) {
                 var result = res.data.result;
                 var qycpjsList = [];
@@ -1274,13 +1238,12 @@ export default {
                     reserve1: result[i].reserve1,
                     cplx: cplxArray,
                     src: result[i].src,
-                    imageUrl: baseUrl + "/upload/" + result[i].src
+                    imageUrl: vm.baseUrl + "/upload/" + result[i].src
                   });
                 }
                 resultForm.qycpjsVOList = qycpjsList;
                 vm.qyjsForm = resultForm;
-                vm.qyjsForm.imageUrl =
-                  baseUrl + "/upload/" + vm.qyjsForm.src;
+                vm.qyjsForm.imageUrl = vm.baseUrl + "/upload/" + vm.qyjsForm.src;
                 vm.loading = false;
               }.bind(vm),
               function(error) {
@@ -1371,7 +1334,7 @@ export default {
     //营业执照图片上传成功回调方法
     picSuccess: function(res, file) {
       this.baseInforForm.src = res.src;
-      this.baseInforForm.imageUrl = baseUrl + "/upload/" + res.src;
+      this.baseInforForm.imageUrl = this.baseUrl + "/upload/" + res.src;
       //this.unsavedPicList.push(res.src);
     },
     //产品图片上传成功回调方法
@@ -2379,8 +2342,8 @@ export default {
     },
     //邮箱验证表单提交
     yxformSubmit: function() {
+     // debugger;
       if (this.yxform.yzm == this.mailCodeReal) {
-        
         this.mailCheck = true;
         this.checkedMailAddress = this.baseInforForm.dzyx1;
         this.dialogYxFormVisible = false;
@@ -2411,7 +2374,6 @@ export default {
       } else {
         //查询邮箱是否注册
         vm.$axios.get("/qyjbxx/getMailNum/" + vm.baseInforForm.dzyx1 + "/static").then(function(res) {
-          
               //session失效
               if (res.data.result == undefined) {
                 vm.$confirm("用户登陆超时，请重新登陆。", "提示", {
@@ -2548,6 +2510,11 @@ export default {
     height: 100px;
     line-height: 100px;
     text-align: center;
+  }
+.avatar {
+    width: 100px;
+    height: 100px;
+    display: block;
   }
 }
 
