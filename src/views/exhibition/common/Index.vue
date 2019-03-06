@@ -73,6 +73,7 @@ export default {
 } */
 .el-main {
   padding: 5px 10px 5px 10px;
+  font-size: 14px;
 }
 .content-box {
     position: absolute;
