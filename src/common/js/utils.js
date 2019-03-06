@@ -97,5 +97,16 @@ export default {
           return val.replace(/(.{4})/g,'$1 ');
       }
     }
+    //剩余多少个字
+    Vue.prototype.checkWord = function(text, name, maxlength) {
+      if (text != "" && text != null && text != undefined) {
+        var length = text.length;
+        var curr = maxlength - length;
+        var ele = document.getElementById(name);
+        if (ele != null) {
+          document.getElementById(name).innerHTML = curr.toString();
+        }
+      }
+    }
   }
 }
