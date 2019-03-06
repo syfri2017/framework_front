@@ -33,55 +33,55 @@ export default [
     component: Login,
     children: [
       {
-        path: '/login/ch/Phone',
-        name: 'login/ch/Phone',
+        path: '/exhibition/login/ch/Phone',
+        name: 'exhibition/login/ch/Phone',
         meta: {auth: true, title: "账户重置", operation: true},
         component: resolve => require(['@/views/exhibition/login/ch/Phone'], resolve)
       },
       {
-        path: '/login/ch/Mailbox',
-        name: 'login/ch/Mailbox',
+        path: '/exhibition/login/ch/Mailbox',
+        name: 'exhibition/login/ch/Mailbox',
         meta: {auth: true, title: "账户重置", operation: true},
         component: resolve => require(['@/views/exhibition/login/ch/Mailbox'], resolve)
       },
       {
-        path: '/login/ch/Administrator',
-        name: 'login/ch/Administrator',
+        path: '/exhibition/login/ch/Administrator',
+        name: 'exhibition/login/ch/Administrator',
         meta: {auth: true, title: "账户重置", operation: true},
         component: resolve => require(['@/views/exhibition/login/ch/Administrator'], resolve)
       },
       {
-        path: '/login/ch/Reset',
-        name: 'login/ch/Reset',
+        path: '/exhibition/login/ch/Reset',
+        name: 'exhibition/login/ch/Reset',
         meta: {auth: true, title: "账户重置", operation: true},
         component: resolve => require(['@/views/exhibition/login/ch/Reset'], resolve)
       },
       {
-        path: '/login/ch/ForgetPassword',
-        name: 'login/ch/ForgetPassword',
+        path: '/exhibition/login/ch/ForgetPassword',
+        name: 'exhibition/login/ch/ForgetPassword',
         meta: {auth: true, title: "忘记用户名", operation: true},
         component: resolve => require(['@/views/exhibition/login/ch/ForgetPassword'], resolve)
       },
       {
-        path: '/login/ch/ForgetUsername',
-        name: 'login/ch/ForgetUsername',
+        path: '/exhibition/login/ch/ForgetUsername',
+        name: 'exhibition/login/ch/ForgetUsername',
         meta: {auth: true, title: "忘记密码", operation: true},
         component: resolve => require(['@/views/exhibition/login/ch/ForgetUsername'], resolve)
       },
       {
-        path: '/login/ch/Register',
-        name: 'login/ch/Register',
+        path: '/exhibition/login/ch/Register',
+        name: 'exhibition/login/ch/Register',
         meta: {auth: true, title: "用户注册", operation: true},
         component: resolve => require(['@/views/exhibition/login/ch/Register'], resolve)
       },
       {
-        path: '/login/ch/Login',
-        name: 'login/ch/Login',
+        path: '/exhibition/login/ch/Login',
+        name: 'exhibition/login/ch/Login',
         meta: {auth: true, title: "用户登录", operation: true},
         component: resolve => require(['@/views/exhibition/login/ch/Login'], resolve)
       }
     ],
-    redirect:'/login/ch/Login'
+    redirect:'/exhibition/login/ch/Login'
   },
   {
     path: '/',
@@ -89,31 +89,31 @@ export default [
     component: LoginEN,
     children: [
       {
-        path: '/login/en/ForgetPassword',
-        name: 'login/en/ForgetPassword',
+        path: '/exhibition/login/en/ForgetPassword',
+        name: 'exhibition/login/en/ForgetPassword',
         meta: {auth: true, title: "忘记用户名", operation: true},
         component: resolve => require(['@/views/exhibition/login/en/ForgetPassword'], resolve)
       },
       {
-        path: '/login/en/ForgetUsername',
-        name: 'login/en/ForgetUsername',
+        path: '/exhibition/login/en/ForgetUsername',
+        name: 'exhibition/login/en/ForgetUsername',
         meta: {auth: true, title: "忘记密码", operation: true},
         component: resolve => require(['@/views/exhibition/login/en/ForgetUsername'], resolve)
       },
       {
-        path: '/login/en/Register',
-        name: 'login/en/Register',
+        path: '/exhibition/login/en/Register',
+        name: 'exhibition/login/en/Register',
         meta: {auth: true, title: "用户注册", operation: true},
         component: resolve => require(['@/views/exhibition/login/en/Register'], resolve)
       },
       {
-        path: '/login/en/Login',
-        name: 'login/en/Login',
+        path: '/exhibition/login/en/Login',
+        name: 'exhibition/login/en/Login',
         meta: {auth: true, title: "用户登录", operation: true},
         component: resolve => require(['@/views/exhibition/login/en/Login'], resolve)
       }
     ],
-    redirect:'/login/en/Login'
+    redirect:'/exhibition/login/en/Login'
   },
   //----------展馆平面图无登录查看----------
   {
