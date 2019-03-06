@@ -389,7 +389,7 @@
             <el-row class="tr mb5">
               <el-col :span="9">
                 <el-form-item label="企业LOGO图标" style="text-align: left" class="is-required">
-                  <el-upload class="avatar-uploader" ref="uploadLogo" action="qyjs/upload" :data="upLoadLogoData" :on-success="logoPicSuccess"
+                  <el-upload class="avatar-uploader" ref="uploadLogo" :headers="myHeaders" action="http://localhost:8809/qyjs/upload" :data="upLoadLogoData" :on-success="logoPicSuccess"
                     :before-upload="LogoChange" :show-file-list="false">
                     <img v-if="qyjsForm.src!==''&& qyjsForm.src!==null" :src="qyjsForm.imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -435,7 +435,7 @@
                 <el-row class="tr">
                   <el-col :span="9">
                     <el-form-item label="产品图片" style="text-align: left" class="is-required">
-                      <el-upload class="avatar-uploader" ref="uploadCpPics" action="/qycpjs/upload" :on-success="cpjsPicSuccess" :before-upload="CpPicsChange"
+                      <el-upload class="avatar-uploader" ref="uploadCpPics" :headers="myHeaders" action="http://localhost:8809/qycpjs/upload" :on-success="cpjsPicSuccess" :before-upload="CpPicsChange"
                           :show-file-list="false" :data="CpjsUpLoadData">
                           <img @click="getIndex(index,domain.src)" v-if="domain.src!=='' && domain.src!==null" :src="domain.imageUrl" class="avatar">
                           <i v-else class="el-icon-plus avatar-uploader-icon" @click="getIndex(index)"></i>
@@ -981,13 +981,8 @@ export default {
       this.findInfoByUserid(this.currentUser.userid);
     } else {
       //管理员
-      this.findInfoByUserid(getQueryString("userid"));
-      var type = getQueryString("type");
-      if (type == "BJ") {
-        loadBreadcrumb("展会报名管理", "报名信息编辑");
-      } else {
-        loadBreadcrumb("展会报名管理", "报名信息新增");
-      }
+      this.findInfoByQyid(this.$route.query.id);
+      var type = this.$route.query.type;
     }
   },
   mounted: function() {
@@ -1073,13 +1068,26 @@ export default {
     },
     //通过userid查询基本信息数据
     findInfoByUserid: function(userid) {
-      let vm = this;
       this.loading = true;
       var params = {
         userid: userid,
         deleteFlag: "N"
       };
-      vm.$axios.post("/qyjbxx/doFindByUserid", params).then(
+      this.findInfoByVo(params);
+    },
+    //通过企业id查询基本信息数据（管理端）
+    findInfoByQyid: function(qyid){
+      this.loading = true;
+      var params = {
+        qyid: qyid,
+        deleteFlag: "N"
+      };
+      this.findInfoByVo(params);
+    },
+    //查询基本信息数据主体方法
+    findInfoByVo: function(params){
+      let vm = this;
+      vm.$axios.post("/qyjbxx/doFindByVo", params).then(
         function(res) {
           if (res.data.result != null && res.data.result != "") {
             if (
@@ -2342,7 +2350,6 @@ export default {
     },
     //邮箱验证表单提交
     yxformSubmit: function() {
-     // debugger;
       if (this.yxform.yzm == this.mailCodeReal) {
         this.mailCheck = true;
         this.checkedMailAddress = this.baseInforForm.dzyx1;
