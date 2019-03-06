@@ -7,7 +7,7 @@
           <div class="filed left">
             <router-link :to="{path:'/exhibition/login/ch/Administrator'}"><i class="iconfont icon-yonghu icou"></i></router-link>
             <span >用户登录</span>
-            <span class="signstyle">没有账户?<router-link :to="{path:'/login/ch/Register'}"><a>去注册</a></router-link></span>
+            <span class="signstyle">没有账户?<router-link :to="{path:'/exhibition/login/ch/Register'}"><a>去注册</a></router-link></span>
           </div>
           <el-form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">

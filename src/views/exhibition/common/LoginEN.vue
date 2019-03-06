@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     clk(){
-      this.$router.push({ path: '/login/ch/Login' });
+      this.$router.push({ path: '/exhibition/login/ch/Login' });
     },
     zgclk(){
       this.$router.push({ path: '/plan/planAnonEN' });
