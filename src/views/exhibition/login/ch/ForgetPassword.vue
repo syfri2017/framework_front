@@ -150,14 +150,18 @@ $blackcolor: #2c2c2c;
 }
 
 .lgin {
-  margin-top: 2.5rem;
+  margin-top: 3.5rem;
   .el-button {
-    width: $widthlgbtn;
-    background-color: $bgcolor;
+    font-size:20px;
+    color:#fff;
+    width: 280px;
+    background-color: #ea2530;
   }
   .el-button:hover {
-    width: $widthlgbtn;
-    background-color: $bgcolor2;
+    font-size:20px;
+    color:#fff;
+    width: 280px;
+    background-color: #ea2530;
   }
 }
 
