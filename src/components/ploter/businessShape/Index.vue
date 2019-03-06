@@ -42,16 +42,16 @@
             })
         },
         watch: {
-            ploterConfig (cfg) {
-                if (cfg.businessShape && cfg.businessShape.enable) {
-                    // window.wrapHandshake.model['updateBusinessData'] = this.updateBusinessData
-                    // window.wrapHandshake.model['updateBusinessRecord'] = this.updateBusinessRecord
-                    this.onStageReady()
-                    setTimeout(() => {
-                        this.getBusinessData(this.wrapStageData.uuid)
-                    }, 1000)
-                }
-            },
+            // ploterConfig (cfg) {
+            //     if (cfg.businessShape && cfg.businessShape.enable) {
+            //         // window.wrapHandshake.model['updateBusinessData'] = this.updateBusinessData
+            //         // window.wrapHandshake.model['updateBusinessRecord'] = this.updateBusinessRecord
+            //         this.onStageReady()
+            //         setTimeout(() => {
+            //             this.getBusinessData(this.wrapStageData.uuid)
+            //         }, 1000)
+            //     }
+            // },
             componentsBusinessShapeData: {
                 handler (data) {
                     this.updateStageFromBusinessData(data)
@@ -67,7 +67,7 @@
             // 
             // window.wrapHandshake.model['updateBusinessData'] = this.updateBusinessData
             // window.wrapHandshake.model['updateBusinessRecord'] = this.updateBusinessRecord
-            //0227  this.onStageReady()
+            // this.onStageReady()
             setTimeout(() => {
                 this.getBusinessData(this.wrapStageData.uuid)
             }, 1000)
@@ -75,6 +75,13 @@
         methods: {
             onStageReady () {
                 if (window.ploterStage) {
+                    
+                    window.ploterStage.off('evt_stage_element_dblclick')
+                    window.ploterStage.off('evt_stage_element_changed')
+                    window.ploterStage.off('evt_stage_element_contextmenu')
+                    window.ploterStage.off('evt_stage_element_mouseenter')
+                    window.ploterStage.off('evt_stage_element_mouseleave')
+
                     window.ploterStage.on('evt_stage_element_dblclick', this.onStageElementDblclick)
                     window.ploterStage.on('evt_stage_element_changed', this.onStageElementChanged)
                     window.ploterStage.on('evt_stage_element_contextmenu', this.onStageElementContextmenu)
@@ -101,6 +108,7 @@
                 }
             },
             onStageElementChanged (event) {
+                
                 const shapeUuid = event.element.getAttr('shapeUuid')
                 const shapeCfg = event.element.getAttr('_shapeCfg')
                 if (!shapeCfg.businessShape) return
@@ -189,6 +197,7 @@
                     }
                     features.push(featureItem)
                 })
+                
                 drawLib.shapesFeatureChange(features)
             },
             handlerModelCancel () {

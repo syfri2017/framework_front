@@ -2380,7 +2380,7 @@ export default {
     //邮箱验证表单提交
     yxformSubmit: function() {
       if (this.yxform.yzm == this.mailCodeReal) {
-        debugger;
+        
         this.mailCheck = true;
         this.checkedMailAddress = this.baseInforForm.dzyx1;
         this.dialogYxFormVisible = false;
@@ -2411,7 +2411,7 @@ export default {
       } else {
         //查询邮箱是否注册
         vm.$axios.get("/qyjbxx/getMailNum/" + vm.baseInforForm.dzyx1 + "/static").then(function(res) {
-          debugger;
+          
               //session失效
               if (res.data.result == undefined) {
                 vm.$confirm("用户登陆超时，请重新登陆。", "提示", {

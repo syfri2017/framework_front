@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="display:flex;flex:1;flex-direction: column;">
     <Layout id="AppViewport">
       <Content class="app-body">
         <div class="app-ploter-main">
@@ -631,6 +631,7 @@ export default {
       const me = this;
       if (window.ploterStage) {
         window.ploterStage.destroy();
+        window.ploterStage = null
       }
       function onWindowReady() {
         if (window.innerWidth > 0) {
@@ -647,6 +648,7 @@ export default {
           const stage = Konva.Node.create(data, wrap);
           me.stage = stage;
           window.ploterStage = stage;
+          
           //  stage 存到store
           me.$store.commit("updatePloterStage", stage);
           me.setStageLayout();

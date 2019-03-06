@@ -146,7 +146,6 @@ function draw (stage, eventPoint, cfg, drawn) {
                         element: shapeWrap
                     })
                 })
-
                 stage.fire('evt_stage_element_changed', {
                     changeType: 'add',
                     element: shapeWrap
@@ -192,7 +191,7 @@ function applyFeature (shape, option) {
             }
         }
     }
-
+    
     if (textShape) {
         for (const key in option.textShape) {
             if (key !== 'fields') {

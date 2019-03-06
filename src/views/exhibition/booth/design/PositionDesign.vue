@@ -11,5 +11,9 @@ export default {
 </script>
 
 <style>
-
+#PositionDesign {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 </style>

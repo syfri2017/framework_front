@@ -213,8 +213,9 @@ function shapesFeatureChange (features) {
 }
 function checkShapeFeatureApplyEnd () {
     if (window.moftPloter.shapeFeatureChangeCount === 0) {
+        
         let shapesLayer = window.ploterStage.findOne('.shapesLayer')
-        shapesLayer.batchDraw()
+        shapesLayer.draw()
         // editCmd.setNewValue(shapeGroup)
         // window.plotstack.execute(editCmd)
     } else {
@@ -227,6 +228,7 @@ function checkShapeFeatureApplyEnd () {
 function applyFeature (shape, option) {
     if (isEmpty(shape)) return
     if (isEmpty(option)) return
+
     const shapeWrap = shape.findAncestor('.shapeWrap')
     const shapeCfg = shapeWrap.getAttr('_shapeCfg')
 

@@ -8,6 +8,7 @@ export default {
     },
     actions: {
         addBusinessRecord ({ getters, commit }, data) {
+            
             let businessShapeData = getters.componentsBusinessShapeData
             if (data) {
                 businessShapeData.push(data)
@@ -16,9 +17,10 @@ export default {
         },
         updateBusinessRecord ({ getters, commit }, data) {
             let businessShapeData = getters.componentsBusinessShapeData
-            let record = businessShapeData.find(item => {
+            let index = businessShapeData.findIndex(item => {
                 return item.shapeUuid === data.shapeUuid
             })
+            let record = businessShapeData[index]
             if (record) {
                 for (const key in data) {
                     if (data.hasOwnProperty(key)) {
@@ -26,6 +28,7 @@ export default {
                         record[key] = value
                     }
                 }
+                
                 commit('updateBusinessShapeData', businessShapeData)
             }
         },
