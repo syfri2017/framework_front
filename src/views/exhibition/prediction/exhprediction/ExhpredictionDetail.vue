@@ -18,19 +18,23 @@
                 </h3>
               </div>
               <dl>
-                <i class="iconfont icon-shuzi"></i>
-                <dt v-if="!isENG" class="dib inform-small-title detail_margin">统一社会信用代码：</dt>
-                <dd v-if="!isENG" class="dtdlStyle" v-text="kpxxData.tyshxydm||'无'"></dd>
-                <br v-if="!isENG">
+                <div v-if="!isENG">
+                  <i class="iconfont icon-shuzi"></i>
+                  <dt class="dib inform-small-title detail_margin">统一社会信用代码：</dt>
+                  <dd class="dtdlStyle" v-text="kpxxData.tyshxydm||'无'"></dd>
+                  <br>
+                </div>
                 <i class="iconfont icon-jieshao"></i>
                 <dt class="dib inform-small-title detail_margin">企业简介：</dt>
                 <dd class="dtdlStyle" v-if="qyjsData!==null" v-text="qyjsData.qyjj||'无'"></dd>
                 <dd class="dtdlStyle" v-else>无</dd>
                 <br>
-                <i class="iconfont icon-yingwen"></i>
-                <dt class="dib inform-small-title detail_margin">企业英文简介：</dt>
-                <dd class="dtdlStyle" v-if="qyjsData!==null" v-text="qyjsData.reserve1||'无'"></dd>
-                <dd class="dtdlStyle" v-else>无</dd>
+                <div v-if="!isENG">
+                  <i class="iconfont icon-yingwen"></i>
+                  <dt class="dib inform-small-title detail_margin">企业英文简介：</dt>
+                  <dd class="dtdlStyle" v-if="qyjsData!==null" v-text="qyjsData.reserve1||'无'"></dd>
+                  <dd class="dtdlStyle" v-else>无</dd>
+                </div>
               </dl>
             </div>
           </el-col>
