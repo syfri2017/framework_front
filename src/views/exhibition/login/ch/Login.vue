@@ -133,7 +133,11 @@ export default {
             localStorage.setItem('XTOKEN',  res.data.data.token);
             localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
             this.CONSTANT.currentUser = res.data.data.currentUser;
-            this.$router.push({ path: '/index' });
+            if (res.data.data.currentUser.deptid == 'ZSYH') {
+              this.$router.push({ name: 'exhpredictionEdit' });
+            } else {
+              this.$router.push({ path: '/index' });
+            }
           } else if (res.data.code == '22222222') {
             this.$message.error("账号不存在");
           } else if (res.data.code == '33333333') {
