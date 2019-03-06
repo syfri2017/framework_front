@@ -108,7 +108,7 @@ export default {
     /* width: auto;
     height: 100%; */
     /* padding: 10px; */
-    /* overflow-y: hidden; */
+    overflow-y: scroll;
     box-sizing: border-box;
 }
 
