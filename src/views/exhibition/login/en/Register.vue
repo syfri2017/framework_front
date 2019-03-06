@@ -7,7 +7,7 @@
         <div class="filed left">
           <i class="iconfont icou"></i>
           <span>User Registration</span>
-          <span class="signstyle">Existing Accounts?<router-link :to="{path:'/login/en/login'}"><a>Go Login</a></router-link>
+          <span class="signstyle">Existing Accounts?<router-link :to="{path:'/exhibition/login/en/login'}"><a>Go Login</a></router-link>
           </span>
         </div>
 

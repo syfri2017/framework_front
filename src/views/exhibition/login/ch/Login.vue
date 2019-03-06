@@ -5,7 +5,7 @@
       <el-col :span="8" style="text-align:-webkit-center">
         <div class="login-form" >
           <div class="filed left">
-            <router-link :to="{path:'/login/ch/Administrator'}"><i class="iconfont icon-yonghu icou"></i></router-link>
+            <router-link :to="{path:'/exhibition/login/ch/Administrator'}"><i class="iconfont icon-yonghu icou"></i></router-link>
             <span >用户登录</span>
             <span class="signstyle">没有账户?<router-link :to="{path:'/login/ch/Register'}"><a>去注册</a></router-link></span>
           </div>
@@ -22,7 +22,7 @@
               <input type="button"  class="verification1 bk" id="code" @click="createCode"  v-model="checkCode"/>
             </div>
             <div class="filed right">
-              <span class="muchtab"><router-link :to="{path:'/login/ch/ForgetUsername'}"><a>忘记用户名</a></router-link>  |  <router-link :to="{path:'/login/ch/ForgetPassword'}"><a>忘记密码</a></router-link>  |  <router-link :to="{path:'/login/ch/Reset'}"><a>重置账户</a></router-link></span>
+              <span class="muchtab"><router-link :to="{path:'/exhibition/login/ch/ForgetUsername'}"><a>忘记用户名</a></router-link>  |  <router-link :to="{path:'/exhibition/login/ch/ForgetPassword'}"><a>忘记密码</a></router-link>  |  <router-link :to="{path:'/exhibition/login/ch/Reset'}"><a>重置账户</a></router-link></span>
             </div>
             <div class="filed lgin">
               <el-button type="danger" @click="GLYlogin" round>登录</el-button>

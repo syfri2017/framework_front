@@ -8,7 +8,7 @@
           <i class="iconfont icou"></i>
           <span>用户注册</span>
           <span class="signstyle">没有账户?
-            <router-link :to="{path:'/login/ch/login'}">
+            <router-link :to="{path:'/exhibition/login/ch/login'}">
               <a>去登录</a>
             </router-link>
           </span>

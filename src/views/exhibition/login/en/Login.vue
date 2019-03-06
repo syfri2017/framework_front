@@ -7,7 +7,7 @@
           <div class="filed left">
             <i class="iconfont icou"></i>
             <span >User Login</span>
-            <span class="signstyle">No Account?<router-link :to="{path:'/login/en/Register'}"><a>To Register</a></router-link></span>
+            <span class="signstyle">No Account?<router-link :to="{path:'/exhibition/login/en/Register'}"><a>To Register</a></router-link></span>
           </div>
           <el-form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
@@ -22,7 +22,7 @@
               <input type="button"  class="verification1 bk" id="code" @click="createCode"  v-model="checkCode"/>
             </div>
             <div class="filed right">
-              <span class="muchtab"><router-link :to="{path:'/login/en/ForgetUsername'}"><a>Forget Your Username</a></router-link>  |  <router-link :to="{path:'/login/en/ForgetPassword'}"><a>Forget Your Password</a></router-link></span>
+              <span class="muchtab"><router-link :to="{path:'/exhibition/login/en/ForgetUsername'}"><a>Forget Your Username</a></router-link>  |  <router-link :to="{path:'/exhibition/login/en/ForgetPassword'}"><a>Forget Your Password</a></router-link></span>
             </div>
             <div class="filed lgin">
               <el-button type="danger" @click="GLYlogin" round>Login</el-button>

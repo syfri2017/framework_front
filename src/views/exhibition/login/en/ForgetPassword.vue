@@ -7,7 +7,7 @@
           <div class="filed left">
             <i class="iconfont icou"></i>
             <span>Password Modification</span>
-            <span class="signstyle"><router-link :to="{path:'/login/en/login'}"><a>Return Login</a></router-link></span>
+            <span class="signstyle"><router-link :to="{path:'/exhibition/login/en/login'}"><a>Return Login</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
