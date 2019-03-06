@@ -389,7 +389,7 @@
             <el-row class="tr mb5">
               <el-col :span="9">
                 <el-form-item label="企业LOGO图标" style="text-align: left" class="is-required">
-                  <el-upload class="avatar-uploader" ref="uploadLogo" action="qyjs/upload" :data="upLoadLogoData" :on-success="logoPicSuccess"
+                  <el-upload class="avatar-uploader" ref="uploadLogo" :headers="myHeaders" action="http://localhost:8809/qyjs/upload" :data="upLoadLogoData" :on-success="logoPicSuccess"
                     :before-upload="LogoChange" :show-file-list="false">
                     <img v-if="qyjsForm.src!==''&& qyjsForm.src!==null" :src="qyjsForm.imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -435,7 +435,7 @@
                 <el-row class="tr">
                   <el-col :span="9">
                     <el-form-item label="产品图片" style="text-align: left" class="is-required">
-                      <el-upload class="avatar-uploader" ref="uploadCpPics" action="/qycpjs/upload" :on-success="cpjsPicSuccess" :before-upload="CpPicsChange"
+                      <el-upload class="avatar-uploader" ref="uploadCpPics" :headers="myHeaders" action="http://localhost:8809/qycpjs/upload" :on-success="cpjsPicSuccess" :before-upload="CpPicsChange"
                           :show-file-list="false" :data="CpjsUpLoadData">
                           <img @click="getIndex(index,domain.src)" v-if="domain.src!=='' && domain.src!==null" :src="domain.imageUrl" class="avatar">
                           <i v-else class="el-icon-plus avatar-uploader-icon" @click="getIndex(index)"></i>
@@ -488,7 +488,6 @@
       </div>
     
       <!--企业参展展位需求意向-->
-      <!--
       <div id="xqyxView" class="pt15" v-show="isXqyxShow">
         <el-row class="mb5" style="border-bottom:1px solid #463132;line-height: 29px;">
           <el-col :span="24">
@@ -497,53 +496,48 @@
         </el-row>
         <el-form class="el-form demo-form-inline" ref="xqyxForm" :model="xqyxForm" label-width="150px" label-position="right">
           <el-row class="tr mb5">
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-              <el-label class="mr5 vbm yxLabel">标准展位（每个12 平方米）</el-label>
+            <el-col :span="8">
+              <span class="mr5 vbm yxLabel">标准展位（每个12 平方米）</span>
             </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <el-input-number size="small" v-model="xqyxForm.bzzwgs" :min="0" :max="6" :precision="0" placeholder="标准展位"></el-input-number>
             </el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" style="text-align: left">
-              <el-label class="mr5 vbm yxLabel">&nbsp;&nbsp;个</el-label>
+            <el-col :span="2" style="text-align: left">
+              <span class="mr5 vbm yxLabel">&nbsp;&nbsp;个</span>
             </el-col>
           </el-row>
           <el-row class="tr mb5">
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-              <el-label class="mr5 vbm yxLabel">室内光地展位（需要特装搭建，24平方米起）</el-label>
+            <el-col :span="8">
+              <span class="mr5 vbm yxLabel">室内光地展位（需要特装搭建，24平方米起）</span>
             </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <el-input-number size="small" v-model="xqyxForm.sngdzw" :min="24" :max="1000" :precision="0" placeholder="室内光地展位"></el-input-number>
             </el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" style="text-align: left">
-              <el-label class="mr5 vbm yxLabel">&nbsp;&nbsp;平方米</el-label>
+            <el-col :span="2" style="text-align: left">
+              <span class="mr5 vbm yxLabel">&nbsp;&nbsp;平方米</span>
             </el-col>
           </el-row>
           <el-row class="tr mb5">
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-              <el-label class="mr5 vbm yxLabel">室外光地展位（仅限<span style="color: red">举高</span>消防车类）</el-label>
+            <el-col :span="8">
+              <span class="mr5 vbm yxLabel">室外光地展位（仅限<span style="color: red">举高</span>消防车类）</span>
             </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <el-input-number size="small" v-model="xqyxForm.swgdzw" :min="0" :max="2000" :precision="0" placeholder="室外光地展位"></el-input-number>
             </el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" style="text-align: left">
-              <el-label class="mr5 vbm yxLabel">&nbsp;&nbsp;平方米</el-label>
+            <el-col :span="2" style="text-align: left">
+              <span class="mr5 vbm yxLabel">&nbsp;&nbsp;平方米</span>
             </el-col>
           </el-row>
-          <el-row class="mt20 mb20">
-            <el-form class="el-form demo-form-inline">
-              <el-row>
-                <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
-                  <el-button type="info" icon="el-icon-arrow-left" size="small" class="btn_submit" @click="cancelXqyx()">上一步</el-button>
-                  <el-button type="success" size="small" class="btn_submit" @click="submitXqyx()">下一步&nbsp;
-                    <i class="el-icon-arrow-right"></i>
-                  </el-button>
-                </el-col>
-              </el-row>
-            </el-form>
+          <el-row class="buttonSubmit">
+            <el-col :span="24">
+              <el-button type="info" icon="el-icon-arrow-left" size="small" class="btn_submit" @click="cancelXqyx()">上一步</el-button>
+              <el-button type="success" size="small" class="btn_submit" @click="submitXqyx()">下一步&nbsp;
+                <i class="el-icon-arrow-right"></i>
+              </el-button>
+            </el-col>
           </el-row>
         </el-form>
       </div>
-      -->
       <!--手机验证dialog-->
       <el-dialog title="手机号码验证" :visible.sync="dialogSjFormVisible" @close="closeDialog()" :close-on-click-modal="false">
         <el-form class="el-form demo-form-inline" ref="sjform" :model="sjform" label-position="right" label-width="120px" :rules="sjformRules">
@@ -683,7 +677,12 @@ export default {
         reserve1: ""
       },
       //需求意向表单
-      xqyxForm: [],
+      xqyxForm: {
+        bzzwgs:"",
+        sngdzw:"",
+        swgdzw:""
+
+      },
       //基本信息显示标识
       isJbxxShow: true,
       //开票信息显示标识
@@ -981,13 +980,8 @@ export default {
       this.findInfoByUserid(this.currentUser.userid);
     } else {
       //管理员
-      this.findInfoByUserid(getQueryString("userid"));
-      var type = getQueryString("type");
-      if (type == "BJ") {
-        loadBreadcrumb("展会报名管理", "报名信息编辑");
-      } else {
-        loadBreadcrumb("展会报名管理", "报名信息新增");
-      }
+      this.findInfoByQyid(this.$route.query.id);
+      var type = this.$route.query.type;
     }
   },
   mounted: function() {
@@ -1073,13 +1067,26 @@ export default {
     },
     //通过userid查询基本信息数据
     findInfoByUserid: function(userid) {
-      let vm = this;
       this.loading = true;
       var params = {
         userid: userid,
         deleteFlag: "N"
       };
-      vm.$axios.post("/qyjbxx/doFindByUserid", params).then(
+      this.findInfoByVo(params);
+    },
+    //通过企业id查询基本信息数据（管理端）
+    findInfoByQyid: function(qyid){
+      this.loading = true;
+      var params = {
+        qyid: qyid,
+        deleteFlag: "N"
+      };
+      this.findInfoByVo(params);
+    },
+    //查询基本信息数据主体方法
+    findInfoByVo: function(params){
+      let vm = this;
+      vm.$axios.post("/qyjbxx/doFindByVo", params).then(
         function(res) {
           if (res.data.result != null && res.data.result != "") {
             if (
@@ -1918,21 +1925,19 @@ export default {
             //信息填写完整
             var tempList = [];
             for (var i in vm.qyjsForm.qycpjsVOList) {
-              var cpjj_temp = vm.qyjsForm.qycpjsVOList[i].cpjj;
+              var qycpjsVO = vm.qyjsForm.qycpjsVOList[i];
               //产品类型级联下拉处理
-              if (vm.qyjsForm.qycpjsVOList[i].cplx == "object" 
-                  && vm.qyjsForm.qycpjsVOList[i].cplx.constructor == Array 
-                  && vm.qyjsForm.qycpjsVOList[i].cplx.length > 0) {
-                var length = vm.qyjsForm.qycpjsVOList[i].cplx.length;
-                var cplx_temp = vm.qyjsForm.qycpjsVOList[i].cplx[length - 1];
+              if (qycpjsVO.cplx.constructor == Array && qycpjsVO.cplx.length > 0) {
+                var length = qycpjsVO.cplx.length;
+                var cplx_temp = qycpjsVO.cplx[length - 1];
               }
               var obj_temp = {
-                uuid: vm.qyjsForm.qycpjsVOList[i].uuid,
+                uuid: qycpjsVO.uuid,
                 qyid: vm.qyid,
-                src: vm.qyjsForm.qycpjsVOList[i].src,
+                src: qycpjsVO.src,
                 cplx: cplx_temp,
-                cpjj: cpjj_temp,
-                reserve1: vm.qyjsForm.qycpjsVOList[i].reserve1
+                cpjj: qycpjsVO.cpjj,
+                reserve1: qycpjsVO.reserve1
               };
               tempList.push(obj_temp);
             }
@@ -2342,7 +2347,6 @@ export default {
     },
     //邮箱验证表单提交
     yxformSubmit: function() {
-     // debugger;
       if (this.yxform.yzm == this.mailCodeReal) {
         this.mailCheck = true;
         this.checkedMailAddress = this.baseInforForm.dzyx1;
