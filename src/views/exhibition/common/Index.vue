@@ -87,7 +87,6 @@ export default {
 .el-main {
   padding: 0;
 }
-
 .content-box {
     /* position: absolute;
     left: 240px;

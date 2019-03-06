@@ -5,7 +5,8 @@ window.config = {
     'selectRefreshTime':'120000', //选择展位更新时间
     'anontRefreshTime':'120000' ,//查看展位更新时间
     'showHideTime': '2018-12-27 9:25:34'// 显示内部展位时间
-  }
+  },
+  baseUrl:"http://localhost:8090"
    //baseURL: 'http://192.168.1.119'
   // baseURL: 'http://localhost/' // 本地mock数据地址配置
 }

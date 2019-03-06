@@ -71,5 +71,31 @@ export default {
     Vue.prototype.rowStyle = function() {
       return "height: 40px";
     }
+
+    //日期格式化
+    Vue.prototype.dateFormat = function(val){
+      var date = new Date(val);
+      if (date == undefined) {
+        return val;
+      }
+      var month = '' + (date.getMonth() + 1),
+        day = '' + date.getDate(),
+        year = date.getFullYear();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+
+      var newDate = [year, month, day].join('-');
+      return newDate;
+    }
+
+    //字符串每4位加一个空格
+    Vue.prototype.longNumFormat = function(val){
+      if(val == null){
+          return null;
+      }else{
+          return val.replace(/(.{4})/g,'$1 ');
+      }
+    }
   }
 }
