@@ -488,7 +488,6 @@
       </div>
     
       <!--企业参展展位需求意向-->
-      <!--
       <div id="xqyxView" class="pt15" v-show="isXqyxShow">
         <el-row class="mb5" style="border-bottom:1px solid #463132;line-height: 29px;">
           <el-col :span="24">
@@ -497,53 +496,48 @@
         </el-row>
         <el-form class="el-form demo-form-inline" ref="xqyxForm" :model="xqyxForm" label-width="150px" label-position="right">
           <el-row class="tr mb5">
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-              <el-label class="mr5 vbm yxLabel">标准展位（每个12 平方米）</el-label>
+            <el-col :span="8">
+              <span class="mr5 vbm yxLabel">标准展位（每个12 平方米）</span>
             </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <el-input-number size="small" v-model="xqyxForm.bzzwgs" :min="0" :max="6" :precision="0" placeholder="标准展位"></el-input-number>
             </el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" style="text-align: left">
-              <el-label class="mr5 vbm yxLabel">&nbsp;&nbsp;个</el-label>
+            <el-col :span="2" style="text-align: left">
+              <span class="mr5 vbm yxLabel">&nbsp;&nbsp;个</span>
             </el-col>
           </el-row>
           <el-row class="tr mb5">
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-              <el-label class="mr5 vbm yxLabel">室内光地展位（需要特装搭建，24平方米起）</el-label>
+            <el-col :span="8">
+              <span class="mr5 vbm yxLabel">室内光地展位（需要特装搭建，24平方米起）</span>
             </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <el-input-number size="small" v-model="xqyxForm.sngdzw" :min="24" :max="1000" :precision="0" placeholder="室内光地展位"></el-input-number>
             </el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" style="text-align: left">
-              <el-label class="mr5 vbm yxLabel">&nbsp;&nbsp;平方米</el-label>
+            <el-col :span="2" style="text-align: left">
+              <span class="mr5 vbm yxLabel">&nbsp;&nbsp;平方米</span>
             </el-col>
           </el-row>
           <el-row class="tr mb5">
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-              <el-label class="mr5 vbm yxLabel">室外光地展位（仅限<span style="color: red">举高</span>消防车类）</el-label>
+            <el-col :span="8">
+              <span class="mr5 vbm yxLabel">室外光地展位（仅限<span style="color: red">举高</span>消防车类）</span>
             </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <el-input-number size="small" v-model="xqyxForm.swgdzw" :min="0" :max="2000" :precision="0" placeholder="室外光地展位"></el-input-number>
             </el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" style="text-align: left">
-              <el-label class="mr5 vbm yxLabel">&nbsp;&nbsp;平方米</el-label>
+            <el-col :span="2" style="text-align: left">
+              <span class="mr5 vbm yxLabel">&nbsp;&nbsp;平方米</span>
             </el-col>
           </el-row>
-          <el-row class="mt20 mb20">
-            <el-form class="el-form demo-form-inline">
-              <el-row>
-                <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
-                  <el-button type="info" icon="el-icon-arrow-left" size="small" class="btn_submit" @click="cancelXqyx()">上一步</el-button>
-                  <el-button type="success" size="small" class="btn_submit" @click="submitXqyx()">下一步&nbsp;
-                    <i class="el-icon-arrow-right"></i>
-                  </el-button>
-                </el-col>
-              </el-row>
-            </el-form>
+          <el-row class="buttonSubmit">
+            <el-col :span="24">
+              <el-button type="info" icon="el-icon-arrow-left" size="small" class="btn_submit" @click="cancelXqyx()">上一步</el-button>
+              <el-button type="success" size="small" class="btn_submit" @click="submitXqyx()">下一步&nbsp;
+                <i class="el-icon-arrow-right"></i>
+              </el-button>
+            </el-col>
           </el-row>
         </el-form>
       </div>
-      -->
       <!--手机验证dialog-->
       <el-dialog title="手机号码验证" :visible.sync="dialogSjFormVisible" @close="closeDialog()" :close-on-click-modal="false">
         <el-form class="el-form demo-form-inline" ref="sjform" :model="sjform" label-position="right" label-width="120px" :rules="sjformRules">
@@ -683,7 +677,12 @@ export default {
         reserve1: ""
       },
       //需求意向表单
-      xqyxForm: [],
+      xqyxForm: {
+        bzzwgs:"",
+        sngdzw:"",
+        swgdzw:""
+
+      },
       //基本信息显示标识
       isJbxxShow: true,
       //开票信息显示标识
@@ -1926,21 +1925,19 @@ export default {
             //信息填写完整
             var tempList = [];
             for (var i in vm.qyjsForm.qycpjsVOList) {
-              var cpjj_temp = vm.qyjsForm.qycpjsVOList[i].cpjj;
+              var qycpjsVO = vm.qyjsForm.qycpjsVOList[i];
               //产品类型级联下拉处理
-              if (vm.qyjsForm.qycpjsVOList[i].cplx == "object" 
-                  && vm.qyjsForm.qycpjsVOList[i].cplx.constructor == Array 
-                  && vm.qyjsForm.qycpjsVOList[i].cplx.length > 0) {
-                var length = vm.qyjsForm.qycpjsVOList[i].cplx.length;
-                var cplx_temp = vm.qyjsForm.qycpjsVOList[i].cplx[length - 1];
+              if (qycpjsVO.cplx.constructor == Array && qycpjsVO.cplx.length > 0) {
+                var length = qycpjsVO.cplx.length;
+                var cplx_temp = qycpjsVO.cplx[length - 1];
               }
               var obj_temp = {
-                uuid: vm.qyjsForm.qycpjsVOList[i].uuid,
+                uuid: qycpjsVO.uuid,
                 qyid: vm.qyid,
-                src: vm.qyjsForm.qycpjsVOList[i].src,
+                src: qycpjsVO.src,
                 cplx: cplx_temp,
-                cpjj: cpjj_temp,
-                reserve1: vm.qyjsForm.qycpjsVOList[i].reserve1
+                cpjj: qycpjsVO.cpjj,
+                reserve1: qycpjsVO.reserve1
               };
               tempList.push(obj_temp);
             }
