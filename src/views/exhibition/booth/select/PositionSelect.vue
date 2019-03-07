@@ -11,6 +11,7 @@
                   :key="data.uuid"
                   @click="getStage(data.uuid,$event)"
                   class="app-ploter-tools-graphs-menu-item"
+                  v-bind:class="{'selected11': data.uuid=='B409603791EE41E4988C8177843810DB' }"
                 >{{data.zgmc}}</el-button>
               </div>
               <div class="ploter-navigation-tools">
@@ -666,9 +667,12 @@ export default {
         });
       }
       // 屏蔽画布上的浏览器右键菜单
-      me.$refs.plotStage.oncontextmenu = function() {
-        return false;
-      };
+      if(me.$refs.plotStage){
+          me.$refs.plotStage.oncontextmenu = function() {
+              return false;
+          };
+      }
+     
       // 浏览器调整大小后，重设画布布局
       window.addEventListener("resize", e => {
         me.onWindowResize();
@@ -974,6 +978,12 @@ export default {
   color: #fff;
   margin: 5px 3px 5px 0px;
 }
+//app-ploter-tools-graphs-menu-item el-button--default selected
+.el-button app-ploter-tools-graphs-menu-item el-button--default selected11 {
+  background : "#666666";
+  //disabled :
+}
+
 .app-editor-ploter-navigation {
   position: fixed;
   z-index: 9999;

@@ -422,9 +422,11 @@ export default {
         });
       }
       // 屏蔽画布上的浏览器右键菜单
-      me.$refs.plotStage.oncontextmenu = function() {
-        return false;
-      };
+      if(me.$refs.plotStage){
+          me.$refs.plotStage.oncontextmenu = function() {
+              return false;
+          };
+      }
       // 浏览器调整大小后，重设画布布局
       window.addEventListener("resize", e => {
         me.onWindowResize();
