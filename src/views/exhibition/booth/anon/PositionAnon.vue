@@ -725,8 +725,8 @@ export default {
   line-height: 0px;
   background: rgb(243, 26, 55);
   color: #fff;
-  margin: 5px 3px 5px 3px;
-  padding-left: 35px;
+  margin: 0px 3px 5px 3px;
+  // padding-left: 35px;
 }
 .app-ploter-tools-graphs-menu-item {
   height: 30px;
