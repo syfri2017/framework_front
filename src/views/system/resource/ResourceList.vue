@@ -119,7 +119,7 @@
 			<el-row>
 				<el-col :span="23">
 					<el-form-item label="资源类型" prop="type" class="is-required">
-						<el-select size="small" v-model="addForm.type" placeholder="请选择" class="searchSelect" clearable>
+						<el-select v-model="addForm.type" placeholder="请选择" class="searchSelect" clearable>
 							<el-option v-for="item in typeData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 						</el-select>
 					</el-form-item>
@@ -678,6 +678,12 @@ export default {
 </script>
 
 <style lang="scss">
+
+.el-select .el-input .el-input__inner{
+      height: 32px !important;
+      line-height: 32px  !important;
+}
+
 #resource{
   .custom-tree-node {
     flex: 1;
