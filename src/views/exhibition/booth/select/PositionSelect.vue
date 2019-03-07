@@ -144,7 +144,7 @@ export default {
     this.initZg();
     setInterval(() => {
       this.refresh();
-    }, window.config.booth.anontRefreshTime);
+    }, window.config.booth.selectRefreshTime);
   },
   methods: {
     //lxy 0225 开始
