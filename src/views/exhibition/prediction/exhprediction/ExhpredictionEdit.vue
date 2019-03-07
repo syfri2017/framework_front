@@ -404,7 +404,7 @@
                     <el-input type="textarea" :rows="2" maxlength="200" placeholder="企业简介" v-model="qyjsForm.qyjj" :onkeyup="checkWord(qyjsForm.qyjj,'qyjsLength','200')"></el-input>
                   </el-form-item>
                   <el-row>
-                    <div class="el-upload__tip">还可输入<span style="color: red" id="qyjsLength"></span>个字</div>
+                    <div class="el-upload__tip">还可输入<span style="color: red" id="qyjsLength">{{200-qyjsForm.qyjj.length}}</span>个字</div>
                   </el-row>
                 </el-row>
                 <el-row>
@@ -412,7 +412,10 @@
                     <el-input type="textarea" :rows="2" maxlength="500" placeholder="企业英文简介" v-model="qyjsForm.reserve1" :onkeyup="checkWord(qyjsForm.reserve1,'qyywjsLength','500')"></el-input>
                   </el-form-item>
                   <el-row>
-                    <div class="el-upload__tip">还可输入<span style="color: red" id="qyywjsLength"></span>个英文字符</div>
+                    <div class="el-upload__tip">还可输入
+                      <span v-if="qyjsForm.reserve1!=null" style="color: red" id="qyywjsLength">{{500-qyjsForm.reserve1.length}}</span>
+                      <span v-else style="color: red" id="qyywjsLength">500</span>
+                      个英文字符</div>
                   </el-row>
                 </el-row>
               </el-col>
@@ -486,7 +489,6 @@
           </el-col>
         </el-row>
       </div>
-    
       <!--企业参展展位需求意向-->
       <div id="xqyxView" class="pt15" v-show="isXqyxShow">
         <el-row class="mb5" style="border-bottom:1px solid #463132;line-height: 29px;">
@@ -678,10 +680,6 @@ export default {
       },
       //需求意向表单
       xqyxForm: {
-        bzzwgs:"",
-        sngdzw:"",
-        swgdzw:""
-
       },
       //基本信息显示标识
       isJbxxShow: true,
@@ -2459,9 +2457,7 @@ export default {
         this.kpxxForm.yhzh != "" &&
         this.kpxxForm.yhzh != null
       ) {
-        this.kpxxForm.yhzh = this.kpxxForm.yhzh
-          .replace(/\s/g, "")
-          .replace(/(\w{4})(?=\w)/g, "$1 ");
+        this.kpxxForm.yhzh = this.kpxxForm.yhzh.replace(/\s/g, "").replace(/(\w{4})(?=\w)/g, "$1 ");
       }
     },
     addBlankXydm: function() {
@@ -2470,22 +2466,10 @@ export default {
         this.kpxxForm.tyshxydm != "" &&
         this.kpxxForm.tyshxydm != null
       ) {
-        this.kpxxForm.tyshxydm = this.kpxxForm.tyshxydm
-          .replace(/\s/g, "")
-          .replace(/(\w{4})(?=\w)/g, "$1 ");
+        this.kpxxForm.tyshxydm = this.kpxxForm.tyshxydm.replace(/\s/g, "").replace(/(\w{4})(?=\w)/g, "$1 ");
       }
     },
-    //剩余多少个字
-    checkWord: function(text, name, maxlength) {
-      if (text != "" && text != null && text != undefined) {
-        var length = text.length;
-        var curr = maxlength - length;
-        var ele = document.getElementById(name);
-        if (ele != null) {
-          document.getElementById(name).innerHTML = curr.toString();
-        }
-      }
-    }
+    
 
 
   }

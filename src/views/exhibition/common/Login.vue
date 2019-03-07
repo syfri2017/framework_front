@@ -11,29 +11,19 @@
           <img class="titlestyle" src="/static/images/login/title.png">
         </p>
       </el-col>
-      <el-col :span="6" style="text-align:-webkit-center">
-        <p style="margin:30px 50px 0px 0px">
-          <span>
-            <i class="iconfont icon-help lana"></i>
-            <a class="lana" href="http://61.161.226.197:8090/templates/帮助手册.doc">帮助手册</a>
-          </span>
-          <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-          <span class="lana">中文</span>
-          <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-          <span class="lanb" @click="clk()">English</span>
-        </p>
-        <p style="margin:10px 0px 0px 80px;">
-          <span>
-            <i class="iconfont icon-help lana"></i>
-            <a class="lana" href="http://61.161.226.197:8090/templates/展馆图片.zip">下载展位图</a>
-          </span>
-        </p>
-        <p style="margin:10px 0px 0px 80px;background:rgba(0,0,0,0.3);color:#fff;">
-          <span>
-            <i class="iconfont icon-help lana"></i>
-            <a class="lana" @click="zgclk">查看展位图</a>
-          </span>
-        </p>
+      <el-col :span="2" class="market_out" style="position:fixed;right:0;text-align:left;margin:40px;">
+        
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="中文" name="first">
+              <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/帮助手册.doc">帮助手册</a></p>
+              <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana" @click="zgclk" style="background:rgba(0,0,0,0.2);padding:5px;">查看展位图</a></p>
+              <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/展馆图片.zip">下载展位图片</a></p>
+          </el-tab-pane>
+          <el-tab-pane label="English" name="second">
+              <span class="lanb" @click="clk()">English</span>
+          </el-tab-pane>
+        </el-tabs>
+
       </el-col>
     </el-row>
     <!-- <login></login> -->
@@ -54,12 +44,15 @@
       <el-tab-pane label="重置账户" name="fifth" :key="'fifth'">
         <reset></reset>
       </el-tab-pane>
+
+
+
     </el-tabs> -->
     <el-row class="footerstyle">
       <el-col :span="4">&nbsp;</el-col>
       <el-col :span="16" class="footer">
-        <div>建议使用谷歌、搜狗、360和火狐浏览器</div>
-        <div>如在登录、注册、信息录入时遇到问题，请联系技术支持024-31530337，分机号608；13998821420</div>
+        <p style="margin-bottom:-20px;">建议使用谷歌、搜狗、360和火狐浏览器</p>
+        <p>如在登录、注册、信息录入时遇到问题，请联系技术支持024-31530337，分机号608；13998821420</p>
       </el-col>
       <el-col :span="4">&nbsp;</el-col>
     </el-row>
@@ -89,6 +82,9 @@ export default {
     };
   },
   methods: {
+    handleClick(tab, event) {
+        console.log(tab, event);
+      },
     clk(){
       this.$router.push({ path: '/exhibition/login/en/Login' });
     },
@@ -109,7 +105,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 // @import '../../common/scss/all.scss';
+// 右侧中英文切换样式
+  
+.market_out{
+  .el-tabs__item{
+    color:red;
+  }
+} 
 $height: 22rem; //全局变量声明
 $width: 22rem;
 $heightimg: 8.75rem;
@@ -117,7 +121,7 @@ $widthimg: 8.75rem;
 $heighttitle: 90%;
 $widthtitle: 90%;
 $bottomfooter: 3.125rem;
-$heightfooter: 3.125rem;
+$heightfooter: 2.125rem;
 $widthlgbtn: 12rem;
 $line-heightfooter: 3.125rem;
 $widthfooter: 100%;
@@ -139,7 +143,8 @@ $blackcolor: #2c2c2c;
   overflow: hidden;
   overflow-y: auto;
   z-index: 1000;
-  background: url("/static/images/login/login.png") center 100% #65809d;
+  background: url("/static/images/login/gen.svg") no-repeat;
+  background-size:cover;
 
   * {
     font-size: 0.8rem;
@@ -172,7 +177,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lanb {
-  color: $blackcolor;
+  color: $whitecolor;
   font-size: 1rem;
   cursor: pointer;
 }
@@ -229,6 +234,10 @@ $blackcolor: #2c2c2c;
 }
 
 .footer {
+  p{
+    margin: 0px;
+    padding:0px;
+  }
   text-align: -webkit-center;
   color: $whitecolor;
   font-size: 1rem;

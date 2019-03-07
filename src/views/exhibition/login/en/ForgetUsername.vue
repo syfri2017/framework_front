@@ -7,7 +7,7 @@
           <div class="filed left">
             <i class="iconfont icou"></i>
             <span >Username Recovery</span>
-            <span class="signstyle"><router-link :to="{path:'/exhibition/login/en/login'}"><a>Back to Login</a></router-link></span>
+            <span class="signstyle"><router-link :to="{path:'/exhibition/login/en/login'}"><a @click="open()">Back to Login</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
@@ -44,6 +44,18 @@ export default {
     }
   },
   methods:{
+     //消息提示框
+      open() {
+        this.$alert('Unsaved data will be lost. Are you sure to return it?', 'Tips', {
+          confirmButtonText: 'Sure',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `Unsaved data will be lost!`
+            });
+          }
+        });
+      },
     //忘记用户名
         FUmailCheck() {
             if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.FUmail))) {
