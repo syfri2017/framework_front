@@ -1156,7 +1156,8 @@ margin-top:60px;
       padding: 4px;
       position: absolute;
       top: -8px;
-      left: 1300px;
+      // left: 1100px;
+      right:-240px;
     }
   }
 }
