@@ -17,6 +17,7 @@
                     :key="data.uuid"
                     @click="getStage(data.uuid,$event)"
                     class="app-ploter-tools-graphs-menu-item"
+                    v-bind:class="{'selected': data.uuid==$route.query.uuid }"
                   >{{data.zgmc}}</el-button>
                 </div>
                 <div class="ploter-navigation-tools">
@@ -559,6 +560,8 @@ export default {
     getStage(uuid,event) {
       const me = this;
       if (event) {
+        //删除展位平面图点击进来的默认展馆选中样式
+        this.$route.query.uuid=''
         this.lastEvent = event;
         if (this.lastEl) {
           this.lastEl.style.background = "#0684E5";
@@ -1277,5 +1280,8 @@ margin-top:60px;
 .clearfix {
   font-weight: bold;
   text-align: center;
+}
+.selected {
+  background : #666666;
 }
 </style>

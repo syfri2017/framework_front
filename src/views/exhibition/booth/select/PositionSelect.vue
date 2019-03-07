@@ -984,7 +984,6 @@ export default {
 .selected {
   background : #666666;
 }
-
 .app-editor-ploter-navigation {
   position: fixed;
   z-index: 9999;
