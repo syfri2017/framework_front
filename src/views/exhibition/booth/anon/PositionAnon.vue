@@ -21,13 +21,14 @@
         </div>
         <ComponentsBusinessShape @evt_stage_element_remove="doShapeDelete"/>
       </Content>
-      <appPloterWidgetMove></appPloterWidgetMove>
+      <appPloterWidgetMove  class="fx"></appPloterWidgetMove>
       <AppPloterWidgetScale
         v-if="stage"
         :stage="stage"
         @evtStageCfgChanged="onStageCfgChanged"
         @evtStageScaleChanged="onStageScaleChanged"
         @evtStageScaleReset="onStageScaleReset"
+        class="plusmin"
       ></AppPloterWidgetScale>
     </Layout>
   </div>
@@ -655,6 +656,13 @@ export default {
 @import "~@/assets/app.scss";
 </style>
 <style lang="scss" scoped>
+.fx{
+  margin-top:60px;
+}
+
+.plusmin{
+margin-top:60px;
+}
 .content[data-v-57ee01a8] {
   overflow-y: hidden;
 }
