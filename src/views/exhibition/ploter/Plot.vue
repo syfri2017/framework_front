@@ -282,6 +282,12 @@ export default {
   watch: {},
   created() {
     drawLib.initLocalSetting();
+    //关闭事件绑定
+    window.wrapHandshake.$off("evtStageElementSave");
+    window.wrapHandshake.$off("evtBusinessDataAllot");
+    window.wrapHandshake.$off("evtBusinessDataUnAllot");
+    window.wrapHandshake.$off("evtStageElementRemove");
+
     window.wrapHandshake.$on("evtStageElementSave", this.savePlotData);
     window.wrapHandshake.$on("evtBusinessDataAllot", this.allotBusinessData);
     window.wrapHandshake.$on(
@@ -481,7 +487,8 @@ export default {
       const me = this;
       var zwjbxxVO = {};
       var zwmkVO = {};
-      zwjbxxVO.uuid = businessData.businessUuid;
+      //zwjbxxVO.uuid = businessData.businessUuid;
+      zwjbxxVO.reserve1 = businessData.shapeUuid;
       zwmkVO.shapeUuid = businessData.shapeUuid;
       var params = {
         zwjbxxVO: zwjbxxVO,
@@ -512,8 +519,10 @@ export default {
         zwjbxxVO: this.plot2back(business),
         zwmkVO: shape
       };
+     console.log('保存 开始')
       me.$axios.post("/zwjbxx/doSaveByVO", params).then(
         function(res) {
+           console.log('保存')
           if (res.data.result) {
             var businessData = this.back2plot(res.data.result);
             //需要新增
@@ -523,6 +532,20 @@ export default {
               type: "success",
               center: true
             });
+          }else {
+                var msg = res.data.msg;
+                if (!msg) {
+                  msg = "保存展位失败！";
+                }
+                this.$alert(
+                  '<span style="color:red"><h3>' + msg + "</h3></span>",
+                  "注意",
+                  {
+                    confirmButtonText: "确定",
+                    type: "error",
+                    dangerouslyUseHTMLString: true
+                  }
+              )
           }
         }.bind(this),
         function(error) {

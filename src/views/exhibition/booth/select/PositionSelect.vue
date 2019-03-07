@@ -132,10 +132,11 @@ export default {
   watch: {},
   created() {
     drawLib.initLocalSetting();
+    window.wrapHandshake.$off("evtBusinessShapeSelected");
     window.wrapHandshake.$on(
       "evtBusinessShapeSelected",
       this.handlerBusinessShapeSelected
-    );
+    )
   },
   mounted() {
     this.getNow();
