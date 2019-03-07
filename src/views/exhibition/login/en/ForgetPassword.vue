@@ -7,7 +7,7 @@
           <div class="filed left">
             <i class="iconfont icou"></i>
             <span>Password Modification</span>
-            <span class="signstyle"><router-link :to="{path:'/exhibition/login/en/login'}"><a>Return Login</a></router-link></span>
+            <span class="signstyle"><router-link :to="{path:'/exhibition/login/en/login'}"><a @click="open()">Return Login</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
@@ -48,6 +48,18 @@ export default {
     }
   },
   methods:{
+       //消息提示框
+     open() {
+        this.$alert('Unsaved data will be lost. Are you sure to return it?', 'Tips', {
+          confirmButtonText: 'Sure',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `Unsaved data will be lost!`
+            });
+          }
+        });
+      },
    //忘记密码
         //B
         FPBmailCheck() {

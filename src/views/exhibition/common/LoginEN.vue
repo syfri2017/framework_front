@@ -11,30 +11,21 @@
           <img class="titlestyle" src="/static/images/login/title_en.png">
         </p>
       </el-col>
-      <el-col :span="6" style="text-align:-webkit-center">
-        <p style="margin:30px 50px 0px 0px">
-          <span>
-            <i class="iconfont icon-help lana"></i>
-            <a class="lana" href="http://61.161.226.197:8090/templates/帮助手册.doc">Help</a>
-          </span>
-          <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-          <span class="lana" @click="clk()">中文</span>
-          <a class="lan">&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-          <span class="lanb">English</span>
-        </p>
-        <p style="margin:10px 0px 0px -110px">
-          <span>
-            <i class="iconfont icon-help lana"></i>
-            <a class="lana" href="http://61.161.226.197:8090/templates/展馆图片.zip">Download Pavilion Pictures</a>
-          </span>
-        </p>
-        <p style="margin:10px 120px 0px 80px;background:rgba(0,0,0,0.3);color:#fff;">
-          <span>
-            <i class="iconfont icon-help lana"></i>
-            <a class="lana" @click="zgclk">View Booth Reservations</a>
-          </span>
-        </p>
+      <el-col :span="4" style="position:fixed;right:0;text-align:left;margin:40px;">
+        
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="Chinese" name="first">
+             <span class="lana" @click="clk()">Chinese</span>
+          </el-tab-pane>
+          <el-tab-pane label="English" name="second">
+              <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana" href="http://61.161.226.197:8090/templates/帮助手册.doc">Help</a></p>
+              <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana" @click="zgclk" style="background:rgba(0,0,0,0.2);padding:5px;">View Booth Reservations</a></p>
+              <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana" href="http://61.161.226.197:8090/templates/展馆图片.zip">Download Pavilion Pictures</a></p>
+          </el-tab-pane>
+        </el-tabs>
+
       </el-col>
+
     </el-row>
     <!-- <login></login> -->
     <router-view></router-view>
@@ -55,7 +46,7 @@ export default {
   data() {
     return {
       //默认第一个选项卡
-      activeName: "first"
+      activeName: "second"
     };
   },
   methods: {
@@ -127,7 +118,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lana {
-  color: $blackcolor;
+  color: $whitecolor;
   font-size: 1rem;
   cursor: pointer;
   letter-spacing: 0.1rem;

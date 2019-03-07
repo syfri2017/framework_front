@@ -1073,11 +1073,11 @@ export default {
 </style>
 <style lang="scss" scoped>
 .fx{
-  margin-top:40px;
+  margin-top:60px;
 }
 
 .plusmin{
-margin-top:40px;
+margin-top:60px;
 }
 
 #menu-toggle-btn {
@@ -1201,11 +1201,11 @@ margin-top:40px;
   // padding-left: 35px;
   &:hover {
     border: 0px;
-    height: 30px;
+    height: 10px;
     line-height: 0px;
     background: rgb(199, 89, 5);
     color: #fff;
-    margin: 5px 3px 5px 3px;
+    margin: 6px 3px 5px 5px;
     // padding-left: 35px;
   }
   &:focus {

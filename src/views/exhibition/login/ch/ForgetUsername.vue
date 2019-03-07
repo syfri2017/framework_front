@@ -7,7 +7,7 @@
           <div class="filed left">
             <i class="iconfont icou"></i>
             <span >用户名找回</span>
-            <span class="signstyle"><router-link :to="{path:'/exhibition/login/ch/login'}"><a>返回登录</a></router-link></span>
+            <span class="signstyle"><router-link :to="{path:'/exhibition/login/ch/login'}"><a @click="open()">返回登录</a></router-link></span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
@@ -50,6 +50,18 @@ export default {
     }
   },
   methods:{
+     //消息提示框
+     open() {
+        this.$alert('未保存的数据将丢失，确定返回吗？', '提示', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `未保存的数据将丢失！`
+            });
+          }
+        });
+      },
     //忘记用户名
     FUmailCheck() {
             if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.FUmail))) {

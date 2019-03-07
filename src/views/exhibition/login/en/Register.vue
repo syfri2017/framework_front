@@ -7,7 +7,7 @@
         <div class="filed left">
           <i class="iconfont icou"></i>
           <span>User Registration</span>
-          <span class="signstyle">Existing Accounts?<router-link :to="{path:'/exhibition/login/en/login'}"><a>Go Login</a></router-link>
+          <span class="signstyle">Existing Accounts?<router-link :to="{path:'/exhibition/login/en/login'}"><a @click="open()">Go Login</a></router-link>
           </span>
         </div>
 
@@ -97,6 +97,18 @@ export default {
     };
   },
   methods: {
+     //消息提示框
+      open() {
+        this.$alert('Unsaved data will be lost. Are you sure to return it?', 'Tips', {
+          confirmButtonText: 'Sure',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `Unsaved data will be lost!`
+            });
+          }
+        });
+      },
     //注册
         mailCheck() {
             if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.mail))) {

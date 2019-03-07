@@ -9,7 +9,7 @@
           <span>用户注册</span>
           <span class="signstyle">没有账户?
             <router-link :to="{path:'/exhibition/login/ch/login'}">
-              <a>去登录</a>
+              <a @click="open()">去登录</a>
             </router-link>
           </span>
         </div>
@@ -104,7 +104,18 @@ export default {
   },
   methods: {
     //校验
-    
+     //消息提示框
+     open() {
+        this.$alert('未保存的数据将丢失，确定返回吗？', '提示', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `未保存的数据将丢失！`
+            });
+          }
+        });
+      },
     //注册
     mobileCheck() {
       if (!/^1[34578]\d{9}$/.test(this.mobile)) {
