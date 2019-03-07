@@ -979,8 +979,8 @@ export default {
   margin: 5px 3px 5px 0px;
 }
 //app-ploter-tools-graphs-menu-item el-button--default selected
-.el-button app-ploter-tools-graphs-menu-item el-button--default selected11 {
-  background : "#666666";
+ .selected11 {
+  background : #666 !important;
   //disabled :
 }
 
