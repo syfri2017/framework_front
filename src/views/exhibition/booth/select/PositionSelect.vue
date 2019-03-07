@@ -11,7 +11,7 @@
                   :key="data.uuid"
                   @click="getStage(data.uuid,$event)"
                   class="app-ploter-tools-graphs-menu-item"
-                  v-bind:class="{'selected11': data.uuid=='B409603791EE41E4988C8177843810DB' }"
+                  v-bind:class="{'selected': data.uuid==$route.query.uuid }"
                 >{{data.zgmc}}</el-button>
               </div>
               <div class="ploter-navigation-tools">
@@ -129,6 +129,7 @@ export default {
       stageSize: "stageSize",
       componentsBusinessShapeData: "componentsBusinessShapeData"
     })
+
   },
   watch: {},
   created() {
@@ -443,6 +444,8 @@ export default {
     getStage(uuid, event) {
       const me = this;
       if (event) {
+        //删除展位平面图点击进来的默认展馆选中样式
+        this.$route.query.uuid=''
         this.lastEvent = event;
         var el = event.currentTarget;
         if (!el && event.currentTargetRefresh) {
@@ -978,10 +981,8 @@ export default {
   color: #fff;
   margin: 5px 3px 5px 0px;
 }
-//app-ploter-tools-graphs-menu-item el-button--default selected
-.el-button app-ploter-tools-graphs-menu-item el-button--default selected11 {
-  background : "#666666";
-  //disabled :
+.selected {
+  background : #666666;
 }
 
 .app-editor-ploter-navigation {
