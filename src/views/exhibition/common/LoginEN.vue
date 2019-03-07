@@ -91,8 +91,8 @@ $blackcolor: #2c2c2c;
   overflow: hidden;
   overflow-y: auto;
   z-index: 1000;
-  background: url("/static/images/login/login.png") center 100% #65809d;
-
+  background: url("/static/images/login/gen.svg") no-repeat;
+  background-size:cover;
   * {
     font-size: 0.8rem;
   }
