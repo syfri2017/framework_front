@@ -368,7 +368,7 @@ export default {
       previewImg: "",
       qyid: "", //企业id
       userid: "",
-      pageShzt:"",
+      pageShzt: "",
       //企业基本信息
       jbxxData: {
         zwgsmc: "",
@@ -419,11 +419,11 @@ export default {
   },
   created: function() {
     this.loading = true;
-  //  this.getNow();
+    //  this.getNow();
     var type = this.$route.query.type;
     this.userid = this.$route.query.userid;
     this.getYxzwData();
-  //  this.tishi();
+    //  this.tishi();
   },
   methods: {
     /*
@@ -569,11 +569,11 @@ export default {
             vm.getQyjsData(vm.qyid);
             vm.getCpjsData(vm.qyid);
             // 内部特权是打开，否则注释掉
-          //  vm.isInternal();
+            //  vm.isInternal();
             // 开启展位选择
             if (vm.compareDate(vm.now, vm.kssj)) {
               if (vm.jbxxData.shzt == "03" && vm.sfkqzw) {
-              //  $("#imgDiv").show();
+                //  $("#imgDiv").show();
               }
             }
             vm.pageShzt = vm.jbxxData.shzt;
@@ -630,7 +630,8 @@ export default {
         function(res) {
           if (res.data.result != null) {
             this.qyjsData = res.data.result;
-            this.qyjsData.imageUrl = vm.baseUrl + "/upload/" + this.qyjsData.src;
+            this.qyjsData.imageUrl =
+              vm.baseUrl + "/upload/" + this.qyjsData.src;
           }
         }.bind(this),
         function(error) {
@@ -769,15 +770,19 @@ export default {
         userid: this.userid
       };
       //loadDivParam("prediction/exhprediction_edit", params);
-      this.$router.push({name:"exhpredictionUpdate", query: {userid: this.userid, type: 'BJ'}});
+      this.$router.push({
+        name: "exhpredictionUpdate",
+        query: { userid: this.userid, type: "BJ" }
+      });
     },
     submitClick: function() {
       let vm = this;
-      vm.$confirm("提交后仅可修改展位意向信息，其他信息不能修改", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
+      vm
+        .$confirm("提交后仅可修改展位意向信息，其他信息不能修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
         .then(() => {
           var params = {
             qyid: vm.qyid,
@@ -815,4 +820,85 @@ export default {
 </script>
 
 <style lang="scss">
+#exhpredictionConfirm {
+  #cpjs .el-form-item__content {
+    width: 100% !important;
+  }
+  #cpjsImg img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+  #cpjs .el-form-item:nth-child(even) {
+    margin-right: 0;
+  }
+  .inform-content .el-tabs__content {
+    padding: 20px 25px 20px 30px !important;
+  }
+  #previewImgDialog .el-dialog {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  #qyzwyx .el-input-number--small {
+    width: 300px;
+  }
+
+  .remark {
+    line-height: 14px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 80%;
+    z-index: 2;
+  }
+
+  /* .remarka{
+    width: 100%;
+}
+
+.row{
+    display: flex;
+    wrap:no-wrap;
+} */
+
+  .topScroll {
+    position: fixed;
+    top: 51px;
+    /* right:calc(50% - 216px); */
+    /* background:#fff; */
+    /* width: calc(100% - 60px); */
+    width: calc(100% - 300px);
+  }
+
+  .topScroll2 {
+    position: fixed;
+    top: 51px;
+    width: calc(100% - 300px);
+    color: #333;
+  }
+
+  .redFont {
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 24px;
+  }
+  .greenFont {
+    color: #67c23a;
+    border: 1px solid #67c23a;
+  }
+  .yellowFont {
+    color: #f7962f;
+    border: 1px solid #f7962f;
+  }
+  #cpjs .el-card__body {
+    height: 106px;
+  }
+  #option {
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    z-index: 2;
+    height: 50px;
+    width: 100%;
+  }
+}
 </style>
