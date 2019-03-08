@@ -18,7 +18,7 @@
         </el-button>
         <el-button type="danger" icon="el-icon-warning" v-if="editPage&&jbxxData.shzt==='03'&&zwxzzt==='01'" class="topScroll remark">
           已选展位:
-          <v-text v-text="yxzwxx"></v-text>
+          <span v-text="yxzwxx"></span>
           <i class="el-icon-warning"></i>
         </el-button>
       </el-row>
@@ -52,54 +52,54 @@
               <el-col :span="12">
                 <el-row class="mb10">
                   <strong>办公电话：</strong>
-                  <v-text v-text="jbxxData.bgdh||'无'"></v-text>
+                  <span v-text="jbxxData.bgdh||'无'"></span>
                 </el-row>
                 <el-row class="mb10">
                   <strong>传真：</strong>
-                  <v-text v-text="jbxxData.cz||'无'"></v-text>
+                  <span v-text="jbxxData.cz||'无'"></span>
                 </el-row>
                 <el-row class="mb10">
                   <strong>网址：</strong>
-                  <v-text v-text="jbxxData.wz||'无'"></v-text>
+                  <span v-text="jbxxData.wz||'无'"></span>
                 </el-row>
                 <el-row class="mb10">
                   <strong>电子邮箱：</strong>
-                  <v-text v-text="jbxxData.dzyx||'无'"></v-text>
+                  <span v-text="jbxxData.dzyx||'无'"></span>
                 </el-row>
                 <el-row class="mb10">
                   <strong>法人代表：</strong>
-                  <v-text v-text="jbxxData.frdb||'无'"></v-text>
+                  <span v-text="jbxxData.frdb||'无'"></span>
                 </el-row>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>中文公司名称：</strong>
-                <v-text v-text="jbxxData.zwgsmc||'无'"></v-text>
+                <span v-text="jbxxData.zwgsmc||'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>法人代表电话：</strong>
-                <v-text v-text="jbxxData.frdbdh||'无'"></v-text>
+                <span v-text="jbxxData.frdbdh||'无'"></span>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>英文公司名称：</strong>
-                <v-text v-text="jbxxData.ywgsmc||'无'"></v-text>
+                <span v-text="jbxxData.ywgsmc||'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>联系人：</strong>
-                <v-text v-text="jbxxData.lxr||'无'"></v-text>
+                <span v-text="jbxxData.lxr||'无'"></span>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>邮寄地址：</strong>
-                <v-text v-text="jbxxData.yjdz||'无'"></v-text>
+                <span v-text="jbxxData.yjdz||'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>联系人手机：</strong>
-                <v-text v-text="jbxxData.lxrsj||'无'"></v-text>
+                <span v-text="jbxxData.lxrsj||'无'"></span>
               </el-col>
             </el-row>
           </el-col>
@@ -116,31 +116,31 @@
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>展位编号：</strong>
-                <v-text v-text="data.zwh||'无'"></v-text>
+                <span v-text="data.zwh||'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>展位面积：</strong>
-                <v-text v-text="data.zwmj||'无'"></v-text>
+                <span v-text="data.zwmj||'无'"></span>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>横向长度：</strong>
-                <v-text v-text="data.zwcd||'无'"></v-text>
+                <span v-text="data.zwcd||'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>纵向长度：</strong>
-                <v-text v-text="data.zwkd||'无'"></v-text>
+                <span v-text="data.zwkd||'无'"></span>
               </el-col>
             </el-row>
             <el-row class="mb20">
               <el-col :span="12">
                 <strong>展位类型：</strong>
-                <v-text v-text="data.zwlb||'无'"></v-text>
+                <span v-text="data.zwlb||'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>出口类型：</strong>
-                <v-text v-text="data.cklx||'无'"></v-text>
+                <span v-text="data.cklx||'无'"></span>
               </el-col>
             </el-row>
           </el-col>
@@ -156,36 +156,36 @@
           <el-col :span="22">
             <el-row class="mb10">
               <strong>开票公司名称：</strong>
-              <v-text v-text="kpxxData.kpgsmc||'无'"></v-text>
+              <span v-text="kpxxData.kpgsmc||'无'"></span>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>开票类型：</strong>
-                <v-text v-text="kpxxData.kplxmc||'无'"></v-text>
+                <span v-text="kpxxData.kplxmc||'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>统一社会信用代码：</strong>
-                <v-text v-text="kpxxData.tyshxydm||'无'"></v-text>
+                <span v-text="kpxxData.tyshxydm||'无'"></span>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>公司地址：</strong>
-                <v-text v-text="kpxxData.gsdz||'无'"></v-text>
+                <span v-text="kpxxData.gsdz||'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>电话号码：</strong>
-                <v-text v-text="kpxxData.dhhm||'无'"></v-text>
+                <span v-text="kpxxData.dhhm||'无'"></span>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>开户银行：</strong>
-                <v-text v-text="kpxxData.khyh||'无'"></v-text>
+                <span v-text="kpxxData.khyh||'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>银行账号：</strong>
-                <v-text v-text="kpxxData.yhzh||'无'"></v-text>
+                <span v-text="kpxxData.yhzh||'无'"></span>
               </el-col>
             </el-row>
           </el-col>
@@ -201,56 +201,56 @@
           <el-col :span="22">
             <el-row class="mb10">
               <strong>公司性质：</strong>
-              <v-text v-text="wjdcData.gsxzmc||'无'"></v-text>
+              <span v-text="wjdcData.gsxzmc||'无'"></span>
             </el-row>
             <el-row class="mb10">
               <strong>主营产品：</strong>
-              <v-text v-text="wjdcData.zycp||'无'"></v-text>
+              <span v-text="wjdcData.zycp||'无'"></span>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>是否代理海外产品：</strong>
-                <v-text v-text="wjdcData.sfhwdlcp==1?'是':wjdcData.sfhwdlcp==0?'否':'无'"></v-text>
+                <span v-text="wjdcData.sfhwdlcp==1?'是':wjdcData.sfhwdlcp==0?'否':'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>海外代理产品品牌：</strong>
-                <v-text v-text="wjdcData.hwdlcppp||'无'"></v-text>
+                <span v-text="wjdcData.hwdlcppp||'无'"></span>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>是否高新技术企业：</strong>
-                <v-text v-text="wjdcData.sfgxjsqy==1?'是':wjdcData.sfgxjsqy==0?'否':'无'"></v-text>
+                <span v-text="wjdcData.sfgxjsqy==1?'是':wjdcData.sfgxjsqy==0?'否':'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>高新技术级别：</strong>
-                <v-text v-text="wjdcData.gxjsjbmc||'无'"></v-text>
+                <span v-text="wjdcData.gxjsjbmc||'无'"></span>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>是否获得行业信用等级：</strong>
-                <v-text v-text="wjdcData.sfhyxydj==1?'是':wjdcData.sfhyxydj==0?'否':'无'"></v-text>
+                <span v-text="wjdcData.sfhyxydj==1?'是':wjdcData.sfhyxydj==0?'否':'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>行业信用等级：</strong>
-                <v-text v-text="wjdcData.hyxydjmc||'无'"></v-text>
+                <span v-text="wjdcData.hyxydjmc||'无'"></span>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>发明专利(项)：</strong>
-                <v-text v-text="wjdcData.fmzl||'无'"></v-text>
+                <span v-text="wjdcData.fmzl||'无'"></span>
               </el-col>
               <el-col :span="12">
                 <strong>实用新型专利(项)：</strong>
-                <v-text v-text="wjdcData.syxxzl||'无'"></v-text>
+                <span v-text="wjdcData.syxxzl||'无'"></span>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
                 <strong>外观设计专利(项)：</strong>
-                <v-text v-text="wjdcData.wgsjzl||'无'"></v-text>
+                <span v-text="wjdcData.wgsjzl||'无'"></span>
               </el-col>
             </el-row>
           </el-col>
@@ -270,10 +270,10 @@
           </el-col>
           <el-col :span="11">
             <strong>企业简介：</strong>
-            <v-text v-text="qyjsData.qyjj||'无'"></v-text>
+            <span v-text="qyjsData.qyjj||'无'"></span>
             <br>
             <strong>企业英文简介：</strong>
-            <v-text v-text="qyjsData.reserve1||'无'"></v-text>
+            <span v-text="qyjsData.reserve1||'无'"></span>
           </el-col>
         </el-row>
         <el-row class="mb10">
@@ -292,19 +292,19 @@
                     </el-col>
                     <el-col :span="19" style="line-height: 24px;" class="pl15">
                       <strong>产品类型：</strong>
-                      <v-text v-text="cpjs.cplxmc||'无'"></v-text>
+                      <span v-text="cpjs.cplxmc||'无'"></span>
                       <br>
                       <strong>产品简介：</strong>
-                      <v-text v-text="cpjs.cpjj||'无'"></v-text>
+                      <span v-text="cpjs.cpjj||'无'"></span>
                       <br>
                       <strong>产品英文简介：</strong>
-                      <v-text v-text="cpjs.reserve1||'无'"></v-text>
+                      <span v-text="cpjs.reserve1||'无'"></span>
                     </el-col>
                   </el-row>
                 </el-card>
               </el-form-item>
             </el-form>
-            <v-text v-else>暂无产品信息</v-text>
+            <span v-else>暂无产品信息</span>
           </el-col>
         </el-row>
       </div>
@@ -321,19 +321,19 @@
             <el-row class="mb10">
               <strong>标准展位：</strong>
               <el-input-number v-if="editZwyx" size="small" v-model="zwyxForm.bzzwgs" :min="0" :max="6" placeholder="标准展位" :precision="0"></el-input-number>
-              <v-text v-else v-text="(zwyxForm.bzzwgs==''||zwyxForm.bzzwgs==null)?'无':zwyxForm.bzzwgs+' 个'"></v-text>
+              <span v-else v-text="(zwyxForm.bzzwgs==''||zwyxForm.bzzwgs==null)?'无':zwyxForm.bzzwgs+' 个'"></span>
               &nbsp;&nbsp;(标准展位：每个12平方米)
             </el-row>
             <el-row class="mb10">
               <strong>室内展位：</strong>
               <el-input-number v-if="editZwyx" size="small" v-model="zwyxForm.sngdzw" :min="24" :max="1000" placeholder="室内光地展位" :precision="0"></el-input-number>
-              <v-text v-else v-text="(zwyxForm.sngdzw==''||zwyxForm.sngdzw==null)?'无':zwyxForm.sngdzw+' m²'"></v-text>
+              <span v-else v-text="(zwyxForm.sngdzw==''||zwyxForm.sngdzw==null)?'无':zwyxForm.sngdzw+' m²'"></span>
               &nbsp;&nbsp;(室内光地展位：需要特装搭建，24平方米起)
             </el-row>
             <el-row class="mb10">
               <strong>室外展位：</strong>
               <el-input-number v-if="editZwyx" size="small" v-model="zwyxForm.swgdzw" :min="0" :max="2000" placeholder="室外光地展位" :precision="0"></el-input-number>
-              <v-text v-else v-text="(zwyxForm.swgdzw==''||zwyxForm.swgdzw==null)?'无':zwyxForm.swgdzw+' m²'"></v-text>
+              <span v-else v-text="(zwyxForm.swgdzw==''||zwyxForm.swgdzw==null)?'无':zwyxForm.swgdzw+' m²'"></span>
               &nbsp;&nbsp;(室外光地展位：仅限消防
               <span style="color:red;">举高</span>车类)
             </el-row>
