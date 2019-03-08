@@ -44,7 +44,7 @@
                 </Row>
             </FormItem>
             <FormItem label="展位名称">
-                <Input v-model="formData.name"></Input>
+                <Input v-model="formData.name" disabled='disabled'></Input>
             </FormItem>
             <FormItem label="名称式样">
                 <Row>
