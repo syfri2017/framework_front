@@ -547,7 +547,7 @@
             <el-col :span="22">
               <el-form-item prop="sjh" label="手机号">
                 <el-input size="small" v-model="sjform.sjh" placeholder="手机号">
-                  <el-button id="mobile-btn" slot="append" @click="getMessageCode()" v-text=messageCodeText></el-button>
+                  <el-button id="mobile-btn" slot="append" @click="getMessageCode()" v-text=messageCodeText :disabled=mobileBtnDisable></el-button>
                 </el-input>
                </el-form-item>
             </el-col>
@@ -709,6 +709,8 @@ export default {
       mailCheck: false,
       //邮箱验证按钮可用flag
       mailBtnDisable : false,
+      //手机验证按钮可用flag
+      mobileBtnDisable : false,
       //上传的文件为pdf标识
       isPdf: false,
       //是否为已驳回的申请
@@ -1116,11 +1118,7 @@ export default {
               vm.upLoadData.qyid = res.data.result.qyid;
             } else {
               //已提交，已审核 直接跳转到确认页
-              var params = {
-                userid: vm.currentUser.userid,
-                type: "BJ"
-              };
-           ///////////////////////////////////////////   loadDivParam("prediction/exhprediction_confirm", params);
+              this.$router.push({name:"exhpredictionConfirm", query: {userid: vm.currentUser.userid, type: 'BJ'}});
             }
           } else {
             vm.jbxxStatus = 0; //新增
@@ -2145,10 +2143,11 @@ export default {
           userid: this.currentUser.userid,
           type: "BJ"
         };
-    ///////////////////////////////////    loadDivParam("prediction/exhprediction_confirm", params);
+    ///////////////    loadDivParam("prediction/exhprediction_confirm", params);
+      this.$router.push({name:"exhpredictionConfirm", query: {userid: this.currentUser.userid, type: 'BJ'}});
       } else {
         //如果是管理员跳转到列表页
-      ////////////////////////////////////////  loadDivParam("prediction/exhprediction_list");
+      this.$router.push({name:"exhprediction"});
       }
     },
     //开票信息上一步
@@ -2297,7 +2296,8 @@ export default {
       vm.sjform.yzm = "";
       if (/^1[34578]\d{9}$/.test(vm.sjform.sjh)) {
         vm.messageCodeText = "发送中...";
-        $("#mobile-btn").attr("disabled", "disabled");
+        //$("#mobile-btn").attr("disabled", "disabled");
+        this.mobileBtnDisable = true;
         vm.$axios.get("/signin/sendMessage?phone=" + vm.sjform.sjh).then(
           function(res) {
             vm.messageCodeReal = res.data.msg;
@@ -2307,11 +2307,13 @@ export default {
                 clearInterval(vm.timer);
                 vm.timer = null;
                 vm.messageCodeText = "获取验证码";
-                $("#mobile-btn").removeAttr("disabled");
+              //  $("#mobile-btn").removeAttr("disabled");
+                this.mobileBtnDisable = false;
               } else {
                 vm.messageCodeText = count + "秒后获取";
                 count--;
-                $("#mobile-btn").attr("disabled", "disabled");
+                //$("#mobile-btn").attr("disabled", "disabled");
+                this.mobileBtnDisable = true;
               }
             }, 1000);
           }.bind(vm),

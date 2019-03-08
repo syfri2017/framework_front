@@ -25,6 +25,7 @@ import Permission from '@/views/system/permission/Permission'
 import Codelist from '@/views/system/codelist/Codelist'
 import Mail from '@/views/system/mail/Mail'
 import ExhpredictionEdit from '@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'
+import ExhpredictionConfirm from '@/views/exhibition/prediction/exhprediction/ExhpredictionConfirm'
 
 export default [
   {
@@ -539,7 +540,20 @@ export default [
           },
           
         ]
-      }
+      },
+      //----------展商报名-信息确认----------
+      {
+        path: '/exhprediction/confirm',
+        meta: {auth: true, title: "报名信息确认"},
+        component: ExhpredictionConfirm,
+        children: [
+          {
+            path: '/',
+            name: 'exhpredictionConfirm',
+            component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionConfirm'], resolve)
+          },
+        ]
+      },
     ]
   }
 ]
