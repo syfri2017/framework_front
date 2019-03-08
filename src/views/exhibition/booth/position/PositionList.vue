@@ -231,10 +231,7 @@ export default {
         },
         //企业详情跳转
         qyDetails: function (val) {
-            var params = {
-                id: val.qyid
-            }
-            loadDivParam("prediction/exhprediction_detail", params);
+        this.$router.push({name:"exhpredictionDetail", query: {id: val.qyid, type: 'search'}});
         },
         //表格查询事件
         searchClick: function (type) {
