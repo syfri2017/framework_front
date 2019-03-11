@@ -572,7 +572,7 @@
     }
     .hqyzm {
       margin-top: -32px;
-      margin-left: 30%;
+      margin-left: 9%;
       color:#EA2530;
     }
 </style>
