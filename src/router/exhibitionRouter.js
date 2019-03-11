@@ -26,6 +26,7 @@ import Codelist from '@/views/system/codelist/Codelist'
 import Mail from '@/views/system/mail/Mail'
 import ExhpredictionEdit from '@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'
 import ExhpredictionConfirm from '@/views/exhibition/prediction/exhprediction/ExhpredictionConfirm'
+import ExhpredictionEditEN from '@/views/exhibition/prediction/exhprediction/ExhpredictionEdit_ENG'
 
 export default [
   {
@@ -537,6 +538,20 @@ export default [
             path: '/',
             name: 'exhpredictionEdit',
             component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'], resolve)
+          },
+          
+        ]
+      },
+      //------------------报名英文-----------
+      {
+        path: '/exhpredictionEn',
+        meta: {auth: true, title: "Exhibition Registration"},
+        component: ExhpredictionEditEN,
+        children: [
+          {
+            path: '/',
+            name: 'exhpredictionEdit_ENG',
+            component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionEdit_ENG'], resolve)
           },
           
         ]
