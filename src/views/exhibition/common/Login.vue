@@ -11,19 +11,14 @@
           <img class="titlestyle" src="/static/images/login/title.png">
         </p>
       </el-col>
-      <el-col :span="3" class="market_out" style="position:fixed;right:0;text-align:left;margin:40px;">
-        
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="中文" name="first">
-              <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/帮助手册.doc">帮助手册</a></p>
-              <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana" @click="zgclk" style="background:rgba(0,0,0,0.2);padding:5px;">查看展位预定情况</a></p>
-              <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/展馆图片.zip">下载展位图片</a></p>
-          </el-tab-pane>
-          <el-tab-pane label="English" name="second">
-              <span class="lanb" @click="clk()">English</span>
-          </el-tab-pane>
-        </el-tabs>
+      <el-col :span="3" class="market_out" style="position:fixed;right:0;text-align:right;margin:20px;">
+            <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/帮助手册.doc">帮助手册</a>
+             <span style="color:#fff;margin-right:10px;">|</span><span class="lanb" @click="clk()">中文</span>
+             <span style="color:#fff;margin-right:10px;">|</span><span class="lanb" @click="clk()">English</span>
+            </p>
 
+            <p style="margin:15px 5px 5px 0px;padding:0px;"><a class="lana" @click="zgclk" style="background:rgba(0,0,0,0.2);padding:5px;">查看展位预定情况</a></p>
+            <p style="margin:15px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/展馆图片.zip">下载展位图片</a></p>
       </el-col>
     </el-row>
     <!-- <login></login> -->
@@ -44,8 +39,6 @@
       <el-tab-pane label="重置账户" name="fifth" :key="'fifth'">
         <reset></reset>
       </el-tab-pane>
-
-
 
     </el-tabs> -->
     <el-row class="footerstyle">
@@ -77,14 +70,11 @@ export default {
   },
   data() {
     return {
-      //默认第一个选项卡
-      activeName: "first"
+     
     };
   },
   methods: {
-    handleClick(tab, event) {
-        console.log(tab, event);
-      },
+   
     clk(){
       this.$router.push({ path: '/exhibition/login/en/Login' });
     },
