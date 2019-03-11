@@ -50,6 +50,9 @@ export default {
     };
   },
   methods: {
+    handleClick(tab, event) {
+        console.log(tab, event);
+      },
     clk(){
       this.$router.push({ path: '/exhibition/login/ch/Login' });
     },
