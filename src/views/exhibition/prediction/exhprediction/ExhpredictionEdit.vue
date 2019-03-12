@@ -15,10 +15,13 @@
       <!--审核状态-->
       <div id="remark" v-if="isYbh">
         <el-row>
-          <el-col :span="1" style="text-align: center"><i class="icon-alarm"></i>&nbsp;</el-col>
+          <el-col :span="1" style="text-align: center">
+            <i class="icon-alarm"></i>&nbsp;</el-col>
           <el-col :span="5" style="text-align: left">上次审核状态：已驳回</el-col>
           <el-col :span="1">&nbsp;</el-col>
-          <el-col :span="15" style="text-align: left">审核意见：<span v-text="baseInforForm.reserve1"></span></el-col>
+          <el-col :span="15" style="text-align: left">审核意见：
+            <span v-text="baseInforForm.reserve1"></span>
+          </el-col>
         </el-row>
       </div>
       <!--基本信息-->
@@ -46,9 +49,8 @@
           <el-row class="tr mb5">
             <el-col :span="11">
               <el-form-item prop="xzqh" label="邮寄地址（省市）">
-                <el-cascader id="ShengShiCascader" :options="xzqhDataTree" :props="defaultProps" size="small" v-model="baseInforForm.xzqh"
-                    placeholder="省/市" class="searchSelect" clearable show-all-levels></el-cascader>
-                </el-form-item>
+                <el-cascader id="ShengShiCascader" :options="xzqhDataTree" :props="defaultProps" size="small" v-model="baseInforForm.xzqh" placeholder="省/市" class="searchSelect" clearable show-all-levels></el-cascader>
+              </el-form-item>
             </el-col>
             <el-col :span="1">&nbsp;</el-col>
             <el-col :span="11">
@@ -120,13 +122,13 @@
           </el-row>
           <el-row class="mb5" style="border-bottom:1px solid #463132;line-height: 29px;">
             <el-col :span="24">
-              <strong style="color: #463132;"><span style="color: red">*</span>&nbsp;营业执照</strong>
+              <strong style="color: #463132;">
+                <span style="color: red">*</span>&nbsp;营业执照</strong>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="11">
-              <el-upload class="avatar-uploader" ref="uploadPics" :headers="myHeaders" action="http://localhost:8809/qyjbxx/upload" :data="upLoadData" :on-success="picSuccess"
-                   :before-upload="PicChange" :show-file-list="false">
+              <el-upload class="avatar-uploader" ref="uploadPics" :headers="myHeaders" action="http://localhost:8809/qyjbxx/upload" :data="upLoadData" :on-success="picSuccess" :before-upload="PicChange" :show-file-list="false">
                 <img v-if="baseInforForm.src!=='' && baseInforForm.src!==null" :src="baseInforForm.imageUrl" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 <div class="el-upload__tip" slot="tip">jpg/png、单页pdf文件，且小于2MB</div>
@@ -150,9 +152,9 @@
             <strong style="color: #463132;">企业开票信息</strong>
           </el-col>
         </el-row>
-       
+
         <el-form class="el-form demo-form-inline" ref="kpxxForm" :model="kpxxForm" label-position="right" label-width="150px" :rules="kpxxRules">
-           <el-row class="tr mb5">
+          <el-row class="tr mb5">
             <el-col :span="5">&nbsp;</el-col>
             <el-col :span="12">
               <el-form-item prop="kplx" label="开票类型" style="text-align: left">
@@ -304,8 +306,7 @@
           </el-row>
           <el-row class="tr mb5" v-show="isgxjsqy">
             <el-col :span="22">
-              <el-form-item label="企业高新技术级别" prop="gxjsjb" :rules="this.isgxjsqy?wjdcRules.gxjsjb:[{ required: false, message: '请选择企业高新技术级别', trigger: 'blur' }]"
-                  style="text-align: left">
+              <el-form-item label="企业高新技术级别" prop="gxjsjb" :rules="this.isgxjsqy?wjdcRules.gxjsjb:[{ required: false, message: '请选择企业高新技术级别', trigger: 'blur' }]" style="text-align: left">
                 <el-radio-group v-model="wjdcForm.gxjsjb" size="small" auto-complete="off">
                   <el-radio v-for="item in gxjsjb_data" :label="item.codeValue" :key="item.codeValue" class="radio">
                     <span v-text="item.codeName"></span>
@@ -360,7 +361,7 @@
               <el-form-item label="行业信用等级" prop="hyxydj" :rules="this.isSfhyxydj?wjdcRules.hyxydj:[{ required: false, message: '请选择行业信用等级', trigger: 'blur' }]">
                 <el-radio-group v-model="wjdcForm.hyxydj" size="small" auto-complete="off">
                   <el-radio v-for="item in hyxydj_data" :label="item.codeValue" :key="item.codeValue" class="radio">
-                      <span v-text="item.codeName"></span>
+                    <span v-text="item.codeName"></span>
                   </el-radio>
                 </el-radio-group>
               </el-form-item>
@@ -389,8 +390,7 @@
             <el-row class="tr mb5">
               <el-col :span="9">
                 <el-form-item label="企业LOGO图标" style="text-align: left" class="is-required">
-                  <el-upload class="avatar-uploader" ref="uploadLogo" :headers="myHeaders" action="http://localhost:8809/qyjs/upload" :data="upLoadLogoData" :on-success="logoPicSuccess"
-                    :before-upload="LogoChange" :show-file-list="false">
+                  <el-upload class="avatar-uploader" ref="uploadLogo" :headers="myHeaders" action="http://localhost:8809/qyjs/upload" :data="upLoadLogoData" :on-success="logoPicSuccess" :before-upload="LogoChange" :show-file-list="false">
                     <img v-if="qyjsForm.src!==''&& qyjsForm.src!==null" :src="qyjsForm.imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     <div class="el-upload__tip" slot="tip">jpg/png文件，且小于1MB</div>
@@ -404,7 +404,8 @@
                     <el-input type="textarea" :rows="2" maxlength="200" placeholder="企业简介" v-model="qyjsForm.qyjj" :onkeyup="checkWord(qyjsForm.qyjj,'qyjsLength','200')"></el-input>
                   </el-form-item>
                   <el-row>
-                    <div class="el-upload__tip">还可输入<span style="color: red" id="qyjsLength">{{200-qyjsForm.qyjj.length}}</span>个字</div>
+                    <div class="el-upload__tip">还可输入
+                      <span style="color: red" id="qyjsLength">{{200-qyjsForm.qyjj.length}}</span>个字</div>
                   </el-row>
                 </el-row>
                 <el-row>
@@ -438,46 +439,45 @@
                 <el-row class="tr">
                   <el-col :span="9">
                     <el-form-item label="产品图片" style="text-align: left" class="is-required">
-                      <el-upload class="avatar-uploader" ref="uploadCpPics" :headers="myHeaders" action="http://localhost:8809/qycpjs/upload" :on-success="cpjsPicSuccess" :before-upload="CpPicsChange"
-                          :show-file-list="false" :data="CpjsUpLoadData">
-                          <img @click="getIndex(index,domain.src)" v-if="domain.src!=='' && domain.src!==null" :src="domain.imageUrl" class="avatar">
-                          <i v-else class="el-icon-plus avatar-uploader-icon" @click="getIndex(index)"></i>
+                      <el-upload class="avatar-uploader" ref="uploadCpPics" :headers="myHeaders" action="http://localhost:8809/qycpjs/upload" :on-success="cpjsPicSuccess" :before-upload="CpPicsChange" :show-file-list="false" :data="CpjsUpLoadData">
+                        <img @click="getIndex(index,domain.src)" v-if="domain.src!=='' && domain.src!==null" :src="domain.imageUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon" @click="getIndex(index)"></i>
                         <div class="el-upload__tip" slot="tip">jpg/png文件，且小于2MB</div>
                       </el-upload>
                     </el-form-item>
                   </el-col>
                   <el-col :span="14" style="margin-left: -10%">
                     <el-row>
-                      <el-form-item label="产品所属分类" class="is-required" :prop = "'qycpjsVOList.' + index + '.cplx'" :rules="qyjsRules.cplx">
-                        <el-cascader :options="cpssfl_data" :props="defaultProps" size="small" v-model="domain.cplx" placeholder="产品所属分类" class="searchSelect"
-                              clearable show-all-levels></el-cascader>
+                      <el-form-item label="产品所属分类" class="is-required" :prop="'qycpjsVOList.' + index + '.cplx'" :rules="qyjsRules.cplx">
+                        <el-cascader :options="cpssfl_data" :props="defaultProps" size="small" v-model="domain.cplx" placeholder="产品所属分类" class="searchSelect" clearable show-all-levels></el-cascader>
                       </el-form-item>
                     </el-row>
                     <el-row>
                       <div class="el-upload__tip"></div>
                     </el-row>
                     <el-row id="cpjsArea">
-                      <el-form-item label="产品简介" :prop = "'qycpjsVOList.' + index + '.cpjj'" :rules="qyjsRules.cpjj">
+                      <el-form-item label="产品简介" :prop="'qycpjsVOList.' + index + '.cpjj'" :rules="qyjsRules.cpjj">
                         <el-input type="textarea" maxlength="150" :rows="2" placeholder="产品简介" v-model="domain.cpjj" :onkeyup="checkWord(domain.cpjj,index+100,'150')"></el-input>
                       </el-form-item>
                     </el-row>
                     <el-row>
-                      <div class="el-upload__tip" >还可输入<span style="color: red" :id="index+100">{{150-domain.cpjj.length}}</span>个字</div>
+                      <div class="el-upload__tip">还可输入
+                        <span style="color: red" :id="index+100">{{150-domain.cpjj.length}}</span>个字</div>
                     </el-row>
                     <el-row id="cpjsArea">
-                      <el-form-item label="产品英文简介" :prop = "'qycpjsVOList.' + index + '.reserve1'" :rules="qyjsRules.reserve1">
+                      <el-form-item label="产品英文简介" :prop="'qycpjsVOList.' + index + '.reserve1'" :rules="qyjsRules.reserve1">
                         <el-input type="textarea" maxlength="400" :rows="2" placeholder="产品英文简介" v-model="domain.reserve1" :onkeyup="checkWord(domain.reserve1,index+200,'400')"></el-input>
                       </el-form-item>
                     </el-row>
                     <el-row>
-                      <div class="el-upload__tip" >还可输入
-                      <span v-if="domain.reserve1!=null" style="color: red" :id="index+200">{{400-domain.reserve1.length}}</span>
-                      <span v-else style="color: red" :id="index+200">400</span>个英文字符</div>
+                      <div class="el-upload__tip">还可输入
+                        <span v-if="domain.reserve1!=null" style="color: red" :id="index+200">{{400-domain.reserve1.length}}</span>
+                        <span v-else style="color: red" :id="index+200">400</span>个英文字符</div>
                     </el-row>
                   </el-col>
                 </el-row>
               </el-card>
-            </el-row>                
+            </el-row>
           </el-form>
         </el-row>
         <el-row class="buttonSubmit">
@@ -521,7 +521,8 @@
           </el-row>
           <el-row class="tr mb5">
             <el-col :span="8">
-              <span class="mr5 vbm yxLabel">室外光地展位（仅限<span style="color: red">举高</span>消防车类）</span>
+              <span class="mr5 vbm yxLabel">室外光地展位（仅限
+                <span style="color: red">举高</span>消防车类）</span>
             </el-col>
             <el-col :span="8">
               <el-input-number size="small" v-model="xqyxForm.swgdzw" :min="0" :max="2000" :precision="0" placeholder="室外光地展位"></el-input-number>
@@ -549,7 +550,7 @@
                 <el-input size="small" v-model="sjform.sjh" placeholder="手机号">
                   <el-button id="mobile-btn" slot="append" @click="getMessageCode()" v-text=messageCodeText :disabled=mobileBtnDisable></el-button>
                 </el-input>
-               </el-form-item>
+              </el-form-item>
             </el-col>
             <el-col :span="2">&nbsp;</el-col>
           </el-row>
@@ -571,7 +572,8 @@
       <el-dialog title="邮箱验证" :visible.sync="dialogYxFormVisible" @close="closeYxDialog()" :close-on-click-modal="false">
         <el-form class="el-form demo-form-inline" ref="yxform" :model="yxform" label-width="120px" label-position="right">
           <el-row class="tr mb5" style="text-align: left;margin-left: 10px">
-            请输入邮箱<span v-text="this.baseInforForm.dzyx1" style="font-style:italic;margin-right: 2px;"></span>收到的验证码
+            请输入邮箱
+            <span v-text="this.baseInforForm.dzyx1" style="font-style:italic;margin-right: 2px;"></span>收到的验证码
           </el-row>
           <el-row class="tr mb5">
             <el-col :span="22">
@@ -597,7 +599,7 @@ export default {
   data() {
     return {
       baseUrl: window.config.baseUrl,
-      myHeaders: {XTOKEN: localStorage.getItem("XTOKEN")},
+      myHeaders: { XTOKEN: localStorage.getItem("XTOKEN") },
       //当前用户
       currentUser: this.CONSTANT.currentUser,
       //菜单编码
@@ -653,13 +655,13 @@ export default {
       },
       //开票信息表单
       kpxxForm: {
-        kplx:"",
-        kpgsmc:"",
-        tyshxydm:"",
-        gsdz:"",
-        dhhm:"",
-        khyh:"",
-        yhzh:""
+        kplx: "",
+        kpgsmc: "",
+        tyshxydm: "",
+        gsdz: "",
+        dhhm: "",
+        khyh: "",
+        yhzh: ""
       },
       //问卷调查表单
       wjdcForm: {
@@ -679,8 +681,7 @@ export default {
         reserve1: ""
       },
       //需求意向表单
-      xqyxForm: {
-      },
+      xqyxForm: {},
       //基本信息显示标识
       isJbxxShow: true,
       //开票信息显示标识
@@ -708,9 +709,9 @@ export default {
       //邮箱验证flag
       mailCheck: false,
       //邮箱验证按钮可用flag
-      mailBtnDisable : false,
+      mailBtnDisable: false,
       //手机验证按钮可用flag
-      mobileBtnDisable : false,
+      mobileBtnDisable: false,
       //上传的文件为pdf标识
       isPdf: false,
       //是否为已驳回的申请
@@ -851,9 +852,22 @@ export default {
           { min: 1, max: 100, message: "最多可输入100个字", trigger: "blur" }
         ],
         tyshxydm: [
-          {required: true,message: "请输入统一社会信用代码",trigger: "blur"},
-          {pattern: /^[A-Za-z0-9 ]+$/, message: "只能输入数字和字母", trigger: "blur"},
-          {min: 22, max: 22, message: "请输入18位统一社会信用代码（不包含空格）", trigger: "blur"}
+          {
+            required: true,
+            message: "请输入统一社会信用代码",
+            trigger: "blur"
+          },
+          {
+            pattern: /^[A-Za-z0-9 ]+$/,
+            message: "只能输入数字和字母",
+            trigger: "blur"
+          },
+          {
+            min: 22,
+            max: 22,
+            message: "请输入18位统一社会信用代码（不包含空格）",
+            trigger: "blur"
+          }
         ],
         gsdz: [
           { required: true, message: "请输入公司地址", trigger: "blur" },
@@ -870,7 +884,12 @@ export default {
         yhzh: [
           { required: true, message: "请输入银行账号", trigger: "blur" },
           { pattern: /^[0-9 ]*$/, message: "只能输入数字", trigger: "blur" },
-          { min: 0, max: 37, message: "最多可输入30位银行账号", trigger: "blur" }
+          {
+            min: 0,
+            max: 37,
+            message: "最多可输入30位银行账号",
+            trigger: "blur"
+          }
         ]
       },
       wjdcRules: {
@@ -878,7 +897,11 @@ export default {
           { required: true, message: "请选择公司性质", trigger: "change" }
         ],
         sfhwdlcp: [
-          { required: true, message: "请选择是否代理海外产品", trigger: "change" }
+          {
+            required: true,
+            message: "请选择是否代理海外产品",
+            trigger: "change"
+          }
         ],
         hwdlcppp: [
           { required: true, message: "请输入产品品牌", trigger: "blur" },
@@ -894,13 +917,21 @@ export default {
           { required: true, message: "请输入外观设计专利(项)", trigger: "blur" }
         ],
         sfgxjsqy: [
-          { required: true, message: "请选择是否为高新技术企业", trigger: "change" }
+          {
+            required: true,
+            message: "请选择是否为高新技术企业",
+            trigger: "change"
+          }
         ],
         gxjsjb: [
           { required: true, message: "请选择高新技术级别", trigger: "change" }
         ],
         sfhyxydj: [
-          { required: true, message: "请选择是否在2018年参与中国消防协会消防行业信用等级评价", trigger: "change" }
+          {
+            required: true,
+            message: "请选择是否在2018年参与中国消防协会消防行业信用等级评价",
+            trigger: "change"
+          }
         ],
         hyxydj: [
           { required: true, message: "请选择行业信用等级", trigger: "change" }
@@ -1075,7 +1106,7 @@ export default {
       this.findInfoByVo(params);
     },
     //通过企业id查询基本信息数据（管理端）
-    findInfoByQyid: function(qyid){
+    findInfoByQyid: function(qyid) {
       this.loading = true;
       var params = {
         qyid: qyid,
@@ -1084,7 +1115,7 @@ export default {
       this.findInfoByVo(params);
     },
     //查询基本信息数据主体方法
-    findInfoByVo: function(params){
+    findInfoByVo: function(params) {
       let vm = this;
       vm.$axios.post("/qyjbxx/doFindByVo", params).then(
         function(res) {
@@ -1101,8 +1132,12 @@ export default {
               vm.baseInforForm = res.data.result;
               //曾用公司名称 记录当前中文公司名称
               vm.cygsmc = res.data.result.zwgsmc;
-              if (vm.baseInforForm.src !== null &&vm.baseInforForm.src !== "") {
-                vm.baseInforForm.imageUrl = vm.baseUrl + "/upload/" + vm.baseInforForm.src;
+              if (
+                vm.baseInforForm.src !== null &&
+                vm.baseInforForm.src !== ""
+              ) {
+                vm.baseInforForm.imageUrl =
+                  vm.baseUrl + "/upload/" + vm.baseInforForm.src;
               }
               //行政区划级联下拉处理
               var xzqhArray = [];
@@ -1110,7 +1145,7 @@ export default {
               xzqhArray.push(res.data.result.yjdzshi);
               vm.baseInforForm.xzqh = xzqhArray;
               vm.baseInforForm.dzyx1 = vm.baseInforForm.dzyx;
-              if (vm.baseInforForm.wz == "" || vm.baseInforForm.wz == null ) {
+              if (vm.baseInforForm.wz == "" || vm.baseInforForm.wz == null) {
                 vm.noWebsit = true;
               }
               vm.jbxxStatus = 1; //修改
@@ -1118,7 +1153,10 @@ export default {
               vm.upLoadData.qyid = res.data.result.qyid;
             } else {
               //已提交，已审核 直接跳转到确认页
-              this.$router.push({name:"exhpredictionConfirm", query: {userid: vm.currentUser.userid, type: 'BJ'}});
+              this.$router.push({
+                name: "exhpredictionConfirm",
+                query: { userid: vm.currentUser.userid, type: "BJ" }
+              });
             }
           } else {
             vm.jbxxStatus = 0; //新增
@@ -1246,7 +1284,8 @@ export default {
                 }
                 resultForm.qycpjsVOList = qycpjsList;
                 vm.qyjsForm = resultForm;
-                vm.qyjsForm.imageUrl = vm.baseUrl + "/upload/" + vm.qyjsForm.src;
+                vm.qyjsForm.imageUrl =
+                  vm.baseUrl + "/upload/" + vm.qyjsForm.src;
                 vm.loading = false;
               }.bind(vm),
               function(error) {
@@ -1507,13 +1546,14 @@ export default {
                     }
                     //删除旧营业执照
                     if (vm.delPicList.length > 0) {
-                      vm.$axios.post("/qycpjs/delPic", vm.delPicList).then(function(res) {
-                        vm.delPicList = [];
-                      }.bind(vm),
-                      function(error) {
-                         console.log(error);
-                      }
-                     );
+                      vm.$axios.post("/qycpjs/delPic", vm.delPicList).then(
+                        function(res) {
+                          vm.delPicList = [];
+                        }.bind(vm),
+                        function(error) {
+                          console.log(error);
+                        }
+                      );
                     }
                     vm.unsavedPicList = [];
                     //给营业执照移动到qyid文件夹中
@@ -1637,13 +1677,13 @@ export default {
                     }
                     if (vm.delPicList.length > 0) {
                       vm.$axios.post("/qycpjs/delPic", vm.delPicList).then(
-                          function(res) {
-                            vm.delPicList = [];
-                          }.bind(vm),
-                          function(error) {
-                            console.log(error);
-                          }
-                        );
+                        function(res) {
+                          vm.delPicList = [];
+                        }.bind(vm),
+                        function(error) {
+                          console.log(error);
+                        }
+                      );
                     }
                     vm.unsavedPicList = [];
                   } else {
@@ -1897,9 +1937,8 @@ export default {
       vm.$refs[formName].validate(valid => {
         if (valid) {
           //判断最后一个card产品信息是否填全
-          var cp = vm.qyjsForm.qycpjsVOList[
-            vm.qyjsForm.qycpjsVOList.length - 1
-          ];
+          var cp =
+            vm.qyjsForm.qycpjsVOList[vm.qyjsForm.qycpjsVOList.length - 1];
           if (cp.cplx == "" || cp.cpjj == "" || cp.src == "") {
             vm.$message({
               message: "请完整填写产品信息",
@@ -1923,7 +1962,10 @@ export default {
             for (var i in vm.qyjsForm.qycpjsVOList) {
               var qycpjsVO = vm.qyjsForm.qycpjsVOList[i];
               //产品类型级联下拉处理
-              if (qycpjsVO.cplx.constructor == Array && qycpjsVO.cplx.length > 0) {
+              if (
+                qycpjsVO.cplx.constructor == Array &&
+                qycpjsVO.cplx.length > 0
+              ) {
                 var length = qycpjsVO.cplx.length;
                 var cplx_temp = qycpjsVO.cplx[length - 1];
               }
@@ -1968,13 +2010,14 @@ export default {
                       vm.findXqyxByQyid(vm.qyid);
                     }
                     if (vm.delPicList.length > 0) {
-                      vm.$axios.post("/qycpjs/delPic", vm.delPicList).then(function(res) {
-                        vm.delPicList = [];
-                      }.bind(vm),
-                      function(error) {
-                        console.log(error);
-                      }
-                     );
+                      vm.$axios.post("/qycpjs/delPic", vm.delPicList).then(
+                        function(res) {
+                          vm.delPicList = [];
+                        }.bind(vm),
+                        function(error) {
+                          console.log(error);
+                        }
+                      );
                     }
                     vm.unsavedPicList = [];
                   } else {
@@ -2020,12 +2063,14 @@ export default {
                       vm.findXqyxByQyid(vm.qyid);
                     }
                     if (vm.delPicList.length > 0) {
-                      vm.$axios.post("/qycpjs/delPic", vm.delPicList).then(function(res) {
-                        vm.delPicList = [];
-                      }.bind(vm),
-                      function(error) {
-                        console.log(error);
-                      });
+                      vm.$axios.post("/qycpjs/delPic", vm.delPicList).then(
+                        function(res) {
+                          vm.delPicList = [];
+                        }.bind(vm),
+                        function(error) {
+                          console.log(error);
+                        }
+                      );
                     }
                     vm.unsavedPicList = [];
                   } else {
@@ -2139,15 +2184,13 @@ export default {
     submit: function() {
       if (this.currentUser.deptid == "ZSYH") {
         //如果是展商用户跳转到确认页
-        var params = {
-          userid: this.currentUser.userid,
-          type: "BJ"
-        };
-    ///////////////    loadDivParam("prediction/exhprediction_confirm", params);
-      this.$router.push({name:"exhpredictionConfirm", query: {userid: this.currentUser.userid, type: 'BJ'}});
+        this.$router.push({
+          name: "exhpredictionConfirm",
+          query: { userid: this.currentUser.userid, type: "BJ" }
+        });
       } else {
         //如果是管理员跳转到列表页
-      this.$router.push({name:"exhprediction"});
+        this.$router.push({ name: "exhprediction" });
       }
     },
     //开票信息上一步
@@ -2307,7 +2350,7 @@ export default {
                 clearInterval(vm.timer);
                 vm.timer = null;
                 vm.messageCodeText = "获取验证码";
-              //  $("#mobile-btn").removeAttr("disabled");
+                //  $("#mobile-btn").removeAttr("disabled");
                 this.mobileBtnDisable = false;
               } else {
                 vm.messageCodeText = count + "秒后获取";
@@ -2377,23 +2420,29 @@ export default {
         return false;
       } else {
         //查询邮箱是否注册
-        vm.$axios.get("/qyjbxx/getMailNum/" + vm.baseInforForm.dzyx1 + "/static").then(function(res) {
+        vm.$axios
+          .get("/qyjbxx/getMailNum/" + vm.baseInforForm.dzyx1 + "/static")
+          .then(
+            function(res) {
               //session失效
               if (res.data.result == undefined) {
-                vm.$confirm("用户登陆超时，请重新登陆。", "提示", {
-                  confirmButtonText: "是",
-                  cancelButtonText: "否",
-                  type: "warning"
-                })
+                vm
+                  .$confirm("用户登陆超时，请重新登陆。", "提示", {
+                    confirmButtonText: "是",
+                    cancelButtonText: "否",
+                    type: "warning"
+                  })
                   .then(() => {
                     window.location.href = "/templates/login.html";
                   })
                   .catch(() => {});
               } else if (res.data.result == 0) {
                 vm.mailCodeText = "发送中...";
-              //  $("#mail-btn").attr("disabled", "disabled");
+                //  $("#mail-btn").attr("disabled", "disabled");
                 vm.mailBtnDisable = true;
-                vm.$axios.get("/signin/sendMail?mail=" + vm.baseInforForm.dzyx1).then(
+                vm.$axios
+                  .get("/signin/sendMail?mail=" + vm.baseInforForm.dzyx1)
+                  .then(
                     function(res) {
                       vm.mailCodeReal = res.data.msg;
                       var count = vm.time2;
@@ -2407,8 +2456,8 @@ export default {
                         } else {
                           vm.mailCodeText = count + "秒后获取";
                           count--;
-                        //  $("#mail-btn").attr("disabled", "disabled");
-                        vm.mailBtnDisable = true;
+                          //  $("#mail-btn").attr("disabled", "disabled");
+                          vm.mailBtnDisable = true;
                         }
                       }, 1000);
                       vm.dialogYxFormVisible = true;
@@ -2459,7 +2508,9 @@ export default {
         this.kpxxForm.yhzh != "" &&
         this.kpxxForm.yhzh != null
       ) {
-        this.kpxxForm.yhzh = this.kpxxForm.yhzh.replace(/\s/g, "").replace(/(\w{4})(?=\w)/g, "$1 ");
+        this.kpxxForm.yhzh = this.kpxxForm.yhzh
+          .replace(/\s/g, "")
+          .replace(/(\w{4})(?=\w)/g, "$1 ");
       }
     },
     addBlankXydm: function() {
@@ -2468,21 +2519,33 @@ export default {
         this.kpxxForm.tyshxydm != "" &&
         this.kpxxForm.tyshxydm != null
       ) {
-        this.kpxxForm.tyshxydm = this.kpxxForm.tyshxydm.replace(/\s/g, "").replace(/(\w{4})(?=\w)/g, "$1 ");
+        this.kpxxForm.tyshxydm = this.kpxxForm.tyshxydm
+          .replace(/\s/g, "")
+          .replace(/(\w{4})(?=\w)/g, "$1 ");
       }
-    },
-    
-
-
+    }
   }
 };
 </script>
 
 <style lang="scss">
-#exhpredictionEdit{
-  .mb5{
-    margin-bottom:5px;
+#exhpredictionEdit {
+  .mb5 {
+    margin-bottom: 5px;
   }
+  #qycpArea .el-form-item__error {
+    padding-top: 8px !important;
+  }
+  #cp_card .el-card__header {
+    padding: 1px 15px;
+  }
+  .el-card__body {
+    padding: 10px 0px 10px 0px;
+  }
+  .el-message {
+    z-index: 10005 !important;
+  }
+
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -2490,10 +2553,10 @@ export default {
     position: relative;
     overflow: hidden;
   }
-.avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
+  .avatar-uploader .el-upload:hover {
+    border-color: #409eff;
   }
-.avatar-uploader-icon {
+  .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
     width: 100px;
@@ -2501,11 +2564,71 @@ export default {
     line-height: 100px;
     text-align: center;
   }
-.avatar {
+  .avatar {
     width: 100px;
     height: 100px;
     display: block;
   }
+  .el-dialog {
+    width: 45%;
+  }
+  .el-button--small {
+    padding: 9px 9px;
+  }
+  .yxLabel {
+    text-align: right;
+    font-size: 14px;
+    color: #606266;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    box-sizing: border-box;
+    font-weight: 700;
+    max-width: 100%;
+    margin-bottom: 5px;
+  }
+  #cplx_btn_group {
+    margin-bottom: 10px;
+  }
+  #cplx_btn_group .el-button--small {
+    margin-right: 10px;
+  }
+  #cplx_btn_group .el-button + .el-button {
+    margin-left: 0;
+  }
+  #cplx_chb_group .el-checkbox {
+    margin-right: 30px;
+  }
+  #cplx_chb_group .el-checkbox + .el-checkbox {
+    margin-left: 0;
+  }
+  #cplx_btn_group .el-form-item__error {
+    padding-top: 8px;
+  }
+  #tagCheckbox .el-checkbox__label {
+    padding-left: 5px;
+    font-size: 10px;
+  }
+  #remark {
+    line-height: 31px;
+    padding: 5px 15px;
+    border: 1px solid #e40613;
+    border-radius: 5px;
+    color: #e40613;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  #remark i.icon-alarm {
+    width: 28px;
+    height: 25px;
+    display: inline-block;
+    margin-bottom: -5px;
+   // background: url(../../images/alarm.png) no-repeat;
+    background-size: cover;
+  }
+  #cpjsArea .el-form-item__error {
+    padding-top: 8px;
+  }
 }
-
 </style>

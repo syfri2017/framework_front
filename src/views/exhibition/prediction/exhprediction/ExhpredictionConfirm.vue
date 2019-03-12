@@ -2,27 +2,52 @@
   <div id="exhpredictionConfirm">
     <div class="main-container" v-loading="this.loading" element-loading-text="加载中">
       <el-row id="btnB">
-        <el-button type="danger" v-if="editPage==false" class="redFont topScroll remark">
+        <el-button type="danger" v-if="editPage==false && userType=='CHN'" class="redFont topScroll remark">
           (1) 贵公司此次填写的展位需求仅为参展意向调查。实际展位选择结果需以贵公司在展位选择阶段的最终自主选择结果为准。
           <br>(2) 贵公司所提供的营业执照、法人代表及企业联系人相关信息仅用于贵公司申请参加第十八届国际消防展的审核工作；
           <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贵公司自主填写的公司信息及产品信息则将显示在网站的产品及展商名录内容里。
         </el-button>
-        <el-button type="success" v-if="editPage&&jbxxData.shzt==='03'&&zwxzzt==='00'" class="topScroll remark">
+        <el-button type="danger" v-if="editPage==false && userType=='ENG'" class="redFont topScroll remark">
+          (1) Booth Requirement Information we collect in Part 5 will be used as references for the booth design.
+          <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is Your Booth Selection at our going-to-open online Booth selection process that will be your final choice.
+          <br>(2) The information of legal representative and contact person you have filled in will only be used as references for censors of our commission,
+          <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in order to guarantee all exhibitors are from the fire and safety industry.
+          <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Company introduction, product introduction and related information will be displayed in the company list and product list on our website,
+          <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which targets to provide a longer promotion period through website channel for our exhibitors.
+          <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you have any concern about this, please contact the commission.
+        </el-button>
+        <el-button type="success" v-if="editPage&&jbxxData.shzt==='03'&&zwxzzt==='00' && userType=='CHN'" class="topScroll remark">
           经审核您的信息已经通过
           <!-- ，请进行展位选择。 -->
           <i class="el-icon-warning"></i>
         </el-button>
-        <el-button type="warning" icon="el-icon-warning" v-if="editPage&&jbxxData.shzt==='01'" class="topScroll remark">
+        <el-button type="success" v-if="editPage&&jbxxData.shzt==='03'&&zwxzzt==='00' && userType=='ENG'" class="topScroll remark">
+          Your information has been approved
+          <!-- ，请进行展位选择。 -->
+          <i class="el-icon-warning"></i>
+        </el-button>
+        <el-button type="warning" icon="el-icon-warning" v-if="editPage&&jbxxData.shzt==='01' && userType=='CHN'" class="topScroll remark">
           展会报名信息已经提交，请等待审核，审核时间大概需要5个工作日！
           <i class="el-icon-warning"></i>
         </el-button>
-        <el-button type="danger" icon="el-icon-warning" v-if="editPage&&jbxxData.shzt==='03'&&zwxzzt==='01'" class="topScroll remark">
+        <el-button type="warning" icon="el-icon-warning" v-if="editPage&&jbxxData.shzt==='01' && userType=='ENG'" class="topScroll remark">
+          Your information has been submitted, please waiting for the audit. The audited time will take about 5 working days.
+          <i class="el-icon-warning"></i>
+        </el-button>
+        <el-button type="danger" icon="el-icon-warning" v-if="editPage&&jbxxData.shzt==='03'&&zwxzzt==='01' && userType=='CHN'" class="topScroll remark">
           已选展位:
           <span v-text="yxzwxx"></span>
           <i class="el-icon-warning"></i>
         </el-button>
+        <el-button type="danger" icon="el-icon-warning" v-if="editPage&&jbxxData.shzt==='03'&&zwxzzt==='01' && userType=='ENG'" class="topScroll remark">
+          You have selected Booths of
+          <span v-text="yxzwxx"></span>. Please wait for the committee to send you booth contract through fireexpo@cfpa.cn.
+          <br> If you have any concerns, pleasd feel free to contact us at this email.
+          <i class="el-icon-warning"></i>
+        </el-button>
       </el-row>
-      <div id="steps" v-if="editPage==false" style="margin-top:80px;">
+      <!--中文步骤条-->
+      <div id="steps" v-if="editPage==false && userType=='CHN'" style="margin-top:80px;">
         <el-steps :active="5" align-center finish-status="success" class="pt10">
           <el-step title="企业基本信息"></el-step>
           <el-step title="企业开票信息"></el-step>
@@ -32,22 +57,36 @@
           <el-step title="确认并提交"></el-step>
         </el-steps>
       </div>
+      <!--英文步骤条-->
+      <div id="steps" v-if="editPage==false && userType=='ENG'" style="margin-top:170px;">
+        <el-steps :active="5" align-center finish-status="success" class="pt10">
+          <el-step title="Brief Information"></el-step>
+          <el-step title="Invoice"></el-step>
+          <el-step title="Product Category"></el-step>
+          <el-step title="Company and Product Details"></el-step>
+          <el-step title="Questionnaire"></el-step>
+          <el-step title="confirmation and Submission"></el-step>
+        </el-steps>
+      </div>
       <!--企业基本信息-->
       <div id="qyjbxx" class="mb5">
         <el-row class="mb10" v-if="editPage==false" style="border-bottom:1px solid #463132;line-height: 29px;">
-          <strong style="color: #463132;">企业基本信息</strong>
+          <strong v-if="userType=='CHN'" style="color: #463132;">企业基本信息</strong>
+          <strong v-if="userType=='ENG'" style="color: #463132;" class="f15">Brief Company Information</strong>
         </el-row>
         <el-row class="mb10 mt30" v-if="editPage&&(jbxxData.shzt==='03'||jbxxData.shzt==='01')" style="border-bottom:1px solid #463132;line-height: 29px;">
-          <strong style="color: #463132;">企业基本信息</strong>
+          <strong v-if="userType=='CHN'" style="color: #463132;">企业基本信息</strong>
+          <strong v-if="userType=='ENG'" style="color: #463132;" class="f15">Brief Company Information</strong>
         </el-row>
-        <el-row>
+        <!--中文-->
+        <el-row v-if="userType=='CHN'">
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="22">
             <el-row>
               <el-col :span="12">
                 <strong class="vt">营业执照：</strong>
                 <img v-if="jbxxData.src!==''" :src="jbxxData.imageUrl" @click="imgPreview(jbxxData.imageUrl)" style="max-width:100%;max-height:140px;" class="poi">
-                <!-------------------  <img v-else src="../../static/images/noPic.png" style="width:100px;"> -------------------->
+                <!--  <img v-else src="../../static/images/noPic.png" style="width:100px;"> -->
               </el-col>
               <el-col :span="12">
                 <el-row class="mb10">
@@ -104,43 +143,128 @@
             </el-row>
           </el-col>
         </el-row>
+        <!--英文-->
+        <el-row v-if="userType=='ENG'">
+          <el-row class="mb10">
+            <el-col :span="1">&nbsp;</el-col>
+            <el-col :span="22">
+              <strong>Company Name：</strong>
+              <span v-text="jbxxData.ywgsmc||'no'"></span>
+            </el-col>
+          </el-row>
+          <el-row class="mb10">
+            <el-col :span="1">&nbsp;</el-col>
+            <el-col :span="22">
+              <strong>Company Address：</strong>
+              <span v-text="jbxxData.yjdz||'no'"></span>
+            </el-col>
+          </el-row>
+          <el-row class="mb10">
+            <el-col :span="1">&nbsp;</el-col>
+            <el-col :span="11">
+              <strong>Postal Code：</strong>
+              <span v-text="jbxxData.reserve2||'no'"></span>
+            </el-col>
+            <el-col :span="11">
+              <strong>Legal Representative：</strong>
+              <span v-text="jbxxData.frdb||'no'"></span>
+            </el-col>
+          </el-row>
+          <el-row class="mb10">
+            <el-col :span="1">&nbsp;</el-col>
+            <el-col :span="11">
+              <strong>Phone：</strong>
+              <span v-text="jbxxData.bgdh||'no'"></span>
+            </el-col>
+            <el-col :span="11">
+              <strong>Legal Representative's Phone：</strong>
+              <span v-text="jbxxData.frdbdh||'no'"></span>
+            </el-col>
+          </el-row>
+          <el-row class="mb10">
+            <el-col :span="1">&nbsp;</el-col>
+            <el-col :span="11">
+              <strong>Fax：</strong>
+              <span v-text="jbxxData.cz||'no'"></span>
+            </el-col>
+            <el-col :span="11">
+              <strong>Contact Person：</strong>
+              <span v-text="jbxxData.lxr||'no'"></span>
+            </el-col>
+          </el-row>
+          <el-row class="mb10">
+            <el-col :span="1">&nbsp;</el-col>
+            <el-col :span="11">
+              <strong>Email：</strong>
+              <span v-text="jbxxData.email||'no'"></span>
+            </el-col>
+            <el-col :span="11">
+              <strong>Contact Person's Phone：</strong>
+              <span v-text="jbxxData.lxrsj||'no'"></span>
+            </el-col>
+          </el-row>
+          <el-row class="mb10">
+            <el-col :span="1">&nbsp;</el-col>
+            <el-col :span="11">
+              <strong>Standby Email for Password Retrieve：</strong>
+              <span v-text="jbxxData.dzyx||'no'"></span>
+            </el-col>
+            <el-col :span="11">
+              <strong>Company Website：</strong>
+              <span v-text="jbxxData.wz||'no'"></span>
+            </el-col>
+          </el-row>
+        </el-row>
       </div>
       <!-- 企业已选展位 -->
       <div id="qyyxzw" v-if="sfkqYxzwzs">
         <el-row class="mb10" style="border-bottom:1px solid #463132;line-height: 29px;">
-          <strong style="color: #463132;">企业已选展位</strong>
+          <strong v-if="userType=='CHN'" style="color: #463132;">企业已选展位</strong>
+          <strong v-if="userType=='ENG'" style="color: #463132;">Booths you have selected</strong>
         </el-row>
         <el-row v-for="data in yxzwData" :key="data.zwh">
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="22">
             <el-row class="mb10">
               <el-col :span="12">
-                <strong>展位编号：</strong>
-                <span v-text="data.zwh||'无'"></span>
+                <strong v-if="userType=='CHN'">展位编号：</strong>
+                <span v-if="userType=='CHN'" v-text="data.zwh||'无'"></span>
+                <strong v-if="userType=='ENG'">Booth No：</strong>
+                <span v-if="userType=='ENG'" v-text="data.zwh||'no'"></span>
               </el-col>
               <el-col :span="12">
-                <strong>展位面积：</strong>
-                <span v-text="data.zwmj||'无'"></span>
+                <strong v-if="userType=='CHN'">展位面积：</strong>
+                <span v-if="userType=='CHN'" v-text="data.zwmj||'无'"></span>
+                <strong v-if="userType=='ENG'">Booth Area(m2)：</strong>
+                <span v-if="userType=='ENG'" v-text="data.zwmj||'no'"></span>
               </el-col>
             </el-row>
             <el-row class="mb10">
               <el-col :span="12">
-                <strong>横向长度：</strong>
-                <span v-text="data.zwcd||'无'"></span>
+                <strong v-if="userType=='CHN'">横向长度：</strong>
+                <span v-if="userType=='CHN'" v-text="data.zwcd||'无'"></span>
+                <strong v-if="userType=='ENG'">Horizontal Length(m)：</strong>
+                <span v-if="userType=='ENG'" v-text="data.zwcd||'no'"></span>
               </el-col>
               <el-col :span="12">
-                <strong>纵向长度：</strong>
-                <span v-text="data.zwkd||'无'"></span>
+                <strong v-if="userType=='CHN'">纵向长度：</strong>
+                <span v-if="userType=='CHN'" v-text="data.zwkd||'无'"></span>
+                <strong v-if="userType=='ENG'">Vertical Length(m)：</strong>
+                <span v-if="userType=='ENG'" v-text="data.zwkd||'no'"></span>
               </el-col>
             </el-row>
             <el-row class="mb20">
               <el-col :span="12">
-                <strong>展位类型：</strong>
-                <span v-text="data.zwlb||'无'"></span>
+                <strong v-if="userType=='CHN'">展位类型：</strong>
+                <span v-if="userType=='CHN'" v-text="data.zwlb||'无'"></span>
+                <strong v-if="userType=='ENG'">Booth type：</strong>
+                <span v-if="userType=='ENG'" v-text="data.zwlb||'no'"></span>
               </el-col>
               <el-col :span="12">
-                <strong>出口类型：</strong>
-                <span v-text="data.cklx||'无'"></span>
+                <strong v-if="userType=='CHN'">出口类型：</strong>
+                <span v-if="userType=='CHN'" v-text="data.cklx||'无'"></span>
+                <strong v-if="userType=='ENG'">Export type：</strong>
+                <span v-if="userType=='ENG'" v-text="data.cklx||'no'"></span>
               </el-col>
             </el-row>
           </el-col>
@@ -149,9 +273,11 @@
       <!--企业开票信息-->
       <div id="qykpxx" class="mb5">
         <el-row class="mb10" style="border-bottom:1px solid #463132;line-height: 29px;">
-          <strong style="color: #463132;">企业开票信息</strong>
+          <strong v-if="userType=='CHN'" style="color: #463132;">企业开票信息</strong>
+          <strong v-if="userType=='ENG'" style="color: #463132;" class="f15">Invoice Information</strong>
         </el-row>
-        <el-row>
+        <!--中文-->
+        <el-row v-if="userType=='CHN'">
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="22">
             <el-row class="mb10">
@@ -190,13 +316,39 @@
             </el-row>
           </el-col>
         </el-row>
+        <!--英文-->
+        <el-row v-if="userType=='ENG'">
+          <el-col :span="1">&nbsp;</el-col>
+          <el-col :span="22">
+            <el-row class="mb10">
+              <strong>Company Name on the Invoice：</strong>
+              <span v-text="kpxxData.kpgsmc||'no'"></span>
+            </el-row>
+            <el-row class="mb10">
+              <strong>Customer Contact：</strong>
+              <span v-text="kpxxData.gsdz||'no'"></span>
+            </el-row>
+            <el-row class="mb10">
+              <el-col :span="12">
+                <strong>Fax：</strong>
+                <span v-text="kpxxData.yhzh||'no'"></span>
+              </el-col>
+              <el-col :span="12">
+                <strong>Phone Number：</strong>
+                <span v-text="kpxxData.dhhm||'no'"></span>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
       </div>
       <!--问卷调查-->
       <div id="qywjdc" class="mb5">
         <el-row class="mb10" style="border-bottom:1px solid #463132;line-height: 29px;">
-          <strong style="color: #463132;">企业问卷调查</strong>
+          <strong v-if="userType=='CHN'" style="color: #463132;">企业问卷调查</strong>
+          <strong v-if="userType=='ENG'" style="color: #463132;" class="f15">Major Product Information</strong>
         </el-row>
-        <el-row>
+        <!--中文-->
+        <el-row v-if="userType=='CHN'">
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="22">
             <el-row class="mb10">
@@ -255,28 +407,41 @@
             </el-row>
           </el-col>
         </el-row>
+        <!--英文-->
+        <el-row v-if="userType=='ENG'" class="mb10">
+          <el-col :span="1">&nbsp;</el-col>
+          <el-col :span="22">
+            <strong>Category of Your Major Products：</strong>
+            <span v-text="wjdcData.zycp||'no'"></span>
+          </el-col>
+        </el-row>
       </div>
       <!--企業產品介紹-->
       <div id="qycpjs" class="mb5">
         <el-row class="mb10" style="border-bottom:1px solid #463132;line-height: 29px;">
-          <strong style="color: #463132;">企业和产品介绍</strong>
+          <strong v-if="userType=='CHN'" style="color: #463132;">企业和产品介绍</strong>
+          <strong v-if="userType=='ENG'" style="color: #463132;" class="f15">Company Information Details and Product Examples</strong>
         </el-row>
         <el-row class="mb10">
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="11">
-            <strong class="vt">企业Logo：</strong>
+            <strong v-if="userType=='CHN'" class="vt">企业Logo：</strong>
+            <strong v-if="userType=='ENG'" class="vt">Company Logo：</strong>
             <img v-if="qyjsData.src!==''" :src="qyjsData.imageUrl" @click="imgPreview(qyjsData.imageUrl)" style="max-width:100%;max-height:140px;" class="poi">
             <!--    <img v-else src="../../static/images/noPic.png" style="width:100px;">   -->
           </el-col>
           <el-col :span="11">
-            <strong>企业简介：</strong>
-            <span v-text="qyjsData.qyjj||'无'"></span>
+            <strong v-if="userType=='CHN'">企业简介：</strong>
+            <span v-if="userType=='CHN'" v-text="qyjsData.qyjj||'无'"></span>
+            <strong v-if="userType=='ENG'">Company Introduction：</strong>
+            <span v-if="userType=='ENG'" v-text="qyjsData.qyjj||'no'"></span>
             <br>
-            <strong>企业英文简介：</strong>
-            <span v-text="qyjsData.reserve1||'无'"></span>
+            <strong v-if="userType=='CHN'">企业英文简介：</strong>
+            <span v-if="userType=='CHN'" v-text="qyjsData.reserve1||'无'"></span>
           </el-col>
         </el-row>
-        <el-row class="mb10">
+        <!--产品介绍中文-->
+        <el-row v-if="userType=='CHN'" class="mb10">
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="22">
             <el-row class="mb10">
@@ -307,15 +472,54 @@
             <span v-else>暂无产品信息</span>
           </el-col>
         </el-row>
+        <!--产品介绍英文-->
+        <el-row v-if="userType=='ENG'" class="mb10">
+          <el-col :span="1">&nbsp;</el-col>
+          <el-col :span="22">
+            <el-row class="mb10">
+              <strong>Product Introduction：</strong>
+            </el-row>
+            <el-form id="cpjs" v-if="cpjsData.length>0" :inline="true" style="width: 100%;" class="demo-form-inline">
+              <el-form-item v-for="(cpjs,index) in cpjsData" style="width: 49%;" :key="index">
+                <el-card class="mb10 card_style" id="cpjsImg">
+                  <el-row class="h100">
+                    <el-col :span="5" class="h100 tc">
+                      <img v-if="cpjs.src!==''" :src="cpjs.imageUrl" class="poi" @click="imgPreview(cpjs.imageUrl)">
+                      <!--  <img v-else src="../../static/images/noPic.png">  -->
+                    </el-col>
+                    <el-col :span="19" style="line-height: 24px;" class="pl15">
+                      <strong>Category of the Product：</strong>
+                      <span v-text="cpjs.cplxmc_ENG||'no'"></span>
+                      <br>
+                      <strong>Product Introduction：</strong>
+                      <span v-text="cpjs.cpjj||'no'"></span>
+                    </el-col>
+                  </el-row>
+                </el-card>
+              </el-form-item>
+            </el-form>
+            <span v-else>no product</span>
+          </el-col>
+        </el-row>
       </div>
       <!--企業展位意向-->
       <div id="qyzwyx" class="mb20">
         <el-row class="mb10" style="border-bottom:1px solid #463132;line-height: 29px;">
-          <strong style="color: #463132;vertical-align: -webkit-baseline-middle;">企业参展展位需求意向</strong>
-          <el-button v-if="editZwyx&&editPage" type="success" icon="el-icon-document" size="small" class="r" @click="saveClick">保存</el-button>
-          <el-button v-else-if="editPage" type="primary" icon="el-icon-edit" size="small" class="r" @click="editZwyx=true">修改</el-button>
+          <strong style="color: #463132;vertical-align: -webkit-baseline-middle;">
+            <span v-if="userType=='CHN'">企业参展展位需求意向</span>
+            <span v-if="userType=='ENG'" class="f15">Questionnaire on your Booth Requirement</span>
+          </strong>
+          <el-button v-if="editZwyx&&editPage" type="success" icon="el-icon-document" size="small" class="r" @click="saveClick">
+            <span v-if="userType=='CHN'">保存</span>
+            <span v-if="userType=='ENG'">Save</span>
+          </el-button>
+          <el-button v-else-if="editPage" type="primary" icon="el-icon-edit" size="small" class="r" @click="editZwyx=true">
+            <span v-if="userType=='CHN'">修改</span>
+            <span v-if="userType=='ENG'">Edit</span>
+          </el-button>
         </el-row>
-        <el-row>
+        <!--中文-->
+        <el-row v-if="userType=='CHN'">
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="22">
             <el-row class="mb10">
@@ -339,11 +543,44 @@
             </el-row>
           </el-col>
         </el-row>
+        <!--英文-->
+        <el-row v-if="userType=='ENG'" class="mb10">
+          <el-col :span="1">&nbsp;</el-col>
+          <el-col :span="22">
+            <el-row class="mb10">
+              <strong>Standard Booth：</strong>
+              <span v-if="editZwyx">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <el-input-number v-if="editZwyx" size="small" v-model="zwyxForm.bzzwgs" :min="0" :max="6" :precision="0"></el-input-number>
+              <span v-else v-text="zwyxForm.bzzwgs==''||zwyxForm.bzzwgs==null?'no':zwyxForm.bzzwgs+' Booth(s)'"></span>
+              &nbsp;&nbsp;(12m² Each)
+            </el-row>
+            <el-row class="mb10">
+              <strong>Indoor Raw Space Booth：</strong>
+              <span v-if="editZwyx">&nbsp;&nbsp;</span>
+              <el-input-number v-if="editZwyx" size="small" v-model="zwyxForm.sngdzw" :min="24" :max="1000" :precision="0"></el-input-number>
+              <span v-else v-text="zwyxForm.sngdzw==''||zwyxForm.sngdzw==null?'no':zwyxForm.sngdzw+' m²'"></span>
+              &nbsp;&nbsp;(Minimum 24m²)
+            </el-row>
+            <el-row class="mb10">
+              <strong>Outdoor Raw Space Booth：</strong>
+              <el-input-number v-if="editZwyx" size="small" v-model="zwyxForm.swgdzw" :min="0" :max="2000" :precision="0"></el-input-number>
+              <span v-else v-text="zwyxForm.swgdzw==''||zwyxForm.swgdzw==null?'no':zwyxForm.swgdzw+' m²'"></span>
+              &nbsp;&nbsp;(Only Available to Fire Engines)
+            </el-row>
+          </el-col>
+        </el-row>
       </div>
+      <!--操作按钮-->
       <div id="option" v-if="editPage==false">
         <el-row class="tc pt5" style="margin-left:-240px;">
-          <el-button type="info" icon="el-icon-close" size="medium" @click="canclClick">取消</el-button>
-          <el-button type="success" icon="el-icon-check" size="medium" @click="submitClick">提交</el-button>
+          <el-button type="info" icon="el-icon-close" size="medium" @click="canclClick">
+            <span v-if="userType=='CHN'">取消</span>
+            <span v-if="userType=='ENG'">Cancle</span>
+          </el-button>
+          <el-button type="success" icon="el-icon-check" size="medium" @click="submitClick">
+            <span v-if="userType=='CHN'">提交</span>
+            <span v-if="userType=='ENG'">Submit</span>
+          </el-button>
         </el-row>
       </div>
       <!--图片预览-->
@@ -358,9 +595,12 @@
 export default {
   data() {
     return {
+      //读取图片base路径
       baseUrl: window.config.baseUrl,
       //当前用户
       currentUser: this.CONSTANT.currentUser,
+      //当前用户中英文标识
+      userType: this.CONSTANT.currentUser.usertype,
       loading: false,
       showPicVisible: false,
       editZwyx: false,
@@ -486,50 +726,81 @@ export default {
         function(res) {
           if (res.data.result.length > 0) {
             var datas = res.data.result;
-            this.yxzwData = datas;
-            var qq = "";
-            for (var i = 0; i < datas.length; i++) {
-              if (i == 0) {
-                this.yxzwxx += datas[i].zwh;
-                if (
-                  (datas[i].zwh.indexOf("W1") != -1 ||
-                    datas[i].zwh.indexOf("W2") != -1 ||
-                    datas[i].zwh.indexOf("W3-A") != -1) &&
-                  qq.indexOf(this.qqW) == -1
-                ) {
-                  qq += this.qqW;
+            //英文版翻译出口类型
+            if (this.userType == "ENG") {
+              for (var i = 0; i < datas.length; i++) {
+                if (i == 0) {
+                  this.yxzwxx += datas[i].zwh;
                 } else {
-                  if (qq.indexOf(this.qqE) == -1) {
-                    qq += this.qqE;
-                  }
+                  this.yxzwxx += "," + datas[i].zwh;
                 }
-              } else {
-                this.yxzwxx += "，" + datas[i].zwh;
-                if (
-                  (datas[i].zwh.indexOf("W1") != -1 ||
-                    datas[i].zwh.indexOf("W2") != -1 ||
-                    datas[i].zwh.indexOf("W3-A") != -1) &&
-                  qq.indexOf(this.qqW) == -1
-                ) {
-                  if (qq) {
-                    qq += "和" + this.qqW;
+                //展位类别，出口类型翻译
+                if (datas[i].zwlb == "标准展位") {
+                  datas[i].zwlb = "Standard booth";
+                }
+                if (datas[i].zwlb == "光地") {
+                  datas[i].zwlb = "Raw space";
+                }
+                if (datas[i].cklx == "一面开") {
+                  datas[i].cklx = "1 Sides open";
+                }
+                if (datas[i].cklx == "两面开") {
+                  datas[i].cklx = "2 Sides open";
+                }
+                if (datas[i].cklx == "三面开") {
+                  datas[i].cklx = "3 Sides open";
+                }
+                if (datas[i].cklx == "全开") {
+                  datas[i].cklx = "4 Sides open";
+                }
+              }
+            } else if (this.userType == "CHN") {
+              //中文版遍历展馆号，加不同qq群号
+              var qq = "";
+              for (var i = 0; i < datas.length; i++) {
+                if (i == 0) {
+                  this.yxzwxx += datas[i].zwh;
+                  if (
+                    (datas[i].zwh.indexOf("W1") != -1 ||
+                      datas[i].zwh.indexOf("W2") != -1 ||
+                      datas[i].zwh.indexOf("W3-A") != -1) &&
+                    qq.indexOf(this.qqW) == -1
+                  ) {
+                    qq += this.qqW;
                   } else {
-                    qq = this.qqW;
+                    if (qq.indexOf(this.qqE) == -1) {
+                      qq += this.qqE;
+                    }
                   }
                 } else {
-                  if (qq.indexOf(this.qqE) == -1) {
+                  this.yxzwxx += "，" + datas[i].zwh;
+                  if (
+                    (datas[i].zwh.indexOf("W1") != -1 ||
+                      datas[i].zwh.indexOf("W2") != -1 ||
+                      datas[i].zwh.indexOf("W3-A") != -1) &&
+                    qq.indexOf(this.qqW) == -1
+                  ) {
                     if (qq) {
-                      qq += "和" + this.qqE;
+                      qq += "和" + this.qqW;
                     } else {
-                      qq = this.qqE;
+                      qq = this.qqW;
+                    }
+                  } else {
+                    if (qq.indexOf(this.qqE) == -1) {
+                      if (qq) {
+                        qq += "和" + this.qqE;
+                      } else {
+                        qq = this.qqE;
+                      }
                     }
                   }
                 }
               }
+              if (qq != "" && this.userType == "CHN") {
+                this.yxzwxx += "，请尽快添加QQ群：" + qq;
+              }
             }
-            if (qq != "") {
-              this.yxzwxx += "，请尽快添加QQ群：" + qq;
-            }
+            this.yxzwData = datas;
             this.zwxzzt = "01";
             this.sfkqYxzwzs = true;
           }
@@ -701,32 +972,40 @@ export default {
     saveClick: function() {
       let vm = this;
       if (
-        this.zwyxForm.bzzwgs > 0 ||
-        this.zwyxForm.sngdzw > 0 ||
-        this.zwyxForm.swgdzw > 0
+        vm.zwyxForm.bzzwgs > 0 ||
+        vm.zwyxForm.sngdzw > 0 ||
+        vm.zwyxForm.swgdzw > 0
       ) {
-        if (this.zwyxData == null) {
+        if (vm.zwyxData == null) {
           //新增
           var params = {
-            qyid: this.qyid,
-            bzzwgs: this.zwyxForm.bzzwgs,
-            sngdzw: this.zwyxForm.sngdzw,
-            swgdzw: this.zwyxForm.swgdzw,
+            qyid: vm.qyid,
+            bzzwgs: vm.zwyxForm.bzzwgs,
+            sngdzw: vm.zwyxForm.sngdzw,
+            swgdzw: vm.zwyxForm.swgdzw,
             deleteFlag: "N",
-            cjrid: this.currentUser.userid,
-            cjrmc: this.currentUser.username
+            cjrid: vm.currentUser.userid,
+            cjrmc: vm.currentUser.username
           };
           vm.$axios.post("/qyzwyx/doInsertByVo", params).then(
             function(res) {
               if (res.data.result == 1) {
-                this.$message({
-                  message: "成功保存企业参展展位需求意向",
-                  type: "success"
-                });
-                this.getZwyxData(this.qyid);
-                this.editZwyx = false;
+                if (vm.userType == "CHN") {
+                  vm.$message({
+                    message: "成功保存企业参展展位需求意向",
+                    type: "success"
+                  });
+                } else if (vm.userType == "ENG") {
+                  vm.$message({
+                    message:
+                      "Questionnaire on your Booth Requirement has been saved!",
+                    type: "success"
+                  });
+                }
+                vm.getZwyxData(vm.qyid);
+                vm.editZwyx = false;
               }
-            }.bind(this),
+            }.bind(vm),
             function(error) {
               console.log(error);
             }
@@ -734,86 +1013,132 @@ export default {
         } else {
           //修改
           var params = {
-            uuid: this.zwyxData.uuid,
-            qyid: this.qyid,
-            bzzwgs: this.zwyxForm.bzzwgs,
-            sngdzw: this.zwyxForm.sngdzw,
-            swgdzw: this.zwyxForm.swgdzw,
-            xgrid: this.currentUser.userid,
-            xgrmc: this.currentUser.username
+            uuid: vm.zwyxData.uuid,
+            qyid: vm.qyid,
+            bzzwgs: vm.zwyxForm.bzzwgs,
+            sngdzw: vm.zwyxForm.sngdzw,
+            swgdzw: vm.zwyxForm.swgdzw,
+            xgrid: vm.currentUser.userid,
+            xgrmc: vm.currentUser.username
           };
           vm.$axios.post("/qyzwyx/doUpdateByVO", params).then(
             function(res) {
               if (res.data.result == 1) {
-                this.$message({
-                  message: "成功保存企业参展展位需求意向",
-                  type: "success"
-                });
-                this.getZwyxData(this.qyid);
-                this.editZwyx = false;
-              }
-            }.bind(this),
-            function(error) {
-              console.log(error);
-            }
-          );
-        }
-      } else {
-        this.$message({
-          message: "请至少选择一种展位填写需求意向",
-          type: "warning"
-        });
-      }
-    },
-    canclClick: function() {
-      var params = {
-        userid: this.userid
-      };
-      //loadDivParam("prediction/exhprediction_edit", params);
-      this.$router.push({
-        name: "exhpredictionUpdate",
-        query: { userid: this.userid, type: "BJ" }
-      });
-    },
-    submitClick: function() {
-      let vm = this;
-      vm
-        .$confirm("提交后仅可修改展位意向信息，其他信息不能修改", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-        .then(() => {
-          var params = {
-            qyid: vm.qyid,
-            sjzt: "03",
-            shzt: "01",
-            xgrid: vm.currentUser.userid,
-            xgrmc: vm.currentUser.username
-          };
-          vm.$axios.post("/qyjbxx/doUpdateByVO", params).then(
-            function(res) {
-              if (res.data.result == 1) {
-                vm.$message({
-                  message: "报名信息已提交待审核",
-                  type: "success"
-                });
-                vm.editPage = true;
-                vm.jbxxData.shzt = "01";
-                vm.pageShzt = "01";
+                if (vm.userType == "CHN") {
+                  vm.$message({
+                    message: "成功保存企业参展展位需求意向",
+                    type: "success"
+                  });
+                } else if (vm.userType == "ENG") {
+                  vm.$message({
+                    message:
+                      "Questionnaire on your Booth Requirement has been saved!",
+                    type: "success"
+                  });
+                }
+                vm.getZwyxData(vm.qyid);
+                vm.editZwyx = false;
               }
             }.bind(vm),
             function(error) {
               console.log(error);
             }
           );
+        }
+      } else {
+        if (vm.userType == "CHN") {
+          vm.$message({
+            message: "请至少选择一种展位填写需求意向",
+            type: "warning"
+          });
+        } else if (vm.userType == "ENG") {
+          vm.$message({
+            message:
+              "Please select at least one booth to fill out the requirements.",
+            type: "warning"
+          });
+        }
+      }
+    },
+    canclClick: function() {
+      if (this.userType == "CHN") {
+        this.$router.push({
+          name: "exhpredictionEdit",
+          query: { userid: this.userid, type: "BJ" }
+        });
+      } else if (this.userType == "ENG") {
+        this.$router.push({
+          name: "exhpredictionEdit_ENG",
+          query: { userid: this.userid, type: "BJ" }
+        });
+      }
+    },
+    submitClick: function() {
+      let vm = this;
+      if(vm.userType == "CHN"){
+        vm.$confirm("提交后仅可修改展位意向信息，其他信息不能修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
         })
-        .catch(() => {
+        .then(() => {
+          vm.submitClickMain();
+        }).catch(() => {
           vm.$message({
             type: "info",
             message: "已取消提交"
           });
         });
+      }else if(vm.userType == "ENG"){
+        vm.$confirm("The information of booth intention can only be modified after submitting. Other information cannot be modified.", "Attention", {
+          confirmButtonText: "Submit",
+          cancelButtonText: "Cancle",
+          type: "warning"
+        })
+        .then(() => {
+          vm.submitClickMain();
+        }).catch(() => {
+          vm.$message({
+            type: "info",
+            message: "uncommitted"
+          });
+        });
+      }
+      
+    },
+    submitClickMain: function() {
+      let vm = this;
+      var params = {
+        qyid: vm.qyid,
+        sjzt: "03",
+        shzt: "01",
+        xgrid: vm.currentUser.userid,
+        xgrmc: vm.currentUser.username
+      };
+      vm.$axios.post("/qyjbxx/doUpdateByVO", params).then(
+        function(res) {
+          if (res.data.result == 1) {
+            if(vm.userType == "CHN"){
+              vm.$message({
+                message: "报名信息已提交待审核",
+                type: "success"
+              });
+            }else if(vm.userType == "ENG"){
+              vm.$message({
+                message: "Application information has been submitted for review.",
+                type: "success"
+              });
+            }
+            
+            vm.editPage = true;
+            vm.jbxxData.shzt = "01";
+            vm.pageShzt = "01";
+          }
+        }.bind(vm),
+        function(error) {
+          console.log(error);
+        }
+      );
     }
   }
 };
@@ -861,7 +1186,7 @@ export default {
 
   .topScroll {
     position: fixed;
-    top: 51px;
+    top: 65px;
     /* right:calc(50% - 216px); */
     /* background:#fff; */
     /* width: calc(100% - 60px); */

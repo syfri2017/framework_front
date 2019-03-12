@@ -1,12 +1,12 @@
 <template>
-  <div id="exhibitor">
+  <div id="confirm">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'exhibitor'
+  name: 'confirm'
 }
 </script>
 
