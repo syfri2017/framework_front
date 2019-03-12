@@ -277,7 +277,7 @@ export default [
        //----------展馆管理-展馆平面图----------
        {
         path: '/plan/planEN',
-        meta: {auth: true, title: "展馆平面图"},
+        meta: {auth: true, title: "Booth Selection"},
         component: VenuePlanEN,
         children: [
           {
@@ -584,6 +584,19 @@ export default [
           },
         ]
       },
+      //----------英文-展商端-产品介绍---------
+      {
+        path: '/exhibitor/productEN',
+        meta: {auth: true, title: "Product Introduction"},
+        component: Product,
+        children: [
+          {
+            path: '/',
+            name: 'exhibitorProductEN',
+            component: resolve => require(['@/views/exhibition/prediction/exhibitor/ProductList'], resolve)
+          },
+        ]
+      },
       //----------展商端-信息确认---------
       {
         path: '/exhibitor/confirm',
@@ -593,6 +606,19 @@ export default [
           {
             path: '/',
             name: 'exhibitorConfirm',
+            component: resolve => require(['@/views/exhibition/prediction/exhibitor/ConfirmList'], resolve)
+          },
+        ]
+      },
+      //----------英文-展商端-信息确认---------
+      {
+        path: '/exhibitor/confirmEN',
+        meta: {auth: true, title: "Verify Message"},
+        component: Confirm,
+        children: [
+          {
+            path: '/',
+            name: 'exhibitorConfirmEN',
             component: resolve => require(['@/views/exhibition/prediction/exhibitor/ConfirmList'], resolve)
           },
         ]

@@ -1,495 +1,532 @@
 <template>
-  <div id="exhibitorList">
-    <el-row>
-      <el-form label-width="75px" :inline="true">
-        <el-row>
-          <el-col :span="8" class="searchInline">
-            <label class="el-form-item__label searchLabel">用户名</label>
-            <el-input size="small" v-model="searchForm.username" placeholder="用户名" clearable></el-input>
-          </el-col>
-          <el-col :span="8" class="searchInline">
-            <label class="el-form-item__label searchLabel">公司名称</label>
-            <el-input size="small" v-model="searchForm.zwgsmc" placeholder="公司名称" clearable></el-input>
-          </el-col>
-          <el-col :span="8" class="searchInline">
-            <label class="el-form-item__label searchLabel">展商类型</label>
-            <el-select size="small" v-model="searchForm.usertype" placeholder="全部" class="searchSelect" clearable>
-              <el-option v-for="item in zslxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-            </el-select>
-          </el-col>
-        </el-row>
-        <div>
-          <el-form>
-            <el-col :span="12" class="btnEditDelete">
-              <el-form-item align="left">                       
-                <el-button v-if="hasPermission('prediction/exhibitor:add')" type="success" icon="el-icon-plus" size="small" @click="addClick">新增</el-button>
-                <el-button v-if="hasPermission('prediction/exhibitor:delete')" type="danger" icon="el-icon-delete" size="small" @click="deleteClick">删除</el-button>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12"></el-col>
-            <el-col :span="12" class="btnSearchPlus">
-              <el-form-item>
-                <el-button type="primary" icon="el-icon-search" size="small" @click="searchClick">查询</el-button>
-                <el-button type="clear" icon="el-icon-refresh" size="small" @click="clearClick">重置</el-button>
-              </el-form-item>
-            </el-col>
-          </el-form>
-        </div>
-      </el-form>
+  <div id="confirmList">
+    <!-- 邮寄信息确认状态条 -->
+    <el-row class="mt10 mb10">
+      <el-button v-if="jbxxForm.qrzt!='Y'" type="danger" icon="el-icon-warning" class="w100" style="font-size: 20px">您尚未进行信息确认
+        <i class="el-icon-warning"></i>
+      </el-button>
+      <el-button v-if="jbxxForm.qrzt=='Y'" type="success" icon="el-icon-warning" class="w100" style="font-size: 20px">您上次信息确认时间为
+        <span v-text="jbxxForm.qrsj"></span>，如需修改可再次修改确认
+        <i class="el-icon-warning"></i>
+      </el-button>
     </el-row>
-    <div class="table_container">
-      <el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-        @selection-change="selectionChange" class="tableStyle" :height="tableheight" :row-style="rowStyle">
-        <el-table-column type="selection" width="35"></el-table-column>
-        <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-        <el-table-column prop="username" show-overflow-tooltip label="用户名" min-width="15%" align="center"></el-table-column>
-        <el-table-column prop="usertypeName" show-overflow-tooltip label="展商类型" min-width="12%" align="center"></el-table-column>
-        <el-table-column prop="zwgsmc" show-overflow-tooltip label="公司名称" min-width="20%" align="center">
-          <template slot-scope="scope">
-            <span v-if="scope.row.usertype == 'ENG'" v-text="scope.row.ywgsmc"></span>
-            <span v-else v-text="scope.row.zwgsmc"></span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="lxr" show-overflow-tooltip label="联系人" min-width="10%" align="center"></el-table-column>
-        <el-table-column prop="dzyx" show-overflow-tooltip label="电子邮箱" min-width="15%" align="center"></el-table-column>
-        <el-table-column label="重置" width="100" align="center">
-            <template slot-scope="scope">
-                <el-button type="text" @click="resetClick(scope.row,scope.$index)">重置密码</el-button>
-            </template>
-        </el-table-column>
-        <el-table-column label="操作" width="65" align="center" v-if="hasPermission('prediction/exhibitor:edit')">
-            <template slot-scope="scope">
-                <el-button type="text" @click="editClick(scope.row,scope.$index)">编辑</el-button>
-            </template>
-        </el-table-column>
-      </el-table>
-      <!--列表底部工具条和分页符-->
-      <el-row type="flex" justify="end">
-        <paginator></paginator>
-      </el-row>
-    </div>
-
-    <!-- 编辑-->
-    <el-dialog :title="dialogTitle" :visible.sync="editFormVisible" @close="closeDialog(editForm)" :close-on-click-modal="false">
-      <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-        <el-row>
-          <el-col :span="1">&nbsp;</el-col>
-          <el-col :span="22">
-            <el-form-item label="展商类型" prop="usertype">
-              <el-radio-group v-model="editForm.usertype" size="small" auto-complete="off">
-                <el-radio class="radio" :label="'CHN'">国内</el-radio>
-                <el-radio class="radio" :label="'ENG'">国外</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :span="1">&nbsp;</el-col>
-        </el-row>
+    <!-- 邮寄地址确认 -->
+    <el-row>
+      <el-card class="card_style">
+        <div slot="header" class="clearfix">
+          <strong class="card_title_font lh28">邮寄地址确认</strong>
+          <el-button v-if="jbxxEditFlag" @click="editJbxxClick" :disabled="shztFlag" class="r" type="primary" icon="el-icon-edit" size="small">修改</el-button>
+          <div v-else class="r">
+            <el-button @click="saveJbxxCancle('jbxxForm')" type="info" icon="el-icon-close" size="small">取消</el-button>
+            <el-button @click="saveJbxxClick('jbxxForm')" type="success" icon="el-icon-check" size="small">保存</el-button>
+        </div>
+        </div>
         <el-row>
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="21">
-            <el-form-item label="用户名" prop="username">
-              <el-input v-if="editForm.usertype == 'ENG'" v-model="editForm.username" placeholder="请输入用户名，用户名为邮箱" size="small" auto-complete="off" clearable :disabled="editFlag" maxlength="30"></el-input>
-              <el-input v-else v-model="editForm.username" placeholder="请输入用户名，用户名为手机号" size="small" auto-complete="off" clearable :disabled="editFlag" maxlength="30"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="2">
-            &nbsp;
-            <el-button v-if="dialogTitle=='展商用户编辑'" v-text="editFlagText" type="text" size="small" @click="editFlagChange" style="margin-top:6px;"></el-button>
+            <el-form ref="jbxxForm" :model="jbxxForm" label-position="right" label-width="160px" :rules="jbxxRules">
+              <el-row>
+                <el-form-item prop="zwgsmc" label="中文公司名称：">
+                  <span v-text="jbxxForm.zwgsmc"></span>
+                </el-form-item>
+              </el-row>
+              <el-row>
+                <el-form-item prop="lxr" label="联系人：">
+                  <span v-if="jbxxEditFlag" v-text="jbxxForm.lxr"></span>
+                  <el-input v-else size="small" v-model="jbxxForm.lxr" placeholder="联系人"></el-input>
+                </el-form-item>
+              </el-row>
+              <el-row>
+                <el-form-item prop="lxrsj" label="联系人手机：">
+                  <span v-if="jbxxEditFlag" v-text="jbxxForm.lxrsj"></span>
+                  <el-input v-else size="small" v-model="jbxxForm.lxrsj" placeholder="手机"></el-input>
+                </el-form-item>
+              </el-row>
+              <el-row v-if="jbxxEditFlag">
+                <el-form-item prop="xzqh" label="邮寄地址：">
+                  <span v-text="jbxxForm.yjdzshengmc+jbxxForm.yjdzshimc+' '+jbxxForm.yjdzxx"></span>
+                </el-form-item>
+              </el-row>
+              <el-row v-else>
+                <el-col :span="8">
+                  <el-form-item prop="xzqh" label="邮寄地址：">
+                    <el-cascader v-model="jbxxForm.xzqh" :options="xzqhDataTree" :props="defaultProps" size="small" placeholder="省/市" class="searchSelect"
+                        clearable show-all-levels></el-cascader>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="16">
+                  <el-form-item prop="yjdzxx" id="yjdzxx">
+                    <el-input size="small" v-model="jbxxForm.yjdzxx" placeholder="详细地址"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
           </el-col>
         </el-row>
-        <el-row v-if="editPasswordShow">
+      </el-card>
+    </el-row>
+    <!-- 开票信息确认 -->
+    <el-row>
+      <el-card class="card_style">
+        <div slot="header" class="clearfix">
+          <strong class="card_title_font lh28">开票信息确认</strong>
+          <el-button v-if="kpxxEditFlag" @click="editKpxxClick" :disabled="shztFlag" class="r" type="primary" icon="el-icon-edit" size="small">修改</el-button>
+          <div v-else class="r">
+            <el-button @click="saveKpxxCancle('kpxxForm')" type="info" icon="el-icon-close" size="small">取消</el-button>
+            <el-button @click="saveKpxxClick('kpxxForm')" type="success" icon="el-icon-check" size="small">保存</el-button>
+          </div>
+        </div>
+        <el-row>
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="21">
-            <el-form-item label="密码" prop="password">
-              <el-input v-model="editForm.password" type="password" placeholder="请输入密码，密码为6-16位数字字母组合" size="small" auto-complete="off" clearable maxlength="60"></el-input>
-            </el-form-item>
+            <el-form ref="kpxxForm" :model="kpxxForm" label-position="right" label-width="160px" :rules="kpxxRules">
+              <el-row>
+                <el-form-item prop="kplx" label="开票类型：">
+                  <span v-if="kpxxEditFlag" v-text="kpxxForm.kplxmc"></span>
+                  <el-radio-group v-else v-model="kpxxForm.kplx" size="small" auto-complete="off" @change="fplxChange">
+                    <el-radio class="radio" :label="'1'">增值税专用发票</el-radio>
+                    <el-radio class="radio" :label="'2'">增值税普通发票</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="kpgsmc" label="开票公司名称：">
+                    <span v-if="kpxxEditFlag" v-text="kpxxForm.kpgsmc"></span>
+                    <el-input v-else size="small" v-model="kpxxForm.kpgsmc" placeholder="开票公司名称"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" v-if="kpxxForm.kplx == '1'">
+                  <el-form-item prop="dhhm" label="电话号码：">
+                    <span v-if="kpxxEditFlag" v-text="kpxxForm.dhhm"></span>
+                    <el-input v-else size="small" v-model="kpxxForm.dhhm" maxlength="50" placeholder="电话号码"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="tyshxydm" label="统一社会信用代码：" :onkeyup="addBlankXydm()">
+                    <span v-if="kpxxEditFlag" v-text="kpxxForm.tyshxydm"></span>
+                    <el-input v-else size="small" v-model="kpxxForm.tyshxydm" placeholder="统一社会信用代码"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" v-if="kpxxForm.kplx == '1'">
+                  <el-form-item prop="khyh" label="开户银行：">
+                    <span v-if="kpxxEditFlag" v-text="kpxxForm.khyh"></span>
+                    <el-input v-else size="small" v-model="kpxxForm.khyh" placeholder="开户银行"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="gsdz" label="公司地址：" :rules="kpxxForm.kplx == '1'?kpxxRules.gsdz:[{ required: false, message: '请输入公司地址', trigger: 'blur' },{ min: 1, max: 150, message: '最多可输入150个字', trigger: 'blur' }]">
+                    <span v-if="kpxxEditFlag" v-text="kpxxForm.gsdz"></span>
+                    <el-input v-else size="small" v-model="kpxxForm.gsdz" placeholder="公司地址"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" v-if="kpxxForm.kplx == '1'">
+                  <el-form-item prop="yhzh" label="银行账号：" :onkeyup="addBlankYhzh()">
+                    <span v-if="kpxxEditFlag" v-text="kpxxForm.yhzh"></span>
+                    <el-input v-else size="small" v-model="kpxxForm.yhzh" placeholder="银行账号"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <!-- 专用发票 -->
+              <!-- <el-row v-if="kpxxForm.kplx == '1'">
+                  <el-row>
+                      <el-form-item prop="dhhm" label="电话号码：">
+                          <span v-if="kpxxEditFlag" v-text="kpxxForm.dhhm"></span>
+                          <el-input v-else size="small" v-model="kpxxForm.dhhm" maxlength="50" placeholder="电话号码"></el-input>
+                      </el-form-item>
+                  </el-row>
+                  <el-row>
+                      <el-form-item prop="khyh" label="开户银行：">
+                          <span v-if="kpxxEditFlag" v-text="kpxxForm.khyh"></span>
+                          <el-input v-else size="small" v-model="kpxxForm.khyh" placeholder="开户银行"></el-input>
+                      </el-form-item>
+                  </el-row>
+                  <el-row>
+                      <el-form-item prop="yhzh" label="银行账号：" :onkeyup="addBlankYhzh()">
+                          <span v-if="kpxxEditFlag" v-text="kpxxForm.yhzh"></span>
+                          <el-input v-else size="small" v-model="kpxxForm.yhzh" placeholder="银行账号"></el-input>
+                      </el-form-item>
+                  </el-row>
+              </el-row> -->
+            </el-form>
           </el-col>
-          <el-col :span="2">&nbsp;</el-col>
         </el-row>
-        <el-row v-if="editPasswordShow">
+      </el-card>
+    </el-row>
+    <!-- 公司简称确认 -->
+    <el-row>
+      <el-card class="card_style">
+        <div slot="header" class="clearfix">
+          <strong class="card_title_font lh28">公司简称确认</strong>
+          <span style="color:red;">（如已选择标准展位，请填写公司简称，此简称只用于展位图上显示公司名称。）</span>
+          <el-button v-if="gsjcEditFlag" @click="editGsjcClick" :disabled="shztFlag" class="r" type="primary" icon="el-icon-edit" size="small">修改</el-button>
+          <div v-else class="r">
+            <el-button @click="saveGsjcCancle" type="info" icon="el-icon-close" size="small">取消</el-button>
+            <el-button @click="saveGsjcClick" type="success" icon="el-icon-check" size="small">保存</el-button>
+          </div>
+        </div>
+        <el-row>
           <el-col :span="1">&nbsp;</el-col>
           <el-col :span="21">
-            <el-form-item label="确认密码" prop="checkPass">
-              <el-input v-model="editForm.checkPass" type="password" placeholder="请输入确认密码" size="small" auto-complete="off" clearable maxlength="60"></el-input>
-            </el-form-item>
+            <el-form label-position="right" label-width="160px">
+              <el-row>
+                <el-form-item label="公司简称：">
+                  <span v-if="gsjcEditFlag" v-text="jbxxForm.gsjc||'无'"></span>
+                  <el-input v-else size="small" v-model="jbxxForm.gsjc" placeholder="公司简称" maxlength="6"></el-input>
+                </el-form-item>
+              </el-row>
+            </el-form>
           </el-col>
-          <el-col :span="2">&nbsp;</el-col>
         </el-row>
-        <el-row class="buttonSubmit">
-          <el-button v-if="dialogTitle == '展商用户编辑'" type="warning" icon="edit" size="small" @click="editPassword">修改密码</el-button>
-          <el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog(editForm)"> 取消</el-button>
-          <el-button type="success" icon="el-icon-check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
-        </el-row>
-      </el-form>
-    </el-dialog>
+      </el-card>
+    </el-row>
+    <el-row class="tc mt20">
+      <!-- <el-button @click="qrztCancle" type="info" icon="el-icon-close" size="small">取消</el-button> -->
+      <el-button @click="qrztSubmit" type="success" icon="el-icon-check" size="small">全部确认</el-button>
+    </el-row>
   </div>
 </template>
 
 <script>
-//引入翻页 paginator
-import paginator from '@/components/paginator'
 export default {
-  name: 'exhibitorList',
-  components: {
-    paginator
-  },
+  name: 'confirmList',
   data () {
-    var validatePwdAgain = (rule, value, callback) => {
-      if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value) == false) {
-        callback(new Error("密码应为6-16位字母和数字组合"));
-      } else if (value !== this.editForm.password) {
-        callback(new Error("两次输入密码不一致"));
-      } else {
-        callback();
-      }
-    };
-    var validateUsername = (rule, value, callback) => {
-      if (this.editForm.usertype == 'CHN') {
-        if (value == null || value == '') {
-          callback(new Error("请输入手机号"));
-        } else if (/^[1][3,4,5,7,8][0-9]{9}$/.test(value) == false) {
-          callback(new Error("手机号格式不正确"));
-        } else {
-          callback();
-        }
-      } else if (this.editForm.usertype == 'ENG') {
-        if (value == null || value == '') {
-          callback(new Error("请输入邮箱"));
-        } else if (/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(value) == false) {
-          callback(new Error("邮箱格式不正确"));
-        } else {
-          callback();
-        }
-      } else {
-        callback();
-      }
-    };
     return {
       //当前登陆用户
       currentUser: this.CONSTANT.currentUser,
       //显示加载中
       loading: false,          
-      //当前页
-      currentPage: 1,
-      //分页大小
-      pageSize: 10,
-      //总记录数
-      total: 0,
-      //表数据
-      tableData: [],
-      //table高度
-      tableheight: this.CONSTANT.tableheight10,
-      //搜索表单
-      searchForm: {
-        id: "",
-        username: "",
-        zwgsmc: "",
-        usertype: "",
+      qyid: '',
+      shztFlag: false,
+      jbxxEditFlag: true,
+      kpxxEditFlag: true,
+      gsjcEditFlag: true,
+      xzqhDataTree: [],
+      //邮寄信息表单
+      jbxxForm: {
+        zwgsmc: '',
+        yjdzsheng: '',
+        yjdzshi: '',
+        yjdzxx: '',
+        lxr: '',
+        lxrsj: '',
+        qrzt: '',
+        gsjc: ''
       },
-      //展商类型Data
-      zslxData: [
-        {codeValue: 'CHN', codeName: '国内'},
-        {codeValue: 'ENG', codeName: '国外'}
-      ],
-      //编辑页按钮显示与隐藏
-      editFlag: false,
-      //编辑页按钮内容
-      editFlagText: "编辑",
-      //选中的序号
-      editIndex: -1,
-      //Dialog Title
-      dialogTitle: "展商用户编辑",
-      //修改密码是否显示
-      editPasswordShow: false,
-      //修改界面是否显示
-      editFormVisible: false,
-      //修改界面数据
-      editForm: {
-        pkid: "",
-        userid: "",
-        username: "",
-        password: "",
-        checkPass: "",
-        usertype: ""
+      //开票信息表单
+      kpxxForm: {
+        kplx: '',
+        kpgsmc: '',
+        tyshxydm: '',
+        gsdz: '',
+        dhhm: '',
+        khyh: '',
+        yhzh: ''
       },
-      editFormRules: {
-        usertype: [
-          { required: true, message: '请选择展商类型', trigger: 'change' }
+      gsjc: '',
+      jbxxRules: {
+        zwgsmc: [
+          { required: true, message: '请输入中文公司名称', trigger: 'blur' },
+          { min: 1, max: 100, message: '最多可输入100个字', trigger: 'blur' }
         ],
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { validator: validateUsername, trigger: "blur" }
+        xzqh: [
+          { required: true, message: '请选择邮寄地址省市', trigger: 'change' }
         ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/, message: '密码应为6-16位字母和数字组合', trigger: 'blur' }
+        yjdzxx: [
+          { required: true, message: '请输入详细地址', trigger: 'blur' },
+          { min: 1, max: 100, message: '最多可输入100个字', trigger: 'blur' }
         ],
-        checkPass: [
-          { required: true, message: '请输入确认密码', trigger: 'blur' },
-          { validator: validatePwdAgain, trigger: "blur" }
+        lxr: [
+          { required: true, message: '请输入联系人', trigger: 'blur' },
+          { min: 1, max: 25, message: '最多可输入25个字', trigger: 'blur' }
         ],
+        lxrsj: [
+          { required: true, message: '请输入联系人手机号码', trigger: 'blur' },
+          { pattern: /^[0-9]*$/, message: '只能输入数字', trigger: 'blur' },
+          { min: 1, max: 30, message: '最多输入30个数字', trigger: 'blur' }
+        ]
       },
-      //编辑页面用户名备份
-      editFormUsername: "",
-      //刪除多选值
-      multipleSelection: [],
+      kpxxRules: {
+        kplx: [
+          { required: true, message: '请选择开票类型', trigger: 'change' }
+        ],
+        kpgsmc: [
+          { required: true, message: '请输入开票公司名称', trigger: 'blur' },
+          { min: 1, max: 100, message: '最多可输入100个字', trigger: 'blur' }
+        ],
+        tyshxydm: [
+          { required: true, message: '请输入统一社会信用代码', trigger: 'blur' },
+          { pattern: /^[A-Za-z0-9 ]+$/, message: '只能输入数字和字母', trigger: 'blur' },
+          { min: 22, max: 22, message: '请输入18位统一社会信用代码（不包含空格）', trigger: 'blur' }
+        ],
+        gsdz: [
+          { required: true, message: '请输入公司地址', trigger: 'blur' },
+          { min: 1, max: 150, message: '最多可输入150个字', trigger: 'blur' }
+        ],
+        dhhm: [
+          { required: true, message: '请输入电话号码', trigger: 'blur' },
+          { pattern: /^[0-9]*$/, message: '只能输入数字', trigger: 'blur' },
+          { min: 1, max: 50, message: '最多输入50个数字', trigger: 'blur' }
+        ],
+        khyh: [
+          { required: true, message: '请输入开户银行', trigger: 'blur' },
+          { min: 1, max: 50, message: '最多可输入50个字', trigger: 'blur' }
+        ],
+        yhzh: [
+          { required: true, message: '请输入银行账号', trigger: 'blur' },
+          { pattern: /^[0-9 ]*$/, message: '只能输入数字', trigger: 'blur' },
+          { min: 0, max: 37, message: '最多可输入30位银行账号', trigger: 'blur' }
+        ]
+      },
+      //树结构配置
+      defaultProps: {
+        children: 'children',
+        label: 'codeName',
+        value: 'codeValue'
+      },
     }
   },
   created: function () {
-    this.searchClick('click');
+    this.findInfoByUserid(this.currentUser.userid, 'init');
+  },
+  mounted: function () {
+    this.getXzqhDataTree();
   },
   methods: {
-    //表格查询事件
-    searchClick: function(type) {
+    //通过userid查询基本信息数据
+    findInfoByUserid: function (userid, type) {
       let vm = this;
-      this.tableData = [];
-      if (type != 'page') {
-        this.currentPage = 1;
-      }
-      this.loading = true;//表格重新加载
+      vm.loading = true;
       var params = {
-        username: this.searchForm.username.replace(/%/g,"\\%"),
-        zwgsmc: this.searchForm.zwgsmc.replace(/%/g,"\\%"),
-        usertype: this.searchForm.usertype,
-        pageSize: this.pageSize,
-        pageNum: this.currentPage
+        userid: userid,
+        deleteFlag: 'N'
       }
-      vm.$axios.post('/qyjbxx/doFindZsxxByQyjbxx', params).then(function (res) {
-        var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
-        this.tableData = tableTemp.concat(res.data.result.list);
-        this.total = res.data.result.total;
-        this.loading = false;
+      vm.$axios.post('/qyjbxx/doFindByVo', params).then(function (res) {
+        if (res.data.result != null && res.data.result != "") {
+          if (res.data.result.sjzt == "05" && res.data.result.shzt == "03") {//数据状态-已审核，审核状态-已通过
+            vm.jbxxForm = res.data.result;
+            vm.gsjc = res.data.result.gsjc;
+            vm.qyid = res.data.result.qyid;
+            //行政区划级联下拉处理
+            var xzqhArray = [];
+            xzqhArray.push(res.data.result.yjdzsheng);
+            xzqhArray.push(res.data.result.yjdzshi);
+            vm.jbxxForm.xzqh = xzqhArray;
+            if (type == 'init') {
+              vm.findKpxxByQyid(this.qyid);
+            } else {
+              vm.loading = false;
+            }
+          } else {
+            vm.shztFlag = true;
+            vm.loading = false;
+            vm.$alert('您尚未通过审核！', '提示', {
+              confirmButtonText: '去查看',
+              callback: action => {
+                this.$router.push({name:"ExhpredictionEdit"});
+              }
+            });
+          }
+        } else {//未报名
+          vm.shztFlag = true;
+          vm.loading = false;
+          vm.$alert('您尚未报名！', '提示', {
+            confirmButtonText: '去报名',
+            callback: action => {
+              this.$router.push({name:"ExhpredictionEdit"});
+            }
+          });
+        }
+      }.bind(this), function (error) {
+          console.log(error)
+      })
+    },
+    //通过企业id查找开票信息
+    findKpxxByQyid: function (qyid) {
+      let vm = this;
+      this.loading = true;
+      var params = {
+        qyid: qyid,
+        deleteFlag: 'N'
+      }
+      vm.$axios.post('/qykpxx/list', params).then(function (res) {
+        vm.kpxxForm = res.data.result[0];
+        vm.loading = false;
       }.bind(this), function (error) {
         console.log(error)
       })
     },
-
-    //清空查询条件
-    clearClick: function () {
-        this.searchForm.id = "",
-        this.searchForm.username = "",
-        this.searchForm.zwgsmc = "",
-        this.searchForm.usertype = "",
-        this.searchClick('reset');
-    },
-
-    //新增事件
-    addClick: function () {
-      this.dialogTitle = "展商用户新增";
-      this.editPasswordShow = true;
-      this.editFlag = false;
-      this.editFormVisible = true;
-    },
-
-    //修改事件
-    editClick: function(val, index) {
-      this.editFlagText = "编辑";
-      this.editIndex = index;
-      this.dialogTitle = "展商用户编辑";
-      this.editPasswordShow = false;
-      this.editSearch(val);
-      this.editFlag = true;
-      this.editFormVisible = true;
-    },
-
-    //删除所选，批量删除
-    deleteClick: function () {
+    //行政区划级联选择数据
+    getXzqhDataTree: function () {
       let vm = this;
-      this.$confirm('确认删除选中信息?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-          vm.$axios.post('/user/deleteByList', this.multipleSelection).then(function (res) {
-            this.$message({
-              message: "成功删除" + res.data.result + "条用户信息",
-              showClose: true,
-              onClose: this.searchClick('delete')
-            });
-          }.bind(this), function (error) {
-              console.log(error)
-          })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
-    },
-
-    //重置密码
-    resetClick: function(val, index){
-      let vm = this;
-      var params = {
-        pkid: val.pkid,
-        userid: val.userid
-      }
-      this.$confirm('是否将密码重置成“111111”?', '提示', {
-        confirmButtonText: '是',
-        cancelButtonText: '否',
-        type: 'warning'
-      }).then(() => {
-        vm.$axios.post('/user/doResetPassword', params).then(function(res) {
-          this.$message({
-            message: "密码重置成功",
-            type: "success"
-          });
-        }.bind(this), function (error) {
-          console.log(error)
-        })
-      }).catch(() => {
-        this.$message({
-        type: 'info',
-        message: '已取消重置'
-        });          
-      });     
-    },
-
-    //修改时查询方法
-    editSearch: function(val){
-      let vm = this;
-      //获取选择行主键
-      var params = {
-        pkid: val.pkid,
-        deptid: "ZSYH"
-      };
-      vm.$axios.post('/user/findByVO', params).then(function(res) {
-        var userData = res.data.result[0];
-        vm.editFormUsername =  res.data.result[0].username;
-        vm.editForm.pkid = userData.pkid;
-        vm.editForm.userid = userData.userid;
-        vm.editForm.usertype = userData.usertype;
-        vm.editForm.username = userData.username;
+      vm.$axios.post('/codelist/getYjdz').then(function (res) {
+        vm.xzqhDataTree = res.data.result;
       }.bind(this), function (error) {
-          console.log(error)
-      }) 
+        console.log(error);
+      })
     },
-
-    //修改密码
-    editPassword: function(){
-      var flag = this.editPasswordShow;
-      this.editPasswordShow = !flag;
+    addBlankYhzh: function () {
+      if (this.kpxxForm.yhzh != undefined && this.kpxxForm.yhzh != '' && this.kpxxForm.yhzh != null) {
+        this.kpxxForm.yhzh = this.kpxxForm.yhzh.replace(/\s/g, '').replace(/(\w{4})(?=\w)/g, "$1 ");
+      }
     },
-
-    //编辑提交点击事件
-    editSubmit: function(val) {
+    addBlankXydm: function () {
+      if (this.kpxxForm.tyshxydm != undefined && this.kpxxForm.tyshxydm != '' && this.kpxxForm.tyshxydm != null) {
+        this.kpxxForm.tyshxydm = this.kpxxForm.tyshxydm.replace(/\s/g, '').replace(/(\w{4})(?=\w)/g, "$1 ");
+      }
+    },
+    fplxChange: function (val) {
+      if (val == "2") {//普通发票
+        this.kpxxForm.dhhm = "";
+        this.kpxxForm.khyh = "";
+        this.kpxxForm.yhzh = "";
+      }
+    },
+    editJbxxClick: function () {
+      this.jbxxEditFlag = false;
+    },
+    saveJbxxClick: function (formName) {
       let vm = this;
-      this.$refs["editForm"].validate((valid) => {
+      vm.$refs[formName].validate((valid) => {
         if (valid) {
-          if(this.dialogTitle == "展商用户新增"){
-            vm.$axios.get('/account/getNum/' + this.editForm.username + "/static").then(function(res){
-              if(res.data.result != 0){
-                this.$message({
-                    message: "用户名已存在!",
-                    type: "error"
-                });
-              }else{
-                var params = {
-                  username: val.username,
-                  password: val.password,
-                  deptid: "ZSYH",
-                  usertype: val.usertype,
-                  createId: this.currentUser.userid,
-                  createName: this.currentUser.username
-                }
-                vm.$axios.post('/user/insertByVO', params).then(function(res){
-                  var addData = res.data.result;
-                  if(addData.usertype == 'ENG'){
-                      addData.usertypeName = "国外";
-                  }else if(addData.usertype == 'CHN'){
-                      addData.usertypeName = "国内";
-                  }
-                  this.tableData.unshift(addData);
-                  this.total = this.tableData.length;
-                  this.editFormVisible = false;
-                }.bind(this),function(error){
-                  console.log(error)
-                })
-              }
-            }.bind(this),function(error){
-                console.log(error)
-            })
-          }else if(this.dialogTitle == "展商用户编辑"){
-            var params = {
-              pkid: val.pkid,
-              userid: val.userid,
-              username: val.username,
-              deptid: "ZSYH",
-              usertype: val.usertype,
-              alterId: this.currentUser.userid,
-              alterName: this.currentUser.realName
-            }
-            if(this.editPasswordShow){
-              params.password = val.password;
-            }
-            if(!this.editFlag){
-              vm.$axios.get('/account/getNum/' + this.editForm.username + "/static").then(function(res){
-                if (res.data.result != 0) {
-                  this.$message({
-                    message: "用户名已存在!",
-                    type: "error"
-                  });
-                  return;
-                } else {
-                  this.updateExhibitor(params);
-                }
-              }.bind(this),function(error){
-                  console.log(error)
-              })
-            } else {
-              this.updateExhibitor(params);
-            }
+          vm.loading = true;
+          var params = {
+            qyid: vm.jbxxForm.qyid,
+            yjdzsheng: vm.jbxxForm.xzqh[0],
+            yjdzshi: vm.jbxxForm.xzqh[1],
+            yjdzxx: vm.jbxxForm.yjdzxx,
+            lxr: vm.jbxxForm.lxr,
+            lxrsj: vm.jbxxForm.lxrsj,
+            xgrid: vm.currentUser.userid,
+            xgrmc: vm.currentUser.username
           }
+          vm.$axios.post('/qyjbxx/doUpdateByVO', params).then(function (res) {
+            if (res.data.result > 0) {
+              vm.$message.success('邮寄信息修改成功');
+            }
+            vm.jbxxEditFlag = true;
+            vm.findInfoByUserid(this.currentUser.userid, 'init');
+            vm.loading = false;
+          }.bind(this), function (error) {
+            console.log(error);
+          })
         } else {
           console.log('error submit!!');
           return false;
         }
       });
     },
-
-    //修改方法
-    updateExhibitor: function(params) {
+    saveJbxxCancle: function (formName) {
+      this.$refs[formName].resetFields();
+      this.jbxxEditFlag = true;
+      this.findInfoByUserid(this.currentUser.userid, 'cancle');
+    },
+    editKpxxClick: function () {
+      this.kpxxEditFlag = false;
+    },
+    saveKpxxClick: function (formName) {
       let vm = this;
-      vm.$axios.post('/user/updateByVO', params).then(function (res){
-        var result = res.data.result;
-        this.tableData[this.editIndex].username = result.username;
-        if(result.usertype == "CHN"){
-          this.tableData[this.editIndex].usertypeName = "国内"; 
-        }else if(result.usertype == "ENG"){
-          this.tableData[this.editIndex].usertypeName = "国外"; 
+      vm.$refs[formName].validate((valid) => {
+        if (valid) {
+          var yhzh_str = null;
+          if (vm.kpxxForm.yhzh != null && vm.kpxxForm.yhzh != '' && vm.kpxxForm.yhzh != undefined) {
+            yhzh_str = vm.kpxxForm.yhzh.replace(/ /g, "");
+          } else {
+            yhzh_str = '';
+          }
+          var params = {
+            uuid: vm.kpxxForm.uuid,
+            kplx: vm.kpxxForm.kplx,
+            kpgsmc: vm.kpxxForm.kpgsmc,
+            tyshxydm: vm.kpxxForm.tyshxydm.replace(/ /g, ""),
+            gsdz: vm.kpxxForm.gsdz,
+            dhhm: vm.kpxxForm.dhhm,
+            khyh: vm.kpxxForm.khyh,
+            yhzh: yhzh_str,
+            xgrid: vm.currentUser.userid,
+            xgrmc: vm.currentUser.username
+          }
+          vm.$axios.post('/qykpxx/doUpdateByVO', params).then(function (res) {
+            if (res.data.result > 0) {
+              vm.$message.success('开票信息修改成功');
+            }
+            vm.kpxxEditFlag = true;
+            vm.findKpxxByQyid(this.qyid);
+            vm.loading = false;
+          }.bind(this), function (error) {
+            console.log(error);
+          })
+        } else {
+          console.log('error submit!!');
+          return false;
         }
-        this.editFormVisible = false;
-        this.$message({
-          message: "修改成功！",
-          type: "success"
-        });
+      });
+    },
+    saveKpxxCancle: function (formName) {
+      this.$refs[formName].resetFields();
+      this.kpxxEditFlag = true;
+      this.findKpxxByQyid(this.qyid);
+    },
+    editGsjcClick: function () {
+      this.gsjcEditFlag = false;
+    },
+    saveGsjcClick: function () {
+      let vm = this;
+      vm.loading = true;
+      var params = {
+        qyid: vm.jbxxForm.qyid,
+        gsjc: vm.jbxxForm.gsjc,
+        xgrid: vm.currentUser.userid,
+        xgrmc: vm.currentUser.username
+      }
+      vm.$axios.post('/qyjbxx/doUpdateByVO', params).then(function (res) {
+        if (res.data.result > 0) {
+          vm.$message.success('公司简称修改成功');
+        }
+        vm.gsjcEditFlag = true;
+        vm.loading = false;
       }.bind(this), function (error) {
-          console.log(error)
+        console.log(error);
       })
     },
-
-    //编辑页按钮显示
-    editFlagChange: function(){
-      if(this.editFlag){
-        this.editFlag = false;
-        this.editFlagText = "取消"; 
-      }else{
-        this.editFlag = true;
-        this.editFlagText = "编辑";
-        this.editForm.username = this.editFormUsername;
+    saveGsjcCancle: function () {
+      this.gsjcEditFlag = true;
+      this.jbxxForm.gsjc = this.gsjc;
+    },
+    qrztSubmit: function () {
+      let vm = this;
+      if (vm.jbxxEditFlag && vm.kpxxEditFlag && vm.gsjcEditFlag) {
+        var params = {
+          qyid: vm.jbxxForm.qyid,
+          qrzt: 'Y',
+          qrsj: '1',
+          xgrid: vm.currentUser.userid,
+          xgrmc: vm.currentUser.username
+        }
+        vm.$axios.post('/qyjbxx/doUpdateByVO', params).then(function (res) {
+          if (res.data.result > 0) {
+            vm.$message.success('信息已确认！');
+          }
+          vm.findInfoByUserid(this.currentUser.userid, 'init');
+          this.loading = false;
+        }.bind(this), function (error) {
+          console.log(error);
+        })
+      } else if (!this.jbxxEditFlag) {
+        this.$message.warning('邮寄地址尚未保存！');
+      } else if (!this.kpxxEditFlag) {
+        this.$message.warning('开票信息尚未保存！');
+      } else if (!this.gsjcEditFlag) {
+        this.$message.warning('公司简称尚未保存！');
       }
     },
+    qrztCancle: function () {
 
-    //表格勾选事件
-    selectionChange: function (val) {
-      this.multipleSelection = val;
-    },
-
-    //关闭Dialog
-    closeDialog: function (val) {
-        this.editFormVisible = false;
-        this.$refs["editForm"].resetFields();
-    },
+    }
   }
 }
 </script>
