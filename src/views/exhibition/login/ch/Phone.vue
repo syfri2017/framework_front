@@ -176,7 +176,7 @@ $blackcolor: #2c2c2c;
   background: url("/static/images/login/login.png") center 100% #65809d;
 
   * {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   p {
@@ -216,7 +216,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lgin {
-  margin-top: 8.8rem;
+  margin-top: 11rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -240,9 +240,10 @@ $blackcolor: #2c2c2c;
 }
 
 .login-form {
-  height: $height;
-  width: $width;
+  height: 400px;
+  width: 400px;
   background: url("/static/images/login/form_bg.png") no-repeat;
+  background-size:100% 100%; 
   .signstyle {
     margin-left: 11.5rem;
     a {
@@ -524,7 +525,7 @@ a {
 }
 
 .icou{
-  font-size:1.2rem;
+  font-size:2.2rem;
 }
 
 /*获取验证码样式*/

@@ -13,7 +13,7 @@
             <div class="filed">
               <el-input placeholder="Association Email" v-model="FUmail" name="FUmail" id="FUmail" prefix-icon="iconfont icon-youxiang"></el-input>
               <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFUMailCode()" v-text=FUmailCodeText :disabled="FUmailBtnDisabled"></button>
-             </div>
+            </div>
             <div class="filed">
               <el-input placeholder="Mail Verification Code"  v-model="FUmailCode" name="FUmailCode" id="FUmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
             </div>
@@ -173,7 +173,7 @@ $blackcolor: #2c2c2c;
   background: url("/static/images/login/login.png") center 100% #65809d;
 
   * {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 
   p {
@@ -213,7 +213,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lgin {
-  margin-top: 8.8rem;
+  margin-top: 11rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -237,9 +237,10 @@ $blackcolor: #2c2c2c;
 }
 
 .login-form {
-  height: $height;
-  width: $width;
+  height: 400px;
+  width: 400px;
   background: url("/static/images/login/form_bg.png") no-repeat;
+  background-size:100% 100%; 
   .signstyle {
     margin-left: 4.5rem;
     a {
@@ -521,7 +522,7 @@ a {
 }
 
 .icou{
-  font-size:1.2rem;
+  font-size:2.2rem;
 }
 
 /*Get Verification Code样式*/
@@ -533,7 +534,7 @@ a {
   background:rgba(0, 0, 0, 0);
   color: #fb6a74;
   cursor: pointer;
-  width: 100px;
+  width: 120px;
 }
 
 </style>

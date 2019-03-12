@@ -11,14 +11,14 @@
           <img class="titlestyle" src="/static/images/login/title.png">
         </p>
       </el-col>
-      <el-col :span="3" class="market_out" style="position:fixed;right:0;text-align:right;margin:20px;">
-            <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/帮助手册.doc">帮助手册</a>
-             <span style="color:#fff;margin-right:10px;">|</span><span class="lanb" @click="clk()">中文</span>
-             <span style="color:#fff;margin-right:10px;">|</span><span class="lanb" @click="clk()">English</span>
-            </p>
+      <el-col :span="3" class="market_out" style="position:fixed;right:0;text-align:right;margin: 40px 100px 50px -50px;margin-left:-50px;">
+          <p style="margin:5px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/帮助手册.doc">帮助手册</a>
+            <span style="color:#fff;margin-right:10px;">|</span><span class="lanb" >中文</span>
+            <span style="color:#fff;margin-right:10px;">|</span><span class="lanb" @click="clk()">English</span>
+          </p>
 
-            <p style="margin:15px 5px 5px 0px;padding:0px;"><a class="lana" @click="zgclk" style="background:rgba(0,0,0,0.2);padding:5px;">查看展位预定情况</a></p>
-            <p style="margin:15px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/展馆图片.zip">下载展位图片</a></p>
+          <p style="margin:15px 5px 5px 0px;padding:0px;"><a class="lana" @click="zgclk" style="background:rgba(0,0,0,0.2);padding:5px;">查看展位预定情况</a></p>
+          <p style="margin:15px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/展馆图片.zip">下载展位图片</a></p>
       </el-col>
     </el-row>
     <!-- <login></login> -->
@@ -39,12 +39,11 @@
       <el-tab-pane label="重置账户" name="fifth" :key="'fifth'">
         <reset></reset>
       </el-tab-pane>
-
     </el-tabs> -->
     <el-row class="footerstyle">
       <el-col :span="4">&nbsp;</el-col>
       <el-col :span="16" class="footer">
-        <p style="margin-bottom:-20px;">建议使用谷歌、搜狗、360和火狐浏览器</p>
+        <p  style="margin-bottom:-20px;">建议使用谷歌、搜狗、360和火狐浏览器</p>
         <p>如在登录、注册、信息录入时遇到问题，请联系技术支持024-31530337，分机号608；13998821420</p>
       </el-col>
       <el-col :span="4">&nbsp;</el-col>
@@ -100,16 +99,26 @@ export default {
 // 右侧中英文切换样式
   
 .market_out{
+  width: 500px;
   .el-tabs__item{
     color:red;
   }
 } 
+
+.market_out p span{
+  font-size:32px; 
+} 
+
+.market_out p a{
+  font-size:32px; 
+} 
+
 $height: 22rem; //全局变量声明
 $width: 22rem;
-$heightimg: 8.75rem;
-$widthimg: 8.75rem;
-$heighttitle: 90%;
-$widthtitle: 90%;
+$heightimg: 10.75rem;
+$widthimg: 10.75rem;
+$heighttitle: 100%;
+$widthtitle: 100%;
 $bottomfooter: 3.125rem;
 $heightfooter: 2.125rem;
 $widthlgbtn: 12rem;
@@ -245,6 +254,10 @@ $blackcolor: #2c2c2c;
   text-align: center;
   line-height: $line-heightfooter;
   width: $widthfooter;
+}
+
+.footerstyle p{
+  font-size: 24px;
 }
 
 .logincenter {
