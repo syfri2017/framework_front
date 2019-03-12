@@ -106,11 +106,11 @@ export default {
 } 
 
 .market_out p span{
-  font-size:32px; 
+  font-size:28px; 
 } 
 
 .market_out p a{
-  font-size:32px; 
+  font-size:28px; 
 } 
 
 $height: 22rem; //全局变量声明
