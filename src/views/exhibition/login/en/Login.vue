@@ -135,7 +135,7 @@ export default {
             localStorage.setItem('XTOKEN',  res.data.data.token);
             localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
             this.CONSTANT.currentUser = res.data.data.currentUser;
-            this.$router.push({ name: 'exhibitorEN' });
+            this.$router.push({ name: 'exhibitorWebEN' });
           } else if (res.data.code == '22222222') {
             this.$message.error("账号不存在");
           } else if (res.data.code == '33333333') {

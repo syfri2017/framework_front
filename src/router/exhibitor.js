@@ -51,8 +51,8 @@ export default [
 
   //-------------------------------------------------------中文展商端--------------------------------------------------
   {
-    path: '/exhibitor',
-    name: 'exhibitor',
+    path: '/exhibitorWeb',
+    name: 'exhibitorWeb',
     redirect: 'exhprediction',
     meta: {auth: true},
     component: Index,
@@ -141,8 +141,8 @@ export default [
 
   //-------------------------------------------------------英文展商端--------------------------------------------------
   {
-    path: '/exhibitorEN',
-    name: 'exhibitorEN',
+    path: '/exhibitorWebEN',
+    name: 'exhibitorWebEN',
     redirect: 'exhpredictionEN',
     meta: {auth: true},
     component: Index,
