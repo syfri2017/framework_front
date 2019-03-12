@@ -86,7 +86,7 @@
               <el-col :span="12">
                 <strong class="vt">营业执照：</strong>
                 <img v-if="jbxxData.src!==''" :src="jbxxData.imageUrl" @click="imgPreview(jbxxData.imageUrl)" style="max-width:100%;max-height:140px;" class="poi">
-                <!--  <img v-else src="../../static/images/noPic.png" style="width:100px;"> -->
+                <div v-else style="width:100px;" class="iconfont icon-noPic"></div>
               </el-col>
               <el-col :span="12">
                 <el-row class="mb10">
@@ -428,7 +428,7 @@
             <strong v-if="userType=='CHN'" class="vt">企业Logo：</strong>
             <strong v-if="userType=='ENG'" class="vt">Company Logo：</strong>
             <img v-if="qyjsData.src!==''" :src="qyjsData.imageUrl" @click="imgPreview(qyjsData.imageUrl)" style="max-width:100%;max-height:140px;" class="poi">
-            <!--    <img v-else src="../../static/images/noPic.png" style="width:100px;">   -->
+            <div v-else style="width:100px;" class="iconfont icon-noPic"></div>
           </el-col>
           <el-col :span="11">
             <strong v-if="userType=='CHN'">企业简介：</strong>
@@ -453,7 +453,7 @@
                   <el-row class="h100">
                     <el-col :span="5" class="h100 tc">
                       <img v-if="cpjs.src!==''" :src="cpjs.imageUrl" @click="imgPreview(cpjs.imageUrl)" class="poi">
-                      <!--        <img v-else src="../../static/images/noPic.png">-->
+                      <div v-else style="width:100px;" class="iconfont icon-noPic"></div>
                     </el-col>
                     <el-col :span="19" style="line-height: 24px;" class="pl15">
                       <strong>产品类型：</strong>
@@ -485,7 +485,7 @@
                   <el-row class="h100">
                     <el-col :span="5" class="h100 tc">
                       <img v-if="cpjs.src!==''" :src="cpjs.imageUrl" class="poi" @click="imgPreview(cpjs.imageUrl)">
-                      <!--  <img v-else src="../../static/images/noPic.png">  -->
+                      <div v-else style="width:100px;" class="iconfont icon-noPic"></div>
                     </el-col>
                     <el-col :span="19" style="line-height: 24px;" class="pl15">
                       <strong>Category of the Product：</strong>
@@ -1174,7 +1174,6 @@ export default {
     width: 80%;
     z-index: 2;
   }
-
   /* .remarka{
     width: 100%;
 }

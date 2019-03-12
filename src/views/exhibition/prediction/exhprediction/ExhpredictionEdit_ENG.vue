@@ -2314,7 +2314,7 @@ export default {
     height: 25px;
     display: inline-block;
     margin-bottom: -5px;
-    //  background: url(../../images/alarm.png) no-repeat;
+    background: url("/static/images/prediction/alarm.png") no-repeat;
     background-size: cover;
   }
   #cpjsArea .el-form-item__error {
