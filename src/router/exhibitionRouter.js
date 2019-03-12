@@ -27,6 +27,8 @@ import Mail from '@/views/system/mail/Mail'
 import ExhpredictionEdit from '@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'
 import ExhpredictionConfirm from '@/views/exhibition/prediction/exhprediction/ExhpredictionConfirm'
 import ExhpredictionEditEN from '@/views/exhibition/prediction/exhprediction/ExhpredictionEdit_ENG'
+import Product from '@/views/exhibition/prediction/exhibitor/Product'
+import Confirm from '@/views/exhibition/prediction/exhibitor/Confirm'
 
 export default [
   {
@@ -566,6 +568,32 @@ export default [
             path: '/',
             name: 'exhpredictionConfirm',
             component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionConfirm'], resolve)
+          },
+        ]
+      },
+      //----------展商端-产品介绍---------
+      {
+        path: '/exhibitor/product',
+        meta: {auth: true, title: "产品介绍"},
+        component: Product,
+        children: [
+          {
+            path: '/',
+            name: 'exhibitorProduct',
+            component: resolve => require(['@/views/exhibition/prediction/exhibitor/ProductList'], resolve)
+          },
+        ]
+      },
+      //----------展商端-信息确认---------
+      {
+        path: '/exhibitor/confirm',
+        meta: {auth: true, title: "信息确认"},
+        component: Confirm,
+        children: [
+          {
+            path: '/',
+            name: 'exhibitorConfirm',
+            component: resolve => require(['@/views/exhibition/prediction/exhibitor/ConfirmList'], resolve)
           },
         ]
       },
