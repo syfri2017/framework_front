@@ -2139,12 +2139,7 @@ export default {
     submit: function() {
       if (this.currentUser.deptid == "ZSYH") {
         //如果是展商用户跳转到确认页
-        var params = {
-          userid: this.currentUser.userid,
-          type: "BJ"
-        };
-    ///////////////    loadDivParam("prediction/exhprediction_confirm", params);
-      this.$router.push({name:"exhpredictionConfirm", query: {userid: this.currentUser.userid, type: 'BJ'}});
+        this.$router.push({name:"exhpredictionConfirm", query: {userid: this.currentUser.userid, type: 'BJ'}});
       } else {
         //如果是管理员跳转到列表页
       this.$router.push({name:"exhprediction"});
