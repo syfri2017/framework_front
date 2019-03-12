@@ -12,7 +12,6 @@
           <el-form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
               <el-input placeholder="用户名" v-model="GLYusername" prefix-icon="iconfont icon-username" @blur="mobileCheck"></el-input>
-              <!-- <p class="alert" v-show="mobileAlertFlag">*请填写正确的手机号码</p> -->
             </div>
             <div class="filed">
               <el-input placeholder="密码" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
@@ -192,7 +191,7 @@ $blackcolor: #2c2c2c;
   background: url("/static/images/login/login.png") center 100% #65809d;
 
   * {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   p {
@@ -232,7 +231,7 @@ $blackcolor: #2c2c2c;
 }
 
 .lgin {
-  margin-top: 3rem;
+  margin-top: 5rem;
   .el-button {
     width: $widthlgbtn;
     background-color: $bgcolor;
@@ -256,11 +255,12 @@ $blackcolor: #2c2c2c;
 }
 
 .login-form {
-  height: $height;
-  width: $width;
+  height: 400px;
+  width: 400px;
   background: url("/static/images/login/form_bg.png") no-repeat;
+  background-size:100% 100%; 
   .signstyle {
-    margin-left: 7.2rem;
+    margin-left: 6.5rem;
     a {
       cursor: pointer;
     }
@@ -353,10 +353,9 @@ $blackcolor: #2c2c2c;
     display: block;
     margin-left: 30px;
     line-height: 30px;
-   
 }
 .yanzhengma_input{
-  width: 170px;
+  width: 220px;
 }
 .disappear{
      visibility:hidden;
@@ -540,7 +539,7 @@ a {
 }
 
 .icou{
-  font-size:1.2rem;
+  font-size:2.2rem;
 }
 
 .bk{
