@@ -133,7 +133,7 @@ export default {
             localStorage.setItem('CURRENTUSER',  JSON.stringify(res.data.data.currentUser));
             this.CONSTANT.currentUser = res.data.data.currentUser;
             if (res.data.data.currentUser.deptid == 'ZSYH') {
-              this.$router.push({ name: 'exhpredictionEdit' });
+              this.$router.push({ path: '/exhibitor' });
             } else {
               this.$router.push({ path: '/index' });
             }
