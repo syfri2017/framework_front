@@ -100,7 +100,7 @@ export default {
       lastEvent: null,
       //显示加载中样
       loading: false,
-      shiroData: this.CONSTANT.currentUser,
+      currentUser: this.CONSTANT.currentUser,
       stage: null,
       currentPlotTool: null,
       currentPlotActiveItem: null,
@@ -281,7 +281,7 @@ export default {
     },
     handlerBusinessShapeSelected(data) {
       var msg = "";
-      if (this.shiroData.deptid != "ZSYH") {
+      if (this.currentUser.deptid != "ZSYH") {
         return;
       }
       if (this.yxzwData.length > 0) {
