@@ -96,19 +96,6 @@ export default [
           },
         ]
       },
-      //----------展商端-展位选择----------
-      {
-        path: '/plan/planEN',
-        meta: {auth: true, title: "Booth Selection"},
-        component: VenuePlanEN,
-        children: [
-          {
-            path: '/',
-            name: 'planEN',
-            component: resolve => require(['@/views/exhibition/venue/plan/PlanEN'], resolve),
-          },
-        ]
-      },
       //----------展商端-产品介绍---------
       {
         path: '/exhibitor/product',
@@ -161,16 +148,16 @@ export default [
           
         ]
       },
-      //----------展馆管理-展位选择----------
+      //----------英文-展商端-展位选择----------
       {
-        path: '/plan/plan',
-        meta: {auth: true, title: "展位选择"},
-        component: VenuePlan,
+        path: '/plan/planEN',
+        meta: {auth: true, title: "Booth Selection"},
+        component: VenuePlanEN,
         children: [
           {
             path: '/',
-            name: 'plan',
-            component: resolve => require(['@/views/exhibition/venue/plan/Plan'], resolve),
+            name: 'planEN',
+            component: resolve => require(['@/views/exhibition/venue/plan/PlanEN'], resolve),
           },
         ]
       },
