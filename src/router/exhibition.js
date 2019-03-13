@@ -5,13 +5,10 @@ import Home from '@/views/exhibition/home/Home'
 import Exhprediction from '@/views/exhibition/prediction/exhprediction/Exhprediction'
 import ExhpredictionApprove from '@/views/exhibition/prediction/exhprediction/ExhpredictionApprove'
 import Exhibitor from '@/views/exhibition/prediction/exhibitor/Exhibitor'
-import VenuePlan from '@/views/exhibition/venue/plan/Plan'
-import VenuePlanEN from '@/views/exhibition/venue/plan/PlanEN'
 import VenueTrader from '@/views/exhibition/venue/trader/Trader'
 import Position from '@/views/exhibition/booth/position/Position'
 import PositionDesign from '@/views/exhibition/booth/design/PositionDesign'
 import PositionSelect from '@/views/exhibition/booth/select/PositionSelect'
-import PositionAnon from '@/views/exhibition/booth/anon/PositionAnon'
 import PositionType from '@/views/exhibition/booth/type/PositionType'
 import StatisProduct from '@/views/exhibition/statistical/product/StatisProduct'
 import StatisArea from '@/views/exhibition/statistical/area/StatisArea'
@@ -24,11 +21,6 @@ import Resource from '@/views/system/resource/Resource'
 import Permission from '@/views/system/permission/Permission'
 import Codelist from '@/views/system/codelist/Codelist'
 import Mail from '@/views/system/mail/Mail'
-import ExhpredictionEdit from '@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'
-import ExhpredictionConfirm from '@/views/exhibition/prediction/exhprediction/ExhpredictionConfirm'
-import ExhpredictionEditEN from '@/views/exhibition/prediction/exhprediction/ExhpredictionEdit_ENG'
-import Product from '@/views/exhibition/prediction/exhibitor/Product'
-import Confirm from '@/views/exhibition/prediction/exhibitor/Confirm'
 
 export default [
   {
@@ -118,45 +110,6 @@ export default [
       }
     ],
     redirect:'/exhibition/login/en/Login'
-  },
-  //----------展馆平面图无登录查看----------
-  {
-    path: '/plan/planAnon',
-    meta: {auth: true, title: "展馆平面图"},
-    component: VenuePlan,
-    children: [
-      {
-        path: '/',
-        name: 'planAnon',
-        component: resolve => require(['@/views/exhibition/venue/plan/Plan'], resolve),
-      },
-    ]
-  },
-  //----------展馆平面图英文无登录查看----------
-  {
-    path: '/plan/planAnonEN',
-    meta: {auth: true, title: "展馆平面图"},
-    component: VenuePlanEN,
-    children: [
-      {
-        path: '/',
-        name: 'planAnonEN',
-        component: resolve => require(['@/views/exhibition/venue/plan/PlanEN'], resolve),
-      },
-    ]
-  },
-  //----------展位无登录查看----------
-  {
-    path: '/booth/anon',
-    meta: {auth: true, title: "展位选择"},
-    component: PositionAnon,
-    children: [
-      {
-        path: '/',
-        name: 'positionAnon',
-        component: resolve => require(['@/views/exhibition/booth/anon/PositionAnon'], resolve)
-      },
-    ]
   },
   {
     path: '/index',
@@ -258,32 +211,6 @@ export default [
             path: '/',
             name: 'exhibitor',
             component: resolve => require(['@/views/exhibition/prediction/exhibitor/ExhibitorList'], resolve)
-          },
-        ]
-      },
-      //----------展馆管理-展馆平面图----------
-      {
-        path: '/plan/plan',
-        meta: {auth: true, title: "展馆平面图"},
-        component: VenuePlan,
-        children: [
-          {
-            path: '/',
-            name: 'plan',
-            component: resolve => require(['@/views/exhibition/venue/plan/Plan'], resolve),
-          },
-        ]
-      },
-       //----------展馆管理-展馆平面图----------
-       {
-        path: '/plan/planEN',
-        meta: {auth: true, title: "Booth Selection"},
-        component: VenuePlanEN,
-        children: [
-          {
-            path: '/',
-            name: 'planEN',
-            component: resolve => require(['@/views/exhibition/venue/plan/PlanEN'], resolve),
           },
         ]
       },
@@ -529,100 +456,7 @@ export default [
             component: resolve => require(['@/views/system/mail/MailList'], resolve)
           },
         ]
-      },
-      //--------------展商端报名----------------
-      {
-        path: '/exhprediction',
-        meta: {auth: true, title: "展会报名"},
-        component: ExhpredictionEdit,
-        children: [
-          {
-            path: '/',
-            name: 'exhpredictionEdit',
-            component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionEdit'], resolve)
-          },
-          
-        ]
-      },
-      //------------------报名英文-----------
-      {
-        path: '/exhpredictionEn',
-        meta: {auth: true, title: "Exhibition Registration"},
-        component: ExhpredictionEditEN,
-        children: [
-          {
-            path: '/',
-            name: 'exhpredictionEdit_ENG',
-            component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionEdit_ENG'], resolve)
-          },
-          
-        ]
-      },
-      //----------展商报名-信息确认----------
-      {
-        path: '/exhprediction/confirm',
-        meta: {auth: true, title: "报名信息确认"},
-        component: ExhpredictionConfirm,
-        children: [
-          {
-            path: '/',
-            name: 'exhpredictionConfirm',
-            component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionConfirm'], resolve)
-          },
-        ]
-      },
-      //----------展商端-产品介绍---------
-      {
-        path: '/exhibitor/product',
-        meta: {auth: true, title: "产品介绍"},
-        component: Product,
-        children: [
-          {
-            path: '/',
-            name: 'exhibitorProduct',
-            component: resolve => require(['@/views/exhibition/prediction/exhibitor/ProductList'], resolve)
-          },
-        ]
-      },
-      //----------英文-展商端-产品介绍---------
-      {
-        path: '/exhibitor/productEN',
-        meta: {auth: true, title: "Product Introduction"},
-        component: Product,
-        children: [
-          {
-            path: '/',
-            name: 'exhibitorProductEN',
-            component: resolve => require(['@/views/exhibition/prediction/exhibitor/ProductList'], resolve)
-          },
-        ]
-      },
-      //----------展商端-信息确认---------
-      {
-        path: '/exhibitor/confirm',
-        meta: {auth: true, title: "信息确认"},
-        component: Confirm,
-        children: [
-          {
-            path: '/',
-            name: 'exhibitorConfirm',
-            component: resolve => require(['@/views/exhibition/prediction/exhibitor/ConfirmList'], resolve)
-          },
-        ]
-      },
-      //----------英文-展商端-信息确认---------
-      {
-        path: '/exhibitor/confirmEN',
-        meta: {auth: true, title: "Verify Message"},
-        component: Confirm,
-        children: [
-          {
-            path: '/',
-            name: 'exhibitorConfirmEN',
-            component: resolve => require(['@/views/exhibition/prediction/exhibitor/ConfirmList'], resolve)
-          },
-        ]
-      },
+      }
     ]
   }
 ]
