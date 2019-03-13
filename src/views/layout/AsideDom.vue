@@ -32,11 +32,11 @@
   name: 'AsideDom',
   data(){
     return {
-       collapse: false,
+      collapse: false,
       isCollapse: false,
       isUniqueOpened: true,
       isRouter: true,
-      menus:[],
+      menus:[]
     };
   },
   methods: {
@@ -58,7 +58,27 @@
   },
   computed:{
       onRoutes(){
+        if (this.$route.path.indexOf('/exhprediction/confirm') > -1) {
+          if(this.CONSTANT.currentUser.usertype == 'ENG') {
+            return '/exhpredictionEN';
+          } else {
+            return '/exhprediction';
+          }
+        }
         return this.$route.path;
+
+        /**页面为子页面时，选中其父菜单 by li.xue 2019/3/13
+        var routeMatched = [];
+        var defaultActive = '';
+        routeMatched = this.$route.matched
+        for (var i in routeMatched) {
+          if (routeMatched[i].meta.title) {
+            defaultActive = routeMatched[i].path; 
+            break;
+          }
+        }
+        return defaultActive;
+        */
       }
   },
   created(){
