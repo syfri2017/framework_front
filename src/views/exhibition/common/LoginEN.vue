@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <div id="autosize">
     <el-row>
       <el-col :span="6">
         <p>
@@ -24,6 +25,7 @@
       </el-col>
 
     </el-row>
+    </div>
     <!-- <login></login> -->
     <router-view></router-view>
     <el-row class="footerstyle">
@@ -44,14 +46,29 @@ export default {
     return {
     };
   },
+  created:function(){
+    // this.autoWide();
+  },
   methods: {
- 
+    
     clk(){
       this.$router.push({ path: '/exhibition/login/ch/Login' });
     },
     zgclk(){
       this.$router.push({ path: '/plan/planAnonEN' });
+    },
+     //适配屏幕分辨率
+    autoWide(){
+       
+        //判断是否宽屏
+        var winWide = window.screen.availWidth;
+        // alert(winWide);
+        var wideScreen = false;
+        var zm = winWide / 1920;
+        document.getElementById('autosize').style.zoom = zm*3 ;
+
     }
+
   }
 };
 </script>
@@ -65,11 +82,11 @@ export default {
 } 
 
 .market_out p span{
-  font-size:28px; 
+  font-size:24px; 
 } 
 
 .market_out p a{
-  font-size:28px; 
+  font-size:24px; 
 } 
 
 // @import '../../common/scss/all.scss';

@@ -1,6 +1,7 @@
 <template>
   <div class="login">
-    <el-row>
+    <div id="autosize">
+    <el-row >
       <el-col :span="6">
         <p>
           <img class="imgstyle" src="/static/images/login/QRCode.jpg">
@@ -21,6 +22,7 @@
           <p style="margin:15px 5px 5px 0px;padding:0px;"><a class="lana"  href="http://61.161.226.197:8090/templates/展馆图片.zip">下载展位图片</a></p>
       </el-col>
     </el-row>
+    </div>
     <!-- <login></login> -->
     <router-view></router-view>
     <!-- <el-tabs v-model="activeName">
@@ -72,6 +74,9 @@ export default {
      
     };
   },
+  created:function(){
+    // this.autoWide();
+  },
   methods: {
    
     clk(){
@@ -79,17 +84,21 @@ export default {
     },
     zgclk(){
       this.$router.push({ path: '/plan/planAnon' });
-    }
+    },
     //适配屏幕分辨率
-      // autoWide() {
-      //     //判断是否宽屏
-      //     var winWide = window.screen.availWidth;
-      //     // alert(winWide);
-      //     var wideScreen = false;
-      //     var zm = winWide / 1920;
-      //     document.body.style.zoom = zm * 1;
-      //   },
+    autoWide(){
+        
+        //判断是否宽屏
+        var winWide = window.screen.availWidth;
+        // alert(winWide);
+        var wideScreen = false;
+        var zm = winWide / 1920;
+        document.getElementById('autosize').style.zoom = zm*3 ;
+
+    },
+
   }
+
 };
 </script>
 
@@ -106,11 +115,11 @@ export default {
 } 
 
 .market_out p span{
-  font-size:28px; 
+  font-size:24px; 
 } 
 
 .market_out p a{
-  font-size:28px; 
+  font-size:24px; 
 } 
 
 $height: 22rem; //全局变量声明
@@ -239,11 +248,11 @@ $blackcolor: #2c2c2c;
   }
   text-align: -webkit-center;
   color: $whitecolor;
-  font-size: 1rem;
+  font-size: 0.7rem;
   * {
     text-align: -webkit-center;
     color: $whitecolor;
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
 }
 
