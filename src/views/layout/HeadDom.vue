@@ -252,7 +252,11 @@
               localStorage.removeItem('isLogin');
               localStorage.removeItem('XTOKEN');
               localStorage.removeItem('CURRENTUSER');
-              vm.$router.push({name: 'login'});
+              if(this.CONSTANT.currentUser.usertype == 'ENG') {
+                vm.$router.push({name: 'loginEN'});
+              } else {
+                vm.$router.push({name: 'login'});
+              }
             }
           }.bind(this), function (error) {
             console.log(error)
