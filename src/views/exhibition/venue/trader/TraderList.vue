@@ -161,7 +161,7 @@ export default {
       editLoading: false,
       currentUuid: "", //当前修改展馆id
       //登陆用户
-      shiroData: "",
+      currentUser: this.CONSTANT.currentUser,
       createModel: {
         show: true,
         loading: true
@@ -318,8 +318,8 @@ export default {
             //新增
             params.url = "/zgjbxx/doInsertByVO";
             params.zgzwhbStr = stageData;
-            params.cjrid = _THIS.shiroData.userid;
-            params.cjrmc = _THIS.shiroData.realName;
+            params.cjrid = _THIS.currentUser.userid;
+            params.cjrmc = _THIS.currentUser.realName;
           }
           _THIS.$axios.post(params.url, params).then(
             function(res) {
@@ -394,8 +394,8 @@ export default {
       var params = [];
       for (var i in this.multipleSelection) {
         var param = {};
-        param.xgrid = this.shiroData.userid;
-        param.xgrmc = this.shiroData.realName;
+        param.xgrid = this.currentUser.userid;
+        param.xgrmc = this.currentUser.realName;
         param.uuid = this.multipleSelection[i].uuid;
         params.push(param);
       }

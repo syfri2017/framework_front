@@ -198,7 +198,6 @@ export default {
       pageSize: 10,
       //总记录数
       total: 0,
-      shiroData: [], //当前用户信息
       shztData: [], //审核状态下拉框
       currentRow: "", //选中行数据
       isReject: false, //未通过flag
