@@ -59,9 +59,15 @@
           <el-tabs v-model="activeName" type="border-card">
             <el-tab-pane label="企业基本信息" name="first">
               <el-row class="mb10">
-                <strong>公司名称：</strong>
-                <span v-if="jbxxData.usertype === 'CHN'" v-text="jbxxData.zwgsmc||'无'"></span>
-                <span v-else-if="jbxxData.usertype === 'ENG'" v-text="jbxxData.ywgsmc||'无'"></span>
+                <el-col :span="12">
+                  <strong>公司名称：</strong>
+                  <span v-if="jbxxData.usertype === 'CHN'" v-text="jbxxData.zwgsmc||'无'"></span>
+                  <span v-else-if="jbxxData.usertype === 'ENG'" v-text="jbxxData.ywgsmc||'无'"></span>
+                </el-col>
+                <el-col :span="12">
+                  <strong>公司简称：</strong>
+                  <span v-text="jbxxData.gsjc||'无'"></span>
+                </el-col>
               </el-row>
               <el-row v-if="isENG" class="mb10">
                 <el-col :span="12">
@@ -153,7 +159,7 @@
               <el-row class="mb10">
                 <el-col :span="12">
                   <strong>审核状态：</strong>
-                  <span v-text="jbxxData.shztmc||'无'"></span>
+                  <strong style="color:#F56C6C" v-text="jbxxData.shztmc||'无'"></strong>
                 </el-col>
               </el-row>
               <el-row class="mb10">
@@ -725,8 +731,10 @@ export default {
           if (valid) {
             if (vm.approveForm.shzt == '02') {//未通过
               vm.approveForm.sjzt = '04';
+              vm.jbxxData.sjztmc = '已驳回';
             } else if (vm.approveForm.shzt == '03') {//已通过
               vm.approveForm.sjzt = '05';
+              vm.jbxxData.sjztmc = '已审核';
             }
             var params = {
               qyid: vm.qyid,
@@ -743,6 +751,13 @@ export default {
                 vm.finalShzt = vm.approveForm.shzt;
                 vm.finalReserve1 = vm.approveForm.reserve1;
                 vm.$message.success('已审核');
+                //修改详情页数据
+                vm.jbxxData.sjztmc = vm.approveForm.shzt == '02' ? '已驳回' : (vm.approveForm.shzt == '03' ? '已审核' : vm.jbxxData.sjzt);
+                vm.jbxxData.shztmc = vm.approveForm.shzt == '02' ? '未通过' : (vm.approveForm.shzt == '03' ? '已通过' : vm.jbxxData.sjzt);
+                vm.jbxxData.reserve1 = vm.approveForm.reserve1 != null ? vm.approveForm.reserve1 : '无';
+                var date = new Date();
+                vm.jbxxData.shsj = this.dateFormat(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+
                 var type = this.$route.query.type;
                 if (type == 'search') {
                   // loadDivParam("prediction/exhprediction_list");
