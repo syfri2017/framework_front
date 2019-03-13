@@ -452,6 +452,12 @@
         collapseChage(){
           this.collapse = !this.collapse;
           bus.$emit('collapse', this.collapse);
+          var e = document.getElementsByClassName("topScroll");
+          if(this.collapse == false){
+            e[0].style.width = "calc(100% - 300px)";
+          }else{
+            e[0].style.width = "calc(100% - 130px)"
+          }
         },
         // 全屏事件
         handleFullScreen(){
