@@ -212,6 +212,12 @@ export default [
             name: 'exhibitor',
             component: resolve => require(['@/views/exhibition/prediction/exhibitor/ExhibitorList'], resolve)
           },
+          {
+            path: '/prediction/exhprediction/detail',
+            name: 'exhhibitorDetail',
+            meta: {auth: true, title: "展商用户管理详情", keepAlive: false},
+            component: resolve => require(['@/views/exhibition/prediction/exhprediction/ExhpredictionDetail'], resolve)
+          },
         ]
       },
       //----------展馆管理-展馆管理----------

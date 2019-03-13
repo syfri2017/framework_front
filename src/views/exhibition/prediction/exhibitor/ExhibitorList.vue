@@ -46,8 +46,8 @@
         <el-table-column prop="usertypeName" show-overflow-tooltip label="展商类型" min-width="12%" align="center"></el-table-column>
         <el-table-column prop="zwgsmc" show-overflow-tooltip label="公司名称" min-width="20%" align="center">
           <template slot-scope="scope">
-            <span v-if="scope.row.usertype == 'ENG'" v-text="scope.row.ywgsmc"></span>
-            <span v-else v-text="scope.row.zwgsmc"></span>
+            <a v-if="scope.row.usertype == 'ENG'" v-text="scope.row.ywgsmc" @click="qyDetails(scope.row)"></a>
+            <a v-else v-text="scope.row.zwgsmc" @click="qyDetails(scope.row)"></a>
           </template>
         </el-table-column>
         <el-table-column prop="lxr" show-overflow-tooltip label="联系人" min-width="10%" align="center"></el-table-column>
@@ -271,6 +271,12 @@ export default {
         this.searchForm.zwgsmc = "",
         this.searchForm.usertype = "",
         this.searchClick('reset');
+    },
+
+    //查看企业详情
+    //企业详情跳转
+    qyDetails: function (val) {
+      this.$router.push({name:"exhhibitorDetail", query: {id: val.qyid, type: 'search'}});
     },
 
     //新增事件
