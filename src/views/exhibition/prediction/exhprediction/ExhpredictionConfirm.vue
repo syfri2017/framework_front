@@ -85,7 +85,7 @@
             <el-row>
               <el-col :span="12">
                 <strong class="vt">营业执照：</strong>
-                <img v-if="jbxxData.src!==''" :src="jbxxData.imageUrl" @click="imgPreview(jbxxData.imageUrl)" style="max-width:100%;max-height:140px;" class="poi">
+                <img v-if="jbxxData.imageUrl!==''" :src="jbxxData.imageUrl" @click="imgPreview(jbxxData.imageUrl)" style="max-width:100%;max-height:140px;" class="poi">
                 <div v-else style="width:100px;" class="iconfont icon-noPic"></div>
               </el-col>
               <el-col :span="12">
@@ -427,7 +427,7 @@
           <el-col :span="11">
             <strong v-if="userType=='CHN'" class="vt">企业Logo：</strong>
             <strong v-if="userType=='ENG'" class="vt">Company Logo：</strong>
-            <img v-if="qyjsData.src!==''" :src="qyjsData.imageUrl" @click="imgPreview(qyjsData.imageUrl)" style="max-width:100%;max-height:140px;" class="poi">
+            <img v-if="qyjsData.imageUrl!==''" :src="qyjsData.imageUrl" @click="imgPreview(qyjsData.imageUrl)" style="max-width:100%;max-height:140px;" class="poi">
             <div v-else style="width:100px;" class="iconfont icon-noPic"></div>
           </el-col>
           <el-col :span="11">
@@ -452,7 +452,7 @@
                 <el-card class="mb10 card_style" id="cpjsImg">
                   <el-row class="h100">
                     <el-col :span="5" class="h100 tc">
-                      <img v-if="cpjs.src!==''" :src="cpjs.imageUrl" @click="imgPreview(cpjs.imageUrl)" class="poi">
+                      <img v-if="cpjs.imageUrl!==''" :src="cpjs.imageUrl" @click="imgPreview(cpjs.imageUrl)" class="poi">
                       <div v-else style="width:100px;" class="iconfont icon-noPic"></div>
                     </el-col>
                     <el-col :span="19" style="line-height: 24px;" class="pl15">
@@ -484,7 +484,7 @@
                 <el-card class="mb10 card_style" id="cpjsImg">
                   <el-row class="h100">
                     <el-col :span="5" class="h100 tc">
-                      <img v-if="cpjs.src!==''" :src="cpjs.imageUrl" class="poi" @click="imgPreview(cpjs.imageUrl)">
+                      <img v-if="cpjs.imageUrl!==''" :src="cpjs.imageUrl" class="poi" @click="imgPreview(cpjs.imageUrl)">
                       <div v-else style="width:100px;" class="iconfont icon-noPic"></div>
                     </el-col>
                     <el-col :span="19" style="line-height: 24px;" class="pl15">
@@ -727,12 +727,12 @@ export default {
           if (res.data.result.length > 0) {
             var datas = res.data.result;
             //英文版翻译出口类型
-            if (this.userType == "ENG") {
+            if (vm.userType == "ENG") {
               for (var i = 0; i < datas.length; i++) {
                 if (i == 0) {
-                  this.yxzwxx += datas[i].zwh;
+                  vm.yxzwxx += datas[i].zwh;
                 } else {
-                  this.yxzwxx += "," + datas[i].zwh;
+                  vm.yxzwxx += "," + datas[i].zwh;
                 }
                 //展位类别，出口类型翻译
                 if (datas[i].zwlb == "标准展位") {
@@ -754,58 +754,58 @@ export default {
                   datas[i].cklx = "4 Sides open";
                 }
               }
-            } else if (this.userType == "CHN") {
+            } else if (vm.userType == "CHN") {
               //中文版遍历展馆号，加不同qq群号
               var qq = "";
               for (var i = 0; i < datas.length; i++) {
                 if (i == 0) {
-                  this.yxzwxx += datas[i].zwh;
+                  vm.yxzwxx += datas[i].zwh;
                   if (
                     (datas[i].zwh.indexOf("W1") != -1 ||
                       datas[i].zwh.indexOf("W2") != -1 ||
                       datas[i].zwh.indexOf("W3-A") != -1) &&
-                    qq.indexOf(this.qqW) == -1
+                    qq.indexOf(vm.qqW) == -1
                   ) {
-                    qq += this.qqW;
+                    qq += vm.qqW;
                   } else {
-                    if (qq.indexOf(this.qqE) == -1) {
-                      qq += this.qqE;
+                    if (qq.indexOf(vm.qqE) == -1) {
+                      qq += vm.qqE;
                     }
                   }
                 } else {
-                  this.yxzwxx += "，" + datas[i].zwh;
+                  vm.yxzwxx += "，" + datas[i].zwh;
                   if (
                     (datas[i].zwh.indexOf("W1") != -1 ||
                       datas[i].zwh.indexOf("W2") != -1 ||
                       datas[i].zwh.indexOf("W3-A") != -1) &&
-                    qq.indexOf(this.qqW) == -1
+                    qq.indexOf(vm.qqW) == -1
                   ) {
                     if (qq) {
-                      qq += "和" + this.qqW;
+                      qq += "和" + vm.qqW;
                     } else {
-                      qq = this.qqW;
+                      qq = vm.qqW;
                     }
                   } else {
-                    if (qq.indexOf(this.qqE) == -1) {
+                    if (qq.indexOf(vm.qqE) == -1) {
                       if (qq) {
-                        qq += "和" + this.qqE;
+                        qq += "和" + vm.qqE;
                       } else {
-                        qq = this.qqE;
+                        qq = vm.qqE;
                       }
                     }
                   }
                 }
               }
-              if (qq != "" && this.userType == "CHN") {
-                this.yxzwxx += "，请尽快添加QQ群：" + qq;
+              if (qq != "" && vm.userType == "CHN") {
+                vm.yxzwxx += "，请尽快添加QQ群：" + qq;
               }
             }
-            this.yxzwData = datas;
-            this.zwxzzt = "01";
-            this.sfkqYxzwzs = true;
+            vm.yxzwData = datas;
+            vm.zwxzzt = "01";
+            vm.sfkqYxzwzs = true;
           }
-          this.getJbxxData(this.userid);
-        }.bind(this),
+          vm.getJbxxData(vm.userid);
+        }.bind(vm),
         function(error) {
           console.log(error);
         }
@@ -813,17 +813,19 @@ export default {
     },
     //企业基本信息
     getJbxxData: function(val) {
-      this.loading = true;
       let vm = this;
+      vm.loading = true;
       var params = {
-        userid: vm.userid,
+        userid: val,
         deleteFlag: "N"
       };
       vm.$axios.post("/qyjbxx/doFindByVo", params).then(
         function(res) {
           if (res.data.result != null) {
             vm.jbxxData = res.data.result;
-            vm.jbxxData.imageUrl = vm.baseUrl + "/upload/" + vm.jbxxData.src;
+            if(vm.jbxxData.src != ""){
+              vm.jbxxData.imageUrl = vm.baseUrl + "/upload/" + vm.jbxxData.src;
+            }
             vm.jbxxData.yjdz =
               vm.jbxxData.yjdzshengmc +
               vm.jbxxData.yjdzshimc +

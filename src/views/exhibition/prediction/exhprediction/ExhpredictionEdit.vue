@@ -1153,10 +1153,16 @@ export default {
               vm.upLoadData.qyid = res.data.result.qyid;
             } else {
               //已提交，已审核 直接跳转到确认页
+              /*
               this.$router.push({
                 name: "exhpredictionConfirm",
                 query: { userid: vm.currentUser.userid, type: "BJ" }
               });
+              */
+             this.$router.replace({
+               name:"exhpredictionConfirm",
+               query: { userid: vm.currentUser.userid, type: "BJ" }
+               });
             }
           } else {
             vm.jbxxStatus = 0; //新增
