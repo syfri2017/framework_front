@@ -1,499 +1,737 @@
 <template>
-  <div id="exhibitorList">
-    <el-row>
-      <el-form label-width="75px" :inline="true">
-        <el-row>
-          <el-col :span="8" class="searchInline">
-            <label class="el-form-item__label searchLabel">用户名</label>
-            <el-input size="small" v-model="searchForm.username" placeholder="用户名" clearable></el-input>
-          </el-col>
-          <el-col :span="8" class="searchInline">
-            <label class="el-form-item__label searchLabel">公司名称</label>
-            <el-input size="small" v-model="searchForm.zwgsmc" placeholder="公司名称" clearable></el-input>
-          </el-col>
-          <el-col :span="8" class="searchInline">
-            <label class="el-form-item__label searchLabel">展商类型</label>
-            <el-select size="small" v-model="searchForm.usertype" placeholder="全部" class="searchSelect" clearable>
-              <el-option v-for="item in zslxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-            </el-select>
-          </el-col>
-        </el-row>
-        <div>
-          <el-form>
-            <el-col :span="12" class="btnEditDelete">
-              <el-form-item align="left">                       
-                <el-button v-if="hasPermission('prediction/exhibitor:add')" type="success" icon="el-icon-plus" size="small" @click="addClick">新增</el-button>
-                <el-button v-if="hasPermission('prediction/exhibitor:delete')" type="danger" icon="el-icon-delete" size="small" @click="deleteClick">删除</el-button>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12"></el-col>
-            <el-col :span="12" class="btnSearchPlus">
-              <el-form-item>
-                <el-button type="primary" icon="el-icon-search" size="small" @click="searchClick">查询</el-button>
-                <el-button type="clear" icon="el-icon-refresh" size="small" @click="clearClick">重置</el-button>
-              </el-form-item>
-            </el-col>
-          </el-form>
-        </div>
+  <div id="productList">
+    <el-row class="mb10">
+      <el-form id="cpjs" v-if="cpjsData.length>0" :inline="true" style="width: 100%;" class="demo-form-inline">
+        <el-form-item align="left">
+          <el-button type="success" icon="el-icon-plus" size="small" @click="addClick()">
+            <span v-if="userType=='CHN'">新增</span>
+            <span v-if="userType=='ENG'">Add</span>
+          </el-button>
+        </el-form-item>
+        <el-form-item v-for="(cpjs,index) in cpjsData" style="width: 100%;" :key="index">
+          <el-card class="mb10 card_style" id="cpjsImg">
+            <div slot="header" class="clearfix">
+              <div class="r">
+                <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteClick(cpjs)">
+                  <span v-if="userType=='CHN'">删除</span>
+                  <span v-if="userType=='ENG'">Delete</span>
+                </el-button>
+                <el-button type="primary" size="small" icon="el-icon-edit" @click="editClick(cpjs)">
+                  <span v-if="userType=='CHN'">修改</span>
+                  <span v-if="userType=='ENG'">Edit</span>
+                </el-button>
+              </div>
+            </div>
+            <el-row class="h100">
+              <el-col :span="5" class="h100 tc">
+                <img v-if="cpjs.src!==''" :src="cpjs.imageUrl" @click="imgPreview(cpjs.imageUrl)" class="poi">
+                <div v-else style="width:100px;" class="iconfont icon-noPic"></div>
+              </el-col>
+              <!--中文-->
+              <el-col v-if="userType=='CHN'" :span="19" style="line-height: 24px" class="pl15 mb10">
+                <strong>产品类型：</strong>
+                <span v-text="cpjs.cplxmc||'无'"></span>
+                <br>
+                <strong>产品简介：</strong>
+                <span v-text="cpjs.cpjj||'无'"></span>
+                <br>
+                <strong>产品英文简介：</strong>
+                <span v-text="cpjs.reserve1||'无'"></span>
+              </el-col>
+              <!--英文-->
+              <el-col v-if="userType=='ENG'" :span="19" style="line-height: 24px" class="pl15 mb10">
+                <strong>Category of the Product：</strong>
+                <span v-text="cpjs.cplxmc_ENG||'no'"></span>
+                <br>
+                <strong>Product Introduction：</strong>
+                <span v-text="cpjs.cpjj||'no'"></span>
+              </el-col>
+            </el-row>
+          </el-card>
+        </el-form-item>
       </el-form>
+      <span v-if="(!cpjsData.length>0) && userType=='CHN'">暂无产品信息</span>
+      <span v-if="(!cpjsData.length>0) && userType=='ENG'">Have no product information</span>
     </el-row>
-    <div class="table_container">
-      <el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-        @selection-change="selectionChange" class="tableStyle" :height="tableheight" :row-style="rowStyle">
-        <el-table-column type="selection" width="35"></el-table-column>
-        <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-        <el-table-column prop="username" show-overflow-tooltip label="用户名" min-width="15%" align="center"></el-table-column>
-        <el-table-column prop="usertypeName" show-overflow-tooltip label="展商类型" min-width="12%" align="center"></el-table-column>
-        <el-table-column prop="zwgsmc" show-overflow-tooltip label="公司名称" min-width="20%" align="center">
-          <template slot-scope="scope">
-            <span v-if="scope.row.usertype == 'ENG'" v-text="scope.row.ywgsmc"></span>
-            <span v-else v-text="scope.row.zwgsmc"></span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="lxr" show-overflow-tooltip label="联系人" min-width="10%" align="center"></el-table-column>
-        <el-table-column prop="dzyx" show-overflow-tooltip label="电子邮箱" min-width="15%" align="center"></el-table-column>
-        <el-table-column label="重置" width="100" align="center">
-            <template slot-scope="scope">
-                <el-button type="text" @click="resetClick(scope.row,scope.$index)">重置密码</el-button>
-            </template>
-        </el-table-column>
-        <el-table-column label="操作" width="65" align="center" v-if="hasPermission('prediction/exhibitor:edit')">
-            <template slot-scope="scope">
-                <el-button type="text" @click="editClick(scope.row,scope.$index)">编辑</el-button>
-            </template>
-        </el-table-column>
-      </el-table>
-      <!--列表底部工具条和分页符-->
-      <el-row type="flex" justify="end">
-        <paginator></paginator>
-      </el-row>
-    </div>
-
-    <!-- 编辑-->
-    <el-dialog :title="dialogTitle" :visible.sync="editFormVisible" @close="closeDialog(editForm)" :close-on-click-modal="false">
-      <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+    <!--产品编辑-中文-->
+    <el-dialog v-if="userType=='CHN'" :title="dialogTitle" :visible.sync="editFormVisible" @close="closeDialog(editForm)" :close-on-click-modal="false">
+      <el-form :model="editForm" label-width="110px" :rules="editFormRules" ref="editForm">
         <el-row>
-          <el-col :span="1">&nbsp;</el-col>
-          <el-col :span="22">
-            <el-form-item label="展商类型" prop="usertype">
-              <el-radio-group v-model="editForm.usertype" size="small" auto-complete="off">
-                <el-radio class="radio" :label="'CHN'">国内</el-radio>
-                <el-radio class="radio" :label="'ENG'">国外</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :span="1">&nbsp;</el-col>
+          <el-form-item label="产品图片" style="text-align: left" class="is-required">
+            <el-upload class="avatar-uploader" ref="uploadCpPics" :headers="myHeaders" action="http://localhost:8809/qycpjs/upload" :on-success="cpjsPicSuccess" :before-upload="CpPicsChange" :show-file-list="false" :data="CpjsUpLoadData">
+              <img v-if="editForm.src!=='' && editForm.src!==null" :src="editForm.imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              <div class="el-upload__tip" slot="tip" style="line-height:0px">jpg/png文件，且小于2MB</div>
+            </el-upload>
+          </el-form-item>
         </el-row>
         <el-row>
-          <el-col :span="1">&nbsp;</el-col>
-          <el-col :span="21">
-            <el-form-item label="用户名" prop="username">
-              <el-input v-if="editForm.usertype == 'ENG'" v-model="editForm.username" placeholder="请输入用户名，用户名为邮箱" size="small" auto-complete="off" clearable :disabled="editFlag" maxlength="30"></el-input>
-              <el-input v-else v-model="editForm.username" placeholder="请输入用户名，用户名为手机号" size="small" auto-complete="off" clearable :disabled="editFlag" maxlength="30"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="2">
-            &nbsp;
-            <el-button v-if="dialogTitle=='展商用户编辑'" v-text="editFlagText" type="text" size="small" @click="editFlagChange" style="margin-top:6px;"></el-button>
-          </el-col>
+          <el-form-item prop="cplx" label="产品所属分类">
+            <el-cascader :options="cpssfl_data" :props="defaultProps" size="small" v-model="editForm.cplx" placeholder="产品所属分类" class="searchSelect" clearable show-all-levels></el-cascader>
+          </el-form-item>
         </el-row>
-        <el-row v-if="editPasswordShow">
-          <el-col :span="1">&nbsp;</el-col>
-          <el-col :span="21">
-            <el-form-item label="密码" prop="password">
-              <el-input v-model="editForm.password" type="password" placeholder="请输入密码，密码为6-16位数字字母组合" size="small" auto-complete="off" clearable maxlength="60"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="2">&nbsp;</el-col>
+        <el-row>
+          <div class="el-upload__tip"></div>
         </el-row>
-        <el-row v-if="editPasswordShow">
-          <el-col :span="1">&nbsp;</el-col>
-          <el-col :span="21">
-            <el-form-item label="确认密码" prop="checkPass">
-              <el-input v-model="editForm.checkPass" type="password" placeholder="请输入确认密码" size="small" auto-complete="off" clearable maxlength="60"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="2">&nbsp;</el-col>
+        <el-row id="cpjsArea">
+          <el-form-item prop="cpjj" label="产品简介">
+            <el-input type="textarea" maxlength="150" :rows="2" placeholder="产品简介" v-model="editForm.cpjj" :onkeyup="checkWord(editForm.cpjj,'cpjs_span','150')"></el-input>
+          </el-form-item>
         </el-row>
-        <el-row class="buttonSubmit">
-          <el-button v-if="dialogTitle == '展商用户编辑'" type="warning" icon="edit" size="small" @click="editPassword">修改密码</el-button>
-          <el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog(editForm)"> 取消</el-button>
-          <el-button type="success" icon="el-icon-check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
+        <el-row>
+          <div class="el-upload__tip" style="float: right;">还可输入
+            <span style="color: red" id="cpjs_span">{{150-editForm.cpjj.length}}</span>字</div>
+        </el-row>
+        <el-row id="cpjsArea">
+          <el-form-item prop="reserve1" label="产品英文简介">
+            <el-input type="textarea" maxlength="400" :rows="2" placeholder="产品英文简介" v-model="editForm.reserve1" :onkeyup="checkWord(editForm.reserve1,'cpjsEng_span','400')"></el-input>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <div class="el-upload__tip" style="float: right;">还可输入
+            <span v-if="editForm.reserve1!=null" style="color: red" id="cpjsEng_span">{{400-editForm.reserve1.length}}</span>
+            <span v-else style="color: red" id="cpjsEng_span">400</span>
+            个英文字符</div>
+        </el-row>
+        <el-row class="mt35 mb20">
+          <el-col :span="24" style="text-align: center">
+            <el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog(editForm)"> 取消</el-button>
+            <el-button type="success" icon="el-icon-check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
+          </el-col>
         </el-row>
       </el-form>
+    </el-dialog>
+    <!--产品编辑-英文-->
+    <el-dialog v-if="userType=='ENG'" :title="dialogTitle" :visible.sync="editFormVisible" @close="closeDialog(editForm)" :close-on-click-modal="false">
+      <el-form :model="editForm" label-width="200px" :rules="editFormRulesENG" ref="editForm">
+        <el-row>
+          <el-form-item label="Product Photo" style="text-align: left" class="is-required">
+            <el-upload class="avatar-uploader" ref="uploadCpPics" :headers="myHeaders" action="http://localhost:8809/qycpjs/upload" :on-success="cpjsPicSuccess" :before-upload="CpPicsChange" :show-file-list="false" :data="CpjsUpLoadData">
+              <img v-if="editForm.src!=='' && editForm.src!==null" :src="editForm.imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              <div class="el-upload__tip" slot="tip" style="line-height:0px">jpg/png,less than 2MB</div>
+            </el-upload>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item prop="cplx" label="Category of the Product">
+            <el-cascader :options="cpssfl_data_ENG" :props="defaultProps" size="small" v-model="editForm.cplx" placeholder="Category of the Product" class="searchSelect" clearable show-all-levels></el-cascader>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <div class="el-upload__tip"></div>
+        </el-row>
+        <el-row id="cpjsArea">
+          <el-form-item prop="cpjj" label="Product Introduction">
+            <el-input type="textarea" maxlength="300" :rows="2" placeholder="Product Introduction" v-model="editForm.cpjj" :onkeyup="checkWord(editForm.cpjj,'cpjs_span','300')"></el-input>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <div class="el-upload__tip" style="float: right;">less than
+            <span style="color: red" id="cpjs_span">{{300-editForm.cpjj.length}}</span> characters</div>
+        </el-row>
+        <el-row class="mt35 mb20">
+          <el-col :span="24" style="text-align: center">
+            <el-button type="clear" icon="el-icon-close" size="small" class="btn_submit" @click="closeDialog(editForm)"> Cancel</el-button>
+            <el-button type="success" icon="el-icon-check" size="small" class="btn_save" @click="editSubmit(editForm)">Submit</el-button>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-dialog>
+    <!--图片预览-->
+    <el-dialog id="previewImgDialog" v-if="true" :visible.sync="showPicVisible" :close-on-click-modal="false" size="tiny">
+      <img :src="previewImg" width="100%" class="mt15">
     </el-dialog>
   </div>
 </template>
 
 <script>
-//引入翻页 paginator
-import paginator from '@/components/paginator'
 export default {
-  name: 'exhibitorList',
-  components: {
-    paginator
-  },
-  data () {
-    var validatePwdAgain = (rule, value, callback) => {
-      if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value) == false) {
-        callback(new Error("密码应为6-16位字母和数字组合"));
-      } else if (value !== this.editForm.password) {
-        callback(new Error("两次输入密码不一致"));
-      } else {
-        callback();
-      }
-    };
-    var validateUsername = (rule, value, callback) => {
-      if (this.editForm.usertype == 'CHN') {
-        if (value == null || value == '') {
-          callback(new Error("请输入手机号"));
-        } else if (/^[1][3,4,5,7,8][0-9]{9}$/.test(value) == false) {
-          callback(new Error("手机号格式不正确"));
-        } else {
-          callback();
-        }
-      } else if (this.editForm.usertype == 'ENG') {
-        if (value == null || value == '') {
-          callback(new Error("请输入邮箱"));
-        } else if (/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(value) == false) {
-          callback(new Error("邮箱格式不正确"));
-        } else {
-          callback();
-        }
-      } else {
-        callback();
-      }
-    };
+  name: "productList",
+
+  data() {
     return {
+      baseUrl: window.config.baseUrl,
       //当前登陆用户
       currentUser: this.CONSTANT.currentUser,
-      //显示加载中
-      loading: false,          
-      //当前页
-      currentPage: 1,
-      //分页大小
-      pageSize: 10,
-      //总记录数
-      total: 0,
-      //表数据
-      tableData: [],
-      //table高度
-      tableheight: this.CONSTANT.tableheight10,
-      //搜索表单
-      searchForm: {
-        id: "",
-        username: "",
-        zwgsmc: "",
-        usertype: "",
+      //当前用户中英文标识
+      userType: this.CONSTANT.currentUser.usertype,
+      myHeaders: { XTOKEN: localStorage.getItem("XTOKEN") },
+      loading: false,
+      showPicVisible: false,
+      previewImg: "",
+      qyid: "", //企业id
+      userid: this.CONSTANT.currentUser.userid,
+      //产品介绍
+      cpjsData: [],
+      //产品所属分类
+      cpssfl_data: [],
+      cpssfl_data_ENG: [],
+      //要删除的图片路径list
+      delPicList: [],
+      //未保存的图片路径list
+      unsavedPicList: [],
+      //树结构配置
+      defaultProps: {
+        children: "children",
+        label: "codeName",
+        value: "codeValue"
       },
-      //展商类型Data
-      zslxData: [
-        {codeValue: 'CHN', codeName: '国内'},
-        {codeValue: 'ENG', codeName: '国外'}
-      ],
-      //编辑页按钮显示与隐藏
-      editFlag: false,
-      //编辑页按钮内容
-      editFlagText: "编辑",
-      //选中的序号
-      editIndex: -1,
-      //Dialog Title
-      dialogTitle: "展商用户编辑",
-      //修改密码是否显示
-      editPasswordShow: false,
-      //修改界面是否显示
+      //编辑（新增）页面对话框标题
+      dialogTitle: "产品编辑",
+      //编辑页面显示flag
       editFormVisible: false,
+      //产品图片上传参数
+      CpjsUpLoadData: {
+        qyid: ""
+      },
       //修改界面数据
       editForm: {
-        pkid: "",
-        userid: "",
-        username: "",
-        password: "",
-        checkPass: "",
-        usertype: ""
+        uuid: "",
+        cplx: [],
+        cpjj: "",
+        reserve1: "",
+        src: "",
+        imageUrl: ""
       },
+      //表单验证
       editFormRules: {
-        usertype: [
-          { required: true, message: '请选择展商类型', trigger: 'change' }
+        cplx: [
+          { required: true, message: "请选择产品类型", trigger: "change" }
         ],
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { validator: validateUsername, trigger: "blur" }
+        cpjj: [
+          { required: true, message: "请输入产品简介", trigger: "blur" },
+          { min: 1, max: 150, message: "最多可输入100个字", trigger: "blur" }
         ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/, message: '密码应为6-16位字母和数字组合', trigger: 'blur' }
-        ],
-        checkPass: [
-          { required: true, message: '请输入确认密码', trigger: 'blur' },
-          { validator: validatePwdAgain, trigger: "blur" }
-        ],
+        reserve1: [
+          { required: false, message: "请输入产品英文简介", trigger: "blur" },
+          {
+            pattern: /^[\da-zA-Z \!\?\r\n\|\<\>\.\,\，\;\:\'\"\@\#\$\￥\=\+\_\—\%\^\&\*\(\)\（\）\[\]\{\}\\\/\~\`\-\。\·\…\！\、\“\”\‘\’\《\》\<\>\【\】\：\；\？]*$/,
+            message: "只能输入字母、数字和英文符号",
+            trigger: "blur"
+          },
+          { min: 0, max: 400, message: "最多可输入400个字符", trigger: "blur" }
+        ]
       },
-      //编辑页面用户名备份
-      editFormUsername: "",
-      //刪除多选值
-      multipleSelection: [],
-    }
+      //英文表单验证
+      editFormRulesENG: {
+        cplx: [
+          {
+            required: true,
+            message: "Category of the Product is required",
+            trigger: "change"
+          }
+        ],
+        cpjj: [
+          {
+            required: true,
+            message: "Product Introduction is required",
+            trigger: "blur"
+          },
+          {
+            pattern: /^[\da-zA-Z \!\?\r\n\|\<\>\.\,\，\;\:\'\"\@\#\$\￥\=\+\_\—\%\^\&\*\(\)\（\）\[\]\{\}\\\/\~\`\-\。\·\…\！\、\“\”\‘\’\《\》\<\>\【\】\：\；\？]*$/,
+            message: "Characters and Symbols only",
+            trigger: "blur"
+          },
+          // { pattern: /^[A-Za-z0-9 ]+$/, message: 'Characters and number and blank only',trigger: 'blur' },
+          {
+            min: 1,
+            max: 300,
+            message: "less than 300 characters",
+            trigger: "blur"
+          }
+        ]
+      }
+    };
   },
-  created: function () {
-    this.searchClick('click');
+  created: function() {
+    this.getJbxxData(this.userid);
+    //查询产品所属分类
+    this.getCpssfl();
+    //英文
+    this.getCpssflENG();
   },
   methods: {
-    //表格查询事件
-    searchClick: function(type) {
+    //根据代码集获取产品所属分类
+    getCpssfl: function() {
       let vm = this;
-      this.tableData = [];
-      if (type != 'page') {
-        this.currentPage = 1;
-      }
-      this.loading = true;//表格重新加载
+      vm.$axios.get("/codelist/getDzlxTree/CPLX").then(
+        function(res) {
+          vm.cpssfl_data = res.data.result;
+        }.bind(vm),
+        function(error) {
+          console.log(error);
+        }
+      );
+    },
+    //根据代码集获取产品所属分类
+    getCpssflENG: function() {
+      let vm = this;
+      vm.$axios.get("/codelist/getDzlxTree/CPLX_EN").then(
+        function(res) {
+          vm.cpssfl_data_ENG = res.data.result;
+        }.bind(vm),
+        function(error) {
+          console.log(error);
+        }
+      );
+    },
+    //根据userid查询qyid
+    getJbxxData: function(val) {
+      let vm = this;
+      vm.loading = true;
       var params = {
-        username: this.searchForm.username.replace(/%/g,"\\%"),
-        zwgsmc: this.searchForm.zwgsmc.replace(/%/g,"\\%"),
-        usertype: this.searchForm.usertype,
-        pageSize: this.pageSize,
-        pageNum: this.currentPage
-      }
-      vm.$axios.post('/qyjbxx/doFindZsxxByQyjbxx', params).then(function (res) {
-        var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
-        this.tableData = tableTemp.concat(res.data.result.list);
-        this.total = res.data.result.total;
-        this.loading = false;
-      }.bind(this), function (error) {
-        console.log(error)
-      })
-    },
-
-    //清空查询条件
-    clearClick: function () {
-        this.searchForm.id = "",
-        this.searchForm.username = "",
-        this.searchForm.zwgsmc = "",
-        this.searchForm.usertype = "",
-        this.searchClick('reset');
-    },
-
-    //新增事件
-    addClick: function () {
-      this.dialogTitle = "展商用户新增";
-      this.editPasswordShow = true;
-      this.editFlag = false;
-      this.editFormVisible = true;
-    },
-
-    //修改事件
-    editClick: function(val, index) {
-      this.editFlagText = "编辑";
-      this.editIndex = index;
-      this.dialogTitle = "展商用户编辑";
-      this.editPasswordShow = false;
-      this.editSearch(val);
-      this.editFlag = true;
-      this.editFormVisible = true;
-    },
-
-    //删除所选，批量删除
-    deleteClick: function () {
-      let vm = this;
-      this.$confirm('确认删除选中信息?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-          vm.$axios.post('/user/deleteByList', this.multipleSelection).then(function (res) {
-            this.$message({
-              message: "成功删除" + res.data.result + "条用户信息",
-              showClose: true,
-              onClose: this.searchClick('delete')
-            });
-          }.bind(this), function (error) {
-              console.log(error)
-          })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
-    },
-
-    //重置密码
-    resetClick: function(val, index){
-      let vm = this;
-      var params = {
-        pkid: val.pkid,
-        userid: val.userid
-      }
-      this.$confirm('是否将密码重置成“111111”?', '提示', {
-        confirmButtonText: '是',
-        cancelButtonText: '否',
-        type: 'warning'
-      }).then(() => {
-        vm.$axios.post('/user/doResetPassword', params).then(function(res) {
-          this.$message({
-            message: "密码重置成功",
-            type: "success"
-          });
-        }.bind(this), function (error) {
-          console.log(error)
-        })
-      }).catch(() => {
-        this.$message({
-        type: 'info',
-        message: '已取消重置'
-        });          
-      });     
-    },
-
-    //修改时查询方法
-    editSearch: function(val){
-      let vm = this;
-      //获取选择行主键
-      var params = {
-        pkid: val.pkid,
-        deptid: "ZSYH"
+        userid: vm.userid,
+        deleteFlag: "N"
       };
-      vm.$axios.post('/user/findByVO', params).then(function(res) {
-        var userData = res.data.result[0];
-        vm.editFormUsername =  res.data.result[0].username;
-        vm.editForm.pkid = userData.pkid;
-        vm.editForm.userid = userData.userid;
-        vm.editForm.usertype = userData.usertype;
-        vm.editForm.username = userData.username;
-      }.bind(this), function (error) {
-          console.log(error)
-      }) 
+      vm.$axios.post("/qyjbxx/doFindByVo", params).then(
+        function(res) {
+          if (res.data.result != null) {
+            vm.qyid = res.data.result.qyid;
+            vm.CpjsUpLoadData.qyid = res.data.result.qyid;
+            vm.getCpjsData(vm.qyid);
+          }
+          vm.loading = false;
+        }.bind(vm),
+        function(error) {
+          console.log(error);
+        }
+      );
     },
-
-    //修改密码
-    editPassword: function(){
-      var flag = this.editPasswordShow;
-      this.editPasswordShow = !flag;
+    //查询产品介绍
+    getCpjsData: function(val) {
+      let vm = this;
+      var param = {
+        qyid: val
+      };
+      vm.$axios.post("/qycpjs/list", param).then(
+        function(res) {
+          if (res.data.result != null) {
+            vm.cpjsData = res.data.result;
+            for (var i in vm.cpjsData) {
+              vm.cpjsData[i].imageUrl =
+                vm.baseUrl + "/upload/" + vm.cpjsData[i].src;
+            }
+          }
+        }.bind(vm),
+        function(error) {
+          console.log(error);
+        }
+      );
     },
-
-    //编辑提交点击事件
+    //图片预览
+    imgPreview: function(val) {
+      this.previewImg = val;
+      this.showPicVisible = true;
+    },
+    //产品图片change
+    CpPicsChange: function(file, fileList) {
+      var fileName = file.name.lastIndexOf("."); //取到文件名开始到最后一个点的长度
+      var fileNameLength = file.name.length; //取到文件名长度
+      var fileFormat = file.name.substring(fileName + 1, fileNameLength);
+      const isPng = fileFormat.toLowerCase() == "png";
+      const isJpg = fileFormat.toLowerCase() == "jpg";
+      const isLt2M = file.size / 1024 / 1024 <= 2;
+      if (!isPng && !isJpg) {
+        if (this.userType == "CHN") {
+          this.$message.error("只能上传jpg、png格式的图片");
+        } else if (this.userType == "ENG") {
+          this.$message.error("Picture has to be endswith png or jpg");
+        }
+        fileList.splice(-1, 1);
+      } else if (!isLt2M) {
+        if (this.userType == "ENG") {
+          this.$message.error("Picture has to be less than 2MB!");
+        } else if (this.userType == "CHN") {
+          this.$message.error("上传图片大小须小于2MB!");
+        }
+        fileList.splice(-1, 1);
+      } else {
+        //this.delPicList.push(this.delPicSrc);
+        this.delPicList.push(this.editForm.src);
+      }
+    },
+    //产品图片上传成功回调方法
+    cpjsPicSuccess: function(res, file) {
+      this.editForm.src = res.src;
+      this.editForm.imageUrl = URL.createObjectURL(file.raw);
+      this.unsavedPicList.push(res.src);
+    },
+    //点击编辑按钮
+    editClick: function(val) {
+      if (this.userType == "ENG") {
+        this.dialogTitle = "Edit Product";
+      } else {
+        this.dialogTitle = "产品编辑";
+      }
+      //产品类型准换成级联下拉数组
+      var cplxArray = [];
+      cplxArray.push(val.cplx.substr(0, 1) + "000");
+      cplxArray.push(val.cplx);
+      //向form赋值
+      this.editForm.uuid = val.uuid;
+      this.editForm.cplx = cplxArray;
+      this.editForm.cpjj = val.cpjj;
+      this.editForm.reserve1 = val.reserve1;
+      this.editForm.src = val.src;
+      this.editForm.imageUrl = val.imageUrl;
+      //显示编辑页面
+      this.editFormVisible = true;
+    },
+    //点击删除按钮
+    deleteClick: function(val) {
+      let vm = this;
+      if (vm.cpjsData.length <= 1) {
+        if (vm.userType == "ENG") {
+          vm.$message({
+            type: "error",
+            message: "Please fill out at least one product example"
+          });
+        } else {
+          vm.$message({
+            type: "error",
+            message: "您需要保留至少一条产品信息"
+          });
+        }
+      } else {
+        if (vm.userType == "ENG") {
+          vm
+            .$confirm("Do you confirm deletion?", "Warning", {
+              confirmButtonText: "Delete",
+              cancelButtonText: "Cancel",
+              type: "warning"
+            })
+            .then(() => {
+              //删除产品方法主体
+              vm.doDelete(val);
+            })
+            .catch(() => {
+              vm.$message({
+                type: "info",
+                message: "Delete canceled!"
+              });
+            });
+        } else {
+          vm
+            .$confirm("此操作将永久删除该产品, 是否继续?", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            })
+            .then(() => {
+              //删除产品方法主体
+              vm.doDelete(val);
+            })
+            .catch(() => {
+              vm.$message({
+                type: "info",
+                message: "已取消删除"
+              });
+            });
+        }
+      }
+    },
+    //删除事件方法
+    doDelete: function(val) {
+      let vm = this;
+      vm.$axios.post("/qycpjs/doDeleteCpxx", val).then(
+        function(res) {
+          if (res.data.result > 0) {
+            if (vm.userType == "ENG") {
+              vm.$message({
+                type: "success",
+                message: "deleted successfully!"
+              });
+            } else {
+              vm.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+            }
+            //删除图片
+            var list = [];
+            list.push(val.src);
+            vm.$axios.post("/qycpjs/delPic", list).then(
+              function(res) {
+                vm.delPicList = [];
+              }.bind(vm),
+              function(error) {
+                console.log(error);
+              }
+            );
+            //刷新产品列表
+            vm.getCpjsData(vm.qyid);
+          } else {
+            if (vm.usertype == "ENG") {
+              vm.$message({
+                type: "error",
+                message: "deleted error!"
+              });
+            } else {
+              vm.$message({
+                type: "error",
+                message: "删除失败!"
+              });
+            }
+          }
+        }.bind(vm),
+        function(error) {
+          console.log(error);
+        }
+      );
+    },
+    //新增
+    addClick: function() {
+      if (this.cpjsData.length < 6) {
+        if (this.userType == "ENG") {
+          this.dialogTitle = "Add Product";
+        } else {
+          this.dialogTitle = "产品新增";
+        }
+        this.editFormVisible = true;
+      } else {
+        if (this.userType == "ENG") {
+          this.$message({
+            message: "You can add at most 6 product Examples",
+            type: "warning"
+          });
+        } else {
+          this.$message({
+            message: "最多可添加6个产品，您已达到最大数量",
+            type: "warning"
+          });
+        }
+      }
+    },
+    //删除delPicList中的图片
+    deletePic: function() {
+      let vm = this;
+      if (vm.delPicList.length > 0) {
+        vm.$axios.post("/qycpjs/delPic", vm.delPicList).then(
+          function(res) {
+            vm.delPicList = [];
+          }.bind(vm),
+          function(error) {
+            console.log(error);
+          }
+        );
+      }
+    },
+    //关闭编辑对话框
+    closeDialog: function(val) {
+      let vm = this;
+      //删除上传但未保存的图片
+      if (vm.unsavedPicList.length > 0) {
+        vm.$axios.post("/qycpjs/delPic", vm.unsavedPicList).then(
+          function(res) {
+            vm.unsavedPicList = [];
+          }.bind(vm),
+          function(error) {
+            console.log(error);
+          }
+        );
+      }
+      //清空delPicList
+      vm.delPicList = [];
+      //清空editForm
+      vm.editForm = {
+        uuid: "",
+        cplx: [],
+        cpjj: "",
+        reserve1: "",
+        src: "",
+        imageUrl: ""
+      };
+      //编辑页隐藏
+      vm.editFormVisible = false;
+      //重置校验
+      vm.$refs["editForm"].resetFields();
+    },
+    //提交
     editSubmit: function(val) {
       let vm = this;
-      this.$refs["editForm"].validate((valid) => {
+      vm.$refs["editForm"].validate(valid => {
         if (valid) {
-          if(this.dialogTitle == "展商用户新增"){
-            vm.$axios.get('/account/getNum/' + this.editForm.username + "/static").then(function(res){
-              if(res.data.result != 0){
-                this.$message({
-                    message: "用户名已存在!",
-                    type: "error"
-                });
-              }else{
-                var params = {
-                  username: val.username,
-                  password: val.password,
-                  deptid: "ZSYH",
-                  usertype: val.usertype,
-                  createId: this.currentUser.userid,
-                  createName: this.currentUser.username
-                }
-                vm.$axios.post('/user/insertByVO', params).then(function(res){
-                  var addData = res.data.result;
-                  if(addData.usertype == 'ENG'){
-                      addData.usertypeName = "国外";
-                  }else if(addData.usertype == 'CHN'){
-                      addData.usertypeName = "国内";
-                  }
-                  this.tableData.unshift(addData);
-                  this.total = this.tableData.length;
-                  this.editFormVisible = false;
-                }.bind(this),function(error){
-                  console.log(error)
-                })
-              }
-            }.bind(this),function(error){
-                console.log(error)
-            })
-          }else if(this.dialogTitle == "展商用户编辑"){
-            var params = {
-              pkid: val.pkid,
-              userid: val.userid,
-              username: val.username,
-              deptid: "ZSYH",
-              usertype: val.usertype,
-              alterId: this.currentUser.userid,
-              alterName: this.currentUser.realName
-            }
-            if(this.editPasswordShow){
-              params.password = val.password;
-            }
-            if(!this.editFlag){
-              vm.$axios.get('/account/getNum/' + this.editForm.username + "/static").then(function(res){
-                if (res.data.result != 0) {
-                  this.$message({
-                    message: "用户名已存在!",
-                    type: "error"
-                  });
-                  return;
-                } else {
-                  this.updateExhibitor(params);
-                }
-              }.bind(this),function(error){
-                  console.log(error)
-              })
+          if (vm.editForm.src == null || vm.editForm.src == "") {
+            if (vm.userType == "ENG") {
+              vm.$message({
+                message: "Product Photo is required",
+                type: "warning"
+              });
             } else {
-              this.updateExhibitor(params);
+              vm.$message({
+                message: "请上传产品图片",
+                type: "warning"
+              });
+            }
+
+            console.log("error submit!!");
+            return false;
+          } else {
+            if (val.uuid != null && val.uuid != "") {
+              //编辑
+              var params = {
+                uuid: vm.editForm.uuid,
+                cplx: vm.editForm.cplx[vm.editForm.cplx.length - 1],
+                cpjj: vm.editForm.cpjj,
+                reserve1: vm.editForm.reserve1,
+                src: vm.editForm.src,
+                xgrid: vm.currentUser.userid,
+                xgrmc: vm.currentUser.username
+              };
+              vm.$axios.post("/qycpjs/doUpdateByVO", params).then(
+                function(res) {
+                  if (res.data.result > 0) {
+                    if (vm.userType == "ENG") {
+                      vm.$message({
+                        message: "Save successful",
+                        type: "success"
+                      });
+                    } else {
+                      vm.$message({
+                        message: "成功保存产品信息",
+                        type: "success"
+                      });
+                    }
+                    vm.deletePic();
+                  } else {
+                    if (vm.userType == "ENG") {
+                      vm.$message({
+                        message: "Save failed",
+                        type: "warning"
+                      });
+                    } else {
+                      vm.$message({
+                        message: "保存失败",
+                        type: "warning"
+                      });
+                    }
+                  }
+                  //清空unsavedPicList
+                  vm.unsavedPicList = [];
+                  //清空delPicList
+                  vm.delPicList = [];
+                  //关闭对话框
+                  vm.closeDialog(vm.editForm);
+                  //刷新产品列表
+                  vm.getCpjsData(vm.qyid);
+                }.bind(vm),
+                function(error) {
+                  console.log(error);
+                }
+              );
+            } else {
+              //新增
+              var params = {
+                qyid: vm.qyid,
+                cplx: vm.editForm.cplx[vm.editForm.cplx.length - 1],
+                cpjj: vm.editForm.cpjj,
+                reserve1: vm.editForm.reserve1,
+                src: vm.editForm.src,
+                cjrid: vm.currentUser.userid,
+                cjrmc: vm.currentUser.username
+              };
+              vm.$axios.post("/qycpjs/doInsertCpxx", params).then(
+                function(res) {
+                  if (res.data.result > 0) {
+                    if (vm.userType == "ENG") {
+                      vm.$message({
+                        message: "Save successful",
+                        type: "success"
+                      });
+                    } else {
+                      vm.$message({
+                        message: "成功保存产品信息",
+                        type: "success"
+                      });
+                    }
+
+                    vm.deletePic();
+                  } else {
+                    if (vm.userType == "ENG") {
+                      vm.$message({
+                        message: "Save failed",
+                        type: "warning"
+                      });
+                    } else {
+                      vm.$message({
+                        message: "保存失败",
+                        type: "warning"
+                      });
+                    }
+                  }
+                  //清空unsavedPicList
+                  vm.unsavedPicList = [];
+                  //清空delPicList
+                  vm.delPicList = [];
+                  //关闭对话框
+                  vm.closeDialog(vm.editForm);
+                  //刷新产品列表
+                  vm.getCpjsData(vm.qyid);
+                }.bind(vm),
+                function(error) {
+                  console.log(error);
+                }
+              );
             }
           }
         } else {
-          console.log('error submit!!');
+          console.log("error submit!!");
           return false;
         }
       });
-    },
-
-    //修改方法
-    updateExhibitor: function(params) {
-      let vm = this;
-      vm.$axios.post('/user/updateByVO', params).then(function (res){
-        var result = res.data.result;
-        this.tableData[this.editIndex].username = result.username;
-        if(result.usertype == "CHN"){
-          this.tableData[this.editIndex].usertypeName = "国内"; 
-        }else if(result.usertype == "ENG"){
-          this.tableData[this.editIndex].usertypeName = "国外"; 
-        }
-        this.editFormVisible = false;
-        this.$message({
-          message: "修改成功！",
-          type: "success"
-        });
-      }.bind(this), function (error) {
-          console.log(error)
-      })
-    },
-
-    //编辑页按钮显示
-    editFlagChange: function(){
-      if(this.editFlag){
-        this.editFlag = false;
-        this.editFlagText = "取消"; 
-      }else{
-        this.editFlag = true;
-        this.editFlagText = "编辑";
-        this.editForm.username = this.editFormUsername;
-      }
-    },
-
-    //表格勾选事件
-    selectionChange: function (val) {
-      this.multipleSelection = val;
-    },
-
-    //关闭Dialog
-    closeDialog: function (val) {
-        this.editFormVisible = false;
-        this.$refs["editForm"].resetFields();
-    },
+    }
   }
-}
+};
 </script>
 
-<style>
-
+<style lang="scss">
+#productList {
+  input[type="file"] {
+    display: none;
+  }
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+  }
+  .avatar {
+    width: 100px;
+    height: 100px;
+    display: block;
+  }
+  .el-upload__tip {
+    margin-top: 2px;
+    margin-bottom: 10px;
+  }
+  #cpjs .el-form-item__content {
+    width: 100% !important;
+  }
+  #cpjs .el-card__body {
+    height: 106px;
+  }
+  #cpjsImg img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+  #cpjsArea .el-form-item__error {
+    padding-top: 8px;
+  }
+  #cpjs .el-form-item__content {
+    line-height: 30px;
+  }
+}
 </style>
