@@ -433,9 +433,12 @@ export default {
           { validator: (rule, value, callback) => {
             if (value == null || value == '') {
               callback(new Error(this.usertype=='ENG' ? "Phone Number is required." : "请输入电话号码"));
-            } else if (/^[\d\-]+$/.test(value) == false) {
+            } 
+            /**
+            else if (/^[\d\-]+$/.test(value) == false) {
               callback(new Error(this.usertype=='ENG' ? 'Number and hyphen only.' : "只能输入数字"));
-            } else if (value.length > 30){
+            } */
+            else if (value.length > 30){
               callback(new Error(this.usertype=='ENG' ? 'Less than 30 characters.' : "最多输入30个数字"));
             } else {
               callback();
