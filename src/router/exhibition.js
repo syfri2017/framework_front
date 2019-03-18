@@ -128,12 +128,6 @@ export default [
             path: '/',
             name: 'home',
             component: resolve => require(['@/views/exhibition/home/homeList'], resolve)
-          },
-          {
-            path: '/home/detail',
-            name: 'home/detail',
-            meta: {auth: true, title: "首页详情"},
-            component: resolve => require(['@/views/exhibition/home/homeDetail'], resolve)
           }
         ]
       },
