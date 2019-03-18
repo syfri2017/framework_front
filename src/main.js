@@ -115,8 +115,7 @@ axios.interceptors.response.use(
     Message.error({
       showClose: true,
       message: "error",
-      type: 'error',
-      duration: 0
+      type: 'error'
     });
     return Promise.reject(error);
     //请求超时跳转到登录页面
