@@ -858,11 +858,7 @@ export default {
             message: "Phone Number is required",
             trigger: "blur"
           },
-          {
-            pattern: /^[\d\-]+$/,
-            message: "Number and hyphen only",
-            trigger: "blur"
-          },
+          //{pattern: /^[\d\-]+$/, message: "Number and hyphen only",trigger: "blur"},
           {
             min: 1,
             max: 30,
