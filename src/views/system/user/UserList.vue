@@ -179,9 +179,11 @@ export default {
   },
   data() {
     var validatePwdAgain = (rule, value, callback) => {
+      /**
       if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value) == false) {
         callback(new Error("密码应为6-16位字母和数字组合"));
-      } else if (value !== this.editForm.password) {
+      } else  */
+      if (value !== this.editForm.password) {
         callback(new Error("两次输入密码不一致"));
       } else {
         callback();
@@ -260,11 +262,13 @@ export default {
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
+          /*
           {
             pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/,
             message: "密码应为6-16位字母和数字组合",
             trigger: "blur"
           }
+          */
         ],
         checkPass: [
           { required: true, message: "请输入密码", trigger: "blur" },
