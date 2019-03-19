@@ -24,7 +24,7 @@
               <el-form>
                 <el-col :span="12">
                   <el-form-item align="left">
-                    <el-button type="success" icon="el-icon-download" size="small" @click="addClick">新增</el-button>
+                    <el-button type="success" icon="el-icon-plus" size="small" @click="addClick">新增</el-button>
                     <el-button type="danger" icon="el-icon-document" size="small" @click="deleteClick">删除</el-button>
                   </el-form-item>
                 </el-col>
