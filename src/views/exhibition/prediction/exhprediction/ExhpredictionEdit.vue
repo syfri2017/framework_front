@@ -2636,5 +2636,11 @@ export default {
   #cpjsArea .el-form-item__error {
     padding-top: 8px;
   }
+  .card_title_font{
+    line-height: 40px;
+  }
+  .clearfix{
+    height: 40px;
+  }
 }
 </style>
