@@ -17,7 +17,7 @@
             <el-table-column prop="sl" label="展位数量" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
           </el-table>
         </div>
-        <el-row type="flex" justify="end">
+        <el-row type="flex" justify="end" class="mt10 mb10">
           <el-col :span="15">
             <el-pagination layout="total" :total=parseInt(total)></el-pagination>
           </el-col>
