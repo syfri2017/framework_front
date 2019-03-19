@@ -50,7 +50,8 @@
         </el-table-column> -->
         <el-table-column prop="wz" label="公司网址" show-overflow-tooltip min-width="20%" align="center">
           <template slot-scope="scope">
-            <a type="text" v-text="scope.row.wz" :href="'http://'+scope.row.wz" target="_blank"></a>
+            <!-- <a type="text" v-text="scope.row.wz" :href="'http://'+scope.row.wz" target="_blank"></a> -->
+            <a type="text" v-text="scope.row.wz" :href="getWz(scope.row.wz)" target="_blank"></a> 
           </template>
         </el-table-column>
         <el-table-column prop="shztmc" label="审核状态" show-overflow-tooltip min-width="10%" align="center">
@@ -339,14 +340,30 @@ export default {
       else
         this.isReject = false;
     },
+
+    //关闭Dialog
     closeDialog: function (val) {
       val.shzt = '';
       this.approveFormVisible = false;
     },
+
     //获取选中的行号（从0开始）
-    showRow(row) {
+    showRow: function (row) {
       this.selectIndex = this.tableData.indexOf(row);
     },
+
+    //获取跳转网站
+    getWz: function (val) {
+      if (val == '' || val == null) {
+        return '';
+      } else {
+        if (val.indexOf('http') > -1) {
+          return val;
+        } else {
+          return 'http://' + val;
+        }
+      }
+    }
   }
 }
 </script>
