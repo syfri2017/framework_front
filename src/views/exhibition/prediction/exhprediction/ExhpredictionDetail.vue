@@ -811,31 +811,33 @@ export default {
 <style lang="scss">
 #exhpredictionDetail{
   .nameBox {
-  min-height: 165px !important;
-	background-color: #fff;
-	border: 5px solid #ccc;
-	/* margin-top: 15px; */
-	padding: 20px 25px 0 25px;
-  box-shadow: 2px 3px 5px #ccc;
+    min-height: 165px !important;
+    background-color: #fff;
+    border: 5px solid #ccc;
+    padding: 20px 25px 0 25px;
+    box-shadow: 2px 3px 5px #ccc;
   }
   #cpjs .el-form-item__content {
-      width: 100% !important;
+    width: 100% !important;
   }
   #cpjsImg img{
-      max-height: 100%;
-      max-width: 100%;
+    max-height: 100%;
+    max-width: 100%;
   }
   #cpjs .el-form-item:nth-child(even){
-      margin-right: 0;
+    margin-right: 0;
   }
   .inform-content .el-tabs__content {
-      padding: 20px 25px 20px 30px !important;
+    padding: 20px 25px 20px 30px !important;
   }
   #previewImgDialog .el-dialog{
-      background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.2);
   }
   #qyzwyx .el-input-number--small {
-      width: 300px;
+    width: 300px;
+  }
+  .el-form-item__error {
+    line-height: 1;
   }
 }
 </style>
