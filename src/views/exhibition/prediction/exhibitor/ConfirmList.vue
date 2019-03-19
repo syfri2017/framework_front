@@ -605,10 +605,8 @@ export default {
       this.jbxxEditFlag = false;
     },
     saveJbxxClick: function (formName) {
-      // debugger
       let vm = this;
       vm.$refs[formName].validate((valid) => {
-        debugger
         if (valid) {
           vm.loading = true;
           var params = {
