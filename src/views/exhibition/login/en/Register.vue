@@ -6,8 +6,8 @@
       <div class="login-form">
         <div class="filed left">
           <i class="iconfont icou"></i>
-          <span>User Registration</span>
-          <span class="signstyle">Existing Accounts?<router-link :to="{path:'/exhibition/login/en/login'}"><a @click="open()">Go Login</a></router-link>
+          <span class="formTitleStyle">User Registration</span>
+          <span class="signstyle">Exist Account?<router-link :to="{path:'/exhibition/login/en/login'}"><a @click="open()">Login</a></router-link>
           </span>
         </div>
         <form autocomplete="off" name="reg-form">
@@ -191,7 +191,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import '../../common/scss/all.scss';
+@import '@/common/scss/login.scss';
 $height: 22rem; //全局变量声明
 $width: 22rem;
 $heightimg: 8.75rem;
@@ -246,12 +246,6 @@ $blackcolor: #2c2c2c;
   }
 }
 
-.lana {
-  color: $whitecolor;
-  font-size: 1rem;
-  cursor: pointer;
-  letter-spacing: 0.1rem;
-}
 
 .lanb {
   color: $blackcolor;
@@ -293,7 +287,9 @@ $blackcolor: #2c2c2c;
   background: url("/static/images/login/form_bg.png") no-repeat;
   background-size:100% 100%; 
   .signstyle {
-    margin-left: 0.6rem;
+    float: right;
+    margin-top: 1.4rem;
+    // margin-left: 0.6rem;
     a {
       cursor: pointer;
     }
@@ -591,33 +587,36 @@ a {
   top:69px;
   margin-left:0px !important;
   color:#EA2530;
-  }
+}
 
-  .alert1{
+.alert1{
   position:absolute;
   top:125px;
   margin-left:0px !important;
   color:#EA2530;
-  }
+}
 
-  .alert2{
+.alert2{
   position:absolute;
   top:181px;
   margin-left:0px !important;
   color:#EA2530;
-  }
+}
 
-  .tip{
+.tip{
   position:absolute;
   top:181px;
   margin-left:0px !important;
   color:#EA2530;
-  }
+}
 
-  .alert3{
+.alert3{
   position:absolute;
   top:239px;
   margin-left:0px !important;
   color:#EA2530;
-  }
+}
+.formTitleStyle{
+  font-size: 1.5rem;
+}
 </style>

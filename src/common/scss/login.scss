@@ -1,0 +1,60 @@
+ //全局变量声明
+$height: 22rem;
+$width: 22rem;
+$heightimg: 8.75rem;
+$widthimg: 8.75rem;
+$heighttitle: 90%;
+$widthtitle: 90%;
+$bottomfooter: 3.125rem;
+$heightfooter: 3.125rem;
+$widthlgbtn: 12rem;
+$line-heightfooter: 3.125rem;
+$widthfooter: 100%;
+$bgcolor: #ea2530;
+$bgcolor2: rgb(234, 109, 37);
+$whitecolor: #fff;
+$color166: rgb(251, 106, 116);
+$top0: 0;
+$left0: 0;
+$right0: 0;
+$bottom0: 0;
+$blackcolor: #2c2c2c;
+.login {
+  position: absolute;
+  top: $top0;
+  left: $top0;
+  right: $right0;
+  bottom: $bottom0;
+  overflow: hidden;
+  overflow-y: auto;
+  z-index: 1000;
+  background: url("/static/images/login/login.png") center 100% #65809d;
+  * {
+    font-size: 0.9rem;
+  }
+  p {
+    margin: 4rem 0 0 6rem;
+  }
+  .imgstyle {
+    height: $heightimg;
+    width: $widthimg;
+  }
+  .titlestyle {
+    height: $heighttitle;
+    width: $widthtitle;
+  }
+  .pstyle {
+    margin: 5rem 0 0 0;
+  }
+}
+.lana {
+  color: $whitecolor;
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 0.1rem;
+}
+
+//登陆、注册、Login、Register
+.formTitleStyle{
+  font-size: 1.3rem;
+}

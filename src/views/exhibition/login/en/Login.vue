@@ -6,7 +6,7 @@
         <div class="login-form" >
           <div class="filed left">
             <i class="iconfont icou"></i>
-            <span >User Login</span>
+            <span class="formTitleStyle">User Login</span>
             <span class="signstyle">No Account?<router-link :to="{path:'/exhibition/login/en/Register'}"><a>To Register</a></router-link></span>
           </div>
           <el-form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
@@ -25,7 +25,7 @@
               <p class="alert2" v-show="validateAlertFlag2">*The verification code is incorrect.</p>
             </div>
             <div class="filed right">
-              <span class="muchtab"><router-link :to="{path:'/exhibition/login/en/ForgetUsername'}"><a>Forget Your Username</a></router-link>  |  <router-link :to="{path:'/exhibition/login/en/ForgetPassword'}"><a>Forget Your Password</a></router-link></span>
+              <span class="muchtab"><router-link :to="{path:'/exhibition/login/en/ForgetUsername'}"><a>Forget Username</a></router-link>  |  <router-link :to="{path:'/exhibition/login/en/ForgetPassword'}"><a>Forget Password</a></router-link></span>
             </div>
             <div class="filed lgin">
               <el-button type="danger" @click="login" round>Login</el-button>
@@ -184,67 +184,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import '../../common/scss/all.scss';
-$height: 22rem; //全局变量声明
-$width: 22rem;
-$heightimg: 8.75rem;
-$widthimg: 8.75rem;
-$heighttitle: 90%;
-$widthtitle: 90%;
-$bottomfooter: 3.125rem;
-$heightfooter: 3.125rem;
-$widthlgbtn: 12rem;
-$line-heightfooter: 3.125rem;
-$widthfooter: 100%;
-$bgcolor: #ea2530;
-$bgcolor2: rgb(234, 109, 37);
-$whitecolor: #fff;
-$color166: rgb(251, 106, 116);
-$top0: 0;
-$left0: 0;
-$right0: 0;
-$bottom0: 0;
-$blackcolor: #2c2c2c;
-.login {
-  position: absolute;
-  top: $top0;
-  left: $top0;
-  right: $right0;
-  bottom: $bottom0;
-  overflow: hidden;
-  overflow-y: auto;
-  z-index: 1000;
-  background: url("/static/images/login/login.png") center 100% #65809d;
-
-  * {
-    font-size: 0.9rem;
-  }
-
-  p {
-    margin: 4rem 0 0 6rem;
-  }
-
-  .imgstyle {
-    height: $heightimg;
-    width: $widthimg;
-  }
-
-  .titlestyle {
-    height: $heighttitle;
-    width: $widthtitle;
-  }
-
-  .pstyle {
-    margin: 5rem 0 0 0;
-  }
-}
-
-.lana {
-  color: $whitecolor;
-  font-size: 1rem;
-  cursor: pointer;
-  letter-spacing: 0.1rem;
-}
+@import '@/common/scss/login.scss';
 
 .lanb {
   color: $blackcolor;
@@ -286,7 +226,9 @@ $blackcolor: #2c2c2c;
   background: url("/static/images/login/form_bg.png") no-repeat;
   background-size:100% 100%; 
   .signstyle {
-    margin-left: 4.5rem;
+    float: right;
+    margin-top: 1.4rem;
+    // margin-left: 4.5rem;
     a {
       cursor: pointer;
     }
@@ -593,5 +535,6 @@ a {
   margin-left:0px !important;
   color:#EA2530;
 }
+
 
 </style>

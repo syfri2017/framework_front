@@ -140,7 +140,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import '../../common/scss/all.scss';
+@import '@/common/scss/login.scss';
 $height: 22rem; //全局变量声明
 $width: 22rem;
 $heightimg: 8.75rem;
@@ -193,13 +193,6 @@ $blackcolor: #2c2c2c;
   .pstyle {
     margin: 5rem 0 0 0;
   }
-}
-
-.lana {
-  color: $whitecolor;
-  font-size: 1rem;
-  cursor: pointer;
-  letter-spacing: 0.1rem;
 }
 
 .lanb {
