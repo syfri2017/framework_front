@@ -27,7 +27,7 @@
       <!--基本信息-->
       <div id="inforView" class="pt15" v-show="isJbxxShow">
         <el-row class="mb5" style="border-bottom:1px solid #463132;line-height: 29px;">
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+          <el-col :span="24">
             <strong style="color: #463132;">Brief Company Information</strong>
           </el-col>
         </el-row>
@@ -150,7 +150,7 @@
           </el-row>
           <el-row class="tr mb5">
             <el-col :span="5">&nbsp;</el-col>
-            <el-col :span="11">
+            <el-col :span="12">
               <!--公司地址字段存英文联系人-->
               <el-form-item prop="gsdz" label="Customer Contact">
                 <el-input size="small" v-model="kpxxForm.gsdz" placeholder="Customer Contact"></el-input>
@@ -160,7 +160,7 @@
           </el-row>
           <el-row class="tr mb5">
             <el-col :span="5">&nbsp;</el-col>
-            <el-col :span="11">
+            <el-col :span="12">
               <!--电话号码字段存英文联系人电话-->
               <el-form-item prop="dhhm" label="Phone Number">
                 <el-input size="small" v-model="kpxxForm.dhhm" placeholder="Phone Number"></el-input>
@@ -170,7 +170,7 @@
           </el-row>
           <el-row class="tr mb5">
             <el-col :span="5">&nbsp;</el-col>
-            <el-col :span="11">
+            <el-col :span="12">
               <!--银行账号字段存英文传真-->
               <el-form-item prop="yhzh" label="Fax">
                 <el-input size="small" v-model="kpxxForm.yhzh" placeholder="Fax"></el-input>
@@ -333,36 +333,36 @@
         </el-row>
         <el-form class="el-form demo-form-inline" ref="xqyxForm" :model="xqyxForm" label-width="230px" label-position="right">
           <el-row class="tr mb5">
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <span class="mr5 vbm yxLabel">Standard Booth(12m² Each)</span>
             </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <el-input-number size="small" v-model="xqyxForm.bzzwgs" :min="0" :max="6" :precision="0" placeholder="Standard Booth"></el-input-number>
             </el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" style="text-align: left">
+            <el-col :span="2" style="text-align: left">
               <span class="mr5 vbm yxLabel">&nbsp;&nbsp;Booth(s)</span>
             </el-col>
           </el-row>
           <el-row class="tr mb5">
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <span class="mr5 vbm yxLabel">Indoor Raw Space Booth(Minimum 24m²)</span>
             </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <el-input-number size="small" v-model="xqyxForm.sngdzw" :min="24" :max="1000" :precision="0" placeholder="Indoor Raw Space Booth"></el-input-number>
             </el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" style="text-align: left">
+            <el-col :span="2" style="text-align: left">
               <span class="mr5 vbm yxLabel">&nbsp;&nbsp;m²</span>
             </el-col>
           </el-row>
           <el-row class="tr mb5">
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <span class="mr5 vbm yxLabel">Outdoor Raw Space Booth(Only Available to
                 <span style="color: red">Elevating Fire Trucks</span>)</span>
             </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-col :span="8">
               <el-input-number size="small" v-model="xqyxForm.swgdzw" :min="0" :max="2000" :precision="0" placeholder="Outdoor Raw Space Booth"></el-input-number>
             </el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" style="text-align: left">
+            <el-col :span="2" style="text-align: left">
               <span class="mr5 vbm yxLabel">&nbsp;&nbsp;m²</span>
             </el-col>
           </el-row>
