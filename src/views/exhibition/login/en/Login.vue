@@ -9,23 +9,26 @@
             <span >User Login</span>
             <span class="signstyle">No Account?<router-link :to="{path:'/exhibition/login/en/Register'}"><a>To Register</a></router-link></span>
           </div>
-          <el-form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+          <el-form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="Username" v-model="GLYusername" prefix-icon="iconfont icon-username" @blur="mobileCheck"></el-input>
-              <!-- <p class="alert" v-show="mobileAlertFlag">*请填写正确的手机号码</p> -->
+              <el-input placeholder="Username" v-model="username" prefix-icon="iconfont icon-username" @blur="mailCheck"></el-input>
+              <p class="alert" v-show="usernameAlertFlag">*Please fill in the correct E-mail number.</p>
             </div>
             <div class="filed">
-              <el-input placeholder="Password" v-model="GLYpassword" prefix-icon="iconfont icon-password" type="password"></el-input>
+              <el-input placeholder="Password" v-model="password" prefix-icon="iconfont icon-password" type="password" @blur="passwordCheck"></el-input>
+              <p class="alert1" v-show="passwordAlertFlag">*The password can not be empty.</p>
             </div>
             <div class="filed">
-              <el-input placeholder="Verification Code" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-validate"></el-input>
+              <el-input placeholder="Verification Code" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-validate" @blur="validateCheck"></el-input>
               <input type="button"  class="verification1 bk" id="code" @click="createCode"  v-model="checkCode"/>
+              <p class="alert2" v-show="validateAlertFlag">*The verification code can not be empty.</p>
+              <p class="alert2" v-show="validateAlertFlag2">*The verification code is incorrect.</p>
             </div>
             <div class="filed right">
               <span class="muchtab"><router-link :to="{path:'/exhibition/login/en/ForgetUsername'}"><a>Forget Your Username</a></router-link>  |  <router-link :to="{path:'/exhibition/login/en/ForgetPassword'}"><a>Forget Your Password</a></router-link></span>
             </div>
             <div class="filed lgin">
-              <el-button type="danger" @click="GLYlogin" round>Login</el-button>
+              <el-button type="danger" @click="login" round>Login</el-button>
             </div>
           </el-form>
         </div>
@@ -40,91 +43,118 @@ export default {
   name: 'Login',
   data () {
     return {
-        GLYusername: "",
-        GLYpassword: "",
-        GLYsrc: "/imageCode",
-        GLYvalidateCode: "",
-        GLYmessages: "",
-        GLYloginType: "MyShiro",
-        userPhone:'',
-        dialog: false,
-        UserPhone:'',
-        LUserPsd:'',
+        username: "",
+        password: "",
+        usertype: "ENG",
+        deptid: 'ZSYH',
         picLyanzhengma:'',
         checkCode:'',
         // 校验标识符
-        //注册校验标识
-        mobileAlertFlag: false,
-        // messageCodeAlertFlag: false,
-        // password1TipFlag: false,
-        // password1AlertFlag: false,
-        // password2AlertFlag: false
-
+        usernameAlertFlag: false,
+        passwordAlertFlag: false,
+        validateAlertFlag: false,
+        validateAlertFlag2: false
+    }
+  },
+  created: function() {
+    this.createCode();
+    if (this.$route.query.type == 'register') {
+      this.username = this.$route.query.username;
+      this.password = this.$route.query.password;
     }
   },
   methods:{
-      // 输入框校验
-      mobileCheck() {
-        if (!/^1[34578]\d{9}$/.test(this.mobile)) {
-          this.mobileAlertFlag = true;
-          return false;
-        } else {
-          this.mobileAlertFlag = false;
-          return true;
-        }
-      },
-     // 图片Verification Code
-      createCode(){
-          code = "";    
-          var codeLength = 4;//Verification Code的长度   
-          var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',   
-           'S','T','U','V','W','X','Y','Z');//随机数   
-          for(var i = 0; i < codeLength; i++) {//循环操作   
-              var index = Math.floor(Math.random()*36);//取得随机数的索引（0~35）   
-              code += random[index];//根据索引取得随机数加到code上   
-          }   
-              this.checkCode = code;//把code值赋给Verification Code   
-      },
-      // 失焦验证图和Password
-      checkLpicma(){
-          this.picLyanzhengma.toUpperCase();//取得输入的Verification Code并转化为大写         
-          if(this.picLyanzhengma == '') {
-              // $(".login_content1 span:eq(2)").text("请输入Verification Code")
-              // $(".login_content1 span:eq(2)").removeClass("disappear");
-          }else if(this.picLyanzhengma.toUpperCase() != this.checkCode ) { //若输入的Verification Code与产生的Verification Code不一致时    
-              console.log(this.picLyanzhengma.toUpperCase())
-              console.log(code)           
-              alert("Verification Code错误！")
-              // $(".login_content1 span:eq(2)").removeClass("disappear");
-              this.createCode();//刷新Verification Code   
-              this.picLyanzhengma = '';
-          }else { //输入正确时   
-              // $(".login_content1 span:eq(2)").addClass("disappear");
-              // $(".login_content1 span:eq(2)").text("请输入Verification Code")
-              return true;
-          } 
+    // 邮箱校验
+    mailCheck() {
+      if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.username))) {
+        // 邮箱格式不正确
+        this.usernameAlertFlag = true;
+        return false;
+      } else {
+        this.usernameAlertFlag = false;
+        return true;
+      }
+    },
 
-      },
-    GLYlogin(){
+    //密码校验
+    passwordCheck() {
+      if (this.password == '' || this.password == null) {
+        this.passwordAlertFlag = true;
+        return false;
+      } else {
+        this.passwordAlertFlag = false;
+        return true;
+      }
+    },
+
+    //验证码校验
+    validateCheck() {
+      if (this.picLyanzhengma == '' || this.picLyanzhengma == null) {
+        this.validateAlertFlag = true;
+        return false;
+      } else if (this.picLyanzhengma.toUpperCase() != this.checkCode) {
+        this.validateAlertFlag2 = true;
+        this.createCode();//刷新Verification Code   
+        this.picLyanzhengma = '';
+        return false;
+      }else {
+        this.validateAlertFlag = false;
+        this.validateAlertFlag2 = false;
+        return true;
+      }
+    },
+    // 图片Verification Code
+    createCode(){
+      code = "";    
+      var codeLength = 4;//Verification Code的长度   
+      var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',   
+        'S','T','U','V','W','X','Y','Z');//随机数   
+      for(var i = 0; i < codeLength; i++) {//循环操作   
+        var index = Math.floor(Math.random()*36);//取得随机数的索引（0~35）   
+        code += random[index];//根据索引取得随机数加到code上   
+      }   
+        this.checkCode = code;//把code值赋给Verification Code   
+    },
+
+    // 失焦验证图和Password------------暂时未使用  by li.xue 2019/3/21
+    checkLpicma(){
+      this.picLyanzhengma.toUpperCase();//取得输入的Verification Code并转化为大写         
+      if(this.picLyanzhengma == '') {
+        // $(".login_content1 span:eq(2)").text("请输入Verification Code")
+        // $(".login_content1 span:eq(2)").removeClass("disappear");
+      }else if(this.picLyanzhengma.toUpperCase() != this.checkCode ) { //若输入的Verification Code与产生的Verification Code不一致时    
+        // $(".login_content1 span:eq(2)").removeClass("disappear");
+        this.createCode();//刷新Verification Code   
+        this.picLyanzhengma = '';
+        return false;
+      }else { //输入正确时   
+        // $(".login_content1 span:eq(2)").addClass("disappear");
+        // $(".login_content1 span:eq(2)").text("请输入Verification Code")
+        return true;
+      }
+    },
+
+    //登陆
+    login(){
       let vm = this;
-      if (this.GLYusername == null || this.GLYusername == '') {
+      if (this.usernameAlertFlag) {
          //用户名不能为空！ 
-        alert("User name can not be empty!")
-      } else if (this.GLYpassword == null || this.GLYpassword == '') {
+        this.$message.error("The username is incorrect.");
+      } else if (this.passwordAlertFlag) {
         //密码不能为空！ 
-        alert("The password can not be empty!")
-      } 
-      else if(this.picLyanzhengma == null || this.picLyanzhengma == ''){
+        this.$message.error("The password can not be empty.");
+      } else if(this.validateAlertFlag){
         //验证码不能为空！ 
-        alert("The verification code can not be empty!")
-      } 
-      else if(this.checkLpicma() == true){
+        this.$message.error("The verification code can not be empty.");
+      } else if(this.validateAlertFlag2) {
+        //验证码错误！ 
+        this.$message.error("The verification code is incorrect.");
+      } else{
         var params = {
-          username: vm.GLYusername,
-          password: vm.GLYpassword,
-          loginType: vm.GLYloginType,
-          // usertype: "EHN",
-          // deptid: "ZSYH"
+          username: vm.username,
+          password: vm.password,
+          usertype: vm.usertype,
+          deptid: vm.deptid
         }
         vm.$axios.post('/login', params).then(function (res) {
           if (res.data.code == '00000000') {          
@@ -137,11 +167,11 @@ export default {
             this.CONSTANT.currentUser = res.data.data.currentUser;
             this.$router.push({ name: 'exhibitorWebEN' });
           } else if (res.data.code == '22222222') {
-            this.$message.error("账号不存在");
+            this.$message.error('Account does not exist.');
           } else if (res.data.code == '33333333') {
-            this.$message.error("Password不正确");
+            this.$message.error('The password is incorrect.');
           } else {
-            this.$message.error("Login失败");
+            this.$message.error("Login failed");
             this.$router.push({ path: '/' });
           }          
         }.bind(this), function (error) {
@@ -149,10 +179,7 @@ export default {
         })
       }
     }
-  },
-    created(){
-        this.createCode();
-    }
+  }
 }
 </script>
 
@@ -551,6 +578,18 @@ a {
 .alert{
   position:absolute;
   top:68px;
+  margin-left:0px !important;
+  color:#EA2530;
+}
+.alert1{
+  position:absolute;
+  top:125px;
+  margin-left:0px !important;
+  color:#EA2530;
+}
+.alert2{
+  position:absolute;
+  top:181px;
   margin-left:0px !important;
   color:#EA2530;
 }
