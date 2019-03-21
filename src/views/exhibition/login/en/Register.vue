@@ -14,11 +14,11 @@
           <div class="filed">
             <el-input v-model="mail" name="mail" id="mail" placeholder="Email" @blur="mailCheck" type="text" class="inputstyle" prefix-icon="iconfont icon-youxiang"></el-input>
             <button type="button" id="mail-btn" class="verficode phonebtn" @click="getMailCode()" v-text=mailCodeText :disabled="mailBtnDisabled"></button>
-            <p class="alert" v-show="mailAlertFlag">*Please fill in the correct E-mail number!</p>
+            <p class="alert" v-show="mailAlertFlag">*Please fill in the correct E-mail number.</p>
           </div>
           <div class="filed">
             <el-input v-model="mailCode" name="mailCode" id="mailCode" placeholder="Mail Verification Code" @blur="mailCodeCheck" prefix-icon="iconfont icon-youxiang1"></el-input>
-            <p class="alert1" v-show="mailCodeAlertFlag">*The verification code can not be empty!</p>
+            <p class="alert1" v-show="mailCodeAlertFlag">*The verification code can not be empty.</p>
           </div>
           <div class="filed">
             <el-input placeholder="Please input a password" prefix-icon="iconfont icon-password" type="password" class="inputstyle" v-model="password1" name="password1"
@@ -176,7 +176,7 @@ export default {
         }
         vm.$axios.post('/signin/insertByVO', params).then(function (res) {
           //注册成功！ 
-          alert("Registration is successful!");
+          alert("Registration is successful.");
           this.username = this.mail;
           this.password = this.password1;
           this.$router.push({name:"exhibition/login/en/Login", query: {username: this.mail, password: this,password1, type: 'register'}});
