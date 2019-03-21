@@ -10,57 +10,27 @@
           <span class="signstyle">Existing Accounts?<router-link :to="{path:'/exhibition/login/en/login'}"><a @click="open()">Go Login</a></router-link>
           </span>
         </div>
-
         <form autocomplete="off" name="reg-form">
           <div class="filed">
-            <el-input v-model="mail" name="mail" id="mail" placeholder="Email" @blur="mailCheck" type="text" class="inputstyle" prefix-icon="iconfont icon-youxiang"
-             ></el-input>
-            <button
-              type="button"
-              iid="mail-btn"
-              class="verficode phonebtn"
-              @click="getMailCode()" 
-              v-text=mailCodeText 
-              :disabled="mailBtnDisabled"
-            ></button>
-             <p class="alert" v-show="mailAlertFlag">*Please fill in the correct E-mail number!</p>
+            <el-input v-model="mail" name="mail" id="mail" placeholder="Email" @blur="mailCheck" type="text" class="inputstyle" prefix-icon="iconfont icon-youxiang"></el-input>
+            <button type="button" id="mail-btn" class="verficode phonebtn" @click="getMailCode()" v-text=mailCodeText :disabled="mailBtnDisabled"></button>
+            <p class="alert" v-show="mailAlertFlag">*Please fill in the correct E-mail number!</p>
           </div>
           <div class="filed">
-            <el-input
-              v-model="mailCode" name="mailCode" id="mailCode" placeholder="Mail Verification Code" @blur="mailCodeCheck"
-              prefix-icon="iconfont icon-youxiang1"
-            ></el-input>
+            <el-input v-model="mailCode" name="mailCode" id="mailCode" placeholder="Mail Verification Code" @blur="mailCodeCheck" prefix-icon="iconfont icon-youxiang1"></el-input>
             <p class="alert1" v-show="mailCodeAlertFlag">*The verification code can not be empty!</p>
           </div>
           <div class="filed">
-            <el-input
-              placeholder="Please input a password"
-              prefix-icon="iconfont icon-password"
-              type="password"
-              class="inputstyle"
-              v-model="password1"
-              name="password1"
-              id="password1"
-              @focus="password1Tip"
-              @blur="password1Check"
-            ></el-input>
+            <el-input placeholder="Please input a password" prefix-icon="iconfont icon-password" type="password" class="inputstyle" v-model="password1" name="password1"
+              id="password1" @focus="password1Tip" @blur="password1Check"></el-input>
             <p class="tip" v-show="password1TipFlag">*Password must be 6-16-bit alphanumeric combination.</p>
             <p class="alert2" v-show="password1AlertFlag">*Password is not in order. Please fill it out again.</p>
           </div>
           <div class="filed">
-            <el-input
-              type="password"
-              class="inputstyle"
-              v-model="password2"
-              name="password2"
-              id="password2"
-              placeholder="Please input the password again"
-              @blur="password2Check"
-              prefix-icon="iconfont icon-querenmima-copy"
-            ></el-input>
+            <el-input type="password" class="inputstyle" v-model="password2" name="password2" id="password2"
+              placeholder="Please input the password again" @blur="password2Check" prefix-icon="iconfont icon-querenmima-copy"></el-input>
             <p class="alert3" v-show="password2AlertFlag">*The two entries do not match. Please fill in again.</p>
           </div>
-
           <div class="filed lgin">
             <el-button type="danger" @click="register()" round>Register</el-button>
           </div>
@@ -87,9 +57,7 @@ export default {
       password1: "",
       password2: "",
       //注册校验标识
-      // mobileAlertFlag: false,
       mailAlertFlag: false,
-      // messageCodeAlertFlag: false,
       mailCodeAlertFlag: false,
       password1TipFlag: false,
       password1AlertFlag: false,
@@ -97,124 +65,127 @@ export default {
     };
   },
   methods: {
-     //消息提示框
-      open() {
-        this.$alert('Unsaved data will be lost. Are you sure to return it?', 'Tips', {
-          confirmButtonText: 'Sure',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `Unsaved data will be lost!`
+    //消息提示框
+    open() {
+      this.$alert('Unsaved data will be lost. Are you sure to return it?', 'Tips', {
+        confirmButtonText: 'Sure',
+        callback: action => {
+          this.$message({
+            type: 'info',
+            message: `Unsaved data will be lost!`
+          });
+        }
+      });
+    },
+    //注册
+    mailCheck() {
+      if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.mail))) {
+        // 邮箱格式不正确
+        this.mailAlertFlag = true;
+        return false;
+      } else {
+        this.mailAlertFlag = false;
+        return true;
+      }
+    },
+    getMailCode() {
+      let vm = this;
+      this.mailCode = "";
+      if (this.mailCheck()) {
+        this.mailCodeText = "Sending...";
+        this.mailBtnDisabled = true;
+        vm.$axios.get('/signin/getMailNumENG/' + this.mail + "/static").then(function (res) {
+          if (res.data.result !== 0) {
+            // 该邮箱已注册！
+            alert("The email is registered!");
+            this.mailCodeText = "Get Verification Code";
+            this.mailBtnDisabled = false;
+          } else {
+            vm.$axios.get('/signin/sendMailEng?mail=' + this.mail).then(function (res) {
+              this.mailCodeReal = res.data.msg;
+              var count = this.time;
+              this.timer = setInterval(() => {
+                if (count == 0) {
+                  clearInterval(this.timer);
+                  this.timer = null;
+                  this.mailCodeText = "Get Verification Code";
+                  this.mailBtnDisabled = false;
+                } else {
+                  this.mailCodeText = count + "seconds later"
+                  count--;
+                  this.mailBtnDisabled = true;
+                }
+              }, 1000)
+            }.bind(this), function (error) {
+                console.log(error);
             });
           }
+        }.bind(this), function (error) {
+            console.log(error);
         });
-      },
-    //注册
-        mailCheck() {
-            if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.mail))) {
-                // 邮箱格式不正确
-                this.mailAlertFlag = true;
-                return false;
-            } else {
-                this.mailAlertFlag = false;
-                return true;
-            }
-        },
-        getMailCode() {
-            let vm = this;
-            this.mailCode = "";
-            if (this.mailCheck()) {
-                this.mailCodeText = "Sending...";
-                this.mailBtnDisabled = true;
-                vm.$axios.get('/signin/getMailNumENG/' + this.mail + "/static").then(function (res) {
-                    if (res.data.result !== 0) {
-                        // 该邮箱已注册！
-                        alert("The email is registered!");
-                        this.mailCodeText = "Get Verification Code";
-                        this.mailBtnDisabled = false;
-                    } else {
-                        vm.$axios.get('/signin/sendMailEng?mail=' + this.mail).then(function (res) {
-                            this.mailCodeReal = res.data.msg;
-                            var count = this.time;
-                            this.timer = setInterval(() => {
-                                if (count == 0) {
-                                    clearInterval(this.timer);
-                                    this.timer = null;
-                                    this.mailCodeText = "Get Verification Code";
-                                    this.mailBtnDisabled = false;
-                                } else {
-                                    this.mailCodeText = count + "seconds later"
-                                    count--;
-                                    this.mailBtnDisabled = true;
-                                }
-                            }, 1000)
-                        }.bind(this), function (error) {
-                            console.log(error);
-                        });
-                    }
-                }.bind(this), function (error) {
-                    console.log(error);
-                });
-            }
-        },
-        mailCodeCheck: function () {
-            if (!(/^[0-9a-zA-Z]{6}$/.test(this.mailCode))) {
-                this.mailCodeAlertFlag = true;
-                return false;
-            } else {
-                this.mailCodeAlertFlag = false;
-                return true;
-            }
-        },
-        password1Check: function () {
-            if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(this.password1))) {
-                this.password1TipFlag = false;
-                this.password1AlertFlag = true;
-                return false;
-            } else {
-                this.password1TipFlag = false;
-                this.password1AlertFlag = false;
-                return true;
-            }
-        },
-        password1Tip: function () {
-            this.password1TipFlag = true;
-            this.password1AlertFlag = false;
-        },
-        password2Check: function () {
-            if (this.password1 !== this.password2) {
-                this.password2AlertFlag = true;
-                return false;
-            } else {
-                this.password2AlertFlag = false;
-                return true;
-            }
-        },
-        register: function () {
-            let vm = this;
-            this.mailCheck();
-            this.mailCodeCheck();
-            this.password1Check();
-            this.password2Check();
-            if (this.mailCheck() && this.mailCodeCheck() && this.password1Check() && this.password2Check() && this.mailCode == this.mailCodeReal) {
-
-                var params = {
-                    username: this.mail,
-                    password: this.password1,
-                    usertype: "ENG",
-                    deptid: "ZSYH"
-                }
-                vm.$axios.post('/signin/insertByVO', params).then(function (res) {
-                    //注册成功！ 
-                    alert("Registration is successful!");
-                    this.username = this.mail;
-                    this.password = this.password1;
-                    this.changeForm('loginFlag');
-                }.bind(this), function (error) {
-                    console.log(error)
-                })
-            }
-        },
+      }
+    },
+    mailCodeCheck: function () {
+      if (!(/^[0-9a-zA-Z]{6}$/.test(this.mailCode))) {
+        this.mailCodeAlertFlag = true;
+        return false;
+      } else {
+        this.mailCodeAlertFlag = false;
+        return true;
+      }
+    },
+    password1Check: function () {
+      if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(this.password1))) {
+        this.password1TipFlag = false;
+        this.password1AlertFlag = true;
+        return false;
+      } else {
+        this.password1TipFlag = false;
+        this.password1AlertFlag = false;
+        return true;
+      }
+    },
+    password1Tip: function () {
+      this.password1TipFlag = true;
+      this.password1AlertFlag = false;
+    },
+    password2Check: function () {
+      if (this.password1 !== this.password2) {
+        this.password2AlertFlag = true;
+        return false;
+      } else {
+        this.password2AlertFlag = false;
+        return true;
+      }
+    },
+    register: function () {
+      this.$router.replace({name:"exhibition/login/en/Login", query: {username: this.mail, password: this,password1, type: 'register'}});
+      return;
+      let vm = this;
+      this.mailCheck();
+      this.mailCodeCheck();
+      this.password1Check();
+      this.password2Check();
+      
+      if (this.mailCheck() && this.mailCodeCheck() && this.password1Check() && this.password2Check() && this.mailCode == this.mailCodeReal) {
+        var params = {
+          username: this.mail,
+          password: this.password1,
+          usertype: "ENG",
+          deptid: "ZSYH"
+        }
+        vm.$axios.post('/signin/insertByVO', params).then(function (res) {
+          //注册成功！ 
+          alert("Registration is successful!");
+          this.username = this.mail;
+          this.password = this.password1;
+          this.$router.push({name:"exhibition/login/en/Login", query: {username: this.mail, password: this,password1, type: 'register'}});
+          // this.changeForm('loginFlag');
+        }.bind(this), function (error) {
+          console.log(error)
+        })
+      }
+    }
   }
 };
 </script>
