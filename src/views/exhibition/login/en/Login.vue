@@ -12,7 +12,7 @@
           <el-form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
               <el-input placeholder="Username" v-model="username" prefix-icon="iconfont icon-username" @blur="mailCheck"></el-input>
-              <p class="alert" v-show="usernameAlertFlag">*Please fill in the correct E-mail number.</p>
+              <p class="alert" v-show="usernameAlertFlag">*Please fill in the correct Email.</p>
             </div>
             <div class="filed">
               <el-input placeholder="Password" v-model="password" prefix-icon="iconfont icon-password" type="password" @blur="passwordCheck"></el-input>
@@ -21,8 +21,7 @@
             <div class="filed">
               <el-input placeholder="Verification Code" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-validate" @blur="validateCheck"></el-input>
               <input type="button"  class="verification1 bk" id="code" @click="createCode"  v-model="checkCode"/>
-              <p class="alert2" v-show="validateAlertFlag">*The verification code can not be empty.</p>
-              <p class="alert2" v-show="validateAlertFlag2">*The verification code is incorrect.</p>
+              <p class="alert2" v-show="validateAlertFlag">*The verification code is incorrect.</p>
             </div>
             <div class="filed right">
               <span class="muchtab"><router-link :to="{path:'/exhibition/login/en/ForgetUsername'}"><a>Forget Username</a></router-link>  |  <router-link :to="{path:'/exhibition/login/en/ForgetPassword'}"><a>Forget Password</a></router-link></span>
@@ -52,8 +51,7 @@ export default {
         // 校验标识符
         usernameAlertFlag: false,
         passwordAlertFlag: false,
-        validateAlertFlag: false,
-        validateAlertFlag2: false
+        validateAlertFlag: false
     }
   },
   created: function() {
@@ -93,13 +91,12 @@ export default {
         this.validateAlertFlag = true;
         return false;
       } else if (this.picLyanzhengma.toUpperCase() != this.checkCode) {
-        this.validateAlertFlag2 = true;
+        this.validateAlertFlag = true;
         this.createCode();//刷新Verification Code   
         this.picLyanzhengma = '';
         return false;
       }else {
         this.validateAlertFlag = false;
-        this.validateAlertFlag2 = false;
         return true;
       }
     },
@@ -137,18 +134,15 @@ export default {
     //登陆
     login(){
       let vm = this;
-      if (this.usernameAlertFlag) {
-         //用户名不能为空！ 
-        this.$message.error("The username is incorrect.");
-      } else if (this.passwordAlertFlag) {
-        //密码不能为空！ 
-        this.$message.error("The password can not be empty.");
-      } else if(this.validateAlertFlag){
-        //验证码不能为空！ 
-        this.$message.error("The verification code can not be empty.");
-      } else if(this.validateAlertFlag2) {
-        //验证码错误！ 
-        this.$message.error("The verification code is incorrect.");
+      if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.username))) {
+        //用户名为邮箱格式
+        this.usernameAlertFlag = true;
+      } else if (this.password == '' || this.password == null) {
+        //密码不能为空
+        this.passwordAlertFlag = true;
+      } else if(this.picLyanzhengma.toUpperCase() != this.checkCode) {
+        //验证码错误
+        this.validateAlertFlag = true;
       } else{
         var params = {
           username: vm.username,
