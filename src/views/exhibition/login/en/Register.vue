@@ -14,11 +14,11 @@
           <div class="filed">
             <el-input v-model="mail" name="mail" id="mail" placeholder="Email" @blur="mailCheck" type="text" class="inputstyle" prefix-icon="iconfont icon-youxiang1"></el-input>
             <button type="button" id="mail-btn" class="verficode phonebtnEN" @click="getMailCode()" v-text=mailCodeText :disabled="mailBtnDisabled"></button>
-            <p class="alert" v-show="mailAlertFlag">*Please fill in the correct Email.</p>
+            <p class="alert" v-show="mailAlertFlag">*The email is incorrect.</p>
           </div>
           <div class="filed">
             <el-input v-model="mailCode" name="mailCode" id="mailCode" placeholder="Mail Verification Code" @blur="mailCodeCheck" prefix-icon="iconfont icon-validate"></el-input>
-            <p class="alert1" v-show="mailCodeAlertFlag">*The verification code can not be empty.</p>
+            <p class="alert1" v-show="mailCodeAlertFlag">*The verification code is incorrect.</p>
           </div>
           <div class="filed">
             <el-input placeholder="Please input a password" prefix-icon="iconfont icon-password" type="password" class="inputstyle" v-model="password1" name="password1"
@@ -127,7 +127,7 @@ export default {
       }
     },
     mailCodeCheck: function () {
-      if (!(/^[0-9a-zA-Z]{6}$/.test(this.mailCode))) {
+      if (this.mailCode != this.mailCodeReal || this.mailCode == '') {
         this.mailCodeAlertFlag = true;
         return false;
       } else {
@@ -157,7 +157,7 @@ export default {
       let vm = this;
       if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.mail))) {
         vm.mailAlertFlag = true;
-      } else if (this.mailCode != this.mailCodeReal) {
+      } else if (this.mailCode != this.mailCodeReal || this.mailCode == '') {
         vm.mailCodeAlertFlag = true;
       } else if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(vm.password1))) {
         vm.password1AlertFlag = true;
@@ -173,9 +173,7 @@ export default {
         vm.$axios.post('/signin/insertByVO', params).then(function (res) {
           //注册成功！ 
           alert("Registration is successful.");
-          vm.username = vm.mail;
-          vm.password = vm.password1;
-          vm.$router.push({name:"exhibition/login/en/Login", query: {username: this.mail, password: this.password1, type: 'register'}});
+          vm.$router.push({name:"exhibition/login/en/Login", query: {username: vm.mail, password: vm.password1, type: 'register'}});
         }.bind(this), function (error) {
           console.log(error)
         })
