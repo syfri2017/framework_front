@@ -8,9 +8,7 @@
           <i class="iconfont icou"></i>
           <span class="formTitleStyle">用户名找回</span>
           <span class="signstyle">
-            <router-link :to="{path:'/exhibition/login/ch/login'}">
-              <a @click="back()">返回登录</a>
-            </router-link>
+            <a @click="back()">返回登录</a>
           </span>
         </div>
         <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform" method="post">
@@ -55,15 +53,23 @@ export default {
   methods: {
     //返回登录
     back() {
-      this.$alert("未保存的数据将丢失，确定返回吗？", "提示", {
-        confirmButtonText: "确定",
-        callback: action => {
+      if(this.FUmail!='' || this.FUmailCode!= ''){
+        this.$confirm("未保存的数据将丢失，确定返回吗？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({path:"/exhibition/login/ch/login"});
+        }).catch(() => {
           this.$message({
-            type: "info",
-            message: "已返回"
-          });
-        }
-      });
+            type: 'info',
+            message: '已取消'
+          });   
+        });
+      }else{
+        this.$router.push({path:"/exhibition/login/ch/login"});
+      }
+      
     },
     //邮箱格式校验
     FUmailCheck() {
