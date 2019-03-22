@@ -56,11 +56,9 @@ export default {
   created(){
     this.createCode();
     var type = this.$route.query.type;
-    if (type == 'register') {
+    if (type == 'register'||type == 'forgetUsername' || type == 'forgetPassword') {
       this.username = this.$route.query.username;
       this.password = this.$route.query.password;
-    }else if (type == 'forgetUsername' || type == 'forgetPassword') {
-      this.username = this.$route.query.username;
     } 
   },
   methods:{

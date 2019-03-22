@@ -1,144 +1,155 @@
 <template>
-    <!-- 用户登录 -->
-    <el-row class="logincenter">
-      <el-col :span="8" >&nbsp;</el-col>
-      <el-col :span="8" style="text-align:-webkit-center">
-        <div class="login-form" >
-          <div class="filed left">
-            <i class="iconfont icou"></i>
-            <span class="formTitleStyle">密码修改</span>
-            <span class="signstyle"><router-link :to="{path:'/exhibition/login/ch/login'}"><a @click="open()">返回登录</a></router-link></span>
-          </div>
-          <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
-            <div class="filed">
-            <el-input placeholder="邮箱" v-model="FPBmail" name="FPBmail" id="FPBmail" prefix-icon="iconfont icon-youxiang"></el-input>
-            <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFPBMailCode()" v-text=FPBmailCodeText :disabled="FPBmailBtnDisabled"></button>
-            </div>
-            <div class="filed">
-            <el-input placeholder="邮件验证码"  v-model="FPBmailCode" name="FPBmailCode" id="FPBmailCode" prefix-icon="iconfont icon-youxiang1"></el-input>
-            </div>
-            <div class="filed lgin">
-            <el-button type="danger" @click="FPBIdentify()" round>确定</el-button>
-            </div>
-          </form>
+  <!-- 用户登录 -->
+  <el-row class="logincenter">
+    <el-col :span="8">&nbsp;</el-col>
+    <el-col :span="8" style="text-align:-webkit-center">
+      <div class="login-form">
+        <div class="filed left">
+          <i class="iconfont icou"></i>
+          <span class="formTitleStyle">密码修改</span>
+          <span class="signstyle">
+            <a @click="open()">返回登录</a>
+          </span>
         </div>
-      </el-col>
-      <el-col :span="8">&nbsp;</el-col>
-    </el-row>
+        <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform" method="post">
+          <div class="filed">
+            <el-input placeholder="邮箱" v-model="email" name="email" id="email" prefix-icon="iconfont icon-youxiang" @blur="FPBmailCheck"></el-input>
+            <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFPBMailCode()" v-text=mailCodeText :disabled="mailBtnDisabled"></button>
+            <p class="alert" v-show="mailAlertFlag">*邮箱格式不正确</p>
+          </div>
+          <div class="filed">
+            <el-input placeholder="邮件验证码" v-model="mailCode" name="mailCode" id="mailCode" prefix-icon="iconfont icon-youxiang1" @blur="mailCodeCheck"></el-input>
+            <p class="alert1" v-show="mailCodeAlertFlag">*验证码输入错误</p>
+          </div>
+          <div class="filed lgin">
+            <el-button type="danger" @click="FPBIdentify()" round>确定</el-button>
+          </div>
+        </form>
+      </div>
+    </el-col>
+    <el-col :span="8">&nbsp;</el-col>
+  </el-row>
 </template>
 
 <script>
 export default {
-  name: 'Login',
-  data () {
+  name: "Login",
+  data() {
     return {
-       //忘记密码
-        FPBmail: "",
-        FPBmailCode: "",
-        FPBmailCodeReal: "",
-        FPBmailCodeText: "获取验证码",
-        FPBtimer: null,
-        FPCmobile: "",
-        FPCmessageCode: "",
-        FPCmessageCodeReal: "",
-        FPCmessageCodeText: "获取验证码",
-        FPCtimer: null,
-        FPDusername: "",
-        FPDpassword1: "",
-        FPDpassword2: "",
-        FPDregisterData: "",
-        FPBmailBtnDisabled: false,
-        FPCmobileBtnDisabled: false,
-        //提交校验标识
-        FPDpassword1TipFlag: false,
-        FPDpassword1AlertFlag: false,
-        FPDpassword2AlertFlag: false,
-    }
+      //忘记密码
+      email: "",
+      mailCode: "",
+      mailCodeReal: "",
+      mailCodeText: "获取验证码",
+      timer: null,
+      time: 60,
+      mailBtnDisabled: false,
+      //验证邮箱标识位
+      mailAlertFlag: false,
+      mailCodeAlertFlag: false,
+    };
   },
-  methods:{
-     //消息提示框
-     open() {
-        this.$alert('未保存的数据将丢失，确定返回吗？', '提示', {
-          confirmButtonText: '确定',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `未保存的数据将丢失！`
-            });
-          }
+  methods: {
+    //返回登录
+    open() {
+      if(this.email != '' || this.mailCode != ''){
+        this.$confirm("未保存的数据将丢失，确定返回吗？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({path:"/exhibition/login/ch/login"});
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });   
         });
-      },
-   //B
-        FPBmailCheck() {
-            if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.FPBmail))) {
-                alert("邮箱格式不正确");
-                return false;
-            } else {
-                return true;
-            }
-        },
-        getFPBMailCode() {
-            let vm = this;
-            this.FPBmailCode = "";
-            if (this.FPBmailCheck()) {
-                this.FPBmailCodeText = "发送中...";
-                this.FPBmailBtnDisabled = true;
-                vm.$axios.get('/signin/getMailNum/' + this.FPBmail + "/static").then(function (res) {
-                    if (res.data.result == 0) {
-                        alert("该邮箱未注册！");
-                        this.FPBmailCodeText = "获取验证码";
-                        this.FPBmailBtnDisabled = false;
-                    } else if (res.data.result == 1) {
-                        vm.$axios.get('/signin/sendMail?mail=' + this.FPBmail).then(function (res) {
-                            this.FPBmailCodeReal = res.data.msg;
-                            var count = this.time;
-                            this.FPBtimer = setInterval(() => {
-                                if (count == 0) {
-                                    clearInterval(this.FPBtimer);
-                                    this.FPBtimer = null;
-                                    this.FPBmailCodeText = "获取验证码";
-                                    this.FPBmailBtnDisabled = false;
-                                } else {
-                                    this.FPBmailCodeText = count + "秒后获取"
-                                    count--;
-                                    this.FPBmailBtnDisabled = true;
-                                }
-                            }, 1000)
-                        }.bind(this), function (error) {
-                            console.log(error);
-                        });
-                    }
-                }.bind(this), function (error) {
-                    console.log(error);
-                });
-            }
-        },
-        FPBIdentify() {
-            let vm = this;
-            if (this.FPBmail == null || this.FPBmail == '') {
-                alert("邮箱不能为空！")
-            } else if (this.FPBmailCode == null || this.FPBmailCode == '') {
-                alert("验证码不能为空！")
-            } else {
-                if (this.FPBmailCode == this.FPBmailCodeReal) {
-                    vm.$axios.get('/signin/findByMail/' + this.FPBmail + "/static").then(function (res) {
-                        this.changeForm('FPDFlag');
-                        this.FPDregisterData = res.data.result;
-                        this.FPDusername = this.FPDregisterData[0].username;
-                        // alert("请输入新密码！");
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    });
+      }else{
+        this.$router.push({path:"/exhibition/login/ch/login"});
+      }
+     
+    },
+    //邮箱格式验证
+    FPBmailCheck() {
+      if (!/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.email)) {
+        this.mailAlertFlag = true;
+        return false;
+      } else {
+        this.mailAlertFlag = false;
+        return true;
+      }
+    },
+    //邮箱验证码验证
+    mailCodeCheck() {
+      debugger;
+      if (this.mailCode != this.mailCodeReal || this.mailCode == '') {
+        this.mailCodeAlertFlag = true;
+        return false;
+      } else {
+        this.mailCodeAlertFlag = false;
+        return true;
+      }
+    },
+    //获取验证码
+    getFPBMailCode() {
+      let vm = this;
+      vm.mailCode = "";
+      if (vm.FPBmailCheck()) {
+        vm.mailCodeText = "发送中...";
+        vm.mailBtnDisabled = true;
+        vm.$axios.get("/signin/getMailNum/" + vm.email + "/static").then(function(res) {
+          if (res.data.result == 0) {
+            vm.$message({
+                type: "error",
+                message: "该邮箱未注册！"
+              });
+            vm.mailCodeText = "获取验证码";
+            vm.mailBtnDisabled = false;
+          } else if (res.data.result == 1) {
+            vm.$axios.get("/signin/sendMail?mail=" + vm.email).then(function(res) {
+              vm.mailCodeReal = res.data.msg;
+              var count = vm.time;
+              vm.timer = setInterval(() => {
+                if (count == 0) {
+                  clearInterval(vm.timer);
+                  vm.timer = null;
+                  vm.mailCodeText = "获取验证码";
+                  vm.mailBtnDisabled = false;
                 } else {
-                    alert("验证码输入错误，请核对后再试");
+                  vm.mailCodeText = count + "秒后获取";
+                  count--;
+                  vm.mailBtnDisabled = true;
                 }
-            }
-        },
-
+              }, 1000);
+            }.bind(vm),function(error) {
+              console.log(error);
+            });
+          }}.bind(vm),function(error) {
+            console.log(error);
+          }
+        );
+      }
+    },
+    //找回密码方法
+    FPBIdentify() {
+      let vm = this;
+      if (!/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(vm.email)) {
+        vm.mailAlertFlag = true;
+      } else if (vm.mailCode != vm.mailCodeReal || vm.mailCode == '') {
+        vm.mailCodeAlertFlag = true;
+      } else {
+        vm.$axios.get("/signin/findByMail/" + vm.email + "/static").then(function(res) {
+          vm.$router.push({path:"/exhibition/login/ch/changePassword", query: {username: res.data.result[0].username, userid: res.data.result[0].userid}});
+        }.bind(vm),function(error) {
+          console.log(error);
+        });
+      }
+    }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '@/common/scss/login.scss';
+@import "@/common/scss/login.scss";
 </style>
