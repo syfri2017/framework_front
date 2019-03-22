@@ -55,10 +55,13 @@ export default {
   },
   created(){
     this.createCode();
-    if (this.$route.query.type == 'register') {
+    var type = this.$route.query.type;
+    if (type == 'register') {
       this.username = this.$route.query.username;
       this.password = this.$route.query.password;
-    }
+    }else if (type == 'forgetUsername' || type == 'forgetPassword') {
+      this.username = this.$route.query.username;
+    } 
   },
   methods:{
     // 验证用户名是否为手机号
