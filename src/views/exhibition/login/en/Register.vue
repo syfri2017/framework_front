@@ -12,12 +12,12 @@
         </div>
         <form autocomplete="off" name="reg-form">
           <div class="filed">
-            <el-input v-model="mail" name="mail" id="mail" placeholder="Email" @blur="mailCheck" type="text" class="inputstyle" prefix-icon="iconfont icon-youxiang"></el-input>
+            <el-input v-model="mail" name="mail" id="mail" placeholder="Email" @blur="mailCheck" type="text" class="inputstyle" prefix-icon="iconfont icon-youxiang1"></el-input>
             <button type="button" id="mail-btn" class="verficode phonebtnEN" @click="getMailCode()" v-text=mailCodeText :disabled="mailBtnDisabled"></button>
             <p class="alert" v-show="mailAlertFlag">*Please fill in the correct Email.</p>
           </div>
           <div class="filed">
-            <el-input v-model="mailCode" name="mailCode" id="mailCode" placeholder="Mail Verification Code" @blur="mailCodeCheck" prefix-icon="iconfont icon-youxiang1"></el-input>
+            <el-input v-model="mailCode" name="mailCode" id="mailCode" placeholder="Mail Verification Code" @blur="mailCodeCheck" prefix-icon="iconfont icon-validate"></el-input>
             <p class="alert1" v-show="mailCodeAlertFlag">*The verification code can not be empty.</p>
           </div>
           <div class="filed">
