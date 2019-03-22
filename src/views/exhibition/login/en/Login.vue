@@ -12,7 +12,7 @@
           <el-form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
               <el-input placeholder="Username" v-model="username" prefix-icon="iconfont icon-username" @blur="mailCheck"></el-input>
-              <p class="alert" v-show="usernameAlertFlag">*Please fill in the correct Email.</p>
+              <p class="alert" v-show="usernameAlertFlag">*The email is incorrect.</p>
             </div>
             <div class="filed">
               <el-input placeholder="Password" v-model="password" prefix-icon="iconfont icon-password" type="password" @blur="passwordCheck"></el-input>
@@ -56,10 +56,13 @@ export default {
   },
   created: function() {
     this.createCode();
-    if (this.$route.query.type == 'register') {
+    var type = this.$route.query.type;
+    if (type == 'register') {
       this.username = this.$route.query.username;
       this.password = this.$route.query.password;
-    }
+    } else if (type == 'forgetUsername' || type == 'forgetPassword') {
+      this.username = this.$route.query.username;
+    } 
   },
   methods:{
     // 邮箱校验
