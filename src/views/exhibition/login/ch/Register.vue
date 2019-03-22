@@ -8,9 +8,7 @@
           <i class="iconfont icou"></i>
           <span class="formTitleStyle">用户注册</span>
           <span class="signstyle">已有账户?
-            <router-link :to="{path:'/exhibition/login/ch/login'}">
-              <a @click="open()">去登录</a>
-            </router-link>
+            <a @click="open()">去登录</a>
           </span>
         </div>
         <form autocomplete="off" name="reg-form">
@@ -71,15 +69,20 @@ export default {
     //消息提示框
     open() {
       if (this.mobile!='' || this.messageCode!='' || this.password1!='' || this.password2!='') {
-        this.$alert("未保存的数据将丢失，确定返回吗？", "提示", {
+        this.$confirm("未保存的数据将丢失，确定返回吗？", "提示", {
           confirmButtonText: "确定",
-          callback: action => {
-            this.$message({
-              type: "info",
-              message: `未保存的数据将丢失！`
-            });
-          }
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({path:"/exhibition/login/ch/login"});
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });   
         });
+      }else{
+        this.$router.push({path:"/exhibition/login/ch/login"});
       }
     },
     //验证手机号
