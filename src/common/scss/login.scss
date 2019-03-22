@@ -144,24 +144,28 @@ a {
   top:69px;
   margin-left:0px !important;
   color:#EA2530;
+  font-size: 0.8rem;
 }
 .alert1{
   position:absolute;
   top:125px;
   margin-left:0px !important;
   color:#EA2530;
+  font-size: 0.8rem;
 }
 .alert2{
   position:absolute;
   top:181px;
   margin-left:0px !important;
   color:#EA2530;
+  font-size: 0.8rem;
 }
 .alert3{
   position:absolute;
   top:239px;
   margin-left:0px !important;
   color:#EA2530;
+  font-size: 0.8rem;
 }
 /*获取验证码样式*/
 .phonebtn {
@@ -172,6 +176,7 @@ a {
   background: #ffffff;
   color: #fb6a74;
   cursor: pointer;
+  outline: none;
 }
 /*Get Verification Code样式*/
 .phonebtnEN {
@@ -183,6 +188,7 @@ a {
   color: #fb6a74;
   cursor: pointer;
   width: 120px;
+  outline: none;
 }
 .bk{
   color:yellow !important;
