@@ -111,7 +111,7 @@ export default [
       {
         path: '/exhibition/login/en/Mailbox',
         name: 'exhibition/login/en/Mailbox',
-        meta: {auth: true, title: "忘记免密", operation: true},
+        meta: {auth: true, title: "忘记密码", operation: true},
         component: resolve => require(['@/views/exhibition/login/en/Mailbox'], resolve)
       },
     ],
