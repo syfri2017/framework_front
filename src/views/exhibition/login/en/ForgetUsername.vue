@@ -12,8 +12,8 @@
           <form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
               <el-input placeholder="Association Email" v-model="FUmail" name="FUmail" id="FUmail" prefix-icon="iconfont icon-youxiang1" @blur="FUmailCheck"></el-input>
-              <button type="button" id="FUmail-btn" class="verficode phonebtnEN" @click="getFUMailCode()" v-text=FUmailCodeText></button>
-              <p class="alert" v-show="mailAlertFlag">*Please fill in the correct Email.</p>
+              <button type="button" id="FUmail-btn" class="verficode phonebtnEN" @click="getFUMailCode()" v-text=FUmailCodeText :disabled="FUmailBtnDisabled"></button>
+              <p class="alert" v-show="mailAlertFlag">*The email is incorrect.</p>
             </div>
             <div class="filed">
               <el-input placeholder="Mail Verification Code"  v-model="FUmailCode" name="FUmailCode" id="FUmailCode" prefix-icon="iconfont icon-validate" @blur="mailCodeCheck"></el-input>
@@ -43,7 +43,9 @@ export default {
       time: 60,
       //验证邮箱标识位
       mailAlertFlag: false,
-      mailCodeAlertFlag: false
+      mailCodeAlertFlag: false,
+      //获取邮箱验证码是否可点击
+      FUmailBtnDisabled: false
     }
   },
   methods:{

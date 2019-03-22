@@ -107,7 +107,13 @@ export default [
         name: 'exhibition/login/en/Login',
         meta: {auth: true, title: "用户登录", operation: true},
         component: resolve => require(['@/views/exhibition/login/en/Login'], resolve)
-      }
+      },
+      {
+        path: '/exhibition/login/en/Mailbox',
+        name: 'exhibition/login/en/Mailbox',
+        meta: {auth: true, title: "忘记免密", operation: true},
+        component: resolve => require(['@/views/exhibition/login/en/Mailbox'], resolve)
+      },
     ],
     redirect:'/exhibition/login/en/Login'
   },
