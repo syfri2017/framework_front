@@ -135,7 +135,7 @@ export default {
         this.mailCodeAlertFlag = true;
       } else {
         vm.$axios.get('/signin/findByUsername/' + this.FPBmail + "/static").then(function (res) {
-          vm.$router.push({name:"exhibition/login/en/Mailbox", query: {username: vm.FPBmail, userid: res.data.result[0].userid}});
+          vm.$router.push({name:"exhibition/login/en/changePassword", query: {username: vm.FPBmail, userid: res.data.result[0].userid}});
         }.bind(this), function (error) {
             console.log(error);
         }); 

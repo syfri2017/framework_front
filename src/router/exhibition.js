@@ -109,10 +109,10 @@ export default [
         component: resolve => require(['@/views/exhibition/login/en/Login'], resolve)
       },
       {
-        path: '/exhibition/login/en/Mailbox',
-        name: 'exhibition/login/en/Mailbox',
+        path: '/exhibition/login/en/changePassword',
+        name: 'exhibition/login/en/changePassword',
         meta: {auth: true, title: "忘记密码", operation: true},
-        component: resolve => require(['@/views/exhibition/login/en/Mailbox'], resolve)
+        component: resolve => require(['@/views/exhibition/login/en/ChangePassword'], resolve)
       },
     ],
     redirect:'/exhibition/login/en/Login'
