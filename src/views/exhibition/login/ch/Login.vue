@@ -53,6 +53,13 @@ export default {
         validateAlertFlag: false
     }
   },
+  created(){
+    this.createCode();
+    if (this.$route.query.type == 'register') {
+      this.username = this.$route.query.username;
+      this.password = this.$route.query.password;
+    }
+  },
   methods:{
     // 验证用户名是否为手机号
     mobileCheck() {
@@ -172,10 +179,8 @@ export default {
         })
       }
     }
-  },
-  created(){
-    this.createCode();
   }
+  
 }
 </script>
 
