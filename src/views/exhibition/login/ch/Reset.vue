@@ -6,7 +6,7 @@
         <div class="login-form" >
           <div class="filed left">
             <i class="iconfont icou"></i>
-            <span >账户重置</span>
+            <span class="formTitleStyle">账户重置</span>
             <span class="signstyle"><router-link :to="{path:'/exhibition/login/ch/login'}"><a @click="open">返回登录</a></router-link></span>
           </div>
           <form  ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">

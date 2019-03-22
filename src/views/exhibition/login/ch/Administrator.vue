@@ -6,7 +6,7 @@
         <div class="login-form" >
           <div class="filed left">
             <router-link :to="{path:'/exhibition/login/ch/Login'}"><i class="iconfont icon-yonghu icou"></i></router-link>
-            <span >管理员登录</span>
+            <span class="formTitleStyle">管理员登录</span>
           </div>
           <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed ">

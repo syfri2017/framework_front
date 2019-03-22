@@ -6,7 +6,7 @@
       <div class="login-form">
         <div class="filed left">
           <i class="iconfont icou"></i>
-          <span>用户注册</span>
+          <span class="formTitleStyle">用户注册</span>
           <span class="signstyle">没有账户?
             <router-link :to="{path:'/exhibition/login/ch/login'}">
               <a @click="open()">去登录</a>
