@@ -70,15 +70,17 @@ export default {
     //校验
     //消息提示框
     open() {
-      this.$alert("未保存的数据将丢失，确定返回吗？", "提示", {
-        confirmButtonText: "确定",
-        callback: action => {
-          this.$message({
-            type: "info",
-            message: `未保存的数据将丢失！`
-          });
-        }
-      });
+      if (this.mobile!='' || this.messageCode!='' || this.password1!='' || this.password2!='') {
+        this.$alert("未保存的数据将丢失，确定返回吗？", "提示", {
+          confirmButtonText: "确定",
+          callback: action => {
+            this.$message({
+              type: "info",
+              message: `未保存的数据将丢失！`
+            });
+          }
+        });
+      }
     },
     //验证手机号
     mobileCheck() {
