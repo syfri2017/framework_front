@@ -32,10 +32,7 @@ export default {
     return {
         GLYusername: "",
         GLYpassword: "",
-        GLYsrc: "/imageCode",
-        GLYvalidateCode: "",
         GLYmessages: "",
-        GLYloginType: "MyShiro"
     }
   },
   methods:{
@@ -52,7 +49,6 @@ export default {
         var params = {
           username: vm.GLYusername,
           password: vm.GLYpassword,
-          loginType: vm.GLYloginType,
           deptid: "GLYH"
         }
         vm.$axios.post('/login', params).then(function (res) {
