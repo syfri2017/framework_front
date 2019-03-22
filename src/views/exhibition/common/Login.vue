@@ -46,7 +46,7 @@
       <el-col :span="4">&nbsp;</el-col>
       <el-col :span="16" class="footer">
         <p  style="margin-bottom:-20px;">建议使用谷歌、搜狗、360和火狐浏览器</p>
-        <p>如在登录、注册、信息录入时遇到问题，请联系技术支持024-31530337，分机号608；13998821420</p>
+        <p>业务咨询：010-87792278，技术支持：024-31530337，分机号606</p>
       </el-col>
       <el-col :span="4">&nbsp;</el-col>
     </el-row>
@@ -115,11 +115,11 @@ export default {
 } 
 
 .market_out p span{
-  font-size:24px; 
+  font-size: 24px; 
 } 
 
 .market_out p a{
-  font-size:24px; 
+  font-size: 24px; 
 } 
 .lana {
   color: $blackcolor;
@@ -127,6 +127,7 @@ export default {
 .lanb {
   color: $whitecolor;
 }
+
 .footer {
   p{
     margin: 0px;
@@ -143,6 +144,6 @@ export default {
 }
 
 .footerstyle p{
-  font-size: 24px;
+  font-size: 20px;
 }
 </style>
