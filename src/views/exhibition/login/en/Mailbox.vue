@@ -1,0 +1,127 @@
+<template>
+    <el-row class="logincenter">
+      <el-col :span="8" >&nbsp;</el-col>
+      <el-col :span="8" style="text-align:-webkit-center">
+        <div class="login-form" >
+          <div class="filed left">
+            <i class="iconfont icou"></i>
+            <span class="formTitleStyle">Password Modification</span>
+            <span class="signstyle"><router-link :to="{path:'/exhibition/login/en/login'}"><a @click="open()">To Login</a></router-link></span>
+          </div>
+          <form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
+            <div class="filed">
+              <el-input placeholder="Please input an email" v-model="FPDusername" name="FPDusername" id="FPDusername" prefix-icon="iconfont icon-youxiang1" :disabled="FPDusernameFlag"></el-input>
+            </div>
+            <div class="filed">
+              <el-input placeholder="Please input a password" prefix-icon="iconfont icon-password" type="password" class="inputstyle" v-model="FPDpassword1" name="FPDpassword1"
+                id="FPDpassword1" @blur="FPDpassword1Check"></el-input>
+              <p class="alert1" v-show="FPDpassword1AlertFlag">*Password must be 6-16-bit alphanumeric combination.</p>
+            </div>
+            <div class="filed">
+              <el-input type="password" class="inputstyle" v-model="FPDpassword2" name="FPDpassword2" id="FPDpassword2"
+                placeholder="Please input the password again" @blur="FPDpassword2Check" prefix-icon="iconfont icon-querenmima-copy"></el-input>
+              <p class="alert2" v-show="FPDpassword2AlertFlag">*The two entries do not match.</p>
+            </div>
+            <div class="filed lgin">
+            <el-button type="danger" @click="updatePassword()" round>Confirm</el-button>
+            </div>
+          </form>
+        </div>
+      </el-col>
+      <el-col :span="8">&nbsp;</el-col>
+    </el-row>
+</template>
+
+<script>
+export default {
+  name: 'Login',
+  data () {
+    return {
+      FPDuserid: "",
+      FPDusername: "",
+      FPDpassword1: "",
+      FPDpassword2: "",
+      FPDregisterData: "",
+      //密码和确认密码标识符
+      FPDpassword1AlertFlag: false,
+      FPDpassword2AlertFlag: false,
+      //用户名文本框Disabled
+      FPDusernameFlag: true
+    }
+  },
+  created: function() {
+    this.FPDuserid = this.$route.query.userid;
+    this.FPDusername = this.$route.query.username;
+  },
+  methods:{
+    //消息提示框
+    open() {
+      if (this.FPDpassword1!='' || this.FPDpassword2!='') {
+        this.$alert('Unsaved data will be lost. Are you sure to return it?', 'Tips', {
+          confirmButtonText: 'Sure',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `Unsaved data will be lost!`
+            });
+          }
+        });
+      }
+    },
+
+    //密码规则校验
+    FPDpassword1Check() {
+      if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(this.FPDpassword1))) {
+        this.FPDpassword1AlertFlag = true;
+        return false;
+      } else {
+        this.FPDpassword1AlertFlag = false;
+        return true;
+      }
+    },
+
+    //确认密码校验
+    FPDpassword2Check() {
+      if (this.FPDpassword1 !== this.FPDpassword2) {
+        this.FPDpassword2AlertFlag = true;
+        return false;
+      } else {
+        this.FPDpassword2AlertFlag = false;
+        return true;
+      }
+    },
+
+    //修改密码
+    updatePassword() {
+      let vm = this;
+      if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(this.FPDpassword1))) {
+        vm.FPDpassword1AlertFlag = true;
+      } else if (this.FPDpassword1 !== this.FPDpassword2) {
+        vm.FPDpassword2AlertFlag = true 
+      } else {
+        var params = {
+          userid: this.FPDuserid,
+          username: this.FPDusername,
+          password: this.FPDpassword1,
+        }
+        vm.$axios.post('/signin/updateByVO', params).then(function (res) {
+          console.log(res);
+          if (res.data.result == 1) {
+            alert("Password changed successfully!");
+            vm.$router.push({name:"exhibition/login/en/Login", query: {username: this.FPDusername, type: 'forgetPassword'}});
+          }
+        }.bind(this), function (error) {
+            console.log(error)
+        })
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/scss/login.scss';
+.lgin {
+  margin-top: 7.25rem;
+}
+</style>
