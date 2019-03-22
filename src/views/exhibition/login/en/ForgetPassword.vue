@@ -218,13 +218,5 @@ export default {
 @import '@/common/scss/login.scss';
 .lgin {
   margin-top: 10.8rem;
-  .el-button {
-    width: $widthlgbtn;
-    background-color: $bgcolor;
-  }
-  .el-button:hover {
-    width: $widthlgbtn;
-    background-color: $bgcolor2;
-  }
 }
 </style>

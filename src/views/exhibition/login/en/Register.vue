@@ -14,7 +14,7 @@
           <div class="filed">
             <el-input v-model="mail" name="mail" id="mail" placeholder="Email" @blur="mailCheck" type="text" class="inputstyle" prefix-icon="iconfont icon-youxiang"></el-input>
             <button type="button" id="mail-btn" class="verficode phonebtnEN" @click="getMailCode()" v-text=mailCodeText :disabled="mailBtnDisabled"></button>
-            <p class="alert" v-show="mailAlertFlag">*Please fill in the correct E-mail number.</p>
+            <p class="alert" v-show="mailAlertFlag">*Please fill in the correct Email.</p>
           </div>
           <div class="filed">
             <el-input v-model="mailCode" name="mailCode" id="mailCode" placeholder="Mail Verification Code" @blur="mailCodeCheck" prefix-icon="iconfont icon-youxiang1"></el-input>
@@ -22,14 +22,13 @@
           </div>
           <div class="filed">
             <el-input placeholder="Please input a password" prefix-icon="iconfont icon-password" type="password" class="inputstyle" v-model="password1" name="password1"
-              id="password1" @focus="password1Tip" @blur="password1Check"></el-input>
-            <p class="tip" v-show="password1TipFlag">*Password must be 6-16-bit alphanumeric combination.</p>
-            <p class="alert2" v-show="password1AlertFlag">*Password is not in order. Please fill it out again.</p>
+              id="password1" @blur="password1Check"></el-input>
+            <p class="alert2" v-show="password1AlertFlag">*Password must be 6-16-bit alphanumeric combination.</p>
           </div>
           <div class="filed">
             <el-input type="password" class="inputstyle" v-model="password2" name="password2" id="password2"
               placeholder="Please input the password again" @blur="password2Check" prefix-icon="iconfont icon-querenmima-copy"></el-input>
-            <p class="alert3" v-show="password2AlertFlag">*The two entries do not match. Please fill in again.</p>
+            <p class="alert3" v-show="password2AlertFlag">*The two entries do not match.</p>
           </div>
           <div class="filed lgin">
             <el-button type="danger" @click="register()" round>Register</el-button>
@@ -67,15 +66,17 @@ export default {
   methods: {
     //消息提示框
     open() {
-      this.$alert('Unsaved data will be lost. Are you sure to return it?', 'Tips', {
-        confirmButtonText: 'Sure',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `Unsaved data will be lost!`
-          });
-        }
-      });
+      if (this.mail!='' || this.mailCode!='' || this.password1!='' || this.password2!='') {
+        this.$alert('Unsaved data will be lost. Are you sure to return it?', 'Tips', {
+          confirmButtonText: 'Sure',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `Unsaved data will be lost!`
+            });
+          }
+        });
+      }
     },
     //注册
     mailCheck() {
@@ -136,18 +137,12 @@ export default {
     },
     password1Check: function () {
       if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(this.password1))) {
-        this.password1TipFlag = false;
         this.password1AlertFlag = true;
         return false;
       } else {
-        this.password1TipFlag = false;
         this.password1AlertFlag = false;
         return true;
       }
-    },
-    password1Tip: function () {
-      this.password1TipFlag = true;
-      this.password1AlertFlag = false;
     },
     password2Check: function () {
       if (this.password1 !== this.password2) {
@@ -159,28 +154,28 @@ export default {
       }
     },
     register: function () {
-      this.$router.replace({name:"exhibition/login/en/Login", query: {username: this.mail, password: this,password1, type: 'register'}});
-      return;
       let vm = this;
-      this.mailCheck();
-      this.mailCodeCheck();
-      this.password1Check();
-      this.password2Check();
-      
-      if (this.mailCheck() && this.mailCodeCheck() && this.password1Check() && this.password2Check() && this.mailCode == this.mailCodeReal) {
+      if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(this.mail))) {
+        vm.mailAlertFlag = true;
+      } else if (this.mailCode != this.mailCodeReal) {
+        vm.mailCodeAlertFlag = true;
+      } else if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(vm.password1))) {
+        vm.password1AlertFlag = true;
+      } else if (this.password1 != this.password2) {
+        vm.password2AlertFlag = true;
+      } else {
         var params = {
-          username: this.mail,
-          password: this.password1,
+          username: vm.mail,
+          password: vm.password1,
           usertype: "ENG",
           deptid: "ZSYH"
         }
         vm.$axios.post('/signin/insertByVO', params).then(function (res) {
           //注册成功！ 
           alert("Registration is successful.");
-          this.username = this.mail;
-          this.password = this.password1;
-          this.$router.push({name:"exhibition/login/en/Login", query: {username: this.mail, password: this,password1, type: 'register'}});
-          // this.changeForm('loginFlag');
+          vm.username = vm.mail;
+          vm.password = vm.password1;
+          vm.$router.push({name:"exhibition/login/en/Login", query: {username: this.mail, password: this.password1, type: 'register'}});
         }.bind(this), function (error) {
           console.log(error)
         })
@@ -194,13 +189,5 @@ export default {
 @import '@/common/scss/login.scss';
 .lgin {
   margin-top: 4rem;
-  .el-button {
-    width: $widthlgbtn;
-    background-color: $bgcolor;
-  }
-  .el-button:hover {
-    width: $widthlgbtn;
-    background-color: $bgcolor2;
-  }
 }
 </style>

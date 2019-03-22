@@ -19,7 +19,7 @@
               <p class="alert1" v-show="passwordAlertFlag">*The password can not be empty.</p>
             </div>
             <div class="filed">
-              <el-input placeholder="Verification Code" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-validate" @blur="validateCheck"></el-input>
+              <el-input placeholder="Verification Code" v-model="picLyanzhengma" class="yanzhengma_input" prefix-icon="iconfont icon-validate" @blur="validateCheck"></el-input>
               <input type="button"  class="verification1 bk" id="code" @click="createCode"  v-model="checkCode"/>
               <p class="alert2" v-show="validateAlertFlag">*The verification code is incorrect.</p>
             </div>
@@ -181,18 +181,5 @@ export default {
 @import '@/common/scss/login.scss';
 .lgin {
   margin-top: 5rem;
-  .el-button {
-    width: $widthlgbtn;
-    background-color: $bgcolor;
-  }
-  .el-button:hover {
-    width: $widthlgbtn;
-    background-color: $bgcolor2;
-  }
-}
-.bk{
-  color:yellow !important;
-  background:chocolate !important;
-  border:0px;
 }
 </style>
