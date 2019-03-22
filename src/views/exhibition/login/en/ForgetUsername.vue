@@ -83,7 +83,7 @@ export default {
     //邮箱验证码验证
     mailCodeCheck() {
       if (this.FUmailCode != this.FUmailCodeReal || this.FUmailCode == '') {
-        this.mailCodeAlertFlag = ture;
+        this.mailCodeAlertFlag = true;
         return false;
       } else {
         this.mailCodeAlertFlag = false;
