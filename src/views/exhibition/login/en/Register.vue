@@ -7,8 +7,7 @@
         <div class="filed left">
           <i class="iconfont icou"></i>
           <span class="formTitleStyle">User Register</span>
-          <span class="signstyle">Exist Account?<router-link :to="{path:'/exhibition/login/en/login'}"><a @click="open()">To Login</a></router-link>
-          </span>
+          <span class="signstyle">Exist Account?<a @click="open()">To Login</a></span>
         </div>
         <form autocomplete="off" name="reg-form">
           <div class="filed">
@@ -67,15 +66,20 @@ export default {
     //消息提示框
     open() {
       if (this.mail!='' || this.mailCode!='' || this.password1!='' || this.password2!='') {
-        this.$alert('Unsaved data will be lost. Are you sure to return it?', 'Tips', {
-          confirmButtonText: 'Sure',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `Unsaved data will be lost!`
-            });
-          }
+        this.$confirm("Unsaved data will be lost. Are you sure to return it?", "Tips", {
+          confirmButtonText: "Confirm",
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({path:"/exhibition/login/en/login"});
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Cancel success'
+          });   
         });
+      } else {
+        this.$router.push({path:"/exhibition/login/en/login"});
       }
     },
     //注册

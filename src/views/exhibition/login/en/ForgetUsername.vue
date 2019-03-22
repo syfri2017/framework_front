@@ -7,7 +7,7 @@
           <div class="filed left">
             <i class="iconfont icou"></i>
             <span class="formTitleStyle">Username Recovery</span>
-            <span class="signstyle"><router-link :to="{path:'/exhibition/login/en/login'}"><a @click="open()">Back to Login</a></router-link></span>
+            <span class="signstyle"><a @click="open()">Back to Login</a></span>
           </div>
           <form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
@@ -52,15 +52,20 @@ export default {
     //消息提示框
     open() {
       if (this.FUmail!='' || this.FUmailCode!='') {
-        this.$alert('Unsaved data will be lost. Are you sure to return it?', 'Tips', {
-          confirmButtonText: 'Sure',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `Unsaved data will be lost!`
-            });
-          }
+        this.$confirm("Unsaved data will be lost. Are you sure to return it?", "Tips", {
+          confirmButtonText: "Confirm",
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({path:"/exhibition/login/en/login"});
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Cancel success'
+          });   
         });
+      } else {
+        this.$router.push({path:"/exhibition/login/en/login"});
       }
     },
 
