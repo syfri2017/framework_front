@@ -126,6 +126,6 @@ export default {
 }
 
 .footerstyle p{
-  font-size: 20px;
+  font-size: 16px;
 }
 </style>
