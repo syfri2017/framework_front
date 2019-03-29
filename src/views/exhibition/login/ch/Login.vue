@@ -9,17 +9,17 @@
             <span class="formTitleStyle">用户登录</span>
             <span class="signstyle">没有账户?<router-link :to="{path:'/exhibition/login/ch/Register'}"><a>去注册</a></router-link></span>
           </div>
-          <el-form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+          <el-form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="用户名" v-model="username" prefix-icon="iconfont icon-username" @blur="mobileCheck"></el-input>
+              <el-input placeholder="用户名" v-model="username" prefix-icon="iconfont icon-login-username" @blur="mobileCheck" class="iconStyle"></el-input>
               <p class="alert" v-show="usernameAlertFlag">*请输入正确手机号</p>
             </div>
             <div class="filed">
-              <el-input placeholder="密码" v-model="password" prefix-icon="iconfont icon-password" type="password" @blur="passwordCheck"></el-input>
+              <el-input placeholder="密码" v-model="password" prefix-icon="iconfont icon-login-password" type="password" @blur="passwordCheck"></el-input>
               <p class="alert1" v-show="passwordAlertFlag">*请输入密码</p>
             </div>
             <div class="filed">
-              <el-input placeholder="验证码" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-validate" @blur="validateCheck"></el-input>
+              <el-input placeholder="验证码" class="yanzhengma_input"  v-model="picLyanzhengma" prefix-icon="iconfont icon-login-validate" @blur="validateCheck"></el-input>
               <input type="button"  class="verification1 bk" id="code" @click="createCode"  v-model="checkCode"/>
               <p class="alert2" v-show="validateAlertFlag">*验证码错误</p>
             </div>
@@ -44,7 +44,6 @@ export default {
     return {
         username: "",
         password: "",
-        //GLYloginType: "MyShiro",
         picLyanzhengma:'',
         checkCode:'',
         // 校验标识符
@@ -149,7 +148,6 @@ export default {
         var params = {
           username: vm.username,
           password: vm.password,
-          //loginType: vm.GLYloginType,
           usertype: "CHN",
           deptid: "ZSYH"
         }
@@ -189,14 +187,6 @@ export default {
 @import '@/common/scss/login.scss';
 .lgin {
   margin-top: 5rem;
-  .el-button {
-    width: $widthlgbtn;
-    background-color: $bgcolor;
-  }
-  .el-button:hover {
-    width: $widthlgbtn;
-    background-color: $bgcolor2;
-  }
 }
 .footer {
   text-align: -webkit-center;
@@ -208,5 +198,4 @@ export default {
     font-size: 1rem;
   }
 }
-
 </style>

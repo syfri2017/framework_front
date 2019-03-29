@@ -9,7 +9,7 @@
             <span class="formTitleStyle">密码修改</span>
             <span class="signstyle"><router-link :to="{path:'/exhibition/login/ch/login'}">返回登录</router-link></span>
           </div>
-          <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+          <form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed lgin">
                 <router-link :to="{path:'/exhibition/login/ch/mailbox'}"><el-button type="danger" round>邮箱找回</el-button></router-link>
             </div>
@@ -32,8 +32,7 @@ export default {
         GLYpassword: "",
         GLYsrc: "/imageCode",
         GLYvalidateCode: "",
-        GLYmessages: "",
-        GLYloginType: "MyShiro"
+        GLYmessages: ""
     }
   },
   methods:{

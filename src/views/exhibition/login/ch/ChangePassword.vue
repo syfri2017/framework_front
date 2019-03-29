@@ -12,16 +12,16 @@
           </div>
           <form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="请输入手机号" v-model="FPDusername" name="FPDusername" id="FPDusername" prefix-icon="iconfont icon-web-icon-" :disabled="FPDusernameFlag"></el-input>
+              <el-input placeholder="请输入手机号" v-model="FPDusername" name="FPDusername" id="FPDusername" prefix-icon="iconfont icon-login-phone" :disabled="FPDusernameFlag"></el-input>
             </div>
             <div class="filed">
-              <el-input placeholder="请输入密码" prefix-icon="iconfont icon-password" type="password" class="inputstyle" v-model="FPDpassword1" name="FPDpassword1"
+              <el-input placeholder="请输入密码" prefix-icon="iconfont icon-login-password" type="password" class="inputstyle" v-model="FPDpassword1" name="FPDpassword1"
                 id="FPDpassword1" @blur="FPDpassword1Check"></el-input>
               <p class="alert1" v-show="FPDpassword1AlertFlag">*密码需为6-16位字母数字组合</p>
             </div>
             <div class="filed">
               <el-input type="password" class="inputstyle" v-model="FPDpassword2" name="FPDpassword2" id="FPDpassword2"
-                placeholder="请再次输入密码" @blur="FPDpassword2Check" prefix-icon="iconfont icon-querenmima-copy"></el-input>
+                placeholder="请再次输入密码" @blur="FPDpassword2Check" prefix-icon="iconfont icon-login-checkpass"></el-input>
               <p class="alert2" v-show="FPDpassword2AlertFlag">*两次填写不一致，请重新填写</p>
             </div>
             <div class="filed lgin">

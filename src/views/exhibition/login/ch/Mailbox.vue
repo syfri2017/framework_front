@@ -11,14 +11,14 @@
             <a @click="open()">返回登录</a>
           </span>
         </div>
-        <form ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform" method="post">
+        <form ref="loginForm" id="loginForm" autocomplete="off" name="loginform" method="post">
           <div class="filed">
-            <el-input placeholder="邮箱" v-model="email" name="email" id="email" prefix-icon="iconfont icon-youxiang" @blur="FPBmailCheck"></el-input>
+            <el-input placeholder="邮箱" v-model="email" name="email" id="email" prefix-icon="iconfont icon-login-mail" @blur="FPBmailCheck"></el-input>
             <button type="button" id="FUmail-btn" class="verficode phonebtn" @click="getFPBMailCode()" v-text=mailCodeText :disabled="mailBtnDisabled"></button>
             <p class="alert" v-show="mailAlertFlag">*邮箱格式不正确</p>
           </div>
           <div class="filed">
-            <el-input placeholder="邮件验证码" v-model="mailCode" name="mailCode" id="mailCode" prefix-icon="iconfont icon-youxiang1" @blur="mailCodeCheck"></el-input>
+            <el-input placeholder="邮件验证码" v-model="mailCode" name="mailCode" id="mailCode" prefix-icon="iconfont icon-login-validate" @blur="mailCodeCheck"></el-input>
             <p class="alert1" v-show="mailCodeAlertFlag">*验证码输入错误</p>
           </div>
           <div class="filed lgin">

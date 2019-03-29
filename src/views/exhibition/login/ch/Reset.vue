@@ -9,7 +9,7 @@
             <span class="formTitleStyle">账户重置</span>
             <span class="signstyle"><router-link :to="{path:'/exhibition/login/ch/login'}"><a @click="open">返回登录</a></router-link></span>
           </div>
-          <form  ref="GLYloginForm" id="GLYloginForm" autocomplete="off" name="loginform"  method="post">
+          <form  ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
               <el-input v-model="REAcompanyName" name="REAcompanyName" id="REAcompanyName" placeholder="单位名称" prefix-icon="iconfont icon-danwei"></el-input>
             </div>
