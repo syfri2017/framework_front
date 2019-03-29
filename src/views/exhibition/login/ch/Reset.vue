@@ -11,11 +11,11 @@
           </div>
           <form  ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input v-model="REAcompanyName" name="REAcompanyName" id="REAcompanyName" placeholder="单位名称" prefix-icon="iconfont icon-danwei" @blur="dwmcCheck"></el-input>
+              <el-input v-model="REAcompanyName" name="REAcompanyName" id="REAcompanyName" placeholder="单位名称" prefix-icon="iconfont icon-login-dwmc" @blur="dwmcCheck"></el-input>
               <p class="alert" v-show="dwmcAlertFlag">*请输入单位名称</p>
             </div>
             <div class="filed">
-              <el-input v-model="REAunscid" name="REAunscid" id="REAunscid" placeholder="统一社会信用代码" prefix-icon="iconfont icon-credentials_icon" @blur="tyshxydmCheck"></el-input>
+              <el-input v-model="REAunscid" name="REAunscid" id="REAunscid" placeholder="统一社会信用代码" prefix-icon="iconfont icon-login-tyshxydm" @blur="tyshxydmCheck"></el-input>
               <p class="alert1" v-show="tyshxydmAlertFlag">*统一社会信用代码为18位数字字母组合</p>
             </div>
             <div class="filed lgin">
