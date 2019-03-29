@@ -22,7 +22,7 @@
             <div class="filed">
               <el-input type="password" class="inputstyle" v-model="FPDpassword2" name="FPDpassword2" id="FPDpassword2"
                 placeholder="请再次输入密码" @blur="FPDpassword2Check" prefix-icon="iconfont icon-login-checkpass"></el-input>
-              <p class="alert2" v-show="FPDpassword2AlertFlag">*两次填写不一致，请重新填写</p>
+              <p class="alert2" v-show="FPDpassword2AlertFlag">*两次密码不一致</p>
             </div>
             <div class="filed lgin">
             <el-button type="danger" @click="updatePassword()" round>确定</el-button>

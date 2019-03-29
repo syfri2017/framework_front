@@ -19,16 +19,15 @@
           </div>
           <div class="filed">
             <el-input v-model="messageCode" name="messageCode" id="messageCode" placeholder="请输入手机验证码" @blur="messageCodeCheck" prefix-icon="iconfont icon-login-validate"></el-input>
-            <p class="alert1" v-show="messageCodeAlertFlag">*请填写正确的手机验证码</p>
+            <p class="alert1" v-show="messageCodeAlertFlag">*验证码不正确</p>
           </div>
           <div class="filed">
-            <el-input placeholder="请输入密码" prefix-icon="iconfont icon-login-password" type="password" class="inputstyle" v-model="password1" name="password1" id="password1" @focus="password1Tip" @blur="password1Check"></el-input>
-            <p class="tip" v-show="password1TipFlag">*密码需为6-16位字母数字组合</p>
-            <p class="alert2" v-show="password1AlertFlag">*密码不合规，请重新填写</p>
+            <el-input placeholder="请输入密码" prefix-icon="iconfont icon-login-password" type="password" class="inputstyle" v-model="password1" name="password1" id="password1" @blur="password1Check"></el-input>
+            <p class="alert2" v-show="password1AlertFlag">*密码需为6-16位字母数字组合</p>
           </div>
           <div class="filed">
             <el-input type="password" class="inputstyle" v-model="password2" name="password2" id="password2" placeholder="请再次输入密码" @blur="password2Check" prefix-icon="iconfont icon-login-checkpass"></el-input>
-            <p class="alert3" v-show="password2AlertFlag">*两次填写不一致，请重新填写</p>
+            <p class="alert3" v-show="password2AlertFlag">*两次密码不一致</p>
           </div>
 
           <div class="filed lgin">
@@ -59,7 +58,6 @@ export default {
       //注册校验标识
       mobileAlertFlag: false,
       messageCodeAlertFlag: false,
-      password1TipFlag: false,
       password1AlertFlag: false,
       password2AlertFlag: false
     };
@@ -164,20 +162,14 @@ export default {
     //密码校验
     password1Check() {
       if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(this.password1)) {
-        this.password1TipFlag = false;
         this.password1AlertFlag = true;
         return false;
       } else {
-        this.password1TipFlag = false;
         this.password1AlertFlag = false;
         return true;
       }
     },
-    //密码规范提示
-    password1Tip() {
-      this.password1TipFlag = true;
-      this.password1AlertFlag = false;
-    },
+    
     //确认密码校验
     password2Check() {
       if (this.password1 !== this.password2) {
