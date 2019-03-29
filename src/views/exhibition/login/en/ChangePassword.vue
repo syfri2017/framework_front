@@ -10,16 +10,16 @@
           </div>
           <form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="Please input an email" v-model="FPDusername" name="FPDusername" id="FPDusername" prefix-icon="iconfont icon-youxiang1" :disabled="FPDusernameFlag"></el-input>
+              <el-input placeholder="Please input an email" v-model="FPDusername" name="FPDusername" id="FPDusername" prefix-icon="iconfont icon-login-mail" :disabled="FPDusernameFlag"></el-input>
             </div>
             <div class="filed">
-              <el-input placeholder="Please input a password" prefix-icon="iconfont icon-password" type="password" class="inputstyle" v-model="FPDpassword1" name="FPDpassword1"
+              <el-input placeholder="Please input a password" prefix-icon="iconfont icon-login-password" type="password" class="inputstyle" v-model="FPDpassword1" name="FPDpassword1"
                 id="FPDpassword1" @blur="FPDpassword1Check"></el-input>
               <p class="alert1" v-show="FPDpassword1AlertFlag">*Password must be 6-16-bit alphanumeric combination.</p>
             </div>
             <div class="filed">
               <el-input type="password" class="inputstyle" v-model="FPDpassword2" name="FPDpassword2" id="FPDpassword2"
-                placeholder="Please input the password again" @blur="FPDpassword2Check" prefix-icon="iconfont icon-querenmima-copy"></el-input>
+                placeholder="Please input the password again" @blur="FPDpassword2Check" prefix-icon="iconfont icon-login-checkpass"></el-input>
               <p class="alert2" v-show="FPDpassword2AlertFlag">*The two entries do not match.</p>
             </div>
             <div class="filed lgin">

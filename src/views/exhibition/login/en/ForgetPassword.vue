@@ -11,12 +11,12 @@
         </div>
         <form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
           <div class="filed">
-            <el-input placeholder="Email" v-model="FPBmail" name="FPBmail" id="FPBmail" prefix-icon="iconfont icon-youxiang1" @blur="FPBmailCheck"></el-input>
+            <el-input placeholder="Email" v-model="FPBmail" name="FPBmail" id="FPBmail" prefix-icon="iconfont icon-login-mail" @blur="FPBmailCheck"></el-input>
             <button type="button" id="FUmail-btn" class="verficode phonebtnEN" @click="getFPBMailCode()" v-text=FPBmailCodeText :disabled="FPBmailBtnDisabled"></button>
             <p class="alert" v-show="mailAlertFlag">*The email is incorrect.</p>
           </div>
           <div class="filed">
-            <el-input placeholder="Mail Verification Code"  v-model="FPBmailCode" name="FPBmailCode" id="FPBmailCode" prefix-icon="iconfont icon-validate" @blur="mailCodeCheck"></el-input>
+            <el-input placeholder="Mail Verification Code"  v-model="FPBmailCode" name="FPBmailCode" id="FPBmailCode" prefix-icon="iconfont icon-login-validate" @blur="mailCodeCheck"></el-input>
             <p class="alert1" v-show="mailCodeAlertFlag">*The verification code is incorrect.</p>
           </div>
           <div class="filed lgin">

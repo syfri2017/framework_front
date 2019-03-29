@@ -11,22 +11,22 @@
         </div>
         <form autocomplete="off" name="reg-form">
           <div class="filed">
-            <el-input v-model="mail" name="mail" id="mail" placeholder="Please input an email" @blur="mailCheck" type="text" class="inputstyle" prefix-icon="iconfont icon-youxiang1"></el-input>
+            <el-input v-model="mail" name="mail" id="mail" placeholder="Please input an email" @blur="mailCheck" type="text" class="inputstyle" prefix-icon="iconfont icon-login-mail"></el-input>
             <button type="button" id="mail-btn" class="verficode phonebtnEN" @click="getMailCode()" v-text=mailCodeText :disabled="mailBtnDisabled"></button>
             <p class="alert" v-show="mailAlertFlag">*The email is incorrect.</p>
           </div>
           <div class="filed">
-            <el-input v-model="mailCode" name="mailCode" id="mailCode" placeholder="Mail Verification Code" @blur="mailCodeCheck" prefix-icon="iconfont icon-validate"></el-input>
+            <el-input v-model="mailCode" name="mailCode" id="mailCode" placeholder="Mail Verification Code" @blur="mailCodeCheck" prefix-icon="iconfont icon-login-validate"></el-input>
             <p class="alert1" v-show="mailCodeAlertFlag">*The verification code is incorrect.</p>
           </div>
           <div class="filed">
-            <el-input placeholder="Please input a password" prefix-icon="iconfont icon-password" type="password" class="inputstyle" v-model="password1" name="password1"
+            <el-input placeholder="Please input a password" prefix-icon="iconfont icon-login-password" type="password" class="inputstyle" v-model="password1" name="password1"
               id="password1" @blur="password1Check"></el-input>
             <p class="alert2" v-show="password1AlertFlag">*Password must be 6-16-bit alphanumeric combination.</p>
           </div>
           <div class="filed">
             <el-input type="password" class="inputstyle" v-model="password2" name="password2" id="password2"
-              placeholder="Please input the password again" @blur="password2Check" prefix-icon="iconfont icon-querenmima-copy"></el-input>
+              placeholder="Please input the password again" @blur="password2Check" prefix-icon="iconfont icon-login-checkpass"></el-input>
             <p class="alert3" v-show="password2AlertFlag">*The two entries do not match.</p>
           </div>
           <div class="filed lgin">

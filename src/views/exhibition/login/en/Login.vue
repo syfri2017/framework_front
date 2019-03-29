@@ -11,15 +11,15 @@
           </div>
           <el-form ref="loginForm" id="loginForm" autocomplete="off" name="loginform"  method="post">
             <div class="filed">
-              <el-input placeholder="Username" v-model="username" prefix-icon="iconfont icon-username" @blur="mailCheck"></el-input>
+              <el-input placeholder="Username" v-model="username" prefix-icon="iconfont icon-login-username" @blur="mailCheck"></el-input>
               <p class="alert" v-show="usernameAlertFlag">*The email is incorrect.</p>
             </div>
             <div class="filed">
-              <el-input placeholder="Password" v-model="password" prefix-icon="iconfont icon-password" type="password" @blur="passwordCheck"></el-input>
+              <el-input placeholder="Password" v-model="password" prefix-icon="iconfont icon-login-password" type="password" @blur="passwordCheck"></el-input>
               <p class="alert1" v-show="passwordAlertFlag">*The password can not be empty.</p>
             </div>
             <div class="filed">
-              <el-input placeholder="Verification Code" v-model="picLyanzhengma" class="yanzhengma_input" prefix-icon="iconfont icon-validate" @blur="validateCheck"></el-input>
+              <el-input placeholder="Verification Code" v-model="picLyanzhengma" class="yanzhengma_input" prefix-icon="iconfont icon-login-validate" @blur="validateCheck"></el-input>
               <input type="button"  class="verification1 bk" id="code" @click="createCode"  v-model="checkCode"/>
               <p class="alert2" v-show="validateAlertFlag">*The verification code is incorrect.</p>
             </div>
