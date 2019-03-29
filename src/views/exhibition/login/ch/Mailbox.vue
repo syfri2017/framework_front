@@ -82,7 +82,6 @@ export default {
     },
     //邮箱验证码验证
     mailCodeCheck() {
-      debugger;
       if (this.mailCode != this.mailCodeReal || this.mailCode == '') {
         this.mailCodeAlertFlag = true;
         return false;
