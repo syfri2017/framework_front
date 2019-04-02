@@ -1,4 +1,5 @@
 <template>
+  <div id="admin">
     <!-- 用户登录 -->
     <el-row class="logincenter">
       <el-col :span="8" >&nbsp;</el-col>
@@ -23,6 +24,7 @@
       </el-col>
       <el-col :span="8">&nbsp;</el-col>
     </el-row>
+  </div>
 </template>
 
 <script>
@@ -79,6 +81,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import '@/common/scss/login.scss';
+<style lang="scss">
+#admin{
+  @import '@/common/scss/login.scss';
+}
 </style>
