@@ -435,5 +435,8 @@ input:-webkit-autofill {
   }
 }
 .el-input__prefix{
-  left: 10px !important;
+  left: 15px !important;
+}
+.el-input--prefix .el-input__inner {
+  padding-left: 40px;
 }
