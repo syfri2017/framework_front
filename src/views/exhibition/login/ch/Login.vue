@@ -183,19 +183,21 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import '@/common/scss/login.scss';
-.lgin {
-  margin-top: 5rem;
-}
-.footer {
-  text-align: -webkit-center;
-  color: $whitecolor;
-  font-size: 1rem;
-  * {
+<style lang="scss">
+.logincenter{
+  @import '@/common/scss/login.scss';
+  .lgin {
+    margin-top: 5rem;
+  }
+  .footer {
     text-align: -webkit-center;
     color: $whitecolor;
     font-size: 1rem;
+    * {
+      text-align: -webkit-center;
+      color: $whitecolor;
+      font-size: 1rem;
+    }
   }
 }
 </style>
