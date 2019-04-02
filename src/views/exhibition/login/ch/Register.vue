@@ -215,9 +215,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "@/common/scss/login.scss";
-.lgin {
-  margin-top: 4rem;
+<style lang="scss">
+.logincenter{
+  @import "@/common/scss/login.scss";
+  .lgin {
+    margin-top: 4rem;
+  }
 }
 </style>
