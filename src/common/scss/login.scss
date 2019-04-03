@@ -144,28 +144,28 @@ a {
 .alert{
   position:absolute;
   //top:71px;
-  margin-left:0px !important;
+  margin-left:10px !important;
   color:#EA2530;
   font-size: 0.8rem;
 }
 .alert1{
   position:absolute;
   //top:127px;
-  margin-left:0px !important;
+  margin-left:10px !important;
   color:#EA2530;
   font-size: 0.8rem;
 }
 .alert2{
   position:absolute;
   //top:183px;
-  margin-left:0px !important;
+  margin-left:10px !important;
   color:#EA2530;
   font-size: 0.8rem;
 }
 .alert3{
   position:absolute;
   //top:239px;
-  margin-left:0px !important;
+  margin-left:10px !important;
   color:#EA2530;
   font-size: 0.8rem;
 }
@@ -439,4 +439,8 @@ input:-webkit-autofill {
 }
 .el-input--prefix .el-input__inner {
   padding-left: 40px;
+}
+input:focus{
+  box-shadow:0px 0px 5px #EA2530;
+  border: 1px solid #EA2530;
 }
