@@ -306,7 +306,13 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-          vm.$axios.post('/user/deleteByList', this.multipleSelection).then(function (res) {
+        //补充修改人id、修改人名称
+        var selection = vm.multipleSelection;
+        for(let i in selection){
+          selection[i].alterId = vm.currentUser.userid;
+          selection[i].alterName = vm.currentUser.username;
+        }
+        vm.$axios.post('/user/deleteByList', selection).then(function (res) {
             this.$message({
               message: "成功删除" + res.data.result + "条用户信息",
               showClose: true,
