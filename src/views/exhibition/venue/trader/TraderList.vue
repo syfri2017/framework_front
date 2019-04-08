@@ -69,11 +69,11 @@
               <el-col :span="22">
                 <el-form-item label="展馆图片">
                   <el-button type="primary" size="small" @click="handlerSelectPhotoBtnClick">选择平面图</el-button>
-                  <span class="allname">*选择图片为png/jpg格式</span>
-                  <!-- <span class="file-name">
+                  <span class="allname">*选择图片为png/jpg格式;</span>
+                  <span class="file-name">
 													<template v-if="createForm.photoName">已选择：{{createForm.photoName}}</template>
 													<template v-else>未选择图片</template>
-                  </span>-->
+                  </span>
                   <input ref="localImageInput" type="file" name="image" accept="image/*" style="display:none" @change="handlerSelectedPhoto">
                 </el-form-item>
               </el-col>
@@ -112,6 +112,14 @@
     </div>
   </div>
 </template>
+<style >
+.file-name{
+  font-size: 14px;
+  color: red;
+  padding:10px;
+  
+}
+</style>
 
 <script>
 //引入翻页 paginator
